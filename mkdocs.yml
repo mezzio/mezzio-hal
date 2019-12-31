@@ -1,6 +1,6 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
+nav:
     - index.md
     - Introduction: intro.md
     - Reference:
@@ -15,5 +15,4 @@ pages:
         - "Using the ResourceGenerator in path-segregated middleware": cookbook/path-segregated-uri-generation.md
 site_name: Hypertext Application Language
 site_description: 'Hypertext Application Language for PSR-7 Applications'
-repo_url: 'https://github.com/zendframework/zend-expressive-hal'
-copyright: 'Copyright (c) 2017-2018 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
+repo_url: 'https://github.com/mezzio/mezzio-hal'
