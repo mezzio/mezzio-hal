@@ -8,8 +8,8 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- [#26](https://github.com/zendframework/zend-expressive-hal/pull/26) adds
-  support for the zend-expressive-helpers 5.0 series of releases.
+- [zendframework/zend-expressive-hal#26](https://github.com/zendframework/zend-expressive-hal/pull/26) adds
+  support for the mezzio-helpers 5.0 series of releases.
 
 ### Changed
 
@@ -35,10 +35,10 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
-- [#23](https://github.com/zendframework/zend-expressive-hal/pull/23) modifies
+- [zendframework/zend-expressive-hal#23](https://github.com/zendframework/zend-expressive-hal/pull/23) modifies
   how the resource generator factory adds strategies and maps metadata to
   strategies. It now adds the following factories under the
-  `Zend\Expressive\Hal\Metadata` namespace:
+  `Mezzio\Hal\Metadata` namespace:
 
   - `RouteBasedCollectionMetadataFactory`
   - `RouteBasedResourceMetadataFactory`
@@ -48,10 +48,10 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
   Each implements a new `MetadataFactoryInterface` under that same namespace
   that accepts the requested metadata type name and associated metadata in order
   to create an `AbstractMetadata` instance. Metadata types are mapped to their
-  factories under the `zend-expressive-hal.metadata-factories` key.
+  factories under the `mezzio-hal.metadata-factories` key.
 
   Strategies are now configured as metadata => strategy class pairings under the
-  `zend-expressive-hal.resource-generator.strategies` key.
+  `mezzio-hal.resource-generator.strategies` key.
 
   In both cases, defaults that mimic previous behavior are provided via the
   `ConfigProvider`.
@@ -88,9 +88,9 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- [#21](https://github.com/zendframework/zend-expressive-hal/pull/21) fixes the
+- [zendframework/zend-expressive-hal#21](https://github.com/zendframework/zend-expressive-hal/pull/21) fixes the
   `LinkGeneratorFactory` to properly use the
-  `Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface` service when
+  `Mezzio\Hal\LinkGenerator\UrlGeneratorInterface` service when
   creating and returning the `LinkGenerator` instance. (0.5.0 was incorrectly
   attempting to use the `UrlGenerator` service, which does not exist.)
 
@@ -102,20 +102,20 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
-- [#20](https://github.com/zendframework/zend-expressive-hal/pull/20) renames
+- [zendframework/zend-expressive-hal#20](https://github.com/zendframework/zend-expressive-hal/pull/20) renames
   the following interfaces and traits to have `Interface` and `Trait` suffixes,
-  respectively; this was done for consistency with existing ZF packages. (Values
+  respectively; this was done for consistency with existing Laminas packages. (Values
   after the `:` retain the namespace, which is omitted for brevity.)
 
-  - `Zend\Expressive\Hal\LinkGenerator\UrlGenerator`: `UrlGeneratorInterface`
-  - `Zend\Expressive\Hal\Renderer\Renderer`: `RendererInterface`
-  - `Zend\Expressive\Hal\ResourceGenerator\Strategy`: `StrategyInterface`
-  - `Zend\Expressive\Hal\ResourceGenerator\ExtractCollection`: `ExtractCollectionTrait`
-  - `Zend\Expressive\Hal\ResourceGenerator\ExtractInstance`: `ExtractInstanceTrait`
+  - `Mezzio\Hal\LinkGenerator\UrlGenerator`: `UrlGeneratorInterface`
+  - `Mezzio\Hal\Renderer\Renderer`: `RendererInterface`
+  - `Mezzio\Hal\ResourceGenerator\Strategy`: `StrategyInterface`
+  - `Mezzio\Hal\ResourceGenerator\ExtractCollection`: `ExtractCollectionTrait`
+  - `Mezzio\Hal\ResourceGenerator\ExtractInstance`: `ExtractInstanceTrait`
 
-- [#16](https://github.com/zendframework/zend-expressive-hal/pull/16) renames
+- [zendframework/zend-expressive-hal#16](https://github.com/zendframework/zend-expressive-hal/pull/16) renames
   the various `Exception` interfaces to `ExceptionInterface`, in order to be
-  consistent with other ZF packages.
+  consistent with other Laminas packages.
 
 ### Deprecated
 
@@ -149,21 +149,21 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- [#19](https://github.com/zendframework/zend-expressive-hal/pull/19) fixes the
+- [zendframework/zend-expressive-hal#19](https://github.com/zendframework/zend-expressive-hal/pull/19) fixes the
   behavior of `ResourceGenerator` when nesting a collection inside another
   resource to properly nest it as an array of items, rather than a collection
   resource.
 
-- [#18](https://github.com/zendframework/zend-expressive-hal/pull/18) fixes the
+- [zendframework/zend-expressive-hal#18](https://github.com/zendframework/zend-expressive-hal/pull/18) fixes the
   return type hint of `RouteBasedResourceMetadata::setRouteParams()` to correctly
   be `void`.
 
-- [#13](https://github.com/zendframework/zend-expressive-hal/pull/13) updates
+- [zendframework/zend-expressive-hal#13](https://github.com/zendframework/zend-expressive-hal/pull/13) updates
   `ExtractCollection::extractPaginator()` to validate that the pagination
   parameter is within the range of pages represented by the paginator instance;
   if not, an `OutOfBoundsException` is raised.
 
-- [#12](https://github.com/zendframework/zend-expressive-hal/pull/12) fixes how pagination
+- [zendframework/zend-expressive-hal#12](https://github.com/zendframework/zend-expressive-hal/pull/12) fixes how pagination
   metadata (`_page`, `_page_count`, `_total_items`) is represented in generated
   resources, ensuring values are cast to integers.
 
@@ -187,11 +187,11 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- [#7](https://github.com/zendframework/zend-expressive-hal/pull/7) fixes a number of issues in
+- [zendframework/zend-expressive-hal#7](https://github.com/zendframework/zend-expressive-hal/pull/7) fixes a number of issues in
   the various exception implementations due to failure to import classes
   referenced in typehints.
 
-- [#6](https://github.com/zendframework/zend-expressive-hal/pull/6) fixes a number of docblock
+- [zendframework/zend-expressive-hal#6](https://github.com/zendframework/zend-expressive-hal/pull/6) fixes a number of docblock
   annotations to reference `HalResource` vs `Resource` (which is a reserved
   word).
 
@@ -215,7 +215,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- [#6](https://github.com/zendframework/zend-expressive-hal/pull/6) fixes an issue with the XML
+- [zendframework/zend-expressive-hal#6](https://github.com/zendframework/zend-expressive-hal/pull/6) fixes an issue with the XML
   renderer when creating resource elements that represent an array.
 
 ## 0.4.0 - 2017-08-08
@@ -245,7 +245,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- [#4](https://github.com/weierophinney/hal/pull/4) adds the ability to force
+- [zendframework/zend-expressive-hal#4](https://github.com/weierophinney/hal/pull/4) adds the ability to force
   both links and embedded resources to be rendered as collections, even if the
   given relation only contains one item.
 
@@ -278,7 +278,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- [#1](https://github.com/weierophinney/pull/1) adds a `Hal\Renderer`
+- [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/pull/1) adds a `Hal\Renderer`
   subcomponent with the following:
   - `Renderer` interface
   - `JsonRenderer`, for creating JSON representations of `HalResource` instances.
@@ -286,7 +286,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
-- [#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactory`
+- [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactory`
   to compose a `JsonRenderer` and `XmlRenderer`, instead of composing
   `$jsonFlags` and creating representations itself. 
 
@@ -305,11 +305,11 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
   ) {
   ```
 
-- [#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactoryFactory`
+- [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactoryFactory`
   to comply with the new constructor signature of `Hal\HalResponseFactory`. It
   also updates to check for `Psr\Http\Message\ResponseInterface` and
   `Psr\Http\Message\StreamInterface` services before attempting to use
-  zend-diactoros classes.
+  laminas-diactoros classes.
 
 ### Deprecated
 
@@ -331,7 +331,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 - Adds a "provides" section to the `composer.json` (provides PSR-13 implementation)
 - Adds `composer.json` suggestions for:
   - PSR-11 implementation
-  - zend-paginator
+  - laminas-paginator
 
 ### Deprecated
 

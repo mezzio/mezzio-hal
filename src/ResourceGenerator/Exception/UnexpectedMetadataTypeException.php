@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal\ResourceGenerator\Exception;
+namespace Mezzio\Hal\ResourceGenerator\Exception;
 
+use Mezzio\Hal\Metadata\AbstractCollectionMetadata;
+use Mezzio\Hal\Metadata\AbstractMetadata;
 use RuntimeException;
-use Zend\Expressive\Hal\Metadata\AbstractCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\AbstractMetadata;
 
 class UnexpectedMetadataTypeException extends RuntimeException implements ExceptionInterface
 {
