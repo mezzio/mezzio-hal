@@ -24,7 +24,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- [#6](https://github.com/weierophinney/hal/pull/6) fixes an issue with the XML
+- [zendframework/zend-expressive-hal#6](https://github.com/weierophinney/hal/pull/6) fixes an issue with the XML
   renderer when creating resource elements that represent an array.
 
 ## 0.4.0 - 2017-08-08
@@ -54,7 +54,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- [#4](https://github.com/weierophinney/hal/pull/4) adds the ability to force
+- [zendframework/zend-expressive-hal#4](https://github.com/weierophinney/hal/pull/4) adds the ability to force
   both links and embedded resources to be rendered as collections, even if the
   given relation only contains one item.
 
@@ -87,7 +87,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- [#1](https://github.com/weierophinney/pull/1) adds a `Hal\Renderer`
+- [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/pull/1) adds a `Hal\Renderer`
   subcomponent with the following:
   - `Renderer` interface
   - `JsonRenderer`, for creating JSON representations of `HalResource` instances.
@@ -95,7 +95,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
-- [#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactory`
+- [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactory`
   to compose a `JsonRenderer` and `XmlRenderer`, instead of composing
   `$jsonFlags` and creating representations itself. 
 
@@ -114,11 +114,11 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
   ) {
   ```
 
-- [#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactoryFactory`
+- [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/pull/1) changes `Hal\HalResponseFactoryFactory`
   to comply with the new constructor signature of `Hal\HalResponseFactory`. It
   also updates to check for `Psr\Http\Message\ResponseInterface` and
   `Psr\Http\Message\StreamInterface` services before attempting to use
-  zend-diactoros classes.
+  laminas-diactoros classes.
 
 ### Deprecated
 
@@ -140,7 +140,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 - Adds a "provides" section to the `composer.json` (provides PSR-13 implementation)
 - Adds `composer.json` suggestions for:
   - PSR-11 implementation
-  - zend-paginator
+  - laminas-paginator
 
 ### Deprecated
 
