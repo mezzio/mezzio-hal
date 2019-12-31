@@ -1,27 +1,28 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal\ResourceGenerator;
+namespace MezzioTest\Hal\ResourceGenerator;
 
+use Laminas\Hydrator\ObjectProperty as ObjectPropertyHydrator;
+use Laminas\Paginator\Adapter\ArrayAdapter;
+use Laminas\Paginator\Paginator;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Link;
+use Mezzio\Hal\LinkGenerator;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+use Mezzio\Hal\ResourceGenerator;
+use MezzioTest\Hal\Assertions;
+use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Hal\HalResource;
-use Zend\Expressive\Hal\Link;
-use Zend\Expressive\Hal\LinkGenerator;
-use Zend\Expressive\Hal\Metadata\MetadataMap;
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
-use Zend\Expressive\Hal\ResourceGenerator;
-use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Zend\Paginator\Paginator;
-use ZendTest\Expressive\Hal\Assertions;
-use ZendTest\Expressive\Hal\TestAsset;
 
 class RouteBasedCollectionWithRouteParamsTest extends TestCase
 {

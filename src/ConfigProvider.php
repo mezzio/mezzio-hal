@@ -1,11 +1,12 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal;
+namespace Mezzio\Hal;
 
 class ConfigProvider
 {
@@ -20,12 +21,20 @@ class ConfigProvider
     {
         return [
             'aliases' => [
-                LinkGenerator\UrlGenerator::class => LinkGenerator\ExpressiveUrlGenerator::class,
+                LinkGenerator\UrlGenerator::class => LinkGenerator\MezzioUrlGenerator::class,
+
+                // Legacy Zend Framework aliases
+                \Zend\Expressive\Hal\LinkGenerator\UrlGenerator::class => LinkGenerator\UrlGenerator::class,
+                \Zend\Expressive\Hal\HalResponseFactory::class => HalResponseFactory::class,
+                \Zend\Expressive\Hal\LinkGenerator::class => LinkGenerator::class,
+                \Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator::class => LinkGenerator\MezzioUrlGenerator::class,
+                \Zend\Expressive\Hal\Metadata\MetadataMap::class => Metadata\MetadataMap::class,
+                \Zend\Expressive\Hal\ResourceGenerator::class => ResourceGenerator::class,
             ],
             'factories' => [
                 HalResponseFactory::class => HalResponseFactoryFactory::class,
                 LinkGenerator::class => LinkGeneratorFactory::class,
-                LinkGenerator\ExpressiveUrlGenerator::class => LinkGenerator\ExpressiveUrlGeneratorFactory::class,
+                LinkGenerator\MezzioUrlGenerator::class => LinkGenerator\MezzioUrlGeneratorFactory::class,
                 Metadata\MetadataMap::class => Metadata\MetadataMapFactory::class,
                 ResourceGenerator::class => ResourceGeneratorFactory::class,
             ],
