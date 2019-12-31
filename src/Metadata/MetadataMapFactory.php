@@ -1,11 +1,12 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal\Metadata;
+namespace Mezzio\Hal\Metadata;
 
 use Psr\Container\ContainerInterface;
 
@@ -30,7 +31,7 @@ use Psr\Container\ContainerInterface;
  * in your configuration to support it. Add an entry to the config array:
  *
  * <code>
- * $config['zend-expressive-hal']['metadata-factories'][MyMetadata::class] = MyMetadataFactory::class;
+ * $config['mezzio-hal']['metadata-factories'][MyMetadata::class] = MyMetadataFactory::class;
  * </code>
  *
  * The factory mapped should implement `MetadataFactoryInterface`.
@@ -46,7 +47,7 @@ class MetadataMapFactory
             throw Exception\InvalidConfigException::dueToNonArray($metadataMapConfig);
         }
 
-        $metadataFactories = $config['zend-expressive-hal']['metadata-factories'] ?? [];
+        $metadataFactories = $config['mezzio-hal']['metadata-factories'] ?? [];
 
         return $this->populateMetadataMapFromConfig(
             new MetadataMap(),

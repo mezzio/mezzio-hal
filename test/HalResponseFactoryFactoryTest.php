@@ -1,22 +1,23 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
 declare(strict_types=1);
 
-namespace ZendTest\Expressive\Hal;
+namespace MezzioTest\Hal;
 
 use Closure;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\HalResponseFactoryFactory;
+use Mezzio\Hal\Renderer;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Zend\Expressive\Hal\HalResponseFactoryFactory;
-use Zend\Expressive\Hal\HalResponseFactory;
-use Zend\Expressive\Hal\Renderer;
 
 class HalResponseFactoryFactoryTest extends TestCase
 {
@@ -55,7 +56,9 @@ class HalResponseFactoryFactoryTest extends TestCase
     {
         $container = $this->prophesize(ContainerInterface::class);
         $container->has(Renderer\JsonRenderer::class)->willReturn(false);
+        $container->has(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)->willReturn(false);
         $container->has(Renderer\XmlRenderer::class)->willReturn(false);
+        $container->has(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)->willReturn(false);
         $container->has(ResponseInterface::class)->willReturn(false);
         $container->has(StreamInterface::class)->willReturn(false);
 

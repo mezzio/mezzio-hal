@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal;
+namespace Mezzio\Hal;
 
 use Closure;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Stream;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Stream;
 
 /**
  * Create and return a HalResponseFactory instance.
@@ -23,16 +24,16 @@ use Zend\Diactoros\Stream;
  * - `Hal\Renderer\JsonRenderer`, if present; otherwise, creates an instance.
  * - `Hal\Renderer\XmlRenderer`, if present; otherwise, creates an instance.
  * - `Psr\Http\Message\ResponseInterface`, if present; otherwise, uses the
- *   zend-diactoros `Response` class.
+ *   laminas-diactoros `Response` class.
  * - `Psr\Http\Message\StreamInterface`, if present; this service should
  *   return a callable capable of returning a new stream instance. If none is
- *   provided, uses a callable returning a zend-diactoros `Stream` class.
+ *   provided, uses a callable returning a laminas-diactoros `Stream` class.
  */
 class HalResponseFactoryFactory
 {
     /**
      * @throws RuntimeException if neither a ResponseInterface service is
-     *     present nor zend-diactoros is installed.
+     *     present nor laminas-diactoros is installed.
      */
     public function __invoke(ContainerInterface $container) : HalResponseFactory
     {
@@ -41,11 +42,15 @@ class HalResponseFactoryFactory
 
         $jsonRenderer = $container->has(Renderer\JsonRenderer::class)
             ? $container->get(Renderer\JsonRenderer::class)
-            : new Renderer\JsonRenderer();
+            : ($container->has(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)
+                ? $container->get(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)
+                : new Renderer\JsonRenderer());
 
         $xmlRenderer = $container->has(Renderer\XmlRenderer::class)
             ? $container->get(Renderer\XmlRenderer::class)
-            : new Renderer\XmlRenderer();
+            : ($container->has(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)
+                ? $container->get(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)
+                : new Renderer\XmlRenderer());
 
         return new HalResponseFactory(
             $response,
@@ -57,7 +62,7 @@ class HalResponseFactoryFactory
 
     /**
      * @throws RuntimeException if neither a ResponseInterface service is available
-     *     nor zend-diactoros installed.
+     *     nor laminas-diactoros installed.
      */
     private function getResponseInstance(ContainerInterface $container) : ResponseInterface
     {
@@ -72,8 +77,8 @@ class HalResponseFactoryFactory
 
         throw new RuntimeException(sprintf(
             'The %s implementation requires that you either define a service '
-            . '"%s" or have zend-diactoros installed; either create %s service '
-            . 'or install zendframework/zend-diactoros.',
+            . '"%s" or have laminas-diactoros installed; either create %s service '
+            . 'or install laminas/laminas-diactoros.',
             self::class,
             ResponseInterface::class,
             ResponseInterface::class
@@ -82,7 +87,7 @@ class HalResponseFactoryFactory
 
     /**
      * @throws RuntimeException if neither a StreamInterface service is available
-     *     nor zend-diactoros installed.
+     *     nor laminas-diactoros installed.
      */
     private function getStreamFactory(ContainerInterface $container) : callable
     {
@@ -97,8 +102,8 @@ class HalResponseFactoryFactory
         throw new RuntimeException(sprintf(
             'The %s implementation requires that you either define a service '
             . '"%s" (which should return a callable capable of returning a %s) '
-            . 'or have zend-diactoros installed; either create %s service '
-            . 'or install zendframework/zend-diactoros.',
+            . 'or have laminas-diactoros installed; either create %s service '
+            . 'or install laminas/laminas-diactoros.',
             self::class,
             StreamInterface::class,
             StreamInterface::class,
