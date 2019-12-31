@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal;
+namespace MezzioTest\Hal;
 
+use Mezzio\Hal\Link;
+use Mezzio\Hal\LinkGenerator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Hal\Link;
-use Zend\Expressive\Hal\LinkGenerator;
 
 class LinkGeneratorTest extends TestCase
 {
@@ -22,7 +23,7 @@ class LinkGeneratorTest extends TestCase
         $urlGenerator->generate(
             $request,
             'test',
-            ['library' => 'zf'],
+            ['library' => 'laminas'],
             ['sort' => 'asc']
         )->willReturn('/library/test?sort=asc');
 
@@ -32,7 +33,7 @@ class LinkGeneratorTest extends TestCase
             'library',
             $request,
             'test',
-            ['library' => 'zf'],
+            ['library' => 'laminas'],
             ['sort' => 'asc'],
             ['type' => 'https://example.com/doc/library']
         );
@@ -52,7 +53,7 @@ class LinkGeneratorTest extends TestCase
         $urlGenerator->generate(
             $request,
             'test',
-            ['library' => 'zf'],
+            ['library' => 'laminas'],
             ['sort' => 'asc']
         )->willReturn('/library/test?sort=asc');
 
@@ -62,7 +63,7 @@ class LinkGeneratorTest extends TestCase
             'library',
             $request,
             'test',
-            ['library' => 'zf'],
+            ['library' => 'laminas'],
             ['sort' => 'asc'],
             ['type' => 'https://example.com/doc/library']
         );

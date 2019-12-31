@@ -1,15 +1,15 @@
 # Generating custom resources
 
-The `ResourceGenerator` allows composing `Zend\Expressive\Hal\ResourceGenerator\StrategyInterface`
+The `ResourceGenerator` allows composing `Mezzio\Hal\ResourceGenerator\StrategyInterface`
 instances. The `StrategyInterface` defines the following:
 
 ```php
-namespace Zend\Expressive\Hal\ResourceGenerator;
+namespace Mezzio\Hal\ResourceGenerator;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Hal\HalResource;
-use Zend\Expressive\Hal\Metadata;
-use Zend\Expressive\Hal\ResourceGenerator;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Metadata;
+use Mezzio\Hal\ResourceGenerator;
 
 interface StrategyInterface
 {
@@ -42,7 +42,7 @@ You can also add your strategies via the configuration:
 
 ```php
 return [
-    'zend-expressive-hal' => [
+    'mezzio-hal' => [
         'resource-generator' => [
             'strategies' => [
                 CustomMetadata::class => CustomStrategy::class,
@@ -56,17 +56,17 @@ If a strategy already is mapped for the given metadata type, this method will
 override it.
 
 To facilitate common operations, this library provides two traits,
-`Zend\Expressive\Hal\ResourceGenerator\ExtractCollectionTrait` and
-`Zend\Expressive\Hal\ResourceGenerator\ExtractInstanceTrait`; inspect these if you
+`Mezzio\Hal\ResourceGenerator\ExtractCollectionTrait` and
+`Mezzio\Hal\ResourceGenerator\ExtractInstanceTrait`; inspect these if you
 decide to write your own strategies.
 
 In order for the `MetadataMap` to be able to use your `CustomMetadata` you need to register 
-a factory (implementing `Zend\Expressive\Hal\Metadata\MetadataFactoryInterface`) for it.
+a factory (implementing `Mezzio\Hal\Metadata\MetadataFactoryInterface`) for it.
 You can register them via the configuration:
 
 ```php
 return [
-    'zend-expressive-hal' => [
+    'mezzio-hal' => [
         'metadata-factories' => [
             CustomMetadata::class => CustomMetadataFactory::class,
         ],
