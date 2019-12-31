@@ -4,18 +4,18 @@ This component provides two renderers, one each for creating JSON and XML
 payloads.
 
 Additionally, as noted in the [introduction](intro.md) examples, this component
-provides `Zend\Expressive\Hal\HalResponseFactory` for generating a PSR-7
+provides `Mezzio\Hal\HalResponseFactory` for generating a PSR-7
 response containing the HAL representation. This chapter dives into that with
 more detail.
 
 ## Renderers
 
-All renderers implement `Zend\Expressive\Hal\Renderer\Renderer`:
+All renderers implement `Mezzio\Hal\Renderer\Renderer`:
 
 ```php
-namespace Zend\Expressive\Hal\Renderer;
+namespace Mezzio\Hal\Renderer;
 
-use Zend\Expressive\Hal\HalResource;
+use Mezzio\Hal\HalResource;
 
 interface Renderer
 {
@@ -23,8 +23,8 @@ interface Renderer
 }
 ```
 
-Two implementations are provided, `Zend\Expressive\Hal\Renderer\JsonRenderer` and
-`Zend\Expressive\Hal\Renderer\XmlRenderer`
+Two implementations are provided, `Mezzio\Hal\Renderer\JsonRenderer` and
+`Mezzio\Hal\Renderer\XmlRenderer`
 
 ### JsonRenderer
 
@@ -52,10 +52,10 @@ constructor arguments at this time.
 the provided `HalResource` instance. In order to keep the component agnostic of
 PSR-7 implementation, the factory composes:
 
-- A PSR-7 response prototype. A zend-diactoros `Response` is used if none is
+- A PSR-7 response prototype. A laminas-diactoros `Response` is used if none is
   provided.
 - A callable capable of generating an empty, writable, PSR-7 stream instance.
-  If none is provided, a callable returning a zend-diactoros `Stream` is
+  If none is provided, a callable returning a laminas-diactoros `Stream` is
   provided.
 
 As an example:
@@ -63,7 +63,7 @@ As an example:
 ```php
 use Slim\Http\Response;
 use Slim\Http\Stream;
-use Zend\Expressive\Hal\HalResponseFactory;
+use Mezzio\Hal\HalResponseFactory;
 
 $factory = new HalResponseFactory(
     new Response(),
@@ -82,14 +82,14 @@ $factory = new HalResponseFactory(
 By default, if you pass no arguments to the `HalResponseFactory` constructor, it
 assumes the following:
 
-- Usage of `Zend\Diactoros\Response`.
-- A callable that returns a new `Zend\Diactoros\Stream` using `php://temp` as
+- Usage of `Laminas\Diactoros\Response`.
+- A callable that returns a new `Laminas\Diactoros\Stream` using `php://temp` as
   its backing resource.
 - A `JsonRenderer` instance is created if none is provided.
 - An `XmlRenderer` instance is created if none is provided.
 
 We provide a PSR-11 compatible factory for generating the `HalResponseFactory`
-which uses zend-diactoros by default.
+which uses laminas-diactoros by default.
 
 ## Using the factory
 
@@ -98,7 +98,7 @@ The factory exposes one method:
 ```php
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Hal\HalResource;
+use Mezzio\Hal\HalResource;
 
 public function createResponse(
     ServerRequestInterface $request,
