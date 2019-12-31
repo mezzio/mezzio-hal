@@ -1,20 +1,21 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal\LinkGenerator;
+namespace Mezzio\Hal\LinkGenerator;
 
+use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Helper\UrlHelper;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
-use Zend\Expressive\Helper\ServerUrlHelper;
-use Zend\Expressive\Helper\UrlHelper;
 
 use function sprintf;
 
-class ExpressiveUrlGeneratorFactory
+class MezzioUrlGeneratorFactory
 {
     /** @var string */
     private $urlHelperServiceName;
@@ -37,20 +38,24 @@ class ExpressiveUrlGeneratorFactory
         $this->urlHelperServiceName = $urlHelperServiceName;
     }
 
-    public function __invoke(ContainerInterface $container) : ExpressiveUrlGenerator
+    public function __invoke(ContainerInterface $container) : MezzioUrlGenerator
     {
         if (! $container->has($this->urlHelperServiceName)) {
             throw new RuntimeException(sprintf(
                 '%s requires a %s in order to generate a %s instance; none found',
                 __CLASS__,
                 $this->urlHelperServiceName,
-                ExpressiveUrlGenerator::class
+                MezzioUrlGenerator::class
             ));
         }
 
-        return new ExpressiveUrlGenerator(
+        return new MezzioUrlGenerator(
             $container->get($this->urlHelperServiceName),
-            $container->has(ServerUrlHelper::class) ? $container->get(ServerUrlHelper::class) : null
+            $container->has(ServerUrlHelper::class)
+                ? $container->get(ServerUrlHelper::class)
+                : ($container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)
+                    ? $container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)
+                    : null)
         );
     }
 }
