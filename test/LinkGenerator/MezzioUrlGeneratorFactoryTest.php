@@ -1,21 +1,22 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal\LinkGenerator;
+namespace MezzioTest\Hal\LinkGenerator;
 
+use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
+use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;
+use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Helper\UrlHelper;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
-use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator;
-use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGeneratorFactory;
-use Zend\Expressive\Helper\ServerUrlHelper;
-use Zend\Expressive\Helper\UrlHelper;
 
-class ExpressiveUrlGeneratorFactoryTest extends TestCase
+class MezzioUrlGeneratorFactoryTest extends TestCase
 {
     public function setUp()
     {
@@ -25,10 +26,13 @@ class ExpressiveUrlGeneratorFactoryTest extends TestCase
     public function testFactoryRaisesExceptionIfUrlHelperIsMissingFromContainer()
     {
         $this->container->has(UrlHelper::class)->willReturn(false);
+        $this->container->has(\Zend\Expressive\Helper\UrlHelper::class)->willReturn(false);
         $this->container->get(UrlHelper::class)->shouldNotBeCalled();
+        $this->container->get(\Zend\Expressive\Helper\UrlHelper::class)->shouldNotBeCalled();
         $this->container->has(ServerUrlHelper::class)->shouldNotBeCalled();
+        $this->container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)->shouldNotBeCalled();
 
-        $factory = new ExpressiveUrlGeneratorFactory();
+        $factory = new MezzioUrlGeneratorFactory();
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(UrlHelper::class);
         $factory($this->container->reveal());
@@ -41,12 +45,14 @@ class ExpressiveUrlGeneratorFactoryTest extends TestCase
         $this->container->has(UrlHelper::class)->willReturn(true);
         $this->container->get(UrlHelper::class)->willReturn($urlHelper);
         $this->container->has(ServerUrlHelper::class)->willReturn(false);
+        $this->container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)->willReturn(false);
         $this->container->get(ServerUrlHelper::class)->shouldNotBeCalled();
+        $this->container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)->shouldNotBeCalled();
 
-        $factory = new ExpressiveUrlGeneratorFactory();
+        $factory = new MezzioUrlGeneratorFactory();
         $generator = $factory($this->container->reveal());
 
-        $this->assertInstanceOf(ExpressiveUrlGenerator::class, $generator);
+        $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
         $this->assertAttributeSame($urlHelper, 'urlHelper', $generator);
     }
 
@@ -60,10 +66,10 @@ class ExpressiveUrlGeneratorFactoryTest extends TestCase
         $this->container->has(ServerUrlHelper::class)->willReturn(true);
         $this->container->get(ServerUrlHelper::class)->willReturn($serverUrlHelper);
 
-        $factory = new ExpressiveUrlGeneratorFactory();
+        $factory = new MezzioUrlGeneratorFactory();
         $generator = $factory($this->container->reveal());
 
-        $this->assertInstanceOf(ExpressiveUrlGenerator::class, $generator);
+        $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
         $this->assertAttributeSame($urlHelper, 'urlHelper', $generator);
         $this->assertAttributeSame($serverUrlHelper, 'serverUrlHelper', $generator);
     }

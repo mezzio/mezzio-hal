@@ -16,19 +16,19 @@ representation of a PHP object. Metadata might include:
 - The PHP class name to represent.
 - A URI to use for the generated resource's self relational link.
 - Alternately, routing information to use with the `LinkGenerator`.
-- A zend-hydrator extractor to use to serialize the object to a representation.
+- A laminas-hydrator extractor to use to serialize the object to a representation.
 - Whether or not the resource is a collection, and, if so, whether pagination is
   handled as a path parameter or a query string argument, the name of the
   parameter, etc.
 
-All metadata types inherit from `Zend\Expressive\Hal\Metadata\AbstractMetadata`,
+All metadata types inherit from `Mezzio\Hal\Metadata\AbstractMetadata`,
 which defines a single method, `getClass()`, for retrieving the name of the PHP
 class to represent; all metadata are expected to inherit from this class.
 
 The component also provides four concrete metadata types, requiring the
 following information:
 
-- `Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata`:
+- `Mezzio\Hal\Metadata\RouteBasedCollectionMetadata`:
     - string `$class`
     - string `$collectionRelation`
     - string `$route`
@@ -39,10 +39,10 @@ following information:
       the designated route)
     - array `$queryStringArguments = []` (associative array of query string
       arguments to include in the generated URI)
-- `Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata`:
+- `Mezzio\Hal\Metadata\RouteBasedResourceMetadata`:
     - string `$class`
     - string `$route`
-    - string `$extractor` (string service name of the zend-hydrator hydrator to
+    - string `$extractor` (string service name of the laminas-hydrator hydrator to
       use for extracting data from the instance)
     - string `$resourceIdentifier = 'id'` (name of the property uniquely
       identifying the resource)
@@ -50,7 +50,7 @@ following information:
       that maps to the resource identifier)
     - array `$routeParams = []` (associative array of additional routing
       parameters to substitute when generating the URI)
-- `Zend\Expressive\Hal\Metadata\UrlBasedCollectionMetadata`:
+- `Mezzio\Hal\Metadata\UrlBasedCollectionMetadata`:
     - string `$class`
     - string `$collectionRelation`
     - string `$url`
@@ -58,7 +58,7 @@ following information:
       current page of results)
     - string `$paginationParamType = self::TYPE_QUERY` (one of "query" or "placeholder")
 
-We aggregate metadata in a `Zend\Expressive\Hal\Metadata\MetadataMap` instance:
+We aggregate metadata in a `Mezzio\Hal\Metadata\MetadataMap` instance:
 
 ```php
 $bookMetadata = new RouteBasedResourceMetadata(
@@ -80,10 +80,10 @@ $metadataMap->add($booksMetadata);
 ### Configuration-based metadata
 
 To automate generation of the `MetadataMap`, we provide
-`Zend\Expressive\Hal\Metadata\MetadataMapFactory`. This factory may be used with any
+`Mezzio\Hal\Metadata\MetadataMapFactory`. This factory may be used with any
 [PSR-11](http://www.php-fig.org/psr/psr-11/) container. It utilizes the `config`
 service, and pulls its configuration from a key named after the
-`Zend\Expressive\Hal\Metadata\MetadataMap` class.
+`Mezzio\Hal\Metadata\MetadataMap` class.
 
 Each item in the map will be an associative array. The member `__class__` will
 describe which metadata class to create, and the remaining properties will then
@@ -93,13 +93,13 @@ follows:
 ```php
 use Api\Books\Book;
 use Api\Books\BookCollection;
-use Zend\Expressive\Hal\Metadata\MetadataMap;
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
-use Zend\Hydrator\ObjectProperty;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+use Laminas\Hydrator\ObjectProperty;
 
 return [
-    'Zend\Expressive\Hal\Metadata\MetadataMap' => [
+    'Mezzio\Hal\Metadata\MetadataMap' => [
         [
             '__class__' => RouteBasedResourceMetadata::class,
             'resource_class' => Book::class,
@@ -121,24 +121,24 @@ return [
 Once you have defined the metadata for the various objects you will represent in
 your API, you can start generating resources.
 
-`Zend\Expressive\Hal\ResourceGenerator` has the following constructor:
+`Mezzio\Hal\ResourceGenerator` has the following constructor:
 
 ```php
 public function __construct(
-    Zend\Expressive\Hal\Metadata\MetadataMap $metadataMap,
+    Mezzio\Hal\Metadata\MetadataMap $metadataMap,
     Psr\Container\ContainerInterface $hydrators,
-    Zend\Expressive\Hal\LinkGenerator $linkGenerator
+    Mezzio\Hal\LinkGenerator $linkGenerator
 ) {
 ```
 
 We described the `MetadataMap` in the previous section, and the `LinkGenerator`
 in the [previous chapter](links-and-resources.md#route-based-link-uris).
 
-Hydrators are defind in the [zend-hydrator component](https://docs.zendframework.com/zend-hydrator/),
+Hydrators are defind in the [laminas-hydrator component](https://docs.laminas.dev/laminas-hydrator/),
 and are objects which can _hdyrate_ associative arrays to object instances and
 _extract_ associative arrays from object instances. Generally speaking, the
 `$hydrators` instance may be any PSR-11 container, but you will generally want
-to use the `Zend\Hydrator\HydratorPluginManager`.
+to use the `Laminas\Hydrator\HydratorPluginManager`.
 
 Once you have your instance created, you can start generating resources:
 
@@ -152,16 +152,16 @@ URIs for `Link` instances.)
 
 ### Customizing resource generation
 
-The `ResourceGenerator` allows composing `Zend\Expressive\Hal\ResourceGenerator\StrategyInterface`
+The `ResourceGenerator` allows composing `Mezzio\Hal\ResourceGenerator\StrategyInterface`
 instances. The `StrategyInterface` defines the following:
 
 ```php
-namespace Zend\Expressive\Hal\ResourceGenerator;
+namespace Mezzio\Hal\ResourceGenerator;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Hal\HalResource;
-use Zend\Expressive\Hal\Metadata;
-use Zend\Expressive\Hal\ResourceGenerator;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Metadata;
+use Mezzio\Hal\ResourceGenerator;
 
 interface StrategyInterface
 {
@@ -194,6 +194,6 @@ If a strategy already is mapped for the given metadata type, this method will
 override it.
 
 To facilitate common operations, this library provides two traits,
-`Zend\Expressive\Hal\ResourceGenerator\ExtractCollectionTrait` and
-`Zend\Expressive\Hal\ResourceGenerator\ExtractInstanceTrait`; inspect these if you
+`Mezzio\Hal\ResourceGenerator\ExtractCollectionTrait` and
+`Mezzio\Hal\ResourceGenerator\ExtractInstanceTrait`; inspect these if you
 decide to write your own strategies.
