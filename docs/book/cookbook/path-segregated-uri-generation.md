@@ -3,13 +3,13 @@
 - Since 1.1.0.
 
 You may want to develop your API as a separate module that you can then drop in
-to an existing application; you may even want to [path-segregate](https://docs.zendframework.com/zend-expressive/v3/features/router/piping/#path-segregation) it.
+to an existing application; you may even want to [path-segregate](https://docs.mezzio.dev/mezzio/v3/features/router/piping/#path-segregation) it.
 
 In such cases, you will want to use a different router instance to isolate your routes, which has a
 huge number of ramifications:
 
 - You'll need separate routing middleware.
-- You'll need a separate [UrlHelper](https://docs.zendframework.com/zend-expressive/v3/features/helpers/url-helper/) instance, as well as its related middleware.
+- You'll need a separate [UrlHelper](https://docs.mezzio.dev/mezzio/v3/features/helpers/url-helper/) instance, as well as its related middleware.
 - You'll need a separate URL generator for HAL that consumes the separate
   `UrlHelper` instance.
 - You'll need a separate `LinkGenerator` for HAL that consumes the separate URL
@@ -24,7 +24,7 @@ factories for these services. What should you do?
 ## Virtual services
 
 Since version 1.1.0 of this package, and versions 3.1.0 of
-zend-expressive-router and 5.1.0 of zend-expressive-helpers, you can now pass
+mezzio-router and 5.1.0 of mezzio-helpers, you can now pass
 additional constructor arguments to a number of factories to allow varying the
 service dependencies they look for.
 
@@ -41,15 +41,15 @@ definitions noted below:
 // in src/Api/ConfigProvider.php:
 namespace Api;
 
-use Zend\Expressive\Hal\LinkGeneratorFactory;
-use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGeneratorFactory;
-use Zend\Expressive\Hal\Metadata\MetadataMap;
-use Zend\Expressive\Hal\ResourceGeneratorFactory;
-use Zend\Expressive\Helper\UrlHelperFactory;
-use Zend\Expressive\Helper\UrlHelperMiddlewareFactory;
-use Zend\Expressive\Router\FastRouteRouter;
-use Zend\Expressive\Router\Middleware\RouteMiddlewareFactory;
-use Zend\Expressive\Router\FastRouteRouterFactory;
+use Mezzio\Hal\LinkGeneratorFactory;
+use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\ResourceGeneratorFactory;
+use Mezzio\Helper\UrlHelperFactory;
+use Mezzio\Helper\UrlHelperMiddlewareFactory;
+use Mezzio\Router\FastRouteRouter;
+use Mezzio\Router\Middleware\RouteMiddlewareFactory;
+use Mezzio\Router\FastRouteRouterFactory;
 
 class ConfigProvider
 {
@@ -72,7 +72,7 @@ class ConfigProvider
                 RouteMiddleware::class        => new RouteMiddlewareFactory(Router::class),
                 UrlHelper::class              => new UrlHelperFactory('/api', Router::class),
                 UrlHelperMiddleware::class    => new UrlHelperMiddlewareFactory(UrlHelper::class),
-                UrlGenerator::class           => new ExpressiveUrlGeneratorFactory(UrlHelper::class),
+                UrlGenerator::class           => new MezzioUrlGeneratorFactory(UrlHelper::class),
 
                 // Our handler:
                 CreateBookHandler::class => CreateBookHandlerFactory::class,
@@ -126,8 +126,8 @@ namespace Api;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Hal\HalResponseFactory;
-use Zend\Expressive\Hal\ResourceGenerator;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 
 class CreateBookHandler implements RequestHandlerInterface
 {
@@ -159,7 +159,7 @@ specific to our module. As such, we'll define our factory as follows:
 namespace Api;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Hal\HalResponseFactory;
+use Mezzio\Hal\HalResponseFactory;
 
 class CreateBookHandlerFactory
 {
@@ -186,14 +186,14 @@ middleware to pipe, or an array of middleware:
 ```php
 // in config/pipeline.php:
 $app->pipe('/api', [
-    \Zend\ProblemDetails\ProblemDetailsMiddleware::class,
+    \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class,
     \Api\RouteMiddleware::class,     // module-specific routing middleware!
     ImplicitHeadMiddleware::class,
     ImplicitOptionsMiddleware::class,
     MethodNotAllowedMiddleware::class,
     \Api\UrlHelperMiddleware::class, // module-specific URL helper middleware!
     DispatchMiddleware::class,
-    \Zend\ProblemDetails\ProblemDetailsNotFoundHandler::class,
+    \Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler::class,
 ]);
 ```
 
@@ -203,7 +203,7 @@ pipeline in other applications; pushing this into the application configuration
 makes that more error-prone.
 
 As such, we will create a factory that generates and returns a
-`Zend\Stratigility\MiddlewarePipe` instance that is fully configured for our
+`Laminas\Stratigility\MiddlewarePipe` instance that is fully configured for our
 module. As part of this functionality, we will also add our module-specific
 routing.
 
@@ -212,12 +212,12 @@ routing.
 namespace Api;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\MiddlewareFactory;
-use Zend\Expressive\Router\Middleware as RouterMiddleware;
-use Zend\Expressive\Router\RouteCollector;
-use Zend\ProblemDetails\ProblemDetailsMiddleware;
-use Zend\ProblemDetails\ProblemDetailsNotFoundHandler;
-use Zend\Stratigility\MiddlewarePipe;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Router\Middleware as RouterMiddleware;
+use Mezzio\Router\RouteCollector;
+use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler;
+use Laminas\Stratigility\MiddlewarePipe;
 
 class PipelineFactory
 {
