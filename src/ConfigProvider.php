@@ -1,27 +1,28 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal;
+namespace Mezzio\Hal;
 
-use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator;
-use Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface;
-use Zend\Expressive\Hal\Metadata\MetadataMap;
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadataFactory;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadataFactory;
-use Zend\Expressive\Hal\Metadata\UrlBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\UrlBasedCollectionMetadataFactory;
-use Zend\Expressive\Hal\Metadata\UrlBasedResourceMetadata;
-use Zend\Expressive\Hal\Metadata\UrlBasedResourceMetadataFactory;
-use Zend\Expressive\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
-use Zend\Expressive\Hal\ResourceGenerator\RouteBasedResourceStrategy;
-use Zend\Expressive\Hal\ResourceGenerator\UrlBasedCollectionStrategy;
-use Zend\Expressive\Hal\ResourceGenerator\UrlBasedResourceStrategy;
+use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
+use Mezzio\Hal\LinkGenerator\UrlGeneratorInterface;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadataFactory;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadataFactory;
+use Mezzio\Hal\Metadata\UrlBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\UrlBasedCollectionMetadataFactory;
+use Mezzio\Hal\Metadata\UrlBasedResourceMetadata;
+use Mezzio\Hal\Metadata\UrlBasedResourceMetadataFactory;
+use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
+use Mezzio\Hal\ResourceGenerator\RouteBasedResourceStrategy;
+use Mezzio\Hal\ResourceGenerator\UrlBasedCollectionStrategy;
+use Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy;
 
 class ConfigProvider
 {
@@ -29,7 +30,7 @@ class ConfigProvider
     {
         return [
             'dependencies'        => $this->getDependencies(),
-            'zend-expressive-hal' => $this->getHalConfig(),
+            'mezzio-hal' => $this->getHalConfig(),
         ];
     }
 
@@ -37,12 +38,24 @@ class ConfigProvider
     {
         return [
             'aliases' => [
-                UrlGeneratorInterface::class => LinkGenerator\ExpressiveUrlGenerator::class,
+                UrlGeneratorInterface::class => LinkGenerator\MezzioUrlGenerator::class,
+
+                // Legacy Zend Framework aliases
+                \Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface::class => UrlGeneratorInterface::class,
+                \Zend\Expressive\Hal\HalResponseFactory::class => HalResponseFactory::class,
+                \Zend\Expressive\Hal\LinkGenerator::class => LinkGenerator::class,
+                \Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator::class => MezzioUrlGenerator::class,
+                \Zend\Expressive\Hal\Metadata\MetadataMap::class => MetadataMap::class,
+                \Zend\Expressive\Hal\ResourceGenerator::class => ResourceGenerator::class,
+                \Zend\Expressive\Hal\RouteBasedCollectionStrategy::class => RouteBasedCollectionStrategy::class,
+                \Zend\Expressive\Hal\RouteBasedResourceStrategy::class => RouteBasedResourceStrategy::class,
+                \Zend\Expressive\Hal\UrlBasedCollectionStrategy::class => UrlBasedCollectionStrategy::class,
+                \Zend\Expressive\Hal\UrlBasedResourceStrategy::class => UrlBasedResourceStrategy::class,
             ],
             'factories' => [
                 HalResponseFactory::class     => HalResponseFactoryFactory::class,
                 LinkGenerator::class          => LinkGeneratorFactory::class,
-                ExpressiveUrlGenerator::class => LinkGenerator\ExpressiveUrlGeneratorFactory::class,
+                MezzioUrlGenerator::class => LinkGenerator\MezzioUrlGeneratorFactory::class,
                 MetadataMap::class            => Metadata\MetadataMapFactory::class,
                 ResourceGenerator::class      => ResourceGeneratorFactory::class,
             ],
