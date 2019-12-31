@@ -4,18 +4,18 @@ This component provides two renderers, one each for creating JSON and XML
 payloads.
 
 Additionally, as noted in the [introduction](intro.md) examples, this component
-provides `Zend\Expressive\Hal\HalResponseFactory` for generating a
+provides `Mezzio\Hal\HalResponseFactory` for generating a
 [PSR-7](https://www.php-fig.org/psr/psr-7/) response containing the HAL
 representation. This chapter dives into that with more detail.
 
 ## Renderers
 
-All renderers implement `Zend\Expressive\Hal\Renderer\RendererInterface`:
+All renderers implement `Mezzio\Hal\Renderer\RendererInterface`:
 
 ```php
-namespace Zend\Expressive\Hal\Renderer;
+namespace Mezzio\Hal\Renderer;
 
-use Zend\Expressive\Hal\HalResource;
+use Mezzio\Hal\HalResource;
 
 interface RendererInterface
 {
@@ -23,8 +23,8 @@ interface RendererInterface
 }
 ```
 
-Two implementations are provided, `Zend\Expressive\Hal\Renderer\JsonRenderer` and
-`Zend\Expressive\Hal\Renderer\XmlRenderer`
+Two implementations are provided, `Mezzio\Hal\Renderer\JsonRenderer` and
+`Mezzio\Hal\Renderer\XmlRenderer`
 
 ### JsonRenderer
 
@@ -58,7 +58,7 @@ As an example:
 ```php
 use Slim\Http\Response;
 use Slim\Http\Stream;
-use Zend\Expressive\Hal\HalResponseFactory;
+use Mezzio\Hal\HalResponseFactory;
 
 $factory = new HalResponseFactory(
     function () {
@@ -75,7 +75,7 @@ arguments, with the described defaults if none is provided:
 
 We provide a [PSR-11](https://www.php-fig.org/psr/psr-11) compatible factory for
 generating the `HalResponseFactory`, described in [the factories
-chapter](factories.md#zendexpressivehalhalresponsefactoryfactory).
+chapter](factories.md#laminasmezziohalhalresponsefactoryfactory).
 
 ## Using the factory
 
@@ -84,7 +84,7 @@ The factory exposes one method:
 ```php
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Hal\HalResource;
+use Mezzio\Hal\HalResource;
 
 public function createResponse(
     ServerRequestInterface $request,
@@ -139,7 +139,7 @@ if that's all the car currently has associated with it.
 
 To accommodate this, we provide two features.
 
-For links, you may pass a special attribute, `Zend\Expressive\Hal\Link::AS_COLLECTION`,
+For links, you may pass a special attribute, `Mezzio\Hal\Link::AS_COLLECTION`,
 with a boolean value of `true`; when encountered, this will then be rendered as
 an array of links, even if only one link for that relation is present.
 

@@ -1,14 +1,15 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal\Renderer;
+namespace MezzioTest\Hal\Renderer;
 
+use Mezzio\Hal\Renderer\JsonRenderer;
 use PHPUnit\Framework\TestCase;
-use Zend\Expressive\Hal\Renderer\JsonRenderer;
 
 use function json_encode;
 
