@@ -1,21 +1,22 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal\LinkGenerator;
+namespace MezzioTest\Hal\LinkGenerator;
 
+use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
+use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Helper\UrlHelper;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
-use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator;
-use Zend\Expressive\Helper\ServerUrlHelper;
-use Zend\Expressive\Helper\UrlHelper;
 
-class ExpressiveUrlGeneratorTest extends TestCase
+class MezzioUrlGeneratorTest extends TestCase
 {
     public function testCanGenerateUrlWithOnlyUrlHelper()
     {
@@ -25,7 +26,7 @@ class ExpressiveUrlGeneratorTest extends TestCase
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getUri()->shouldNotBeCalled();
 
-        $generator = new ExpressiveUrlGenerator($urlHelper->reveal());
+        $generator = new MezzioUrlGenerator($urlHelper->reveal());
 
         $this->assertSame('/test/bar?baz=bat', $generator->generate(
             $request->reveal(),
@@ -60,7 +61,7 @@ class ExpressiveUrlGeneratorTest extends TestCase
 
         $serverUrlHelper = new ServerUrlHelper();
 
-        $generator = new ExpressiveUrlGenerator($urlHelper->reveal(), $serverUrlHelper);
+        $generator = new MezzioUrlGenerator($urlHelper->reveal(), $serverUrlHelper);
 
         $this->assertSame('https://api.example.com/test/bar?baz=bat', $generator->generate(
             $request->reveal(),

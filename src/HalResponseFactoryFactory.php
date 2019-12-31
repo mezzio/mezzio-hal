@@ -1,11 +1,12 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal;
+namespace Mezzio\Hal;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,17 +25,21 @@ class HalResponseFactoryFactory
 {
     /**
      * @throws RuntimeException if neither a ResponseInterface service is
-     *     present nor zend-diactoros is installed.
+     *     present nor laminas-diactoros is installed.
      */
     public function __invoke(ContainerInterface $container) : HalResponseFactory
     {
         $jsonRenderer = $container->has(Renderer\JsonRenderer::class)
             ? $container->get(Renderer\JsonRenderer::class)
-            : new Renderer\JsonRenderer();
+            : ($container->has(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)
+                ? $container->get(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)
+                : new Renderer\JsonRenderer());
 
         $xmlRenderer = $container->has(Renderer\XmlRenderer::class)
             ? $container->get(Renderer\XmlRenderer::class)
-            : new Renderer\XmlRenderer();
+            : ($container->has(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)
+                ? $container->get(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)
+                : new Renderer\XmlRenderer());
 
         return new HalResponseFactory(
             $container->get(ResponseInterface::class),

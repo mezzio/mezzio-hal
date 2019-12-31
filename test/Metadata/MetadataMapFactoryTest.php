@@ -1,30 +1,31 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal\Metadata;
+namespace MezzioTest\Hal\Metadata;
 
 use Generator;
+use Mezzio\Hal\Metadata;
+use Mezzio\Hal\Metadata\Exception\InvalidConfigException;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\MetadataMapFactory;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadataFactory;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadataFactory;
+use Mezzio\Hal\Metadata\UrlBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\UrlBasedCollectionMetadataFactory;
+use Mezzio\Hal\Metadata\UrlBasedResourceMetadata;
+use Mezzio\Hal\Metadata\UrlBasedResourceMetadataFactory;
+use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use stdClass;
-use Zend\Expressive\Hal\Metadata;
-use Zend\Expressive\Hal\Metadata\Exception\InvalidConfigException;
-use Zend\Expressive\Hal\Metadata\MetadataMap;
-use Zend\Expressive\Hal\Metadata\MetadataMapFactory;
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadataFactory;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadataFactory;
-use Zend\Expressive\Hal\Metadata\UrlBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\UrlBasedCollectionMetadataFactory;
-use Zend\Expressive\Hal\Metadata\UrlBasedResourceMetadata;
-use Zend\Expressive\Hal\Metadata\UrlBasedResourceMetadataFactory;
-use ZendTest\Expressive\Hal\TestAsset;
 
 class MetadataMapFactoryTest extends TestCase
 {
@@ -129,7 +130,7 @@ class MetadataMapFactoryTest extends TestCase
                 MetadataMap::class => [
                     ['__class__' => TestAsset\TestMetadata::class]
                 ],
-                'zend-expressive-hal' => [
+                'mezzio-hal' => [
                     'metadata-factories' => [
                         TestAsset\TestMetadata::class => stdClass::class,
                     ],
@@ -166,7 +167,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->container->get('config')->willReturn(
             [
                 MetadataMap::class => [$metadata],
-                'zend-expressive-hal' => [
+                'mezzio-hal' => [
                     'metadata-factories' => [
                         RouteBasedCollectionMetadata::class => RouteBasedCollectionMetadataFactory::class,
                         RouteBasedResourceMetadata::class   => RouteBasedResourceMetadataFactory::class,
@@ -195,7 +196,7 @@ class MetadataMapFactoryTest extends TestCase
                         'extractor'      => 'ObjectProperty',
                     ],
                 ],
-                'zend-expressive-hal' => [
+                'mezzio-hal' => [
                     'metadata-factories' => [
                         UrlBasedResourceMetadata::class => UrlBasedResourceMetadataFactory::class,
                     ],
@@ -229,7 +230,7 @@ class MetadataMapFactoryTest extends TestCase
                         'pagination_param_type' => Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER,
                     ],
                 ],
-                'zend-expressive-hal' => [
+                'mezzio-hal' => [
                     'metadata-factories' => [
                         UrlBasedCollectionMetadata::class => UrlBasedCollectionMetadataFactory::class,
                     ],
@@ -269,7 +270,7 @@ class MetadataMapFactoryTest extends TestCase
                         'route_params'                 => ['foo' => 'bar'],
                     ],
                 ],
-                'zend-expressive-hal' => [
+                'mezzio-hal' => [
                     'metadata-factories' => [
                         RouteBasedResourceMetadata::class => RouteBasedResourceMetadataFactory::class,
                     ],
@@ -308,7 +309,7 @@ class MetadataMapFactoryTest extends TestCase
                         'query_string_arguments' => ['baz' => 'bat'],
                     ],
                 ],
-                'zend-expressive-hal' => [
+                'mezzio-hal' => [
                     'metadata-factories' => [
                         RouteBasedCollectionMetadata::class => RouteBasedCollectionMetadataFactory::class,
                     ],
