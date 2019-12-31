@@ -1,23 +1,24 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Expressive\Hal;
+namespace MezzioTest\Hal;
 
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\Link;
+use Mezzio\Hal\Renderer;
+use MezzioTest\Hal\Renderer\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use ReflectionProperty;
-use Zend\Expressive\Hal\HalResource;
-use Zend\Expressive\Hal\HalResponseFactory;
-use Zend\Expressive\Hal\Link;
-use Zend\Expressive\Hal\Renderer;
-use ZendTest\Expressive\Hal\Renderer\TestAsset;
 
 class HalResponseFactoryTest extends TestCase
 {

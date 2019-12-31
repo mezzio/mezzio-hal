@@ -1,67 +1,66 @@
 {
-    "name": "zendframework/zend-expressive-hal",
+    "name": "mezzio/mezzio-hal",
     "description": "Hypertext Application Language implementation for PHP and PSR-7",
     "license": "BSD-3-Clause",
     "keywords": [
-        "expressive",
+        "laminas",
+        "mezzio",
         "hal",
         "http",
         "psr",
         "psr-7",
         "psr-11",
         "psr-13",
-        "rest",
-        "zf",
-        "zendframework",
-        "zend-expressive"
+        "rest"
     ],
+    "homepage": "https://mezzio.dev",
     "support": {
-        "docs": "https://docs.zendframework.com/zend-expressive-hal/",
-        "issues": "https://github.com/zendframework/zend-expressive-hal/issues",
-        "source": "https://github.com/zendframework/zend-expressive-hal",
-        "rss": "https://github.com/zendframework/zend-expressive-hal/releases.atom",
-        "slack": "https://zendframework-slack.herokuapp.com",
-        "forum": "https://discourse.zendframework.com/c/questions/expressive"
-    },
-    "minimum-stability": "alpha",
-    "require": {
-        "php": "^7.1",
-        "psr/http-message": "^1.0.1",
-        "psr/link": "^1.0",
-        "willdurand/negotiation": "^2.3.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7.0.1",
-        "zendframework/zend-coding-standard": "~1.0.0",
-        "zendframework/zend-expressive-helpers": "^5.0.0alpha3",
-        "zendframework/zend-hydrator": "^2.3.1",
-        "zendframework/zend-paginator": "^2.7"
-    },
-    "provide": {
-        "psr/link-implementation": "1.0"
-    },
-    "suggest": {
-        "psr/container-implementation": "^1.0 in order to use the provided PSR-11 factories",
-        "zendframework/zend-expressive-helpers": "^5.0 in order to use UrlHelper/ServerUrlHelper-based ExpressiveUrlGenerator with the LinkGenerator",
-        "zendframework/zend-hydrator": "^2.3.1 in order to use the ResourceGenerator to create Resource instances from objects",
-        "zendframework/zend-paginator": "^2.7 in order to provide paginated collections"
-    },
-    "autoload": {
-        "psr-4": {
-            "Zend\\Expressive\\Hal\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Expressive\\Hal\\": "test/"
-        }
+        "docs": "https://docs.mezzio.dev/mezzio-hal/",
+        "issues": "https://github.com/mezzio/mezzio-hal/issues",
+        "source": "https://github.com/mezzio/mezzio-hal",
+        "rss": "https://github.com/mezzio/mezzio-hal/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
     "config": {
         "sort-packages": true
     },
     "extra": {
-        "zf": {
-            "config-provider": "Zend\\Expressive\\Hal\\ConfigProvider"
+        "laminas": {
+            "config-provider": "Mezzio\\Hal\\ConfigProvider"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "psr/http-message": "^1.0.1",
+        "psr/link": "^1.0",
+        "willdurand/negotiation": "^2.3.1"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-hydrator": "^2.3.1",
+        "laminas/laminas-paginator": "^2.7",
+        "mezzio/mezzio-helpers": "^5.0.0alpha3",
+        "phpunit/phpunit": "^7.0.1"
+    },
+    "provide": {
+        "psr/link-implementation": "1.0"
+    },
+    "suggest": {
+        "laminas/laminas-hydrator": "^2.3.1 in order to use the ResourceGenerator to create Resource instances from objects",
+        "laminas/laminas-paginator": "^2.7 in order to provide paginated collections",
+        "mezzio/mezzio-helpers": "^5.0 in order to use UrlHelper/ServerUrlHelper-based MezzioUrlGenerator with the LinkGenerator",
+        "psr/container-implementation": "^1.0 in order to use the provided PSR-11 factories"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mezzio\\Hal\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MezzioTest\\Hal\\": "test/"
         }
     },
     "scripts": {
@@ -73,5 +72,8 @@
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "replace": {
+        "zendframework/zend-expressive-hal": "self.version"
     }
 }
