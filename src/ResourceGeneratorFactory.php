@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-expressive-hal for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-hal/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
+ * @copyright https://github.com/mezzio/mezzio-hal/blob/master/COPYRIGHT.md
+ * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Expressive\Hal;
+namespace Mezzio\Hal;
 
 use ArrayAccess;
+use Laminas\Hydrator\HydratorPluginManager;
+use Mezzio\Hal\ResourceGenerator\Exception\InvalidConfigException;
 use Psr\Container\ContainerInterface;
 use Traversable;
-use Zend\Expressive\Hal\ResourceGenerator\Exception\InvalidConfigException;
-use Zend\Hydrator\HydratorPluginManager;
 
 use function is_array;
 
@@ -48,11 +49,11 @@ class ResourceGeneratorFactory
             throw InvalidConfigException::dueToNonArray($config);
         }
 
-        if (! isset($config['zend-expressive-hal']['resource-generator']['strategies'])) {
+        if (! isset($config['mezzio-hal']['resource-generator']['strategies'])) {
             return;
         }
 
-        $strategies = $config['zend-expressive-hal']['resource-generator']['strategies'];
+        $strategies = $config['mezzio-hal']['resource-generator']['strategies'];
 
         if (! is_array($strategies) && ! $strategies instanceof Traversable) {
             throw InvalidConfigException::dueToInvalidStrategies($strategies);
