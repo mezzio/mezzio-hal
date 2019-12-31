@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <link rel="canonical" href="https://docs.mezzio.dev/resource-generator/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Generating Resources - mezzio-hal - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="mezzio">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">mezzio-hal</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../hal/" class="subnavigation__link">HAL</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Generating Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Representations</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Mezzio
+
+                    
+                        <small class="header__subtitle">mezzio-hal</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#metadata" class="toc__link">Metadata</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#resourcegenerator" class="toc__link">ResourceGenerator</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">mezzio-hal</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Generating Resources</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="generating-resources-from-php-objects">Generating Resources from PHP Objects</h1>
+<p>In the previous chapter, <a href="../links-and-resources/">we discussed links and resources</a>.
+The primitive objects allow us to create representations easily, but do not
+answer one critical question: how can we create resources based on existing PHP
+object types?</p>
+<p>To answer that question, we provide two related features: metadata, and a
+resource generator.</p>
+<h2 id="metadata">Metadata</h2>
+<p>Metadata allows you to detail the requirements for generating a HAL
+representation of a PHP object. Metadata might include:</p>
+<ul>
+<li>The PHP class name to represent.</li>
+<li>A URI to use for the generated resource's self relational link.</li>
+<li>Alternately, routing information to use with the <code>LinkGenerator</code>.</li>
+<li>A laminas-hydrator extractor to use to serialize the object to a representation.</li>
+<li>Whether or not the resource is a collection, and, if so, whether pagination is
+  handled as a path parameter or a query string argument, the name of the
+  parameter, etc.</li>
+</ul>
+<p>All metadata types inherit from <code>Mezzio\Hal\Metadata\AbstractMetadata</code>,
+which defines a single method, <code>getClass()</code>, for retrieving the name of the PHP
+class to represent; all metadata are expected to inherit from this class.</p>
+<p>The component also provides four concrete metadata types, requiring the
+following information:</p>
+<ul>
+<li><code>Mezzio\Hal\Metadata\RouteBasedCollectionMetadata</code>:<ul>
+<li>string <code>$class</code></li>
+<li>string <code>$collectionRelation</code></li>
+<li>string <code>$route</code></li>
+<li>string <code>$paginationParam = 'page'</code> (name of the parameter indicating the
+  current page of results)</li>
+<li>string <code>$paginationParamType = self::TYPE_QUERY</code> (one of "query" or "placeholder")</li>
+<li>array <code>$routeParams = []</code> (associative array of substitutions to use with
+  the designated route)</li>
+<li>array <code>$queryStringArguments = []</code> (associative array of query string
+  arguments to include in the generated URI)</li>
+</ul>
+</li>
+<li><code>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</code>:<ul>
+<li>string <code>$class</code></li>
+<li>string <code>$route</code></li>
+<li>string <code>$extractor</code> (string service name of the laminas-hydrator hydrator to
+  use for extracting data from the instance)</li>
+<li>string <code>$resourceIdentifier = 'id'</code> (name of the property uniquely
+  identifying the resource)</li>
+<li>string <code>$routeIdentifierPlaceholder = 'id'</code> (name of the routing parameter
+  that maps to the resource identifier)</li>
+<li>array <code>$routeParams = []</code> (associative array of additional routing
+  parameters to substitute when generating the URI)</li>
+</ul>
+</li>
+<li><code>Mezzio\Hal\Metadata\UrlBasedCollectionMetadata</code>:<ul>
+<li>string <code>$class</code></li>
+<li>string <code>$collectionRelation</code></li>
+<li>string <code>$url</code></li>
+<li>string <code>$paginationParam = 'page'</code> (name of the parameter indicating the
+  current page of results)</li>
+<li>string <code>$paginationParamType = self::TYPE_QUERY</code> (one of "query" or "placeholder")</li>
+</ul>
+</li>
+<li><code>Mezzio\Hal\Metadata\UrlBasedResourceMetadata</code><ul>
+<li>string <code>$class</code></li>
+<li>string <code>$url</code></li>
+<li>string <code>$extractor</code> (string service name of the laminas-hydrator hydrator to
+    use for extracting data from the instance)</li>
+</ul>
+</li>
+</ul>
+<p>We aggregate metadata in a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$bookMetadata = new RouteBasedResourceMetadata(</span>
+<span class=x>    Book::class,</span>
+<span class=x>    &#39;book&#39;,</span>
+<span class=x>    ObjectPropertyHydrator::class</span>
+<span class=x>);</span>
+<span class=x>$booksMetadata = new RouteBasedCollectionMetadata(</span>
+<span class=x>    BookCollection::class,</span>
+<span class=x>    &#39;book&#39;,</span>
+<span class=x>    &#39;books&#39;,</span>
+<span class=x>);</span>
+
+<span class=x>$metadataMap = new MetadataMap();</span>
+<span class=x>$metadataMap-&gt;add($bookMetadata);</span>
+<span class=x>$metadataMap-&gt;add($booksMetadata);</span>
+</pre></div></p>
+<h3>Configuration-based metadata</h3>
+<p>To automate generation of the <code>MetadataMap</code>, we provide
+<code>Mezzio\Hal\Metadata\MetadataMapFactory</code>. This factory may be used with any
+<a href="https://www.php-fig.org/psr/psr-11/">PSR-11</a> container. It utilizes the <code>config</code>
+service, and pulls its configuration from a key named after the
+<code>Mezzio\Hal\Metadata\MetadataMap</code> class.</p>
+<p>Each item in the map will be an associative array. The member <code>__class__</code> will
+describe which metadata class to create, and the remaining properties will then
+be used to generate an instance. As an example, the above could be configured as
+follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Api\Books\Book;</span>
+<span class=x>use Api\Books\BookCollection;</span>
+<span class=x>use Mezzio\Hal\Metadata\MetadataMap;</span>
+<span class=x>use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;</span>
+<span class=x>use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
+<span class=x>use Laminas\Hydrator\ObjectProperty;</span>
+
+<span class=x>return [</span>
+<span class=x>    &#39;Mezzio\Hal\Metadata\MetadataMap&#39; =&gt; [</span>
+<span class=x>        [</span>
+<span class=x>            &#39;__class__&#39; =&gt; RouteBasedResourceMetadata::class,</span>
+<span class=x>            &#39;resource_class&#39; =&gt; Book::class,</span>
+<span class=x>            &#39;route&#39; =&gt; &#39;book&#39;,</span>
+<span class=x>            &#39;extractor&#39; =&gt; ObjectProperty::class,</span>
+<span class=x>        ],</span>
+<span class=x>        [</span>
+<span class=x>            &#39;__class__&#39; =&gt; RouteBasedCollectionMetadata::class,</span>
+<span class=x>            &#39;collection_class&#39; =&gt; BookCollection::class,</span>
+<span class=x>            &#39;collection_relation&#39; =&gt; &#39;book&#39;,</span>
+<span class=x>            &#39;route&#39; =&gt; &#39;books&#39;,</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+<span class=x>];</span>
+</pre></div></p>
+<p>The rest of the parameters follow underscore delimiter naming convention:</p>
+<ul>
+<li><code>RouteBasedResourceMetadata::class</code><ul>
+<li><code>resource_identifier</code> (name of the property uniquely identifying the resource)</li>
+<li><code>route_identifier_placeholder</code> (name of the routing parameter that maps to the resource identifier)</li>
+<li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
+</ul>
+</li>
+<li><code>RouteBasedCollectionMetadata::class</code><ul>
+<li><code>pagination_param</code>  (name of the parameter indicating the current page of results)</li>
+<li><code>pagination_param_type</code> (one of "query" or "placeholder")</li>
+<li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
+<li><code>query_string_arguments</code> (associative array of additional routing parameters to substitute when generating the URI)</li>
+</ul>
+</li>
+<li><code>UrlBasedResourceMetadata::class</code><ul>
+<li><code>resource_class</code></li>
+<li><code>url</code></li>
+<li><code>extractor</code></li>
+</ul>
+</li>
+<li><code>UrlBasedCollectionMetadata::class</code><ul>
+<li><code>collection_class</code></li>
+<li><code>collection_relation</code></li>
+<li><code>url</code></li>
+<li><code>pagination_param</code> (name of the parameter indicating the current page of results)</li>
+<li><code>pagination_param_type</code> (one of "query" or "placeholder")</li>
+</ul>
+</li>
+</ul>
+<h2 id="resourcegenerator">ResourceGenerator</h2>
+<p>Once you have defined the metadata for the various objects you will represent in
+your API, you can start generating resources.</p>
+<p><code>Mezzio\Hal\ResourceGenerator</code> has the following constructor:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>public function __construct(</span>
+<span class=x>    Mezzio\Hal\Metadata\MetadataMap $metadataMap,</span>
+<span class=x>    Psr\Container\ContainerInterface $hydrators,</span>
+<span class=x>    Mezzio\Hal\LinkGenerator $linkGenerator</span>
+<span class=x>) {</span>
+</pre></div></p>
+<p>We described the <code>MetadataMap</code> in the previous section, and the <code>LinkGenerator</code>
+in the <a href="../links-and-resources/#route-based-link-uris">previous chapter</a>.</p>
+<p>Hydrators are defind in the <a href="https://docs.laminas.dev/laminas-hydrator/">laminas-hydrator component</a>,
+and are objects which can <em>hdyrate</em> associative arrays to object instances and
+<em>extract</em> associative arrays from object instances. Generally speaking, the
+<code>$hydrators</code> instance may be any PSR-11 container, but you will generally want
+to use the <code>Laminas\Hydrator\HydratorPluginManager</code>.</p>
+<p>Once you have your instance created, you can start generating resources:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$resource = $resourceGenerator-&gt;fromObject($book, $request);</span>
+</pre></div></p>
+<p>(Where <code>$request</code> is a <code>Psr\Http\Message\ServerRequestInterface</code> instance; the
+instance is passed along to the <code>LinkGenerator</code> in order to generate route-based
+URIs for <code>Link</code> instances.)</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../links-and-resources/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../cookbook/generating-custom-resources/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/resource-generator.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">mezzio-hal</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../hal/" class="subnavigation__link">HAL</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Generating Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Representations</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "mezzio",
+            siteName = 'mezzio-hal';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in mezzio-hal" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

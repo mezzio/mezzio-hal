@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <link rel="canonical" href="https://docs.mezzio.dev/cookbook/path-segregated-uri-generation/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Using the ResourceGenerator in path-segregated middleware - mezzio-hal - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="mezzio">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">mezzio-hal</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../hal/" class="subnavigation__link">HAL</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../links-and-resources/" class="subnavigation__link">Links and Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../representations/" class="subnavigation__link">Representations</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Mezzio
+
+                    
+                        <small class="header__subtitle">mezzio-hal</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#virtual-services" class="toc__link">Virtual services</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#using-virtual-services-with-a-handler" class="toc__link">Using virtual services with a handler</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#creating-our-pipeline-and-routes" class="toc__link">Creating our pipeline and routes</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#creating-a-path-segregated-pipeline" class="toc__link">Creating a path-segregated pipeline</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../..">mezzio-hal</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Cookbook</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Using the ResourceGenerator in path-segregated middleware</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Cookbook</h2>
+    
+
+    <h1 id="using-the-resourcegenerator-in-path-segregated-middleware">Using the ResourceGenerator in path-segregated middleware</h1>
+<ul>
+<li>Since 1.1.0.</li>
+</ul>
+<p>You may want to develop your API as a separate module that you can then drop in
+to an existing application; you may even want to <a href="https://docs.mezzio.dev/mezzio/v3/features/router/piping/#path-segregation">path-segregate</a> it.</p>
+<p>In such cases, you will want to use a different router instance to isolate your routes, which has a
+huge number of ramifications:</p>
+<ul>
+<li>You'll need separate routing middleware.</li>
+<li>You'll need a separate <a href="https://docs.mezzio.dev/mezzio/v3/features/helpers/url-helper/">UrlHelper</a> instance, as well as its related middleware.</li>
+<li>You'll need a separate URL generator for HAL that consumes the separate
+  <code>UrlHelper</code> instance.</li>
+<li>You'll need a separate <code>LinkGenerator</code> for HAL that consumes the separate URL
+  generator.</li>
+<li>You'll need a separate <code>ResourceGenerator</code> for HAL that consumes the separate
+  <code>LinkGenerator</code>.</li>
+</ul>
+<p>This can be accomplished by writing your own factories, but that means a lot of
+extra code, and the potential for it to go out-of-sync with the official
+factories for these services. What should you do?</p>
+<h2 id="virtual-services">Virtual services</h2>
+<p>Since version 1.1.0 of this package, and versions 3.1.0 of
+mezzio-router and 5.1.0 of mezzio-helpers, you can now pass
+additional constructor arguments to a number of factories to allow varying the
+service dependencies they look for.</p>
+<p>In our example below, we will create an <code>Api</code> module. This module will have its
+own router, and be segregated in the path <code>/api</code>; all routes we create will be
+relative to that path, and not include it in their definitions. The handler we
+create will return HAL-JSON, and thus need to generate links using the
+configured router and base path.</p>
+<p>To begin, we will alter the <code>ConfigProvider</code> for our module to add the
+definitions noted below:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// in src/Api/ConfigProvider.php:</span>
+<span class=x>namespace Api;</span>
+
+<span class=x>use Mezzio\Hal\LinkGeneratorFactory;</span>
+<span class=x>use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;</span>
+<span class=x>use Mezzio\Hal\Metadata\MetadataMap;</span>
+<span class=x>use Mezzio\Hal\ResourceGeneratorFactory;</span>
+<span class=x>use Mezzio\Helper\UrlHelperFactory;</span>
+<span class=x>use Mezzio\Helper\UrlHelperMiddlewareFactory;</span>
+<span class=x>use Mezzio\Router\FastRouteRouter;</span>
+<span class=x>use Mezzio\Router\Middleware\RouteMiddlewareFactory;</span>
+<span class=x>use Mezzio\Router\FastRouteRouterFactory;</span>
+
+<span class=x>class ConfigProvider</span>
+<span class=x>{</span>
+<span class=x>    public function __invoke() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            &#39;dependencies&#39; =&gt; $this-&gt;getDependencies(),</span>
+<span class=x>            MetadataMap::class =&gt; $this-&gt;getMetadataMap(),</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+
+<span class=x>    public function getDependencies() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            &#39;factories&#39; =&gt; [</span>
+<span class=x>                // module-specific class name =&gt; factory</span>
+<span class=x>                LinkGenerator::class          =&gt; new LinkGeneratorFactory(UrlGenerator::class),</span>
+<span class=x>                ResourceGenerator::class      =&gt; new ResourceGeneratorFactory(LinkGenerator::class),</span>
+<span class=x>                Router::class                 =&gt; FastRouteRouterFactory::class,</span>
+<span class=x>                RouteMiddleware::class        =&gt; new RouteMiddlewareFactory(Router::class),</span>
+<span class=x>                UrlHelper::class              =&gt; new UrlHelperFactory(&#39;/api&#39;, Router::class),</span>
+<span class=x>                UrlHelperMiddleware::class    =&gt; new UrlHelperMiddlewareFactory(UrlHelper::class),</span>
+<span class=x>                UrlGenerator::class           =&gt; new MezzioUrlGeneratorFactory(UrlHelper::class),</span>
+
+<span class=x>                // Our handler:</span>
+<span class=x>                CreateBookHandler::class =&gt; CreateBookHandlerFactory::class,</span>
+
+<span class=x>                // And our pipeline:</span>
+<span class=x>                Pipeline::class =&gt; PipelineFactory::class,</span>
+<span class=x>            ],</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+
+<span class=x>    public function getMetadataMap() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            // ...</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Note that the majority of these service names are <em>virtual</em>; they do not resolve
+to actual classes. PHP allows usage of the <code>::class</code> pseudo-constant anywhere,
+and will resolve the value based on the current namespace. This gives us virtual
+services such as <code>Api\Router</code>, <code>Api\UrlHelper</code>, etc.</p>
+<p>Also note that we are creating factory <em>instances</em>. Normally, we recommend not
+using closures or instances for factories due to potential problems with
+configuration caching. Fortunately, we have provided functionality in each of
+these factories that allows them to be safely cached, retaining the
+context-specific configuration required.</p>
+<blockquote>
+<h3>What about the hard-coded path?</h3>
+<p>You'll note that the above example hard-codes the base path for the
+<code>UrlHelper</code>. What if you want to use a different path?</p>
+<p>You can override the service in an application-specific configuration under
+<code>config/autoload/</code>, specifying a different path!</p>
+<pre class=codehilite><code class=language-php>
+\Api\UrlHelper::class =&gt; new UrlHelperFactory('/different/path', \Api\Router::class),
+</code></pre>
+</blockquote>
+<h2 id="using-virtual-services-with-a-handler">Using virtual services with a handler</h2>
+<p>Now let's turn to our <code>CreateBookHandler</code>. We'll define it as follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// in src/Api/CreateBookHandler.php:</span>
+<span class=x>namespace Api;</span>
+
+<span class=x>use Psr\Http\Message\ResponseInterface;</span>
+<span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
+<span class=x>use Psr\Http\Server\RequestHandlerInterface;</span>
+<span class=x>use Mezzio\Hal\HalResponseFactory;</span>
+<span class=x>use Mezzio\Hal\ResourceGenerator;</span>
+
+<span class=x>class CreateBookHandler implements RequestHandlerInterface</span>
+<span class=x>{</span>
+<span class=x>    private $resourceGenerator;</span>
+
+<span class=x>    private $responseFactory;</span>
+
+<span class=x>    public function __construct(ResourceGenerator $resourceGenerator, HalResponseFactory $responseFactory)</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;resourceGenerator = $resourceGenerator;</span>
+<span class=x>        $this-&gt;responseFactory = $responseFactory;</span>
+<span class=x>    }</span>
+
+<span class=x>    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
+<span class=x>    {</span>
+<span class=x>        // do some work ...</span>
+
+<span class=x>        $resource = $this-&gt;resourceGenerator-&gt;fromObject($book, $request);</span>
+<span class=x>        return $this-&gt;responseFactory-&gt;createResponse($request, $book);</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>This handler needs a HAL resource generator. More specifically, it needs the one
+specific to our module. As such, we'll define our factory as follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// in src/Api/CreateBookHandlerFactory.php:</span>
+<span class=x>namespace Api;</span>
+
+<span class=x>use Psr\Container\ContainerInterface;</span>
+<span class=x>use Mezzio\Hal\HalResponseFactory;</span>
+
+<span class=x>class CreateBookHandlerFactory</span>
+<span class=x>{</span>
+<span class=x>    public function __invoke(ContainerInterface $container) : CreateBookHandler</span>
+<span class=x>    {</span>
+<span class=x>        return new CreateBookHandler(</span>
+<span class=x>            ResourceGenerator::class, // module-specific service name!</span>
+<span class=x>            HalResponseFactory::class</span>
+<span class=x>        );</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>You can create any number of such handlers for your module; the above
+demonstrates how and where injection of the alternate resource generator occurs.</p>
+<h2 id="creating-our-pipeline-and-routes">Creating our pipeline and routes</h2>
+<p>Now we can create our pipeline and routes.</p>
+<p>Generally when piping to an application instance, we can specify a class name of
+middleware to pipe, or an array of middleware:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// in config/pipeline.php:</span>
+<span class=x>$app-&gt;pipe(&#39;/api&#39;, [</span>
+<span class=x>    \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class,</span>
+<span class=x>    \Api\RouteMiddleware::class,     // module-specific routing middleware!</span>
+<span class=x>    ImplicitHeadMiddleware::class,</span>
+<span class=x>    ImplicitOptionsMiddleware::class,</span>
+<span class=x>    MethodNotAllowedMiddleware::class,</span>
+<span class=x>    \Api\UrlHelperMiddleware::class, // module-specific URL helper middleware!</span>
+<span class=x>    DispatchMiddleware::class,</span>
+<span class=x>    \Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler::class,</span>
+<span class=x>]);</span>
+</pre></div></p>
+<p>However, we have both the pipeline <em>and</em> routes, and we likely want to indicate
+the exact behavior of this pipeline. Additionally, we may want to re-use this
+pipeline in other applications; pushing this into the application configuration
+makes that more error-prone.</p>
+<p>As such, we will create a factory that generates and returns a
+<code>Laminas\Stratigility\MiddlewarePipe</code> instance that is fully configured for our
+module. As part of this functionality, we will also add our module-specific
+routing.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// In src/Api/PipelineFactory.php:</span>
+<span class=x>namespace Api;</span>
+
+<span class=x>use Psr\Container\ContainerInterface;</span>
+<span class=x>use Mezzio\MiddlewareFactory;</span>
+<span class=x>use Mezzio\Router\Middleware as RouterMiddleware;</span>
+<span class=x>use Mezzio\Router\RouteCollector;</span>
+<span class=x>use Mezzio\ProblemDetails\ProblemDetailsMiddleware;</span>
+<span class=x>use Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler;</span>
+<span class=x>use Laminas\Stratigility\MiddlewarePipe;</span>
+
+<span class=x>class PipelineFactory</span>
+<span class=x>{</span>
+<span class=x>    public function __invoke(ContainerInterface $container) : MiddlewarePipe</span>
+<span class=x>    {</span>
+<span class=x>        $factory = $container-&gt;get(MiddlewareFactory::class);</span>
+
+<span class=x>        // First, create our middleware pipeline</span>
+<span class=x>        $pipeline = new MiddlewarePipe();</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(ProblemDetailsMiddleware::class));</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouteMiddleware::class)); // module-specific!</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\ImplicitHeadMiddleware::class));</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\ImplicitOptionsMiddleware::class));</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\MethodNotAllowedMiddleware::class));</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(UrlHelperMiddleware::class)); // module-specific!</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\DispatchMiddleware::class));</span>
+<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(ProblemDetailsNotFoundHandler::class));</span>
+
+<span class=x>        // Second, we&#39;ll create our routes</span>
+<span class=x>        $router = $container-&gt;get(Router::class); // Retrieve our module-specific router</span>
+<span class=x>        $routes = new RouteCollector($router);    // Create a route collector to simplify routing</span>
+
+<span class=x>        // Start routing:</span>
+<span class=x>        $routes-&gt;post(&#39;/books&#39;, $factory-&gt;lazy(CreateBookHandler::class));</span>
+
+<span class=x>        // Return the pipeline now that we&#39;re done!</span>
+<span class=x>        return $pipeline;</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Note that the routing definitions do <strong>not</strong> include the prefix <code>/api</code>; this is
+because that prefix will be stripped when we path-segregate our API middleware
+pipeline. All routing will be <em>relative</em> to that path.</p>
+<h2 id="creating-a-path-segregated-pipeline">Creating a path-segregated pipeline</h2>
+<p>Finally, we will attach our pipeline to the application, using path segregation:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// in config/pipeline.php:</span>
+<span class=x>$app-&gt;pipe(&#39;/api&#39;, \Api\Pipeline::class);</span>
+</pre></div></p>
+<p>This statement tells the application to pipe the pipeline returned by our
+<code>PipelineFactory</code> under the path <code>/api</code>; that path will be stripped from
+requests when passed to the underlying middleware.</p>
+<p>At this point, we now have a re-usable module, complete with its own routing,
+with URI generation that will include the base path under which we have
+segregated the pipeline!</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../generating-custom-links-in-middleware/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/cookbook/path-segregated-uri-generation.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">mezzio-hal</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../hal/" class="subnavigation__link">HAL</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../links-and-resources/" class="subnavigation__link">Links and Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../representations/" class="subnavigation__link">Representations</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../..',
+            project  = "mezzio",
+            siteName = 'mezzio-hal';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in mezzio-hal" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

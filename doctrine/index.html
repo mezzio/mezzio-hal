@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <link rel="canonical" href="https://docs.mezzio.dev/doctrine/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Generating HAL for Doctrine Entities - mezzio-hal - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="mezzio">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">mezzio-hal</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../hal/" class="subnavigation__link">HAL</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Representations</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Mezzio
+
+                    
+                        <small class="header__subtitle">mezzio-hal</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#example-paginated-albums" class="toc__link">Example: Paginated Albums</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#example-doctrine-collections" class="toc__link">Example: Doctrine Collections</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">mezzio-hal</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Generating HAL for Doctrine Entities</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="generating-hal-from-doctrine">Generating HAL from Doctrine</h1>
+<blockquote>
+<ul>
+<li>Since 1.3.0</li>
+</ul>
+</blockquote>
+<p><a href="https://www.doctrine-project.org/">Doctrine</a> is a well-known and popular Object
+Relational Mapper; you will find it in use across pretty much every PHP
+framework. Mezzio is no different.</p>
+<p>How do you generate HAL for Doctrine resources? As it turns out, the same way
+you would for any other objects you might have: create metadata mapping the
+objects you want to represent to the routes and the hydrators/collections to use
+when extracting them.</p>
+<h2 id="example-paginated-albums">Example: Paginated Albums</h2>
+<p>In this example, we have an entity named <code>Album</code> that we want to expose via a
+paginated HAL representation. Over the course of the example, we will create a
+custom collection class based off of the Doctrine <code>Paginator</code> class, and map it
+as a HAL collection.</p>
+<p>Our first step is defining an entity:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>declare(strict_types=1);</span>
+
+<span class=x>namespace Album\Entity;</span>
+
+<span class=x>use Doctrine\ORM\Mapping as ORM;</span>
+<span class=x>use Ramsey\Uuid\Uuid;</span>
+
+<span class=x>/**</span>
+<span class=x> * https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/basic-mapping.html</span>
+<span class=x> *</span>
+<span class=x> * @ORM\Entity</span>
+<span class=x> * @ORM\Table(name=&quot;albums&quot;)</span>
+<span class=x> **/</span>
+<span class=x>class Album</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * @var Uuid</span>
+<span class=x>     *</span>
+<span class=x>     * @ORM\Id</span>
+<span class=x>     * @ORM\Column(type=&quot;uuid&quot;, unique=true)</span>
+<span class=x>     * @ORM\GeneratedValue(strategy=&quot;CUSTOM&quot;)</span>
+<span class=x>     * @ORM\CustomIdGenerator(class=&quot;Ramsey\Uuid\Doctrine\UuidGenerator&quot;)</span>
+<span class=x>     */</span>
+<span class=x>    protected $id;</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @ORM\Column(type=&quot;string&quot;, nullable=false)</span>
+<span class=x>     */</span>
+<span class=x>    protected $title;</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @ORM\Column(type=&quot;datetime&quot;, nullable=false)</span>
+<span class=x>     */</span>
+<span class=x>    protected $created;</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @ORM\Column(type=&quot;datetime&quot;)</span>
+<span class=x>     */</span>
+<span class=x>    protected $modified;</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @return Uuid</span>
+<span class=x>     */</span>
+<span class=x>    public function getId(): Uuid</span>
+<span class=x>    {</span>
+<span class=x>        return $this-&gt;id;</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @return string</span>
+<span class=x>     */</span>
+<span class=x>    public function getTitle(): string</span>
+<span class=x>    {</span>
+<span class=x>        return $this-&gt;title;</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @param string $title</span>
+<span class=x>     */</span>
+<span class=x>    public function setTitle(string $title): void</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;title = $title;</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @return \DateTime</span>
+<span class=x>     */</span>
+<span class=x>    public function getCreated(): \DateTime</span>
+<span class=x>    {</span>
+<span class=x>        return $this-&gt;created;</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @param \DateTime $created</span>
+<span class=x>     * @throws \Exception</span>
+<span class=x>     */</span>
+<span class=x>    public function setCreated(\DateTime $created = null): void</span>
+<span class=x>    {</span>
+<span class=x>        if (!$created &amp;&amp; empty($this-&gt;getId())) {</span>
+<span class=x>            $this-&gt;created = new \DateTime(&quot;now&quot;);</span>
+<span class=x>        } else {</span>
+<span class=x>            $this-&gt;created = $created;</span>
+<span class=x>        }</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @return \DateTime</span>
+<span class=x>     */</span>
+<span class=x>    public function getModified(): \DateTime</span>
+<span class=x>    {</span>
+<span class=x>        return $this-&gt;modified;</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @param \DateTime $modified</span>
+<span class=x>     * @throws \Exception</span>
+<span class=x>     */</span>
+<span class=x>    public function setModified(\DateTime $modified = null): void</span>
+<span class=x>    {</span>
+<span class=x>        if (!$modified) {</span>
+<span class=x>            $this-&gt;modified = new \DateTime(&quot;now&quot;);</span>
+<span class=x>        } else {</span>
+<span class=x>            $this-&gt;modified = $modified;</span>
+<span class=x>        }</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>In order to work with this, we need to provide Doctrine persistence mapping
+configuration. We will do this in the <code>ConfigProvider</code> for this module:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>declare(strict_types=1);</span>
+
+<span class=x>namespace Album;</span>
+
+<span class=x>use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;</span>
+<span class=x>use Doctrine\ORM\Mapping\Driver\AnnotationDriver;</span>
+
+<span class=x>class ConfigProvider</span>
+<span class=x>{</span>
+<span class=x>    public function __invoke() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            &#39;dependencies&#39; =&gt; $this-&gt;getDependencies(),</span>
+<span class=x>            &#39;doctrine&#39;     =&gt; $this-&gt;getDoctrineEntities(),</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+
+<span class=x>    public function getDependencies() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+
+<span class=x>    public function getDoctrineEntities() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            &#39;driver&#39; =&gt; [</span>
+<span class=x>                &#39;orm_default&#39; =&gt; [</span>
+<span class=x>                    &#39;class&#39; =&gt; MappingDriverChain::class,</span>
+<span class=x>                    &#39;drivers&#39; =&gt; [</span>
+<span class=x>                        &#39;Album\Entity&#39; =&gt; &#39;album_entity&#39;,</span>
+<span class=x>                    ],</span>
+<span class=x>                ],</span>
+<span class=x>                &#39;album_entity&#39; =&gt; [</span>
+<span class=x>                    &#39;class&#39; =&gt; AnnotationDriver::class,</span>
+<span class=x>                    &#39;cache&#39; =&gt; &#39;array&#39;,</span>
+<span class=x>                    &#39;paths&#39; =&gt; [__DIR__ . &#39;/Entity&#39;],</span>
+<span class=x>                ],</span>
+<span class=x>            ],</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Next, in order to provide a HAL <em>collection</em> representation, we will create a
+custom <code>Doctrine\ORM\Tools\Pagination\Paginator</code> extension:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>declare(strict_types=1);</span>
+
+<span class=x>namespace Album\Entity;</span>
+
+<span class=x>use Doctrine\ORM\Tools\Pagination\Paginator;</span>
+
+<span class=x>class AlbumCollection extends Paginator</span>
+<span class=x>{</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>From here, we will add configuration of our HAL metadata map to the
+<code>ConfigProvider</code>. First, we will add the following method to configure both our
+entity and our collection:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Add these imports to the top of the class file</span>
+<span class=x>use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;</span>
+<span class=x>use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
+<span class=x>use Laminas\Hydrator\ReflectionHydrator;</span>
+
+
+<span class=x>    // Add this method inside the ConfigProvider class:</span>
+<span class=x>    public function getHalMetadataMap()</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            [</span>
+<span class=x>                &#39;__class__&#39;      =&gt; RouteBasedResourceMetadata::class,</span>
+<span class=x>                &#39;resource_class&#39; =&gt; Entity\Album::class,</span>
+<span class=x>                &#39;route&#39;          =&gt; &#39;albums.show&#39;, // assumes a route named &#39;albums.show&#39; has been created</span>
+<span class=x>                &#39;extractor&#39;      =&gt; ReflectionHydrator::class,</span>
+<span class=x>            ],</span>
+<span class=x>            [</span>
+<span class=x>                &#39;__class__&#39;           =&gt; RouteBasedCollectionMetadata::class,</span>
+<span class=x>                &#39;collection_class&#39;    =&gt; Entity\AlbumCollection::class,</span>
+<span class=x>                &#39;collection_relation&#39; =&gt; &#39;album&#39;,</span>
+<span class=x>                &#39;route&#39;               =&gt; &#39;albums.list&#39;, // assumes a route named &#39;albums.list&#39; has been created</span>
+<span class=x>            ],</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+</pre></div></p>
+<p>Then, within the <code>__invoke()</code> method, we will assign the return value of that
+method to the key <code>MetadataMap::class</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Add this import to the top of the class file:</span>
+<span class=x>use Mezzio\Hal\Metadata\MetadataMap;</span>
+
+<span class=x>    // Modify this ConfigProvider method to read:</span>
+<span class=x>    public function __invoke() : array</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            &#39;dependencies&#39; =&gt; $this-&gt;getDependencies(),</span>
+<span class=x>            &#39;templates&#39;    =&gt; $this-&gt;getTemplates(),</span>
+<span class=x>            &#39;doctrine&#39;     =&gt; $this-&gt;getDoctrineEntities(),</span>
+<span class=x>            MetadataMap::class =&gt; $this-&gt;getHalMetadataMap(),</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+</pre></div></p>
+<p>With these in place, we can write a handler that will display a collection as
+follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>declare(strict_types=1);</span>
+
+<span class=x>namespace Album\Handler;</span>
+
+<span class=x>use Album\Entity\Album;</span>
+<span class=x>use Album\Entity\AlbumCollection;</span>
+<span class=x>use Doctrine\ORM\EntityManager;</span>
+<span class=x>use Psr\Http\Message\ResponseInterface;</span>
+<span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
+<span class=x>use Psr\Http\Server\RequestHandlerInterface;</span>
+<span class=x>use Mezzio\Hal\HalResponseFactory;</span>
+<span class=x>use Mezzio\Hal\ResourceGenerator;</span>
+
+<span class=x>class ListAlbumsHandler implements RequestHandlerInterface</span>
+<span class=x>{</span>
+<span class=x>    protected $entityManager;</span>
+<span class=x>    protected $pageCount;</span>
+<span class=x>    protected $responseFactory;</span>
+<span class=x>    protected $resourceGenerator;</span>
+
+<span class=x>    public function __construct(</span>
+<span class=x>        EntityManager $entityManager,</span>
+<span class=x>        int $pageCount,</span>
+<span class=x>        HalResponseFactory $responseFactory,</span>
+<span class=x>        ResourceGenerator $resourceGenerator</span>
+<span class=x>    ) {</span>
+<span class=x>        $this-&gt;entityManager     = $entityManager;</span>
+<span class=x>        $this-&gt;pageCount         = $pageCount;</span>
+<span class=x>        $this-&gt;responseFactory   = $responseFactory;</span>
+<span class=x>        $this-&gt;resourceGenerator = $resourceGenerator;</span>
+<span class=x>    }</span>
+
+<span class=x>    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
+<span class=x>    {</span>
+<span class=x>        $repository = $this-&gt;entityManager-&gt;getRepository(Album::class);</span>
+
+<span class=x>        $query = $repository</span>
+<span class=x>            -&gt;createQueryBuilder(&#39;c&#39;)</span>
+<span class=x>            -&gt;getQuery();</span>
+<span class=x>        $query-&gt;setMaxResults($this-&gt;pageCount);</span>
+
+<span class=x>        $paginator = new AlbumCollection($query);</span>
+<span class=x>        $resource  = $this-&gt;resourceGenerator-&gt;fromObject($paginator, $request);</span>
+<span class=x>        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>And another handler for displaying an individual album:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>declare(strict_types=1);</span>
+
+<span class=x>namespace Album\Handler;</span>
+
+<span class=x>use Album\Entity\Album;</span>
+<span class=x>use Doctrine\ORM\EntityManager;</span>
+<span class=x>use Mezzio\Helper\ServerUrlHelper;</span>
+<span class=x>use Psr\Http\Message\ResponseInterface;</span>
+<span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
+<span class=x>use Psr\Http\Server\RequestHandlerInterface;</span>
+
+<span class=x>class ShowAlbumHandler implements RequestHandlerInterface</span>
+<span class=x>{</span>
+<span class=x>    protected $entityManager;</span>
+<span class=x>    protected $urlHelper;</span>
+
+<span class=x>    /**</span>
+<span class=x>     * AnnouncementsViewHandler constructor.</span>
+<span class=x>     * @param EntityManager $entityManager</span>
+<span class=x>     * @param ServerUrlHelper $urlHelper</span>
+<span class=x>     */</span>
+<span class=x>    public function __construct(</span>
+<span class=x>        EntityManager $entityManager,</span>
+<span class=x>    ) {</span>
+<span class=x>        $this-&gt;entityManager = $entityManager;</span>
+<span class=x>    }</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @param ServerRequestInterface $request</span>
+<span class=x>     * @return ResponseInterface</span>
+<span class=x>     */</span>
+<span class=x>    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
+<span class=x>    {</span>
+<span class=x>        $entityRepository = $this-&gt;entityManager-&gt;getRepository(Album::class);</span>
+
+<span class=x>        $result = $entityRepository-&gt;find($request-&gt;getAttribute(&#39;id&#39;));</span>
+
+<span class=x>        if (empty($return)) {</span>
+<span class=x>            throw new RuntimeException(&#39;Not Found&#39;, 404);</span>
+<span class=x>        }</span>
+
+<span class=x>        $resource = $this-&gt;resourceGenerator-&gt;fromObject($result, $request);</span>
+<span class=x>        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>In the above example, we map our <code>Album</code> entity such that:</p>
+<ul>
+<li>it is route-based; we will generate relational links to such entities based on
+  existing routing definitions. (In this example, "albums.show".)</li>
+<li>it uses the <code>ReflectionHydrator</code> from the <a href="https://docs.laminas.dev/laminas-hydrator">laminas-hydrator
+  package</a> to extract a
+  representation of the object to use with HAL.</li>
+</ul>
+<p>For our <code>AlbumCollection</code>, we define it such that:</p>
+<ul>
+<li>it, too, is route-based. (In this example, it maps to the route
+  "albums.list".)</li>
+<li>the collection will map to the property "album".</li>
+</ul>
+<p>Since these mappings are in place, our handlers need only use the Doctrine
+<code>EntityManager</code> in order to retrieve the appropriate repository, and from there
+either retrieve appropriate entities (in the case of the <code>ShowAlbumHandler</code>), or
+seed a collection paginator (in the case of the <code>ListAlbumsHandler</code>). These
+values are known by the metadata map, and, as such, we can generate HAL
+resources for them without needing any other information.</p>
+<blockquote>
+<h3>Setting the offset</h3>
+<p>When you plan to use paginated Doctrine result sets, you DO NOT need to
+call <code>$query-&gt;setFirstResult()</code>. This will be called when generating the
+result set based on the current page and the value of
+<code>$query-&gt;getMaxResults()</code>.</p>
+<p>You MUST call <code>$query-&gt;setMaxResults()</code> prior to generating your resource if
+you want it to be paginated, however.</p>
+</blockquote>
+<h2 id="example-doctrine-collections">Example: Doctrine Collections</h2>
+<p>Sometimes we will want to return an entire collection at once. The <code>getResult()</code>
+method of <code>Doctrine\ORM\Query</code> will return an array of results by default, with
+each item in the array an object based on provided mappings.</p>
+<p>mezzio-hal will not work with arrays by default, as it needs a typed
+object in order to appropriately map it to a representation. To accomplish this,
+then, we have several options:</p>
+<ul>
+<li>Create a custom extension of an SPL iterator such as <code>ArrayIterator</code> to wrap
+  the results.</li>
+<li>Create a custom extension of something like <code>Doctrine\Common\Collections\ArrayCollection</code>
+  to wrap the results.</li>
+</ul>
+<p>The following examples are based on the paginated collection from above;
+familiarize yourself with that code before continuing.</p>
+<p>The first change we will make is to modify our <code>AlbumCollection</code> to extend the
+Doctrine <code>ArrayCollection</code>, instead of its <code>Paginator</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Album\Entity;</span>
+
+<span class=x>use Doctrine\Common\Collections\ArrayCollection;</span>
+
+<span class=x>class AlbumCollection extends ArrayCollection</span>
+<span class=x>{</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The only other changes we then need to make are to our <code>ListAlbumsHandler</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
+<span class=x>    {</span>
+<span class=x>        $repository = $this-&gt;entityManager-&gt;getRepository(Album::class);</span>
+
+<span class=x>        // Note that this removes the call to setMaxResults()</span>
+<span class=x>        $query = $repository</span>
+<span class=x>            -&gt;createQueryBuilder(&#39;c&#39;)</span>
+<span class=x>            -&gt;getQuery();</span>
+
+<span class=x>        // Note that we pass the collection class the query result, and not the</span>
+<span class=x>        // query instance:</span>
+<span class=x>        $collection = new AlbumCollection($query-&gt;getResult());</span>
+
+<span class=x>        $resource  = $this-&gt;resourceGenerator-&gt;fromObject($collection, $request);</span>
+<span class=x>        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);</span>
+<span class=x>    }</span>
+</pre></div></p>
+<p>With these in place, we will now get representation of all items returned by the
+query.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../representations/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../factories/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/doctrine.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">mezzio-hal</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../hal/" class="subnavigation__link">HAL</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Representations</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Factories</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Cookbook</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "mezzio",
+            siteName = 'mezzio-hal';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in mezzio-hal" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
