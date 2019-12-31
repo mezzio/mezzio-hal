@@ -4,7 +4,7 @@
 
 [Doctrine](https://www.doctrine-project.org/) is a well-known and popular Object
 Relational Mapper; you will find it in use across pretty much every PHP
-framework. Expressive is no different.
+framework. Mezzio is no different.
 
 How do you generate HAL for Doctrine resources? As it turns out, the same way
 you would for any other objects you might have: create metadata mapping the
@@ -198,9 +198,9 @@ entity and our collection:
 
 ```php
 // Add these imports to the top of the class file
-use Zend\Expressive\Hal\Metadata\RouteBasedCollectionMetadata;
-use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
-use Zend\Hydrator\ReflectionHydrator;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+use Laminas\Hydrator\ReflectionHydrator;
 
 
     // Add this method inside the ConfigProvider class:
@@ -228,7 +228,7 @@ method to the key `MetadataMap::class`:
 
 ```php
 // Add this import to the top of the class file:
-use Zend\Expressive\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\MetadataMap;
 
     // Modify this ConfigProvider method to read:
     public function __invoke() : array
@@ -256,8 +256,8 @@ use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Hal\HalResponseFactory;
-use Zend\Expressive\Hal\ResourceGenerator;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 
 class ListAlbumsHandler implements RequestHandlerInterface
 {
@@ -303,7 +303,7 @@ namespace Album\Handler;
 
 use Album\Entity\Album;
 use Doctrine\ORM\EntityManager;
-use Zend\Expressive\Helper\ServerUrlHelper;
+use Mezzio\Helper\ServerUrlHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -348,8 +348,8 @@ In the above example, we map our `Album` entity such that:
 
 - it is route-based; we will generate relational links to such entities based on
   existing routing definitions. (In this example, "albums.show".)
-- it uses the `ReflectionHydrator` from the [zend-hydrator
-  package](https://docs.zendframework.com/zend-hydrator) to extract a
+- it uses the `ReflectionHydrator` from the [laminas-hydrator
+  package](https://docs.laminas.dev/laminas-hydrator) to extract a
   representation of the object to use with HAL.
 
 For our `AlbumCollection`, we define it such that:
@@ -381,7 +381,7 @@ Sometimes we will want to return an entire collection at once. The `getResult()`
 method of `Doctrine\ORM\Query` will return an array of results by default, with
 each item in the array an object based on provided mappings.
 
-zend-expressive-hal will not work with arrays by default, as it needs a typed
+mezzio-hal will not work with arrays by default, as it needs a typed
 object in order to appropriately map it to a representation. To accomplish this,
 then, we have several options:
 
