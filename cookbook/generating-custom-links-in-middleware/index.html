@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -297,19 +301,17 @@ generator via getter methods:</p>
 middleware, and assigned it to the <code>$resourceGenerator</code> property.</p>
 <p>The link we want to generate will look something like
 <code>/api/books?query={searchParms}</code>, and map to a route named <code>books</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$searchLink = $this-&gt;resourceGenerator</span>
-<span class=x>    -&gt;getLinkGenerator()</span>
-<span class=x>    -&gt;templatedFromRoute(</span>
-<span class=x>        &#39;search&#39;,</span>
-<span class=x>        $request,</span>
-<span class=x>        &#39;books&#39;,</span>
-<span class=x>        [],</span>
-<span class=x>        [&#39;query&#39; =&gt; &#39;{searchTerms}&#39;]</span>
-<span class=x>    );</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$searchLink = $this-&gt;resourceGenerator
+    -&gt;getLinkGenerator()
+    -&gt;templatedFromRoute(
+        'search',
+        $request,
+        'books',
+        [],
+        ['query' =&gt; '{searchTerms}']
+    );</code></pre>
 <p>You could then compose it in your resource:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$resource = $resource-&gt;withLink($searchLink);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$resource = $resource-&gt;withLink($searchLink);</code></pre>
 <h2 id="adding-metadata-for-generated-links">Adding metadata for generated links</h2>
 <p>In our second scenario, we'll consider a collection endpoint. It might include a
 <code>per_page</code> query string argument, to allow defining how many results to return
@@ -318,36 +320,35 @@ string. We know these at <em>runtime</em>, but not at the time we create our
 configuration, so we need to inject them <em>after</em> we have our metadata created,
 but <em>before</em> we generate our resource, so that the pagination links are
 correctly generated.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$queryParams = $request-&gt;getQueryParams();</span>
-<span class=x>$query       = $queryParams[&#39;query&#39;] ?? &#39;&#39;;</span>
-<span class=x>$perPage     = $queryParams[&#39;per_page&#39;] ?? 25;</span>
-<span class=x>$sort        = $queryParams[&#39;sort&#39;] ?? &#39;&#39;;</span>
-<span class=x>$metadataMap = $this-&gt;resourceGenerator-&gt;getMetadataMap();</span>
-<span class=x>$metadata    = $metadataMap-&gt;get(BookCollection::class);</span>
+<pre class=codehilite><code class=language-php>$queryParams = $request-&gt;getQueryParams();
+$query       = $queryParams['query'] ?? '';
+$perPage     = $queryParams['per_page'] ?? 25;
+$sort        = $queryParams['sort'] ?? '';
+$metadataMap = $this-&gt;resourceGenerator-&gt;getMetadataMap();
+$metadata    = $metadataMap-&gt;get(BookCollection::class);
 
-<span class=x>$metadataQuery = $origMetadataQuery = $metadata-&gt;getQueryStringArguments();</span>
+$metadataQuery = $origMetadataQuery = $metadata-&gt;getQueryStringArguments();
 
-<span class=x>if (&#39;&#39; !== $query) {</span>
-<span class=x>    $metadataQuery = array_merge($metadataQuery, [&#39;query&#39; =&gt; $query]);</span>
-<span class=x>}</span>
+if ('' !== $query) {
+    $metadataQuery = array_merge($metadataQuery, ['query' =&gt; $query]);
+}
 
-<span class=x>if (&#39;&#39; !== $perPage) {</span>
-<span class=x>    $metadataQuery = array_merge($metadataQuery, [&#39;per_page&#39; =&gt; $perPage]);</span>
-<span class=x>}</span>
+if ('' !== $perPage) {
+    $metadataQuery = array_merge($metadataQuery, ['per_page' =&gt; $perPage]);
+}
 
-<span class=x>if (&#39;&#39; !== $sort) {</span>
-<span class=x>    $metadataQuery = array_merge($metadataQuery, [&#39;sort&#39; =&gt; $sort]);</span>
-<span class=x>}</span>
+if ('' !== $sort) {
+    $metadataQuery = array_merge($metadataQuery, ['sort' =&gt; $sort]);
+}
 
-<span class=x>$metadata-&gt;setQueryStringArguments($metadataQuery);</span>
+$metadata-&gt;setQueryStringArguments($metadataQuery);
 
-<span class=x>// ...</span>
+// ...
 
-<span class=x>$resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);</span>
+$resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);
 
-<span class=x>// Reset query string arguments</span>
-<span class=x>$metadata-&gt;setQueryStringArguments($origMetadataQuery);</span>
-</pre></div></p>
+// Reset query string arguments
+$metadata-&gt;setQueryStringArguments($origMetadataQuery);</code></pre>
 <p>This will lead to links with URIs such as
 <code>/api/books?query=Adams&amp;per_page=5&amp;sort=DESC&amp;page=4</code>.</p>
 
@@ -536,9 +537,10 @@ correctly generated.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -575,7 +577,7 @@ correctly generated.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -584,8 +586,8 @@ correctly generated.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

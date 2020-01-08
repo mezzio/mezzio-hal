@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -320,59 +324,58 @@ create will return HAL-JSON, and thus need to generate links using the
 configured router and base path.</p>
 <p>To begin, we will alter the <code>ConfigProvider</code> for our module to add the
 definitions noted below:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// in src/Api/ConfigProvider.php:</span>
-<span class=x>namespace Api;</span>
+<pre class=codehilite><code class=language-php>// in src/Api/ConfigProvider.php:
+namespace Api;
 
-<span class=x>use Mezzio\Hal\LinkGeneratorFactory;</span>
-<span class=x>use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;</span>
-<span class=x>use Mezzio\Hal\Metadata\MetadataMap;</span>
-<span class=x>use Mezzio\Hal\ResourceGeneratorFactory;</span>
-<span class=x>use Mezzio\Helper\UrlHelperFactory;</span>
-<span class=x>use Mezzio\Helper\UrlHelperMiddlewareFactory;</span>
-<span class=x>use Mezzio\Router\FastRouteRouter;</span>
-<span class=x>use Mezzio\Router\Middleware\RouteMiddlewareFactory;</span>
-<span class=x>use Mezzio\Router\FastRouteRouterFactory;</span>
+use Mezzio\Hal\LinkGeneratorFactory;
+use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\ResourceGeneratorFactory;
+use Mezzio\Helper\UrlHelperFactory;
+use Mezzio\Helper\UrlHelperMiddlewareFactory;
+use Mezzio\Router\FastRouteRouter;
+use Mezzio\Router\Middleware\RouteMiddlewareFactory;
+use Mezzio\Router\FastRouteRouterFactory;
 
-<span class=x>class ConfigProvider</span>
-<span class=x>{</span>
-<span class=x>    public function __invoke() : array</span>
-<span class=x>    {</span>
-<span class=x>        return [</span>
-<span class=x>            &#39;dependencies&#39; =&gt; $this-&gt;getDependencies(),</span>
-<span class=x>            MetadataMap::class =&gt; $this-&gt;getMetadataMap(),</span>
-<span class=x>        ];</span>
-<span class=x>    }</span>
+class ConfigProvider
+{
+    public function __invoke() : array
+    {
+        return [
+            'dependencies' =&gt; $this-&gt;getDependencies(),
+            MetadataMap::class =&gt; $this-&gt;getMetadataMap(),
+        ];
+    }
 
-<span class=x>    public function getDependencies() : array</span>
-<span class=x>    {</span>
-<span class=x>        return [</span>
-<span class=x>            &#39;factories&#39; =&gt; [</span>
-<span class=x>                // module-specific class name =&gt; factory</span>
-<span class=x>                LinkGenerator::class          =&gt; new LinkGeneratorFactory(UrlGenerator::class),</span>
-<span class=x>                ResourceGenerator::class      =&gt; new ResourceGeneratorFactory(LinkGenerator::class),</span>
-<span class=x>                Router::class                 =&gt; FastRouteRouterFactory::class,</span>
-<span class=x>                RouteMiddleware::class        =&gt; new RouteMiddlewareFactory(Router::class),</span>
-<span class=x>                UrlHelper::class              =&gt; new UrlHelperFactory(&#39;/api&#39;, Router::class),</span>
-<span class=x>                UrlHelperMiddleware::class    =&gt; new UrlHelperMiddlewareFactory(UrlHelper::class),</span>
-<span class=x>                UrlGenerator::class           =&gt; new MezzioUrlGeneratorFactory(UrlHelper::class),</span>
+    public function getDependencies() : array
+    {
+        return [
+            'factories' =&gt; [
+                // module-specific class name =&gt; factory
+                LinkGenerator::class          =&gt; new LinkGeneratorFactory(UrlGenerator::class),
+                ResourceGenerator::class      =&gt; new ResourceGeneratorFactory(LinkGenerator::class),
+                Router::class                 =&gt; FastRouteRouterFactory::class,
+                RouteMiddleware::class        =&gt; new RouteMiddlewareFactory(Router::class),
+                UrlHelper::class              =&gt; new UrlHelperFactory('/api', Router::class),
+                UrlHelperMiddleware::class    =&gt; new UrlHelperMiddlewareFactory(UrlHelper::class),
+                UrlGenerator::class           =&gt; new MezzioUrlGeneratorFactory(UrlHelper::class),
 
-<span class=x>                // Our handler:</span>
-<span class=x>                CreateBookHandler::class =&gt; CreateBookHandlerFactory::class,</span>
+                // Our handler:
+                CreateBookHandler::class =&gt; CreateBookHandlerFactory::class,
 
-<span class=x>                // And our pipeline:</span>
-<span class=x>                Pipeline::class =&gt; PipelineFactory::class,</span>
-<span class=x>            ],</span>
-<span class=x>        ];</span>
-<span class=x>    }</span>
+                // And our pipeline:
+                Pipeline::class =&gt; PipelineFactory::class,
+            ],
+        ];
+    }
 
-<span class=x>    public function getMetadataMap() : array</span>
-<span class=x>    {</span>
-<span class=x>        return [</span>
-<span class=x>            // ...</span>
-<span class=x>        ];</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    public function getMetadataMap() : array
+    {
+        return [
+            // ...
+        ];
+    }
+}</code></pre>
 <p>Note that the majority of these service names are <em>virtual</em>; they do not resolve
 to actual classes. PHP allows usage of the <code>::class</code> pseudo-constant anywhere,
 and will resolve the value based on the current namespace. This gives us virtual
@@ -388,79 +391,76 @@ context-specific configuration required.</p>
 <code>UrlHelper</code>. What if you want to use a different path?</p>
 <p>You can override the service in an application-specific configuration under
 <code>config/autoload/</code>, specifying a different path!</p>
-<pre class=codehilite><code class=language-php>
+<pre class="codehilite"><code class="language-php">
 \Api\UrlHelper::class =&gt; new UrlHelperFactory('/different/path', \Api\Router::class),
 </code></pre>
 </blockquote>
 <h2 id="using-virtual-services-with-a-handler">Using virtual services with a handler</h2>
 <p>Now let's turn to our <code>CreateBookHandler</code>. We'll define it as follows:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// in src/Api/CreateBookHandler.php:</span>
-<span class=x>namespace Api;</span>
+<pre class=codehilite><code class=language-php>// in src/Api/CreateBookHandler.php:
+namespace Api;
 
-<span class=x>use Psr\Http\Message\ResponseInterface;</span>
-<span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
-<span class=x>use Psr\Http\Server\RequestHandlerInterface;</span>
-<span class=x>use Mezzio\Hal\HalResponseFactory;</span>
-<span class=x>use Mezzio\Hal\ResourceGenerator;</span>
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 
-<span class=x>class CreateBookHandler implements RequestHandlerInterface</span>
-<span class=x>{</span>
-<span class=x>    private $resourceGenerator;</span>
+class CreateBookHandler implements RequestHandlerInterface
+{
+    private $resourceGenerator;
 
-<span class=x>    private $responseFactory;</span>
+    private $responseFactory;
 
-<span class=x>    public function __construct(ResourceGenerator $resourceGenerator, HalResponseFactory $responseFactory)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;resourceGenerator = $resourceGenerator;</span>
-<span class=x>        $this-&gt;responseFactory = $responseFactory;</span>
-<span class=x>    }</span>
+    public function __construct(ResourceGenerator $resourceGenerator, HalResponseFactory $responseFactory)
+    {
+        $this-&gt;resourceGenerator = $resourceGenerator;
+        $this-&gt;responseFactory = $responseFactory;
+    }
 
-<span class=x>    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
-<span class=x>    {</span>
-<span class=x>        // do some work ...</span>
+    public function handle(ServerRequestInterface $request) : ResponseInterface
+    {
+        // do some work ...
 
-<span class=x>        $resource = $this-&gt;resourceGenerator-&gt;fromObject($book, $request);</span>
-<span class=x>        return $this-&gt;responseFactory-&gt;createResponse($request, $book);</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        $resource = $this-&gt;resourceGenerator-&gt;fromObject($book, $request);
+        return $this-&gt;responseFactory-&gt;createResponse($request, $book);
+    }
+}</code></pre>
 <p>This handler needs a HAL resource generator. More specifically, it needs the one
 specific to our module. As such, we'll define our factory as follows:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// in src/Api/CreateBookHandlerFactory.php:</span>
-<span class=x>namespace Api;</span>
+<pre class=codehilite><code class=language-php>// in src/Api/CreateBookHandlerFactory.php:
+namespace Api;
 
-<span class=x>use Psr\Container\ContainerInterface;</span>
-<span class=x>use Mezzio\Hal\HalResponseFactory;</span>
+use Psr\Container\ContainerInterface;
+use Mezzio\Hal\HalResponseFactory;
 
-<span class=x>class CreateBookHandlerFactory</span>
-<span class=x>{</span>
-<span class=x>    public function __invoke(ContainerInterface $container) : CreateBookHandler</span>
-<span class=x>    {</span>
-<span class=x>        return new CreateBookHandler(</span>
-<span class=x>            ResourceGenerator::class, // module-specific service name!</span>
-<span class=x>            HalResponseFactory::class</span>
-<span class=x>        );</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+class CreateBookHandlerFactory
+{
+    public function __invoke(ContainerInterface $container) : CreateBookHandler
+    {
+        return new CreateBookHandler(
+            ResourceGenerator::class, // module-specific service name!
+            HalResponseFactory::class
+        );
+    }
+}</code></pre>
 <p>You can create any number of such handlers for your module; the above
 demonstrates how and where injection of the alternate resource generator occurs.</p>
 <h2 id="creating-our-pipeline-and-routes">Creating our pipeline and routes</h2>
 <p>Now we can create our pipeline and routes.</p>
 <p>Generally when piping to an application instance, we can specify a class name of
 middleware to pipe, or an array of middleware:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// in config/pipeline.php:</span>
-<span class=x>$app-&gt;pipe(&#39;/api&#39;, [</span>
-<span class=x>    \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class,</span>
-<span class=x>    \Api\RouteMiddleware::class,     // module-specific routing middleware!</span>
-<span class=x>    ImplicitHeadMiddleware::class,</span>
-<span class=x>    ImplicitOptionsMiddleware::class,</span>
-<span class=x>    MethodNotAllowedMiddleware::class,</span>
-<span class=x>    \Api\UrlHelperMiddleware::class, // module-specific URL helper middleware!</span>
-<span class=x>    DispatchMiddleware::class,</span>
-<span class=x>    \Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler::class,</span>
-<span class=x>]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// in config/pipeline.php:
+$app-&gt;pipe('/api', [
+    \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class,
+    \Api\RouteMiddleware::class,     // module-specific routing middleware!
+    ImplicitHeadMiddleware::class,
+    ImplicitOptionsMiddleware::class,
+    MethodNotAllowedMiddleware::class,
+    \Api\UrlHelperMiddleware::class, // module-specific URL helper middleware!
+    DispatchMiddleware::class,
+    \Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler::class,
+]);</code></pre>
 <p>However, we have both the pipeline <em>and</em> routes, and we likely want to indicate
 the exact behavior of this pipeline. Additionally, we may want to re-use this
 pipeline in other applications; pushing this into the application configuration
@@ -469,54 +469,52 @@ makes that more error-prone.</p>
 <code>Laminas\Stratigility\MiddlewarePipe</code> instance that is fully configured for our
 module. As part of this functionality, we will also add our module-specific
 routing.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// In src/Api/PipelineFactory.php:</span>
-<span class=x>namespace Api;</span>
+<pre class=codehilite><code class=language-php>// In src/Api/PipelineFactory.php:
+namespace Api;
 
-<span class=x>use Psr\Container\ContainerInterface;</span>
-<span class=x>use Mezzio\MiddlewareFactory;</span>
-<span class=x>use Mezzio\Router\Middleware as RouterMiddleware;</span>
-<span class=x>use Mezzio\Router\RouteCollector;</span>
-<span class=x>use Mezzio\ProblemDetails\ProblemDetailsMiddleware;</span>
-<span class=x>use Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler;</span>
-<span class=x>use Laminas\Stratigility\MiddlewarePipe;</span>
+use Psr\Container\ContainerInterface;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Router\Middleware as RouterMiddleware;
+use Mezzio\Router\RouteCollector;
+use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler;
+use Laminas\Stratigility\MiddlewarePipe;
 
-<span class=x>class PipelineFactory</span>
-<span class=x>{</span>
-<span class=x>    public function __invoke(ContainerInterface $container) : MiddlewarePipe</span>
-<span class=x>    {</span>
-<span class=x>        $factory = $container-&gt;get(MiddlewareFactory::class);</span>
+class PipelineFactory
+{
+    public function __invoke(ContainerInterface $container) : MiddlewarePipe
+    {
+        $factory = $container-&gt;get(MiddlewareFactory::class);
 
-<span class=x>        // First, create our middleware pipeline</span>
-<span class=x>        $pipeline = new MiddlewarePipe();</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(ProblemDetailsMiddleware::class));</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouteMiddleware::class)); // module-specific!</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\ImplicitHeadMiddleware::class));</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\ImplicitOptionsMiddleware::class));</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\MethodNotAllowedMiddleware::class));</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(UrlHelperMiddleware::class)); // module-specific!</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\DispatchMiddleware::class));</span>
-<span class=x>        $pipeline-&gt;pipe($factory-&gt;lazy(ProblemDetailsNotFoundHandler::class));</span>
+        // First, create our middleware pipeline
+        $pipeline = new MiddlewarePipe();
+        $pipeline-&gt;pipe($factory-&gt;lazy(ProblemDetailsMiddleware::class));
+        $pipeline-&gt;pipe($factory-&gt;lazy(RouteMiddleware::class)); // module-specific!
+        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\ImplicitHeadMiddleware::class));
+        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\ImplicitOptionsMiddleware::class));
+        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\MethodNotAllowedMiddleware::class));
+        $pipeline-&gt;pipe($factory-&gt;lazy(UrlHelperMiddleware::class)); // module-specific!
+        $pipeline-&gt;pipe($factory-&gt;lazy(RouterMiddleware\DispatchMiddleware::class));
+        $pipeline-&gt;pipe($factory-&gt;lazy(ProblemDetailsNotFoundHandler::class));
 
-<span class=x>        // Second, we&#39;ll create our routes</span>
-<span class=x>        $router = $container-&gt;get(Router::class); // Retrieve our module-specific router</span>
-<span class=x>        $routes = new RouteCollector($router);    // Create a route collector to simplify routing</span>
+        // Second, we'll create our routes
+        $router = $container-&gt;get(Router::class); // Retrieve our module-specific router
+        $routes = new RouteCollector($router);    // Create a route collector to simplify routing
 
-<span class=x>        // Start routing:</span>
-<span class=x>        $routes-&gt;post(&#39;/books&#39;, $factory-&gt;lazy(CreateBookHandler::class));</span>
+        // Start routing:
+        $routes-&gt;post('/books', $factory-&gt;lazy(CreateBookHandler::class));
 
-<span class=x>        // Return the pipeline now that we&#39;re done!</span>
-<span class=x>        return $pipeline;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        // Return the pipeline now that we're done!
+        return $pipeline;
+    }
+}</code></pre>
 <p>Note that the routing definitions do <strong>not</strong> include the prefix <code>/api</code>; this is
 because that prefix will be stripped when we path-segregate our API middleware
 pipeline. All routing will be <em>relative</em> to that path.</p>
 <h2 id="creating-a-path-segregated-pipeline">Creating a path-segregated pipeline</h2>
 <p>Finally, we will attach our pipeline to the application, using path segregation:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// in config/pipeline.php:</span>
-<span class=x>$app-&gt;pipe(&#39;/api&#39;, \Api\Pipeline::class);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// in config/pipeline.php:
+$app-&gt;pipe('/api', \Api\Pipeline::class);</code></pre>
 <p>This statement tells the application to pipe the pipeline returned by our
 <code>PipelineFactory</code> under the path <code>/api</code>; that path will be stripped from
 requests when passed to the underlying middleware.</p>
@@ -705,9 +703,10 @@ segregated the pipeline!</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -744,7 +743,7 @@ segregated the pipeline!</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -753,8 +752,8 @@ segregated the pipeline!</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

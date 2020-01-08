@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -296,25 +300,23 @@ provides <code>Mezzio\Hal\HalResponseFactory</code> for generating a
 representation. This chapter dives into that with more detail.</p>
 <h2 id="renderers">Renderers</h2>
 <p>All renderers implement <code>Mezzio\Hal\Renderer\RendererInterface</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Mezzio\Hal\Renderer;</span>
+<pre class=codehilite><code class=language-php>namespace Mezzio\Hal\Renderer;
 
-<span class=x>use Mezzio\Hal\HalResource;</span>
+use Mezzio\Hal\HalResource;
 
-<span class=x>interface RendererInterface</span>
-<span class=x>{</span>
-<span class=x>    public function render(HalResource $resource) : string;</span>
-<span class=x>}</span>
-</pre></div></p>
+interface RendererInterface
+{
+    public function render(HalResource $resource) : string;
+}</code></pre>
 <p>Two implementations are provided, <code>Mezzio\Hal\Renderer\JsonRenderer</code> and
 <code>Mezzio\Hal\Renderer\XmlRenderer</code></p>
 <h3>JsonRenderer</h3>
 <p>The <code>JsonRenderer</code> constructor allows you to specify a bitmask of flags for use
 with <code>json_encode()</code>. By default, if none are provided, it uses the value of
 <code>JsonRenderer::DEFAULT_JSON_FLAGS</code>, which evaluates to:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>JSON_UNESCAPED_SLASHES</span>
-<span class=x>| JSON_UNESCAPED_UNICODE</span>
-<span class=x>| JSON_PRESERVE_ZERO_FRACTION</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>JSON_UNESCAPED_SLASHES
+| JSON_UNESCAPED_UNICODE
+| JSON_PRESERVE_ZERO_FRACTION</code></pre>
 <p>When your application is in "debug" mode, it also adds the <code>JSON_PRETTY_PRINT</code>
 flag to the default list, in order to provide human-readable JSON output.</p>
 <h3>XmlRenderer</h3>
@@ -326,16 +328,15 @@ the provided <code>HalResource</code> instance. In order to keep the component a
 PSR-7 implementation, <code>HalResponseFactory</code> itself composes a callable factory
 capable of producing an empty PSR-7 response.</p>
 <p>As an example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Slim\Http\Response;</span>
-<span class=x>use Slim\Http\Stream;</span>
-<span class=x>use Mezzio\Hal\HalResponseFactory;</span>
+<pre class=codehilite><code class=language-php>use Slim\Http\Response;
+use Slim\Http\Stream;
+use Mezzio\Hal\HalResponseFactory;
 
-<span class=x>$factory = new HalResponseFactory(</span>
-<span class=x>    function () {</span>
-<span class=x>        return new Response();</span>
-<span class=x>    }</span>
-<span class=x>);</span>
-</pre></div></p>
+$factory = new HalResponseFactory(
+    function () {
+        return new Response();
+    }
+);</code></pre>
 <p>Additionally, the <code>HalResponseFactory</code> constructor can accept the following
 arguments, with the described defaults if none is provided:</p>
 <ul>
@@ -347,16 +348,15 @@ generating the <code>HalResponseFactory</code>, described in <a href="../factori
 chapter</a>.</p>
 <h2 id="using-the-factory">Using the factory</h2>
 <p>The factory exposes one method:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Psr\Http\Message\ResponseInterface;</span>
-<span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
-<span class=x>use Mezzio\Hal\HalResource;</span>
+<pre class=codehilite><code class=language-php>use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Mezzio\Hal\HalResource;
 
-<span class=x>public function createResponse(</span>
-<span class=x>    ServerRequestInterface $request,</span>
-<span class=x>    HalResource $resource,</span>
-<span class=x>    string $mediaType = self::DEFAULT_CONTENT_TYPE</span>
-<span class=x>) : ResponseInterface {</span>
-</pre></div></p>
+public function createResponse(
+    ServerRequestInterface $request,
+    HalResource $resource,
+    string $mediaType = self::DEFAULT_CONTENT_TYPE
+) : ResponseInterface {</code></pre>
 <p>Generally speaking, you'll pass the current request instance, and the resource
 for which you want to generate a response, and the factory will return a
 response based on its response prototype, with the following:</p>
@@ -374,12 +374,11 @@ representations. While they will still be HAL, this allows you to document the
 specific structure of your resources, and potentially even validate them against
 JSON schema.</p>
 <p>To do this, pass the media type when creating the response:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$response = $factory-&gt;createResponse(</span>
-<span class=x>    $request,</span>
-<span class=x>    $resource,</span>
-<span class=x>    &#39;application/vnd.book&#39;</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$response = $factory-&gt;createResponse(
+    $request,
+    $resource,
+    'application/vnd.book'
+);</code></pre>
 <p><em>Do not</em> pass the format (e.g., <code>+json</code>, <code>+xml</code>) when doing so; the factory will
 append the appropriate one based on content negotiation.</p>
 <h2 id="forcing-collections-for-relations">Forcing collections for relations</h2>
@@ -397,51 +396,46 @@ if that's all the car currently has associated with it.</p>
 <p>For links, you may pass a special attribute, <code>Mezzio\Hal\Link::AS_COLLECTION</code>,
 with a boolean value of <code>true</code>; when encountered, this will then be rendered as
 an array of links, even if only one link for that relation is present.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$link = new Link(</span>
-<span class=x>    &#39;wheels&#39;,</span>
-<span class=x>    &#39;/api/car/XXXX-YYYY-ZZZZ/wheels/111&#39;,</span>
-<span class=x>    false,</span>
-<span class=x>    [Link::AS_COLLECTION =&gt; true]</span>
-<span class=x>);</span>
+<pre class=codehilite><code class=language-php>$link = new Link(
+    'wheels',
+    '/api/car/XXXX-YYYY-ZZZZ/wheels/111',
+    false,
+    [Link::AS_COLLECTION =&gt; true]
+);
 
-<span class=x>$resource = $resource-&gt;withLink($link);</span>
-</pre></div></p>
+$resource = $resource-&gt;withLink($link);</code></pre>
 <p>In the above, you will then get the following within your representation:</p>
-<p> <div class=codehilite><pre><span></span><span class=s2>&quot;_links&quot;</span><span class=err>:</span> <span class=p>{</span>
-  <span class=nt>&quot;wheels&quot;</span><span class=p>:</span> <span class=p>[</span>
-    <span class=p>{</span><span class=nt>&quot;href&quot;</span><span class=p>:</span> <span class=s2>&quot;/api/car/XXXX-YYYY-ZZZZ/wheels/111&quot;</span><span class=p>}</span>
-  <span class=p>]</span>
-<span class=p>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-json>&quot;_links&quot;: {
+  &quot;wheels&quot;: [
+    {&quot;href&quot;: &quot;/api/car/XXXX-YYYY-ZZZZ/wheels/111&quot;}
+  ]
+}</code></pre>
 <p>To force an embedded resource to be rendered within an array, you have two
 options.</p>
 <p>First, and simplest, pass the resource within an array when calling
 <code>withElement()</code>, <code>embed()</code>, or passing data to the constructor:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Constructor:</span>
-<span class=x>$resource = new HalResource([&#39;wheels&#39; =&gt; [$wheel]]);</span>
+<pre class=codehilite><code class=language-php>// Constructor:
+$resource = new HalResource(['wheels' =&gt; [$wheel]]);
 
-<span class=x>// withElement():</span>
-<span class=x>$resource = $resource-&gt;withElement(&#39;wheels&#39;, [$wheel]);</span>
+// withElement():
+$resource = $resource-&gt;withElement('wheels', [$wheel]);
 
-<span class=x>// embed():</span>
-<span class=x>$resource = $resource-&gt;embed(&#39;wheels&#39;, [$wheel]);</span>
-</pre></div></p>
+// embed():
+$resource = $resource-&gt;embed('wheels', [$wheel]);</code></pre>
 <p>Alternately, you can call the <code>HalResource::embed</code> method with only the
 resource, passing the method a third argument, a flag indicating whether or not
 to force an array:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$resource = $resource-&gt;embed(&#39;wheels&#39;, $wheel, true);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$resource = $resource-&gt;embed('wheels', $wheel, true);</code></pre>
 <p>In each of these cases, assuming no other wheels were provided to the final
 resource, you might get a representation such as the following:</p>
-<p> <div class=codehilite><pre><span></span><span class=s2>&quot;_embedded&quot;</span><span class=err>:</span> <span class=p>{</span>
-  <span class=nt>&quot;wheels&quot;</span><span class=p>:</span> <span class=p>[</span>
-    <span class=p>{</span>
-      <span class=nt>&quot;_links&quot;</span> <span class=err>=&gt;</span> <span class=p>{</span><span class=nt>&quot;self&quot;</span><span class=p>:</span> <span class=p>{</span><span class=nt>&quot;href&quot;</span><span class=p>:</span> <span class=s2>&quot;...&quot;</span><span class=p>}}</span>
-      <span class=s2>&quot;id&quot;</span><span class=p>:</span> <span class=s2>&quot;...&quot;</span>
-    <span class=p>},</span>
-  <span class=p>]</span>
-<span class=p>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-json>&quot;_embedded&quot;: {
+  &quot;wheels&quot;: [
+    {
+      &quot;_links&quot; =&gt; {&quot;self&quot;: {&quot;href&quot;: &quot;...&quot;}}
+      &quot;id&quot;: &quot;...&quot;
+    },
+  ]
+}</code></pre>
 
 
 
@@ -628,9 +622,10 @@ resource, you might get a representation such as the following:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -667,7 +662,7 @@ resource, you might get a representation such as the following:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -676,8 +671,8 @@ resource, you might get a representation such as the following:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

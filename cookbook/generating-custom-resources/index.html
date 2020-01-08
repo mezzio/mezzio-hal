@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -267,47 +271,44 @@
     <h1 id="generating-custom-resources">Generating custom resources</h1>
 <p>The <code>ResourceGenerator</code> allows composing <code>Mezzio\Hal\ResourceGenerator\StrategyInterface</code>
 instances. The <code>StrategyInterface</code> defines the following:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Mezzio\Hal\ResourceGenerator;</span>
+<pre class=codehilite><code class=language-php>namespace Mezzio\Hal\ResourceGenerator;
 
-<span class=x>use Psr\Http\Message\ServerRequestInterface;</span>
-<span class=x>use Mezzio\Hal\HalResource;</span>
-<span class=x>use Mezzio\Hal\Metadata;</span>
-<span class=x>use Mezzio\Hal\ResourceGenerator;</span>
+use Psr\Http\Message\ServerRequestInterface;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Metadata;
+use Mezzio\Hal\ResourceGenerator;
 
-<span class=x>interface StrategyInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @param object $instance Instance from which to create Resource.</span>
-<span class=x>     * @throws Exception\UnexpectedMetadataTypeException for metadata types the</span>
-<span class=x>     *     strategy cannot handle.</span>
-<span class=x>     */</span>
-<span class=x>    public function createResource(</span>
-<span class=x>        $instance,</span>
-<span class=x>        Metadata\AbstractMetadata $metadata,</span>
-<span class=x>        ResourceGenerator $resourceGenerator,</span>
-<span class=x>        ServerRequestInterface $request</span>
-<span class=x>    ) : HalResource;</span>
-<span class=x>}</span>
-</pre></div></p>
+interface StrategyInterface
+{
+    /**
+     * @param object $instance Instance from which to create Resource.
+     * @throws Exception\UnexpectedMetadataTypeException for metadata types the
+     *     strategy cannot handle.
+     */
+    public function createResource(
+        $instance,
+        Metadata\AbstractMetadata $metadata,
+        ResourceGenerator $resourceGenerator,
+        ServerRequestInterface $request
+    ) : HalResource;
+}</code></pre>
 <p>When you register a strategy, you will map a metadata type to the strategy; the
 <code>ResourceGenerator</code> will then call your strategy whenever it encounteres
 metadata of that type.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);</span>
+<pre class=codehilite><code class=language-php>$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);
 
-<span class=x>// or:</span>
-<span class=x>$resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</span>
-</pre></div></p>
+// or:
+$resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</code></pre>
 <p>You can also add your strategies via the configuration:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>return [</span>
-<span class=x>    &#39;mezzio-hal&#39; =&gt; [</span>
-<span class=x>        &#39;resource-generator&#39; =&gt; [</span>
-<span class=x>            &#39;strategies&#39; =&gt; [</span>
-<span class=x>                CustomMetadata::class =&gt; CustomStrategy::class,</span>
-<span class=x>            ],</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>return [
+    'mezzio-hal' =&gt; [
+        'resource-generator' =&gt; [
+            'strategies' =&gt; [
+                CustomMetadata::class =&gt; CustomStrategy::class,
+            ],
+        ],
+    ],
+];</code></pre>
 <p>If a strategy already is mapped for the given metadata type, this method will
 override it.</p>
 <p>To facilitate common operations, this library provides two traits,
@@ -317,14 +318,13 @@ decide to write your own strategies.</p>
 <p>In order for the <code>MetadataMap</code> to be able to use your <code>CustomMetadata</code> you need to register 
 a factory (implementing <code>Mezzio\Hal\Metadata\MetadataFactoryInterface</code>) for it.
 You can register them via the configuration:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>return [</span>
-<span class=x>    &#39;mezzio-hal&#39; =&gt; [</span>
-<span class=x>        &#39;metadata-factories&#39; =&gt; [</span>
-<span class=x>            CustomMetadata::class =&gt; CustomMetadataFactory::class,</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>return [
+    'mezzio-hal' =&gt; [
+        'metadata-factories' =&gt; [
+            CustomMetadata::class =&gt; CustomMetadataFactory::class,
+        ],
+    ],
+];</code></pre>
 
 
 
@@ -511,9 +511,10 @@ You can register them via the configuration:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -550,7 +551,7 @@ You can register them via the configuration:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/mezzio/mezzio-hal//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -559,8 +560,8 @@ You can register them via the configuration:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/mezzio/mezzio-hal//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
