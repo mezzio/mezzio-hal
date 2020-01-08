@@ -36,6 +36,7 @@
     },
     "require": {
         "php": "^7.1",
+        "dasprid/container-interop-doctrine": "^1.1",
         "laminas/laminas-zendframework-bridge": "^1.0",
         "psr/http-message": "^1.0.1",
         "psr/link": "^1.0",

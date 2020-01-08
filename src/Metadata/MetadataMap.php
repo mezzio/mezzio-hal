@@ -8,11 +8,43 @@
 
 namespace Mezzio\Hal\Metadata;
 
-use function class_exists;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\Proxy;
 
+use function array_key_exists;
+use function class_exists;
+use function in_array;
+
+/**
+ * Class MetadataMap
+ * @package Mezzio\Hal\Metadata
+ */
 class MetadataMap
 {
+    /** @var EntityManagerInterface $em */
+    private $em;
+
+    /** @var array $map */
     private $map = [];
+
+    /** @var array $entityClasses */
+    private $entityClasses = [];
+
+    /**
+     * MetadataMap constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+
+        $metas = $em->getMetadataFactory()->getAllMetadata();
+        foreach ($metas as $meta) {
+            $this->entityClasses[] = $meta->getName();
+            $this->entityClasses[] =
+                $em->getConfiguration()->getProxyNamespace() . '\\' . Proxy::MARKER . '\\' . $meta->getName();
+        }
+    }
 
     /**
      * @throws Exception\DuplicateMetadataException if metadata matching the
@@ -36,6 +68,12 @@ class MetadataMap
 
     public function has(string $class) : bool
     {
+        if (!array_key_exists($class, $this->map)) {
+            if (in_array($class, $this->entityClasses)) {
+                $class = $this->em->getClassMetadata($class)->getName();
+            }
+        }
+
         return isset($this->map[$class]);
     }
 
@@ -45,6 +83,12 @@ class MetadataMap
      */
     public function get(string $class) : AbstractMetadata
     {
+        if (!array_key_exists($class, $this->map)) {
+            if (in_array($class, $this->entityClasses)) {
+                $class = $this->em->getClassMetadata($class)->getName();
+            }
+        }
+
         if (! isset($this->map[$class])) {
             throw Exception\UndefinedMetadataException::create($class);
         }

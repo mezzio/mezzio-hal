@@ -8,6 +8,7 @@
 
 namespace Mezzio\Hal;
 
+use ContainerInteropDoctrine\EntityManagerFactory;
 use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
 use Mezzio\Hal\LinkGenerator\UrlGeneratorInterface;
 use Mezzio\Hal\Metadata\MetadataMap;
@@ -39,6 +40,10 @@ class ConfigProvider
         return [
             'aliases' => [
                 UrlGeneratorInterface::class => LinkGenerator\MezzioUrlGenerator::class,
+                \Doctrine\ORM\EntityManager::class => 'doctrine.entity_manager.orm_default',
+                \Doctrine\ORM\EntityManagerInterface::class => 'doctrine.entity_manager.default',
+                'doctrine.entitymanager.orm_default' => 'doctrine.entity_manager.orm_default',
+                'doctrine.entity_manager.default' => 'doctrine.entitymanager.orm_default',
 
                 // Legacy Zend Framework aliases
                 \Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface::class => UrlGeneratorInterface::class,
@@ -53,6 +58,7 @@ class ConfigProvider
                 \Zend\Expressive\Hal\UrlBasedResourceStrategy::class => UrlBasedResourceStrategy::class,
             ],
             'factories' => [
+                'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
                 HalResponseFactory::class     => HalResponseFactoryFactory::class,
                 LinkGenerator::class          => LinkGeneratorFactory::class,
                 MezzioUrlGenerator::class => LinkGenerator\MezzioUrlGeneratorFactory::class,
