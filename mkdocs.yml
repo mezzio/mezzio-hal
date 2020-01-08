@@ -19,4 +19,3 @@ site_description: 'Hypertext Application Language for PSR-7 Applications'
 repo_url: 'https://github.com/mezzio/mezzio-hal'
 extra:
     project: Mezzio
-    project_url: 'https://docs.mezzio.dev'
