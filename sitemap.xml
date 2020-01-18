@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/intro/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/hal/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/links-and-resources/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/resource-generator/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/cookbook/generating-custom-resources/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/representations/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/doctrine/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/factories/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/cookbook/generating-custom-links-in-middleware/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.mezzio.dev/mezzio-hal/cookbook/path-segregated-uri-generation/</loc>
-     <lastmod>2020-01-16</lastmod>
+     <lastmod>2020-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
