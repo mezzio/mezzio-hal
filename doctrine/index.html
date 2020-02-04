@@ -306,9 +306,7 @@ paginated HAL representation. Over the course of the example, we will create a
 custom collection class based off of the Doctrine <code>Paginator</code> class, and map it
 as a HAL collection.</p>
 <p>Our first step is defining an entity:</p>
-<pre class=codehilite><code class=language-php>declare(strict_types=1);
-
-namespace Album\Entity;
+<pre class=codehilite><code class=language-php>namespace Album\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -318,7 +316,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @ORM\Entity
  * @ORM\Table(name=&quot;albums&quot;)
- **/
+ */
 class Album
 {
     /**
@@ -414,9 +412,7 @@ class Album
 }</code></pre>
 <p>In order to work with this, we need to provide Doctrine persistence mapping
 configuration. We will do this in the <code>ConfigProvider</code> for this module:</p>
-<pre class=codehilite><code class=language-php>declare(strict_types=1);
-
-namespace Album;
+<pre class=codehilite><code class=language-php>namespace Album;
 
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
@@ -458,9 +454,7 @@ class ConfigProvider
 }</code></pre>
 <p>Next, in order to provide a HAL <em>collection</em> representation, we will create a
 custom <code>Doctrine\ORM\Tools\Pagination\Paginator</code> extension:</p>
-<pre class=codehilite><code class=language-php>declare(strict_types=1);
-
-namespace Album\Entity;
+<pre class=codehilite><code class=language-php>namespace Album\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -471,10 +465,9 @@ class AlbumCollection extends Paginator
 <code>ConfigProvider</code>. First, we will add the following method to configure both our
 entity and our collection:</p>
 <pre class=codehilite><code class=language-php>// Add these imports to the top of the class file
+use Laminas\Hydrator\ReflectionHydrator;
 use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
 use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
-use Laminas\Hydrator\ReflectionHydrator;
-
 
     // Add this method inside the ConfigProvider class:
     public function getHalMetadataMap()
@@ -511,18 +504,16 @@ use Mezzio\Hal\Metadata\MetadataMap;
     }</code></pre>
 <p>With these in place, we can write a handler that will display a collection as
 follows:</p>
-<pre class=codehilite><code class=language-php>declare(strict_types=1);
-
-namespace Album\Handler;
+<pre class=codehilite><code class=language-php>namespace Album\Handler;
 
 use Album\Entity\Album;
 use Album\Entity\AlbumCollection;
 use Doctrine\ORM\EntityManager;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Mezzio\Hal\HalResponseFactory;
-use Mezzio\Hal\ResourceGenerator;
 
 class ListAlbumsHandler implements RequestHandlerInterface
 {
@@ -558,37 +549,37 @@ class ListAlbumsHandler implements RequestHandlerInterface
     }
 }</code></pre>
 <p>And another handler for displaying an individual album:</p>
-<pre class=codehilite><code class=language-php>declare(strict_types=1);
-
-namespace Album\Handler;
+<pre class=codehilite><code class=language-php>namespace Album\Handler;
 
 use Album\Entity\Album;
 use Doctrine\ORM\EntityManager;
-use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class ShowAlbumHandler implements RequestHandlerInterface
 {
+    /** @var EntityManager */
     protected $entityManager;
-    protected $urlHelper;
 
-    /**
-     * AnnouncementsViewHandler constructor.
-     * @param EntityManager $entityManager
-     * @param ServerUrlHelper $urlHelper
-     */
+    /** @var HalResponseFactory */
+    protected $responseFactory;
+
+    /** @var ResourceGenerator */
+    protected $resourceGenerator;
+
     public function __construct(
         EntityManager $entityManager,
+        HalResponseFactory $responseFactory,
+        ResourceGenerator $resourceGenerator
     ) {
-        $this-&gt;entityManager = $entityManager;
+        $this-&gt;entityManager     = $entityManager;
+        $this-&gt;responseFactory   = $responseFactory;
+        $this-&gt;resourceGenerator = $resourceGenerator;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $entityRepository = $this-&gt;entityManager-&gt;getRepository(Album::class);
