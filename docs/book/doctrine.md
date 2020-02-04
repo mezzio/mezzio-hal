@@ -21,8 +21,6 @@ as a HAL collection.
 Our first step is defining an entity:
 
 ```php
-declare(strict_types=1);
-
 namespace Album\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -33,7 +31,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @ORM\Entity
  * @ORM\Table(name="albums")
- **/
+ */
 class Album
 {
     /**
@@ -133,8 +131,6 @@ In order to work with this, we need to provide Doctrine persistence mapping
 configuration. We will do this in the `ConfigProvider` for this module:
 
 ```php
-declare(strict_types=1);
-
 namespace Album;
 
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
@@ -181,8 +177,6 @@ Next, in order to provide a HAL _collection_ representation, we will create a
 custom `Doctrine\ORM\Tools\Pagination\Paginator` extension:
 
 ```php
-declare(strict_types=1);
-
 namespace Album\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -198,10 +192,9 @@ entity and our collection:
 
 ```php
 // Add these imports to the top of the class file
+use Laminas\Hydrator\ReflectionHydrator;
 use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
 use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
-use Laminas\Hydrator\ReflectionHydrator;
-
 
     // Add this method inside the ConfigProvider class:
     public function getHalMetadataMap()
@@ -246,18 +239,16 @@ With these in place, we can write a handler that will display a collection as
 follows:
 
 ```php
-declare(strict_types=1);
-
 namespace Album\Handler;
 
 use Album\Entity\Album;
 use Album\Entity\AlbumCollection;
 use Doctrine\ORM\EntityManager;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Mezzio\Hal\HalResponseFactory;
-use Mezzio\Hal\ResourceGenerator;
 
 class ListAlbumsHandler implements RequestHandlerInterface
 {
@@ -297,37 +288,37 @@ class ListAlbumsHandler implements RequestHandlerInterface
 And another handler for displaying an individual album:
 
 ```php
-declare(strict_types=1);
-
 namespace Album\Handler;
 
 use Album\Entity\Album;
 use Doctrine\ORM\EntityManager;
-use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class ShowAlbumHandler implements RequestHandlerInterface
 {
+    /** @var EntityManager */
     protected $entityManager;
-    protected $urlHelper;
+    
+    /** @var HalResponseFactory */
+    protected $responseFactory;
+    
+    /** @var ResourceGenerator */
+    protected $resourceGenerator;
 
-    /**
-     * AnnouncementsViewHandler constructor.
-     * @param EntityManager $entityManager
-     * @param ServerUrlHelper $urlHelper
-     */
     public function __construct(
         EntityManager $entityManager,
+        HalResponseFactory $responseFactory,
+        ResourceGenerator $resourceGenerator
     ) {
-        $this->entityManager = $entityManager;
+        $this->entityManager     = $entityManager;
+        $this->responseFactory   = $responseFactory;
+        $this->resourceGenerator = $resourceGenerator;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $entityRepository = $this->entityManager->getRepository(Album::class);
