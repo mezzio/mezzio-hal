@@ -411,7 +411,7 @@ following information:</p>
 </li>
 </ul>
 <p>We aggregate metadata in a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance:</p>
-<pre class=codehilite><code class=language-php>$bookMetadata = new RouteBasedResourceMetadata(
+<pre class="highlight"><code class="language-php">$bookMetadata = new RouteBasedResourceMetadata(
     Book::class,
     'book',
     ObjectPropertyHydrator::class
@@ -425,6 +425,7 @@ $booksMetadata = new RouteBasedCollectionMetadata(
 $metadataMap = new MetadataMap();
 $metadataMap-&gt;add($bookMetadata);
 $metadataMap-&gt;add($booksMetadata);</code></pre>
+
 <h3>Configuration-based metadata</h3>
 <p>To automate generation of the <code>MetadataMap</code>, we provide
 <code>Mezzio\Hal\Metadata\MetadataMapFactory</code>. This factory may be used with any
@@ -435,7 +436,7 @@ service, and pulls its configuration from a key named after the
 describe which metadata class to create, and the remaining properties will then
 be used to generate an instance. As an example, the above could be configured as
 follows:</p>
-<pre class=codehilite><code class=language-php>use Api\Books\Book;
+<pre class="highlight"><code class="language-php">use Api\Books\Book;
 use Api\Books\BookCollection;
 use Mezzio\Hal\Metadata\MetadataMap;
 use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
@@ -458,6 +459,7 @@ return [
         ],
     ],
 ];</code></pre>
+
 <p>The rest of the parameters follow underscore delimiter naming convention:</p>
 <ul>
 <li><code>RouteBasedResourceMetadata::class</code><ul>
@@ -492,11 +494,12 @@ return [
 <p>Once you have defined the metadata for the various objects you will represent in
 your API, you can start generating resources.</p>
 <p><code>Mezzio\Hal\ResourceGenerator</code> has the following constructor:</p>
-<pre class=codehilite><code class=language-php>public function __construct(
+<pre class="highlight"><code class="language-php">public function __construct(
     Mezzio\Hal\Metadata\MetadataMap $metadataMap,
     Psr\Container\ContainerInterface $hydrators,
     Mezzio\Hal\LinkGenerator $linkGenerator
 ) {</code></pre>
+
 <p>We described the <code>MetadataMap</code> in the previous section, and the <code>LinkGenerator</code>
 in the <a href="../links-and-resources/#route-based-link-uris">previous chapter</a>.</p>
 <p>Hydrators are defind in the <a href="https://docs.laminas.dev/laminas-hydrator/">laminas-hydrator component</a>,
@@ -505,7 +508,8 @@ and are objects which can <em>hdyrate</em> associative arrays to object instance
 <code>$hydrators</code> instance may be any PSR-11 container, but you will generally want
 to use the <code>Laminas\Hydrator\HydratorPluginManager</code>.</p>
 <p>Once you have your instance created, you can start generating resources:</p>
-<pre class=codehilite><code class=language-php>$resource = $resourceGenerator-&gt;fromObject($book, $request);</code></pre>
+<pre class="highlight"><code class="language-php">$resource = $resourceGenerator-&gt;fromObject($book, $request);</code></pre>
+
 <p>(Where <code>$request</code> is a <code>Psr\Http\Message\ServerRequestInterface</code> instance; the
 instance is passed along to the <code>LinkGenerator</code> in order to generate route-based
 URIs for <code>Link</code> instances.)</p>

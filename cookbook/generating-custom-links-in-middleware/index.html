@@ -360,7 +360,7 @@ generator via getter methods:</p>
 middleware, and assigned it to the <code>$resourceGenerator</code> property.</p>
 <p>The link we want to generate will look something like
 <code>/api/books?query={searchParms}</code>, and map to a route named <code>books</code>.</p>
-<pre class=codehilite><code class=language-php>$searchLink = $this-&gt;resourceGenerator
+<pre class="highlight"><code class="language-php">$searchLink = $this-&gt;resourceGenerator
     -&gt;getLinkGenerator()
     -&gt;templatedFromRoute(
         'search',
@@ -369,8 +369,10 @@ middleware, and assigned it to the <code>$resourceGenerator</code> property.</p>
         [],
         ['query' =&gt; '{searchTerms}']
     );</code></pre>
+
 <p>You could then compose it in your resource:</p>
-<pre class=codehilite><code class=language-php>$resource = $resource-&gt;withLink($searchLink);</code></pre>
+<pre class="highlight"><code class="language-php">$resource = $resource-&gt;withLink($searchLink);</code></pre>
+
 <h2 id="adding-metadata-for-generated-links">Adding metadata for generated links</h2>
 <p>In our second scenario, we'll consider a collection endpoint. It might include a
 <code>per_page</code> query string argument, to allow defining how many results to return
@@ -379,7 +381,7 @@ string. We know these at <em>runtime</em>, but not at the time we create our
 configuration, so we need to inject them <em>after</em> we have our metadata created,
 but <em>before</em> we generate our resource, so that the pagination links are
 correctly generated.</p>
-<pre class=codehilite><code class=language-php>$queryParams = $request-&gt;getQueryParams();
+<pre class="highlight"><code class="language-php">$queryParams = $request-&gt;getQueryParams();
 $query       = $queryParams['query'] ?? '';
 $perPage     = $queryParams['per_page'] ?? 25;
 $sort        = $queryParams['sort'] ?? '';
@@ -408,6 +410,7 @@ $resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);
 
 // Reset query string arguments
 $metadata-&gt;setQueryStringArguments($origMetadataQuery);</code></pre>
+
 <p>This will lead to links with URIs such as
 <code>/api/books?query=Adams&amp;per_page=5&amp;sort=DESC&amp;page=4</code>.</p>
 

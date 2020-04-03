@@ -361,7 +361,7 @@ paginated HAL representation. Over the course of the example, we will create a
 custom collection class based off of the Doctrine <code>Paginator</code> class, and map it
 as a HAL collection.</p>
 <p>Our first step is defining an entity:</p>
-<pre class=codehilite><code class=language-php>namespace Album\Entity;
+<pre class="highlight"><code class="language-php">namespace Album\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -370,7 +370,7 @@ use Ramsey\Uuid\Uuid;
  * https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/basic-mapping.html
  *
  * @ORM\Entity
- * @ORM\Table(name=&quot;albums&quot;)
+ * @ORM\Table(name="albums")
  */
 class Album
 {
@@ -378,24 +378,24 @@ class Album
      * @var Uuid
      *
      * @ORM\Id
-     * @ORM\Column(type=&quot;uuid&quot;, unique=true)
-     * @ORM\GeneratedValue(strategy=&quot;CUSTOM&quot;)
-     * @ORM\CustomIdGenerator(class=&quot;Ramsey\Uuid\Doctrine\UuidGenerator&quot;)
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     protected $id;
 
     /**
-     * @ORM\Column(type=&quot;string&quot;, nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $title;
 
     /**
-     * @ORM\Column(type=&quot;datetime&quot;, nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $created;
 
     /**
-     * @ORM\Column(type=&quot;datetime&quot;)
+     * @ORM\Column(type="datetime")
      */
     protected $modified;
 
@@ -438,7 +438,7 @@ class Album
     public function setCreated(\DateTime $created = null): void
     {
         if (!$created &amp;&amp; empty($this-&gt;getId())) {
-            $this-&gt;created = new \DateTime(&quot;now&quot;);
+            $this-&gt;created = new \DateTime("now");
         } else {
             $this-&gt;created = $created;
         }
@@ -459,15 +459,16 @@ class Album
     public function setModified(\DateTime $modified = null): void
     {
         if (!$modified) {
-            $this-&gt;modified = new \DateTime(&quot;now&quot;);
+            $this-&gt;modified = new \DateTime("now");
         } else {
             $this-&gt;modified = $modified;
         }
     }
 }</code></pre>
+
 <p>In order to work with this, we need to provide Doctrine persistence mapping
 configuration. We will do this in the <code>ConfigProvider</code> for this module:</p>
-<pre class=codehilite><code class=language-php>namespace Album;
+<pre class="highlight"><code class="language-php">namespace Album;
 
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
@@ -507,19 +508,21 @@ class ConfigProvider
         ];
     }
 }</code></pre>
+
 <p>Next, in order to provide a HAL <em>collection</em> representation, we will create a
 custom <code>Doctrine\ORM\Tools\Pagination\Paginator</code> extension:</p>
-<pre class=codehilite><code class=language-php>namespace Album\Entity;
+<pre class="highlight"><code class="language-php">namespace Album\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AlbumCollection extends Paginator
 {
 }</code></pre>
+
 <p>From here, we will add configuration of our HAL metadata map to the
 <code>ConfigProvider</code>. First, we will add the following method to configure both our
 entity and our collection:</p>
-<pre class=codehilite><code class=language-php>// Add these imports to the top of the class file
+<pre class="highlight"><code class="language-php">// Add these imports to the top of the class file
 use Laminas\Hydrator\ReflectionHydrator;
 use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
 use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
@@ -542,9 +545,10 @@ use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
             ],
         ];
     }</code></pre>
+
 <p>Then, within the <code>__invoke()</code> method, we will assign the return value of that
 method to the key <code>MetadataMap::class</code>:</p>
-<pre class=codehilite><code class=language-php>// Add this import to the top of the class file:
+<pre class="highlight"><code class="language-php">// Add this import to the top of the class file:
 use Mezzio\Hal\Metadata\MetadataMap;
 
     // Modify this ConfigProvider method to read:
@@ -557,9 +561,10 @@ use Mezzio\Hal\Metadata\MetadataMap;
             MetadataMap::class =&gt; $this-&gt;getHalMetadataMap(),
         ];
     }</code></pre>
+
 <p>With these in place, we can write a handler that will display a collection as
 follows:</p>
-<pre class=codehilite><code class=language-php>namespace Album\Handler;
+<pre class="highlight"><code class="language-php">namespace Album\Handler;
 
 use Album\Entity\Album;
 use Album\Entity\AlbumCollection;
@@ -603,8 +608,9 @@ class ListAlbumsHandler implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
+
 <p>And another handler for displaying an individual album:</p>
-<pre class=codehilite><code class=language-php>namespace Album\Handler;
+<pre class="highlight"><code class="language-php">namespace Album\Handler;
 
 use Album\Entity\Album;
 use Doctrine\ORM\EntityManager;
@@ -649,6 +655,7 @@ class ShowAlbumHandler implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
+
 <p>In the above example, we map our <code>Album</code> entity such that:</p>
 <ul>
 <li>it is route-based; we will generate relational links to such entities based on
@@ -695,15 +702,16 @@ then, we have several options:</p>
 familiarize yourself with that code before continuing.</p>
 <p>The first change we will make is to modify our <code>AlbumCollection</code> to extend the
 Doctrine <code>ArrayCollection</code>, instead of its <code>Paginator</code>:</p>
-<pre class=codehilite><code class=language-php>namespace Album\Entity;
+<pre class="highlight"><code class="language-php">namespace Album\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 class AlbumCollection extends ArrayCollection
 {
 }</code></pre>
+
 <p>The only other changes we then need to make are to our <code>ListAlbumsHandler</code>:</p>
-<pre class=codehilite><code class=language-php>    public function handle(ServerRequestInterface $request) : ResponseInterface
+<pre class="highlight"><code class="language-php">    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $repository = $this-&gt;entityManager-&gt;getRepository(Album::class);
 
@@ -719,6 +727,7 @@ class AlbumCollection extends ArrayCollection
         $resource  = $this-&gt;resourceGenerator-&gt;fromObject($collection, $request);
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }</code></pre>
+
 <p>With these in place, we will now get representation of all items returned by the
 query.</p>
 

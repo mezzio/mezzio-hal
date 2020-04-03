@@ -372,27 +372,30 @@ Additionally, links:</p>
 </ul>
 <p>To model these, we provide the <code>Mezzio\Hal\Link</code> class. It has the
 following constructor:</p>
-<pre class=codehilite><code class=language-php>public function __construct(
+<pre class="highlight"><code class="language-php">public function __construct(
     $relation,
     string $uri = '',
     bool $isTemplated = false,
     array $attributes = []
 )</code></pre>
+
 <p><code>$relation</code> can be a string value, or an array of string values, representing
 the relation.</p>
 <p>To access these various properties, you can use the following methods:</p>
-<pre class=codehilite><code class=language-php>$link-&gt;getRels()       // get the list of relations for the link
+<pre class="highlight"><code class="language-php">$link-&gt;getRels()       // get the list of relations for the link
 $link-&gt;getHref()       // retrieve the URI
 $link-&gt;isTemplated()   // is the link templated?
 $link-&gt;getAttributes() // get any additional link attributes</code></pre>
+
 <p>A <code>Link</code> is <em>immutable</em>; you cannot change it after the fact. If you need a
 modified version of the link, we provide several methods that will return <em>new
 instances</em> containing the changes:</p>
-<pre class=codehilite><code class=language-php>$link = $link-&gt;withRel($rel);    // or provide an array of relations
+<pre class="highlight"><code class="language-php">$link = $link-&gt;withRel($rel);    // or provide an array of relations
 $link = $link-&gt;withoutRel($rel); // or provide an array of relations
 $link = $link-&gt;withHref($href);
 $link = $link-&gt;withAttribute($attribute, $value);
 $link = $link-&gt;withoutAttribute($attribute);</code></pre>
+
 <p>With these tools, you can describe any relational link.</p>
 <h3>Route-based link URIs</h3>
 <p>Most frameworks provide routing capabilities, and delegate URI generation to
@@ -402,7 +405,7 @@ hard-coding that URI?</p>
 <p>This component provides a tool for that: <code>Mezzio\Hal\LinkGenerator</code>.
 This class composes a <code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code>
 instance, which defines the following:</p>
-<pre class=codehilite><code class=language-php>namespace Mezzio\Hal\LinkGenerator;
+<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\LinkGenerator;
 
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -427,12 +430,13 @@ interface UrlGeneratorInterface
         array $queryParams = []
     ) : string;
 }</code></pre>
+
 <p>We provide a default implementation for Mezzio users,
 <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code>,  that uses the
 <code>UrlHelper</code> and <code>ServerUrlHelper</code> from mezzio-helpers in order to
 generate URIs.</p>
 <p>The <code>LinkGenerator</code> itself defines two methods:</p>
-<pre class=codehilite><code class=language-php>$link = $linkGenerator-&gt;fromRoute(
+<pre class="highlight"><code class="language-php">$link = $linkGenerator-&gt;fromRoute(
     $relation,
     $request,
     $routeName,
@@ -449,6 +453,7 @@ $link = $linkGenerator-&gt;templatedFromRoute(
     $queryParams, // Array of query string arguments to inject
     $attributes   // Array of Link attributes to use
 );</code></pre>
+
 <p><code>fromRoute()</code> will generate a non-templated <code>Link</code> instance, while
 <code>templatedFromRoute()</code> generates a templated instance.</p>
 <p>If you need to generate custom links based on routing, we recommend composing
@@ -468,11 +473,12 @@ parameter. See the issue for a comprehensive example.</p>
 <code>Mezzio\Hal\HalResource</code> allows you to model these representations,
 along with any relational links and child resources.</p>
 <p>It defines the following constructor:</p>
-<pre class=codehilite><code class=language-php>public function __construct(
+<pre class="highlight"><code class="language-php">public function __construct(
     array $data = [],
     array $links = [],
     array $embedded = []
 )</code></pre>
+
 <p><code>$data</code> should be an associative array of data you wish to include in your
 representation; the only limitation is you may not use the keys <code>_links</code> or
 <code>_embedded</code>, as these are reserved keywords.</p>
@@ -481,19 +487,21 @@ representation; the only limitation is you may not use the keys <code>_links</co
 Most often, however, you will include these with <code>$data</code>, as the class contains
 logic for identifying them.</p>
 <p>Once you have created an instance, you can access its properties:</p>
-<pre class=codehilite><code class=language-php>$resource-&gt;getElement($name) // retrieve an element or embedded resource by name
+<pre class="highlight"><code class="language-php">$resource-&gt;getElement($name) // retrieve an element or embedded resource by name
 $resource-&gt;getElements()     // retrieve all elements and embedded resources
 $resource-&gt;getLinks()        // retrieve all relational links
 $resource-&gt;getLinksByRel()   // retrieve links for a specific relation
 $resource-&gt;toArray()         // retrieve associative array representation</code></pre>
+
 <p><code>HalResource</code> instances are <em>immutable</em>. We provide a number of methods that
 allow you to create <em>new instances</em> with changes:</p>
-<pre class=codehilite><code class=language-php>$resource = $resource-&gt;withElement($name, $value);
+<pre class="highlight"><code class="language-php">$resource = $resource-&gt;withElement($name, $value);
 $resource = $resource-&gt;withoutElement($name);
 $resource = $resource-&gt;withElements($elements);
 $resource = $resource-&gt;embed($name, $resource);
 $resource = $resource-&gt;withLink($link);
 $resource = $resource-&gt;withoutLink($link);</code></pre>
+
 <p>With these tools, you can describe any resource you want to represent.</p>
 
 

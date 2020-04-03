@@ -432,10 +432,11 @@ directly to a factory that will return a valid instance.</p>
 <p>This service uses the <code>Mezzio\Hal\Metadata\MetadataMap</code> key of the <code>config</code> service in
 order to configure and return a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance. It expects
 that value to be an array of elements, each with the following structure:</p>
-<pre class=codehilite><code class=language-php>[
+<pre class="highlight"><code class="language-php">[
     '__class__' =&gt; 'Fully qualified class name of an AbstractMetadata type',
     // additional key/value pairs as required by the metadata type.
 ]</code></pre>
+
 <p>The additional pairs are as follows:</p>
 <ul>
 <li>For <code>UrlBasedResourceMetadata</code>:<ul>

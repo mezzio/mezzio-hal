@@ -330,7 +330,7 @@
     <h1 id="generating-custom-resources">Generating custom resources</h1>
 <p>The <code>ResourceGenerator</code> allows composing <code>Mezzio\Hal\ResourceGenerator\StrategyInterface</code>
 instances. The <code>StrategyInterface</code> defines the following:</p>
-<pre class=codehilite><code class=language-php>namespace Mezzio\Hal\ResourceGenerator;
+<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\ResourceGenerator;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Mezzio\Hal\HalResource;
@@ -351,15 +351,17 @@ interface StrategyInterface
         ServerRequestInterface $request
     ) : HalResource;
 }</code></pre>
+
 <p>When you register a strategy, you will map a metadata type to the strategy; the
 <code>ResourceGenerator</code> will then call your strategy whenever it encounteres
 metadata of that type.</p>
-<pre class=codehilite><code class=language-php>$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);
+<pre class="highlight"><code class="language-php">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);
 
 // or:
 $resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</code></pre>
+
 <p>You can also add your strategies via the configuration:</p>
-<pre class=codehilite><code class=language-php>return [
+<pre class="highlight"><code class="language-php">return [
     'mezzio-hal' =&gt; [
         'resource-generator' =&gt; [
             'strategies' =&gt; [
@@ -368,6 +370,7 @@ $resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</c
         ],
     ],
 ];</code></pre>
+
 <p>If a strategy already is mapped for the given metadata type, this method will
 override it.</p>
 <p>To facilitate common operations, this library provides two traits,
@@ -377,7 +380,7 @@ decide to write your own strategies.</p>
 <p>In order for the <code>MetadataMap</code> to be able to use your <code>CustomMetadata</code> you need to register 
 a factory (implementing <code>Mezzio\Hal\Metadata\MetadataFactoryInterface</code>) for it.
 You can register them via the configuration:</p>
-<pre class=codehilite><code class=language-php>return [
+<pre class="highlight"><code class="language-php">return [
     'mezzio-hal' =&gt; [
         'metadata-factories' =&gt; [
             CustomMetadata::class =&gt; CustomMetadataFactory::class,

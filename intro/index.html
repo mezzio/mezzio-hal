@@ -376,7 +376,8 @@ this, we provide two components:</p>
 relational links, from PHP objects.</strong></p>
 <h2 id="installation">Installation</h2>
 <p>Use Composer:</p>
-<pre class=codehilite><code class=language-bash>$ composer require mezzio/mezzio-hal</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
+
 <p>If you are adding this to an Mezzio application, and have the
 <a href="https://docs.laminas.dev/laminas-component-installer/">laminas-component-installer</a>
 package installed, this will prompt you to ask if you wish to add it to your
@@ -385,16 +386,18 @@ factories.</p>
 <p>We also recommend installing <a href="https://docs.laminas.dev/laminas-hydrator/">laminas-hydrator</a>,
 which provides facilities for extracting associative array representations of
 PHP objects:</p>
-<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-hydrator</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-hydrator</code></pre>
+
 <p>Finally, if you want to provide paginated collections, we recommend installing
 <a href="https://docs.laminas.dev/laminas-paginator/">laminas-paginator</a>:</p>
-<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-paginator</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-paginator</code></pre>
+
 <h2 id="quick-start">Quick Start</h2>
 <p>The following examples assume that you have added this package to an Mezzio
 application.</p>
 <h3>Entity and collection classes</h3>
 <p>For each of our examples, we'll assume the following class exists:</p>
-<pre class=codehilite><code class=language-php>namespace Api\Books;
+<pre class="highlight"><code class="language-php">namespace Api\Books;
 
 class Book
 {
@@ -402,14 +405,16 @@ class Book
     public $title;
     public $author;
 }</code></pre>
+
 <p>Additionally, we'll have a class representing a paginated group of books:</p>
-<pre class=codehilite><code class=language-php>namespace Api\Books;
+<pre class="highlight"><code class="language-php">namespace Api\Books;
 
 use Laminas\Paginator\Paginator;
 
 class BookCollection extends Paginator
 {
 }</code></pre>
+
 <h3>Routes</h3>
 <p>The examples below assume that we have the following routes defined in our
 application somehow:</p>
@@ -427,7 +432,7 @@ configuration, which you could put in one of the following places:</p>
   you will need to add an entry for this class to your <code>config/config.php</code> file.</li>
 </ul>
 <p>The configuration will look like this:</p>
-<pre class=codehilite><code class=language-php>// Provide the following imports:
+<pre class="highlight"><code class="language-php">// Provide the following imports:
 use Api\Books\Book;
 use Api\Books\BookCollection;
 use Mezzio\Hal\Metadata\MetadataMap;
@@ -450,13 +455,14 @@ MetadataMap::class =&gt; [
         'route' =&gt; 'books',
     ],
 ],</code></pre>
+
 <h3>Manually creating and rendering a resource</h3>
 <p>The following request handler creates a <code>HalResource</code> with its associated links,
 and then manually renders it using <code>Mezzio\Hal\Renderer\JsonRenderer</code>.
 (An <code>XmlRenderer</code> is also provided, but not demonstrated here.)</p>
 <p>We'll assume that <code>Api\Books\Repository</code> handles retrieving data from persistent
 storage.</p>
-<pre class=codehilite><code class=language-php>namespace Api\Books\Action;
+<pre class="highlight"><code class="language-php">namespace Api\Books\Action;
 
 use Api\Books\Repository;
 use Psr\Http\Message\ResponseInterface;
@@ -500,16 +506,18 @@ class BookAction implements RequestHandlerInterface
         );
     }
 }</code></pre>
+
 <p>The <code>JsonRenderer</code> returns the JSON string representing the data and links in
 the resource. The payload generated might look like the following:</p>
-<pre class=codehilite><code class=language-json>{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/api/books/1234&quot; }
+<pre class="highlight"><code class="language-json">{
+    "_links": {
+        "self": { "href": "/api/books/1234" }
     },
-    &quot;id&quot;: 1234,
-    &quot;title&quot;: &quot;Hitchhiker's Guide to the Galaxy&quot;,
-    &quot;author&quot;: &quot;Adams, Douglas&quot;
+    "id": 1234,
+    "title": "Hitchhiker's Guide to the Galaxy",
+    "author": "Adams, Douglas"
 }</code></pre>
+
 <p>The above example uses no metadata, and manually creates the <code>HalResource</code>
 instance. As the complexity of your objects increase, and the number of objects
 you want to represent via HAL increases, you may not want to manually generate
@@ -522,7 +530,7 @@ them.</p>
 returned resource.</p>
 <p>First, we'll look at a handler that displays a single book. We'll assume that
 <code>Api\Books\Repository</code> handles retrieving data from persistent storage.</p>
-<pre class=codehilite><code class=language-php>namespace Api\Books\Action;
+<pre class="highlight"><code class="language-php">namespace Api\Books\Action;
 
 use Api\Books\Repository;
 use Psr\Http\Message\ResponseInterface;
@@ -567,6 +575,7 @@ class BookAction implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
+
 <p>Note that the <code>$request</code> instance is passed to both the resource generator and
 response factory:</p>
 <ul>
@@ -575,20 +584,21 @@ response factory:</p>
   payload should be generated.</li>
 </ul>
 <p>The generated payload might look like the following:</p>
-<pre class=codehilite><code class=language-json>{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/api/books/1234&quot; }
+<pre class="highlight"><code class="language-json">{
+    "_links": {
+        "self": { "href": "/api/books/1234" }
     },
-    &quot;id&quot;: 1234,
-    &quot;title&quot;: &quot;Hitchhiker's Guide to the Galaxy&quot;,
-    &quot;author&quot;: &quot;Adams, Douglas&quot;
+    "id": 1234,
+    "title": "Hitchhiker's Guide to the Galaxy",
+    "author": "Adams, Douglas"
 }</code></pre>
+
 <h3>Request handler returning a collection</h3>
 <p>Next, we'll create a request handler that returns a <em>collection</em> of books. The
 collection will be <em>paginated</em> (assume our repository class creates a
 <code>BookCollection</code> backed by an appropriate adapter), and use a query string
 parameter to determine which page of results to return.</p>
-<pre class=codehilite><code class=language-php>namespace Api\Books\Action;
+<pre class="highlight"><code class="language-php">namespace Api\Books\Action;
 
 use Api\Books\Repository;
 use Psr\Http\Message\ResponseInterface;
@@ -633,48 +643,50 @@ class BooksAction implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
+
 <p>Note that resource and response generation <em>is exactly the same</em> as our previous
 example! This is because the metadata map takes care of the details of
 extracting the data from our value objects and generating links for us.</p>
 <p>In this particular example, since we are using a paginator for our collection
 class, we might get back something like the following:</p>
-<pre class=codehilite><code class=language-json>{
-    &quot;_links&quot;: {
-        &quot;self&quot;: { &quot;href&quot;: &quot;/api/books?page=7&quot; },
-        &quot;first&quot;: { &quot;href&quot;: &quot;/api/books?page=1&quot; },
-        &quot;prev&quot;: { &quot;href&quot;: &quot;/api/books?page=6&quot; },
-        &quot;next&quot;: { &quot;href&quot;: &quot;/api/books?page=8&quot; },
-        &quot;last&quot;: { &quot;href&quot;: &quot;/api/books?page=17&quot; }
-        &quot;search&quot;: {
-            &quot;href&quot;: &quot;/api/books?query={searchTerms}&quot;,
-            &quot;templated&quot;: true
+<pre class="highlight"><code class="language-json">{
+    "_links": {
+        "self": { "href": "/api/books?page=7" },
+        "first": { "href": "/api/books?page=1" },
+        "prev": { "href": "/api/books?page=6" },
+        "next": { "href": "/api/books?page=8" },
+        "last": { "href": "/api/books?page=17" }
+        "search": {
+            "href": "/api/books?query={searchTerms}",
+            "templated": true
         }
     },
-    &quot;_embedded&quot;: {
-        &quot;book&quot;: [
+    "_embedded": {
+        "book": [
             {
-                &quot;_links&quot;: {
-                    &quot;self&quot;: { &quot;href&quot;: &quot;/api/books/1234&quot; }
+                "_links": {
+                    "self": { "href": "/api/books/1234" }
                 }
-                &quot;id&quot;: 1234,
-                &quot;title&quot;: &quot;Hitchhiker's Guide to the Galaxy&quot;,
-                &quot;author&quot;: &quot;Adams, Douglas&quot;
+                "id": 1234,
+                "title": "Hitchhiker's Guide to the Galaxy",
+                "author": "Adams, Douglas"
             },
             {
-                &quot;_links&quot;: {
-                    &quot;self&quot;: { &quot;href&quot;: &quot;/api/books/6789&quot; }
+                "_links": {
+                    "self": { "href": "/api/books/6789" }
                 }
-                &quot;id&quot;: 6789,
-                &quot;title&quot;: &quot;Ancillary Justice&quot;,
-                &quot;author&quot;: &quot;Leckie, Ann&quot;
+                "id": 6789,
+                "title": "Ancillary Justice",
+                "author": "Leckie, Ann"
             },
             /* ... */
         ]
     },
-    &quot;_page&quot;: 7,
-    &quot;_per_page&quot;: 25,
-    &quot;_total&quot;: 407
+    "_page": 7,
+    "_per_page": 25,
+    "_total": 407
 }</code></pre>
+
 <h2 id="next-steps">Next steps</h2>
 <p>The above examples demonstrate setting up your application to generate and
 return HAL resources. In the following chapters, we'll cover:</p>

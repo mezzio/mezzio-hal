@@ -383,7 +383,7 @@ create will return HAL-JSON, and thus need to generate links using the
 configured router and base path.</p>
 <p>To begin, we will alter the <code>ConfigProvider</code> for our module to add the
 definitions noted below:</p>
-<pre class=codehilite><code class=language-php>// in src/Api/ConfigProvider.php:
+<pre class="highlight"><code class="language-php">// in src/Api/ConfigProvider.php:
 namespace Api;
 
 use Mezzio\Hal\LinkGeneratorFactory;
@@ -435,6 +435,7 @@ class ConfigProvider
         ];
     }
 }</code></pre>
+
 <p>Note that the majority of these service names are <em>virtual</em>; they do not resolve
 to actual classes. PHP allows usage of the <code>::class</code> pseudo-constant anywhere,
 and will resolve the value based on the current namespace. This gives us virtual
@@ -450,13 +451,12 @@ context-specific configuration required.</p>
 <code>UrlHelper</code>. What if you want to use a different path?</p>
 <p>You can override the service in an application-specific configuration under
 <code>config/autoload/</code>, specifying a different path!</p>
-<pre class="codehilite"><code class="language-php">
-\Api\UrlHelper::class =&gt; new UrlHelperFactory('/different/path', \Api\Router::class),
-</code></pre>
+<pre class="highlight"><code class="language-php">\Api\UrlHelper::class =&gt; new UrlHelperFactory('/different/path', \Api\Router::class),</code></pre>
+
 </blockquote>
 <h2 id="using-virtual-services-with-a-handler">Using virtual services with a handler</h2>
 <p>Now let's turn to our <code>CreateBookHandler</code>. We'll define it as follows:</p>
-<pre class=codehilite><code class=language-php>// in src/Api/CreateBookHandler.php:
+<pre class="highlight"><code class="language-php">// in src/Api/CreateBookHandler.php:
 namespace Api;
 
 use Psr\Http\Message\ResponseInterface;
@@ -485,9 +485,10 @@ class CreateBookHandler implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $book);
     }
 }</code></pre>
+
 <p>This handler needs a HAL resource generator. More specifically, it needs the one
 specific to our module. As such, we'll define our factory as follows:</p>
-<pre class=codehilite><code class=language-php>// in src/Api/CreateBookHandlerFactory.php:
+<pre class="highlight"><code class="language-php">// in src/Api/CreateBookHandlerFactory.php:
 namespace Api;
 
 use Psr\Container\ContainerInterface;
@@ -503,13 +504,14 @@ class CreateBookHandlerFactory
         );
     }
 }</code></pre>
+
 <p>You can create any number of such handlers for your module; the above
 demonstrates how and where injection of the alternate resource generator occurs.</p>
 <h2 id="creating-our-pipeline-and-routes">Creating our pipeline and routes</h2>
 <p>Now we can create our pipeline and routes.</p>
 <p>Generally when piping to an application instance, we can specify a class name of
 middleware to pipe, or an array of middleware:</p>
-<pre class=codehilite><code class=language-php>// in config/pipeline.php:
+<pre class="highlight"><code class="language-php">// in config/pipeline.php:
 $app-&gt;pipe('/api', [
     \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class,
     \Api\RouteMiddleware::class,     // module-specific routing middleware!
@@ -520,6 +522,7 @@ $app-&gt;pipe('/api', [
     DispatchMiddleware::class,
     \Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler::class,
 ]);</code></pre>
+
 <p>However, we have both the pipeline <em>and</em> routes, and we likely want to indicate
 the exact behavior of this pipeline. Additionally, we may want to re-use this
 pipeline in other applications; pushing this into the application configuration
@@ -528,7 +531,7 @@ makes that more error-prone.</p>
 <code>Laminas\Stratigility\MiddlewarePipe</code> instance that is fully configured for our
 module. As part of this functionality, we will also add our module-specific
 routing.</p>
-<pre class=codehilite><code class=language-php>// In src/Api/PipelineFactory.php:
+<pre class="highlight"><code class="language-php">// In src/Api/PipelineFactory.php:
 namespace Api;
 
 use Psr\Container\ContainerInterface;
@@ -567,13 +570,15 @@ class PipelineFactory
         return $pipeline;
     }
 }</code></pre>
+
 <p>Note that the routing definitions do <strong>not</strong> include the prefix <code>/api</code>; this is
 because that prefix will be stripped when we path-segregate our API middleware
 pipeline. All routing will be <em>relative</em> to that path.</p>
 <h2 id="creating-a-path-segregated-pipeline">Creating a path-segregated pipeline</h2>
 <p>Finally, we will attach our pipeline to the application, using path segregation:</p>
-<pre class=codehilite><code class=language-php>// in config/pipeline.php:
+<pre class="highlight"><code class="language-php">// in config/pipeline.php:
 $app-&gt;pipe('/api', \Api\Pipeline::class);</code></pre>
+
 <p>This statement tells the application to pipe the pipeline returned by our
 <code>PipelineFactory</code> under the path <code>/api</code>; that path will be stripped from
 requests when passed to the underlying middleware.</p>
