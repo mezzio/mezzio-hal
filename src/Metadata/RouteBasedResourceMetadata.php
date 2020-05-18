@@ -10,6 +10,9 @@ namespace Mezzio\Hal\Metadata;
 
 class RouteBasedResourceMetadata extends AbstractResourceMetadata
 {
+    /** @var array */
+    private $identifiersToPlaceHoldersMapping;
+
     /** @var string */
     private $resourceIdentifier;
 
@@ -28,7 +31,8 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         string $extractor,
         string $resourceIdentifier = 'id',
         string $routeIdentifierPlaceholder = 'id',
-        array $routeParams = []
+        array $routeParams = [],
+        array $identifiersToPlaceholdersMapping = ['id' => 'id']
     ) {
         $this->class = $class;
         $this->route = $route;
@@ -36,6 +40,7 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         $this->resourceIdentifier = $resourceIdentifier;
         $this->routeIdentifierPlaceholder = $routeIdentifierPlaceholder;
         $this->routeParams = $routeParams;
+        $this->identifiersToPlaceHoldersMapping = $identifiersToPlaceholdersMapping;
     }
 
     public function getRoute() : string
@@ -43,11 +48,26 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         return $this->route;
     }
 
+    public function getIdentifiersToPlaceholdersMapping() : array
+    {
+        return $this->identifiersToPlaceHoldersMapping;
+    }
+
+    /**
+     * This method has been kept for BC and should be deprecated.
+     *
+     * @return string
+     */
     public function getResourceIdentifier() : string
     {
         return $this->resourceIdentifier;
     }
 
+    /**
+     * This method has been kept for BC and should be deprecated.
+     *
+     * @return string
+     */
     public function getRouteIdentifierPlaceholder() : string
     {
         return $this->routeIdentifierPlaceholder;

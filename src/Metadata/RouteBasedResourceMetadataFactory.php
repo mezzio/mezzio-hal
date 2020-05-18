@@ -73,7 +73,8 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
             $metadata['extractor'],
             $metadata['resource_identifier'] ?? 'id',
             $metadata['route_identifier_placeholder'] ?? 'id',
-            $metadata['route_params'] ?? []
+            $metadata['route_params'] ?? [],
+            $metadata['identifiers_to_placeholders_mapping'] ?? ['id' => 'id']
         );
     }
 }
