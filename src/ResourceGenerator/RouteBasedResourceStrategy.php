@@ -45,6 +45,11 @@ class RouteBasedResourceStrategy implements StrategyInterface
         if (isset($data[$resourceIdentifier])) {
             $routeParams[$routeIdentifier] = $data[$resourceIdentifier];
         }
+        
+        // Inject all entity keys automatically into route parameters
+        foreach($data as $key => $value) {
+            $routeParams[$key] = $value;
+        }
 
         return new HalResource($data, [
             $resourceGenerator->getLinkGenerator()->fromRoute(
