@@ -26,28 +26,6 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - Nothing.
 
-## 1.3.2 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
 ## 1.3.1 - 2019-02-11
 
 ### Added
@@ -239,7 +217,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- [zendframework/zend-expressive-hal#36](https://github.com/zendframework/zend-expressive-hal/pull/36) 
+- [zendframework/zend-expressive-hal#36](https://github.com/zendframework/zend-expressive-hal/pull/36)
   fixes an issue whereby query string arguments were not being added to
   links generated for a resource. It now correctly merges those specified in
   metadata with those from the request when generating links.
@@ -625,11 +603,11 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - [zendframework/zend-expressive-hal#1](https://github.com/weierophinney/hal/pull/1) changes `Hal\HalResponseFactory`
   to compose a `JsonRenderer` and `XmlRenderer`, instead of composing
-  `$jsonFlags` and creating representations itself. 
+  `$jsonFlags` and creating representations itself.
 
   It also makes the response prototype and the stream factory the first
   arguments, as those will be the values most often injected.
-  
+
   The constructor signature is
   now:
 
