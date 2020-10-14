@@ -11,7 +11,7 @@ namespace Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\Metadata;
-use Mezzio\Hal\ResourceGenerator;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
@@ -35,7 +35,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
     public function createResource(
         $instance,
         Metadata\AbstractMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         if (! $metadata instanceof Metadata\UrlBasedCollectionMetadata) {
@@ -59,7 +59,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
      * @param Metadata\AbstractCollectionMetadata $metadata Used to provide the
      *     base URL, pagination parameter, and type of pagination used (query
      *     string, path parameter)
-     * @param ResourceGenerator $resourceGenerator Ignored; required to fulfill
+     * @param ResourceGeneratorInterface $resourceGenerator Ignored; required to fulfill
      *     abstract.
      * @param ServerRequestInterface $request Ignored; required to fulfill
      *     abstract.
@@ -69,7 +69,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         string $rel,
         int $page,
         Metadata\AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : Link {
         $paginationParam = $metadata->getPaginationParam();
@@ -93,7 +93,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
     /**
      * @param Metadata\AbstractCollectionMetadata $metadata Provides base URL
      *     for self link.
-     * @param ResourceGenerator $resourceGenerator Ignored; required to fulfill
+     * @param ResourceGeneratorInterface $resourceGenerator Ignored; required to fulfill
      *     abstract.
      * @param ServerRequestInterface $request Ignored; required to fulfill
      *     abstract.
@@ -101,7 +101,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
      */
     protected function generateSelfLink(
         Metadata\AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) {
 

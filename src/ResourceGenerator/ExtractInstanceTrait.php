@@ -11,7 +11,7 @@ namespace Mezzio\Hal\ResourceGenerator;
 use Laminas\Hydrator\ExtractionInterface;
 use Mezzio\Hal\Metadata\AbstractCollectionMetadata;
 use Mezzio\Hal\Metadata\AbstractMetadata;
-use Mezzio\Hal\ResourceGenerator;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function get_class;
@@ -27,7 +27,7 @@ trait ExtractInstanceTrait
     private function extractInstance(
         $instance,
         AbstractMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : array {
         $hydrators = $resourceGenerator->getHydrators();

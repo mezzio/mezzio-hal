@@ -10,7 +10,7 @@ namespace Mezzio\Hal\ResourceGenerator;
 
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Metadata;
-use Mezzio\Hal\ResourceGenerator;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 interface StrategyInterface
@@ -23,7 +23,7 @@ interface StrategyInterface
     public function createResource(
         $instance,
         Metadata\AbstractMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource;
 }

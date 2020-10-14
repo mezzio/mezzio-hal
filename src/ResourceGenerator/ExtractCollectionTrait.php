@@ -14,7 +14,7 @@ use Laminas\Paginator\Paginator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\Metadata\AbstractCollectionMetadata;
-use Mezzio\Hal\ResourceGenerator;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
@@ -33,20 +33,20 @@ trait ExtractCollectionTrait
         string $rel,
         int $page,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : Link;
 
     abstract protected function generateSelfLink(
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : Link;
 
     private function extractCollection(
         Traversable $collection,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         if (! $metadata instanceof AbstractCollectionMetadata) {
@@ -69,7 +69,7 @@ trait ExtractCollectionTrait
      *
      * @param Paginator $collection
      * @param AbstractCollectionMetadata $metadata
-     * @param ResourceGenerator $resourceGenerator
+     * @param ResourceGeneratorInterface $resourceGenerator
      * @param ServerRequestInterface $request
      * @return HalResource
      * @throws Exception\OutOfBoundsException if requested page if outside the available pages
@@ -77,7 +77,7 @@ trait ExtractCollectionTrait
     private function extractPaginator(
         Paginator $collection,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         $data      = ['_total_items' => $collection->getTotalItemCount()];
@@ -106,7 +106,7 @@ trait ExtractCollectionTrait
     private function extractDoctrinePaginator(
         DoctrinePaginator $collection,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         $query      = $collection->getQuery();
@@ -132,7 +132,7 @@ trait ExtractCollectionTrait
     private function extractIterator(
         Traversable $collection,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         $isCountable = $collection instanceof Countable;
@@ -184,7 +184,7 @@ trait ExtractCollectionTrait
         callable $notifyCollectionOfPage,
         iterable $collection,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         $links               = [];
@@ -255,7 +255,7 @@ trait ExtractCollectionTrait
         array $data,
         iterable $collection,
         AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         $resources = [];

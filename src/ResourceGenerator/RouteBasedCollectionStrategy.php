@@ -11,7 +11,7 @@ namespace Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\Metadata;
-use Mezzio\Hal\ResourceGenerator;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
@@ -27,7 +27,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
     public function createResource(
         $instance,
         Metadata\AbstractMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         if (! $metadata instanceof Metadata\RouteBasedCollectionMetadata) {
@@ -51,7 +51,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
      * @param Metadata\AbstractCollectionMetadata $metadata Used to provide the
      *     base URL, pagination parameter, and type of pagination used (query
      *     string, path parameter)
-     * @param ResourceGenerator $resourceGenerator Used to retrieve link
+     * @param ResourceGeneratorInterface $resourceGenerator Used to retrieve link
      *     generator in order to generate link based on routing information.
      * @param ServerRequestInterface $request Passed to link generator when
      *     generating link based on routing information.
@@ -61,7 +61,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         string $rel,
         int $page,
         Metadata\AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : Link {
         $route = $metadata->getRoute();
@@ -92,7 +92,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
     /**
      * @param Metadata\AbstractCollectionMetadata $metadata Provides base URL
      *     for self link.
-     * @param ResourceGenerator $resourceGenerator Used to retrieve link
+     * @param ResourceGeneratorInterface $resourceGenerator Used to retrieve link
      *     generator in order to generate link based on routing information.
      * @param ServerRequestInterface $request Passed to link generator when
      *     generating link based on routing information.
@@ -100,7 +100,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
      */
     protected function generateSelfLink(
         Metadata\AbstractCollectionMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) {
 

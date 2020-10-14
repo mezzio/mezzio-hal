@@ -11,7 +11,7 @@ namespace Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\Metadata;
-use Mezzio\Hal\ResourceGenerator;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class UrlBasedResourceStrategy implements StrategyInterface
@@ -21,7 +21,7 @@ class UrlBasedResourceStrategy implements StrategyInterface
     public function createResource(
         $instance,
         Metadata\AbstractMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
+        ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) : HalResource {
         if (! $metadata instanceof Metadata\UrlBasedResourceMetadata) {

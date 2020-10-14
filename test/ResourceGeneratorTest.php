@@ -21,6 +21,7 @@ use Mezzio\Hal\LinkGenerator;
 use Mezzio\Hal\Metadata;
 use Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\ResourceGenerator\Exception\OutOfBoundsException;
+use Mezzio\Hal\ResourceGeneratorInterface;
 use MezzioTest\Hal\TestAsset\TestMetadata;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -97,6 +98,11 @@ class ResourceGeneratorTest extends TestCase
             Metadata\UrlBasedResourceMetadata::class,
             ResourceGenerator\UrlBasedResourceStrategy::class
         );
+    }
+
+    public function testResourceGeneratorImplementsInterface()
+    {
+        $this->assertInstanceOf(ResourceGeneratorInterface::class, $this->generator);
     }
 
     public function testCanGenerateResourceWithSelfLinkFromArrayData()
