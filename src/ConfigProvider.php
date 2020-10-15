@@ -39,6 +39,7 @@ class ConfigProvider
         return [
             'aliases' => [
                 UrlGeneratorInterface::class => LinkGenerator\MezzioUrlGenerator::class,
+                ResourceGeneratorInterface::class => ResourceGenerator::class,
 
                 // Legacy Zend Framework aliases
                 \Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface::class => UrlGeneratorInterface::class,
