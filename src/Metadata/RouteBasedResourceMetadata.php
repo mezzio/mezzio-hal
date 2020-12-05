@@ -38,12 +38,14 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         string $resourceIdentifier = self::DEFAULT_RESOURCE_ID,
         string $routeIdentifierPlaceholder = self::DEFAULT_ROUTE_ID_PLACEHOLDER,
         array $routeParams = [],
-        array $identifiersToPlaceholdersMapping = []
+        array $identifiersToPlaceholdersMapping = [],
+        int $maxDepth = 10
     ) {
         $this->class = $class;
         $this->route = $route;
         $this->extractor = $extractor;
         $this->routeParams = $routeParams;
+        $this->maxDepth = $maxDepth;
 
         $this->resourceIdentifier = $resourceIdentifier;
         $this->routeIdentifierPlaceholder = $routeIdentifierPlaceholder;

@@ -23,4 +23,9 @@ abstract class AbstractMetadata
     {
         return $this->class;
     }
+
+    public function hasReachedMaxDepth(int $currentDepth): bool
+    {
+        return false;
+    }
 }

@@ -17,8 +17,16 @@ abstract class AbstractResourceMetadata extends AbstractMetadata
      */
     protected $extractor;
 
+    /** @var int */
+    protected $maxDepth;
+
     public function getExtractor() : string
     {
         return $this->extractor;
+    }
+
+    public function hasReachedMaxDepth(int $currentDepth): bool
+    {
+        return $currentDepth > $this->maxDepth;
     }
 }
