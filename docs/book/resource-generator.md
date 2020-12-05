@@ -52,6 +52,7 @@ following information:
     - array `$routeParams = []` (associative array of additional routing
       parameters to substitute when generating the URI)
     - array `$identifiersToPlacholdersMapping = []` (associative array mapping resource properties to route parameters, for use when generating the URI; available since 1.4.0)
+    - int `$maxDepth = 10` max allowed nesting levels.
 - `Mezzio\Hal\Metadata\UrlBasedCollectionMetadata`:
     - string `$class`
     - string `$collectionRelation`

@@ -111,6 +111,7 @@ The additional pairs are as follows:
     - `route_params`: an array of additional routing parameters to use when
       generating the self relational link for the resource.
     - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI; since 1.4.0)
+    - `max_depth`: the number of nesting levels processed. Defaults to 10.
 - For `RouteBasedCollectionMetadata`:
     - `collection_class`: the collection class the metadata describes.
     - `collection_relation`: the embedded relation for the collection in the
