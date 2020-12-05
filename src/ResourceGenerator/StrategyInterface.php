@@ -24,6 +24,7 @@ interface StrategyInterface
         $instance,
         Metadata\AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource;
 }
