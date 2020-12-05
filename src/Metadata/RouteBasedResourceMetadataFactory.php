@@ -55,6 +55,10 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
      *          // 'route_identifier_placeholder' setting, which will be removed
      *          // in version 2.0.
      *          'identifiers_to_placeholders_mapping' => ['id' => 'id'],
+     *
+     *          // Max depth to render
+     *          // Defaults to 10.
+     *          'max_depth' => 10,
      *     ]
      *     </code>
      * @return AbstractMetadata
@@ -82,7 +86,8 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
             $metadata['resource_identifier'] ?? 'id',
             $metadata['route_identifier_placeholder'] ?? 'id',
             $metadata['route_params'] ?? [],
-            $metadata['identifiers_to_placeholders_mapping'] ?? ['id' => 'id']
+            $metadata['identifiers_to_placeholders_mapping'] ?? ['id' => 'id'],
+            $metadata['max_depth'] ?? 10
         );
     }
 }

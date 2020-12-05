@@ -32,6 +32,10 @@ class UrlBasedResourceMetadataFactory implements MetadataFactoryInterface
      *
      *          // The extractor/hydrator service to use to extract resource data.
      *          'extractor' => 'MyExtractor',
+     *
+     *          // Max depth to render
+     *          // Defaults to 10.
+     *          'max_depth' => 10,
      *     ]
      *     </code>
      * @return AbstractMetadata
@@ -55,7 +59,8 @@ class UrlBasedResourceMetadataFactory implements MetadataFactoryInterface
         return new $requestedName(
             $metadata['resource_class'],
             $metadata['url'],
-            $metadata['extractor']
+            $metadata['extractor'],
+            $metadata['max_depth'] ?? 10
         );
     }
 }
