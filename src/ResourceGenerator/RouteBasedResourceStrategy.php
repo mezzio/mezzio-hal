@@ -57,6 +57,10 @@ class RouteBasedResourceStrategy implements StrategyInterface
             $routeParams[$key] = $value;
         }
 
+        if ($metadata->hasReachedMaxDepth($depth)) {
+            $data = [];
+        }
+
         return new HalResource($data, [
             $resourceGenerator->getLinkGenerator()->fromRoute(
                 'self',

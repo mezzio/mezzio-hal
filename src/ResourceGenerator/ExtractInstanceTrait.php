@@ -39,6 +39,10 @@ trait ExtractInstanceTrait
 
         $array = $extractor->extract($instance);
 
+        if ($metadata->hasReachedMaxDepth($depth)) {
+            return $array;
+        }
+
         // Extract nested resources if present in metadata map
         $metadataMap = $resourceGenerator->getMetadataMap();
         foreach ($array as $key => $value) {
