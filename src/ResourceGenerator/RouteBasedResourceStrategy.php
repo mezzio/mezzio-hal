@@ -36,7 +36,8 @@ class RouteBasedResourceStrategy implements StrategyInterface
             $instance,
             $metadata,
             $resourceGenerator,
-            $request
+            $request,
+            $depth
         );
 
         $routeParams    = $metadata->getRouteParams();

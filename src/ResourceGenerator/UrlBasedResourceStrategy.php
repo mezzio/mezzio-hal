@@ -34,7 +34,7 @@ class UrlBasedResourceStrategy implements StrategyInterface
         }
 
         return new HalResource(
-            $this->extractInstance($instance, $metadata, $resourceGenerator, $request),
+            $this->extractInstance($instance, $metadata, $resourceGenerator, $request, $depth),
             [new Link('self', $metadata->getUrl())]
         );
     }

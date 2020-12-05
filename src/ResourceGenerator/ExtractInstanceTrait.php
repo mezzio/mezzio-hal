@@ -28,7 +28,8 @@ trait ExtractInstanceTrait
         $instance,
         AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : array {
         $hydrators = $resourceGenerator->getHydrators();
         $extractor = $hydrators->get($metadata->getExtractor());
