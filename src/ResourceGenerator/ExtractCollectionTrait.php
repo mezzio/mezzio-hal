@@ -146,7 +146,7 @@ trait ExtractCollectionTrait
 
         $resources = [];
         foreach ($collection as $item) {
-            $resources[] = $resourceGenerator->fromObject($item, $request);
+            $resources[] = $resourceGenerator->fromObject($item, $request, $depth + 1);
             $count = $isCountable ? $count : $count + 1;
         }
 
@@ -270,7 +270,7 @@ trait ExtractCollectionTrait
     ) : HalResource {
         $resources = [];
         foreach ($collection as $item) {
-            $resources[] = $resourceGenerator->fromObject($item, $request);
+            $resources[] = $resourceGenerator->fromObject($item, $request, $depth + 1);
         }
 
         return new HalResource($data, $links, [

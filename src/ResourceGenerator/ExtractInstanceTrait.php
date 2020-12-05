@@ -51,7 +51,7 @@ trait ExtractInstanceTrait
                 continue;
             }
 
-            $childData = $resourceGenerator->fromObject($value, $request);
+            $childData = $resourceGenerator->fromObject($value, $request, $depth + 1);
 
             // Nested collections need to be merged.
             $childMetadata = $metadataMap->get($childClass);
