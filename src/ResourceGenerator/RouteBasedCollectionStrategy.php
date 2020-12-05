@@ -43,7 +43,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
             throw Exception\InvalidCollectionException::fromInstance($instance, get_class($this));
         }
 
-        return $this->extractCollection($instance, $metadata, $resourceGenerator, $request);
+        return $this->extractCollection($instance, $metadata, $resourceGenerator, $request, $depth);
     }
 
     /**

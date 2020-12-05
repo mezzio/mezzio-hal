@@ -47,21 +47,22 @@ trait ExtractCollectionTrait
         Traversable $collection,
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource {
         if (! $metadata instanceof AbstractCollectionMetadata) {
             throw Exception\UnexpectedMetadataTypeException::forCollection($metadata, get_class($this));
         }
 
         if ($collection instanceof Paginator) {
-            return $this->extractPaginator($collection, $metadata, $resourceGenerator, $request);
+            return $this->extractPaginator($collection, $metadata, $resourceGenerator, $request, $depth);
         }
 
         if ($collection instanceof DoctrinePaginator) {
-            return $this->extractDoctrinePaginator($collection, $metadata, $resourceGenerator, $request);
+            return $this->extractDoctrinePaginator($collection, $metadata, $resourceGenerator, $request, $depth);
         }
 
-        return $this->extractIterator($collection, $metadata, $resourceGenerator, $request);
+        return $this->extractIterator($collection, $metadata, $resourceGenerator, $request, $depth);
     }
 
     /**
@@ -78,7 +79,8 @@ trait ExtractCollectionTrait
         Paginator $collection,
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource {
         $data      = ['_total_items' => $collection->getTotalItemCount()];
         $pageCount = $collection->count();
@@ -92,7 +94,8 @@ trait ExtractCollectionTrait
             $collection,
             $metadata,
             $resourceGenerator,
-            $request
+            $request,
+            $depth
         );
     }
 
@@ -107,7 +110,8 @@ trait ExtractCollectionTrait
         DoctrinePaginator $collection,
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource {
         $query      = $collection->getQuery();
         $totalItems = count($collection);
@@ -125,7 +129,8 @@ trait ExtractCollectionTrait
             $collection,
             $metadata,
             $resourceGenerator,
-            $request
+            $request,
+            $depth
         );
     }
 
@@ -133,7 +138,8 @@ trait ExtractCollectionTrait
         Traversable $collection,
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource {
         $isCountable = $collection instanceof Countable;
         $count = $isCountable ? $collection->count() : 0;
@@ -185,7 +191,8 @@ trait ExtractCollectionTrait
         iterable $collection,
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource {
         $links               = [];
         $paginationParamType = $metadata->getPaginationParamType();
@@ -198,7 +205,8 @@ trait ExtractCollectionTrait
                 $collection,
                 $metadata,
                 $resourceGenerator,
-                $request
+                $request,
+                $depth
             );
         }
 
@@ -237,7 +245,8 @@ trait ExtractCollectionTrait
             $collection,
             $metadata,
             $resourceGenerator,
-            $request
+            $request,
+            $depth
         );
     }
 
@@ -256,7 +265,8 @@ trait ExtractCollectionTrait
         iterable $collection,
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
+        ServerRequestInterface $request,
+        int $depth = 0
     ) : HalResource {
         $resources = [];
         foreach ($collection as $item) {
