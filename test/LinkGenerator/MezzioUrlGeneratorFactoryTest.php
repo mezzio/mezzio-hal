@@ -12,13 +12,19 @@ use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
 use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
+use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
 class MezzioUrlGeneratorFactoryTest extends TestCase
 {
-    public function setUp()
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
+
+    public function setUp(): void
     {
         $this->container = $this->prophesize(ContainerInterface::class);
     }

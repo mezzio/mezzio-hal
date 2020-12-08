@@ -15,12 +15,17 @@ use Mezzio\Hal\HalResponseFactoryFactory;
 use Mezzio\Hal\Renderer;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionProperty;
 
 class HalResponseFactoryFactoryTest extends TestCase
 {
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
+
     public static function assertResponseFactoryReturns(ResponseInterface $expected, HalResponseFactory $factory) : void
     {
         $r = new ReflectionProperty($factory, 'responseFactory');

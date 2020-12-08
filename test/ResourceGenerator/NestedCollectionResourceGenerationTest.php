@@ -16,8 +16,10 @@ use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
 use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
 use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
+use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -26,6 +28,10 @@ use function array_shift;
 class NestedCollectionResourceGenerationTest extends TestCase
 {
     use Assertions;
+
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
 
     public function testNestedCollectionIsEmbeddedAsAnArrayNotAHalCollection()
     {
@@ -68,7 +74,7 @@ class NestedCollectionResourceGenerationTest extends TestCase
             $this->assertInternalType('array', $selfLinks);
             $this->assertNotEmpty($selfLinks);
             $selfLink = array_shift($selfLinks);
-            $this->assertContains('/child/', $selfLink->getHref());
+            $this->assertStringContainsString('/child/', $selfLink->getHref());
         }
     }
 

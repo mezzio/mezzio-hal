@@ -23,6 +23,7 @@ use Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\ResourceGenerator\Exception\OutOfBoundsException;
 use MezzioTest\Hal\TestAsset\TestMetadata;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,6 +35,10 @@ use stdClass;
 class ResourceGeneratorTest extends TestCase
 {
     use Assertions;
+
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
 
     /**
      * @var ObjectProphecy|ServerRequestInterface
@@ -60,7 +65,7 @@ class ResourceGeneratorTest extends TestCase
      */
     private $generator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = $this->prophesize(ServerRequestInterface::class);
         $this->hydrators = $this->prophesize(ContainerInterface::class);

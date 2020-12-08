@@ -21,14 +21,20 @@ use Mezzio\Hal\Metadata\UrlBasedCollectionMetadata;
 use Mezzio\Hal\Metadata\UrlBasedCollectionMetadataFactory;
 use Mezzio\Hal\Metadata\UrlBasedResourceMetadata;
 use Mezzio\Hal\Metadata\UrlBasedResourceMetadataFactory;
+use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use stdClass;
 
 class MetadataMapFactoryTest extends TestCase
 {
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
+
     /**
      * @var MetadataMapFactory
      */
@@ -39,7 +45,7 @@ class MetadataMapFactoryTest extends TestCase
      */
     private $container;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->container = $this->prophesize(ContainerInterface::class);
         $this->factory = new MetadataMapFactory();

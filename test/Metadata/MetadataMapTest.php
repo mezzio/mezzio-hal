@@ -10,9 +10,12 @@ namespace MezzioTest\Hal\Metadata;
 
 use Mezzio\Hal\Metadata;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MetadataMapTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $metadataClasses = [
         Metadata\AbstractMetadata::class,
         Metadata\AbstractCollectionMetadata::class,
@@ -23,7 +26,7 @@ class MetadataMapTest extends TestCase
         Metadata\UrlBasedResourceMetadata::class,
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->map = new Metadata\MetadataMap();
     }
