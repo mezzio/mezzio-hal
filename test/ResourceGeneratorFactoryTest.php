@@ -17,18 +17,23 @@ use Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
 use Mezzio\Hal\ResourceGeneratorFactory;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use stdClass;
 
 class ResourceGeneratorFactoryTest extends TestCase
 {
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy|ContainerInterface
      */
     private $container;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->container = $this->prophesize(ContainerInterface::class);
 
@@ -82,7 +87,7 @@ class ResourceGeneratorFactoryTest extends TestCase
     }
 
     /**
-     * @depends missingOrEmptyStrategiesConfiguration
+     * @dataProvider missingOrEmptyStrategiesConfiguration
      */
     public function testFactoryWithoutAnyStrategies(array $config)
     {
@@ -98,7 +103,6 @@ class ResourceGeneratorFactoryTest extends TestCase
 
     public function invalidStrategiesConfig()
     {
-        yield 'null'       => [null];
         yield 'false'      => [false];
         yield 'true'       => [true];
         yield 'zero'       => [0];
@@ -110,7 +114,7 @@ class ResourceGeneratorFactoryTest extends TestCase
     }
 
     /**
-     * @depends invalidStrategiesConfig
+     * @dataProvider invalidStrategiesConfig
      * @param mixed $strategies
      */
     public function testFactoryRaisesExceptionIfStrategiesConfigIsNonTraversable($strategies)

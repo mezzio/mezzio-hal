@@ -21,12 +21,15 @@ use MezzioTest\Hal\Assertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class UrlBasedCollectionWithRouteParamsTest extends TestCase
 {
     use Assertions;
+
+    use ProphecyTrait;
 
     public function testUsesQueriesWithPaginatorSpecifiedInMetadataWhenGeneratingLinkHref()
     {

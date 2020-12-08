@@ -11,10 +11,13 @@ namespace MezzioTest\Hal;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\LinkGenerator;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class LinkGeneratorTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testUsesComposedUrlGeneratorToGenerateHrefForLink()
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
