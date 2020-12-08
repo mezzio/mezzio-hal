@@ -28,7 +28,9 @@ use const PHP_URL_QUERY;
 
 class UrlBasedCollectionStrategy implements StrategyInterface
 {
-    use ExtractCollectionTrait;
+    use ExtractCollectionTrait, GenerateSelfLinkTrait {
+        GenerateSelfLinkTrait::generateSelfLink insteadof ExtractCollectionTrait;
+    }
 
     public function createResource(
         $instance,
