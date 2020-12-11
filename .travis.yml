@@ -6,7 +6,6 @@ cache:
 
 env:
   global:
-    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
     - COVERAGE_DEPS="php-coveralls/php-coveralls"
 
 matrix:
@@ -15,23 +14,29 @@ matrix:
     - php: 7.3
       env:
         - DEPS=lowest
+        - COMPOSER_ARGS="--no-interaction"
     - php: 7.3
       env:
         - DEPS=latest
         - CS_CHECK=true
         - TEST_COVERAGE=true
+        - COMPOSER_ARGS="--no-interaction"
     - php: 7.4
       env:
         - DEPS=lowest
+        - COMPOSER_ARGS="--no-interaction"
     - php: 7.4
       env:
         - DEPS=latest
+        - COMPOSER_ARGS="--no-interaction"
     - php: 8.0
       env:
         - DEPS=lowest
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
     - php: 8.0
       env:
         - DEPS=latest
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
