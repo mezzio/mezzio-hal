@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
-## 1.4.0 - TBD
+## 2.0.0 - TBD
 
 ### Added
 
