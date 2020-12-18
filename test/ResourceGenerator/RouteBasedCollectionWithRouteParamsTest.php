@@ -20,6 +20,7 @@ use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -194,7 +195,12 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             $rel,
             $request->reveal(),
             'foo-bar',
-            ['foo_id' => 1234, 'p' => $page],
+            Argument::that(function (array $params) use ($page) {
+                return array_key_exists('foo_id', $params)
+                    && array_key_exists('p', $params)
+                    && $params['foo_id'] === 1234
+                    && $params['p'] === $page;
+            }),
             ['sort' => 'ASC']
         )->willReturn(new Link($rel, sprintf('/api/foo/1234/p/%d?sort=ASC', $page)));
     }
@@ -216,10 +222,12 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
                     'self',
                     $request->reveal(),
                     'foo-bar',
-                    [
-                        'foo_id' => 1234,
-                        'bar_id' => $i,
-                    ]
+                    Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_id', $params)
+                            && array_key_exists('bar_id', $params)
+                            && $params['foo_id'] === 1234
+                            && $params['bar_id'] === $i;
+                    })
                 )
                 ->willReturn(new Link('self', '/api/foo/1234/bar/' . $i));
         }

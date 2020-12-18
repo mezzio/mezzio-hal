@@ -12,7 +12,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
-- Nothing.
+- [#16](https://github.com/mezzio/mezzio-hal/pull/16) changes the behavior when route-based resource links are generated. It now passes all scalar properties of the resource as route parameters, allowing the resource to fill in properties required by the route, without the need of seeding metadata. As an example, if you defined the route `/group/:group_id/:user_id`, and `:user_id` is the resource identifier, and your resource also defines `group_id`, the `group_id` value will fill in the associated value in the generated URI.
 
 ### Deprecated
 
@@ -136,28 +136,6 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - [zendframework/zend-expressive-hal#39](https://github.com/zendframework/zend-expressive-hal/pull/39) updates `ResourceGeneratorFactory` to allow passing an alternate service name to use when
   retrieving the `LinkGenerator` dependency.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 1.0.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
 
 ### Deprecated
 

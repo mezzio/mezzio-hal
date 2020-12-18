@@ -23,6 +23,7 @@ use Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\ResourceGenerator\Exception\OutOfBoundsException;
 use MezzioTest\Hal\TestAsset\TestMetadata;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -173,10 +174,12 @@ class ResourceGeneratorTest extends TestCase
                 'self',
                 $this->request->reveal(),
                 'foo-bar',
-                [
-                    'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
-                    'test' => 'param',
-                ]
+                Argument::that(function (array $params) {
+                    return array_key_exists('foo_bar_id', $params)
+                        && array_key_exists('test', $params)
+                        && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
+                        && $params['test'] === 'param';
+                })
             )
             ->willReturn(new Link('self', '/api/foo-bar/XXXX-YYYY-ZZZZ'));
 
@@ -289,10 +292,12 @@ class ResourceGeneratorTest extends TestCase
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    [
-                        'foo_bar_id' => $i,
-                        'test' => 'param',
-                    ]
+                    Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_bar_id', $params)
+                            && array_key_exists('test', $params)
+                            && $params['foo_bar_id'] === $i
+                            && $params['test'] === 'param';
+                    })
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
         }
@@ -311,7 +316,7 @@ class ResourceGeneratorTest extends TestCase
                 'self',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 3]
             )
             ->willReturn(new Link('self', '/api/foo-bar?page=3'));
@@ -320,7 +325,7 @@ class ResourceGeneratorTest extends TestCase
                 'first',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 1]
             )
             ->willReturn(new Link('first', '/api/foo-bar?page=1'));
@@ -329,7 +334,7 @@ class ResourceGeneratorTest extends TestCase
                 'prev',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 2]
             )
             ->willReturn(new Link('prev', '/api/foo-bar?page=2'));
@@ -338,7 +343,7 @@ class ResourceGeneratorTest extends TestCase
                 'next',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 4]
             )
             ->willReturn(new Link('next', '/api/foo-bar?page=4'));
@@ -347,7 +352,7 @@ class ResourceGeneratorTest extends TestCase
                 'last',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 5]
             )
             ->willReturn(new Link('last', '/api/foo-bar?page=5'));
@@ -419,10 +424,12 @@ class ResourceGeneratorTest extends TestCase
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    [
-                        'foo_bar_id' => $i,
-                        'test' => 'param',
-                    ]
+                    Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_bar_id', $params)
+                            && array_key_exists('test', $params)
+                            && $params['foo_bar_id'] === $i
+                            && $params['test'] === 'param';
+                    })
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
         }
@@ -441,7 +448,7 @@ class ResourceGeneratorTest extends TestCase
                 'self',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 3]
             )
             ->willReturn(new Link('self', '/api/foo-bar?page=3'));
@@ -450,7 +457,7 @@ class ResourceGeneratorTest extends TestCase
                 'first',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 1]
             )
             ->willReturn(new Link('first', '/api/foo-bar?page=1'));
@@ -459,7 +466,7 @@ class ResourceGeneratorTest extends TestCase
                 'prev',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 2]
             )
             ->willReturn(new Link('prev', '/api/foo-bar?page=2'));
@@ -468,7 +475,7 @@ class ResourceGeneratorTest extends TestCase
                 'next',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 4]
             )
             ->willReturn(new Link('next', '/api/foo-bar?page=4'));
@@ -477,7 +484,7 @@ class ResourceGeneratorTest extends TestCase
                 'last',
                 $this->request->reveal(),
                 'foo-bar',
-                [],
+                Argument::type('array'),
                 ['page' => 5]
             )
             ->willReturn(new Link('last', '/api/foo-bar?page=5'));
@@ -756,5 +763,51 @@ class ResourceGeneratorTest extends TestCase
         $this->expectException(InvalidStrategyException::class);
         $this->expectExceptionMessage('does not exist, or does not implement');
         $this->generator->addStrategy(TestMetadata::class, 'invalid-strategy');
+    }
+
+    public function testPassesAllScalarEntityPropertiesAsRouteParametersWhenGeneratingUri()
+    {
+        $instance      = new TestAsset\FooBar;
+        $instance->id  = 'XXXX-YYYY-ZZZZ';
+        $instance->foo = 'BAR';
+        $instance->bar = [
+            'value' => 'baz',
+        ];
+
+        $metadata = new Metadata\RouteBasedResourceMetadata(
+            TestAsset\FooBar::class,
+            'foo-bar',
+            self::getObjectPropertyHydratorClass(),
+            'id',
+            'foo_bar_id',
+            ['test' => 'param']
+        );
+
+        $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
+        $this->metadataMap->get(TestAsset\FooBar::class)->willReturn($metadata);
+
+        $hydratorClass = self::getObjectPropertyHydratorClass();
+
+        $this->hydrators->get($hydratorClass)->willReturn(new $hydratorClass());
+        $this->linkGenerator
+            ->fromRoute(
+                'self',
+                $this->request->reveal(),
+                'foo-bar',
+                [
+                    'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
+                    'id'         => 'XXXX-YYYY-ZZZZ',
+                    'foo'        => 'BAR',
+                    'test'       => 'param',
+                ]
+            )
+            ->willReturn(new Link('self', '/api/foo-bar/XXXX-YYYY-ZZZZ'));
+
+        $resource = $this->generator->fromObject($instance, $this->request->reveal());
+
+        $this->assertInstanceOf(HalResource::class, $resource);
+
+        $self = $this->getLinkByRel('self', $resource);
+        $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ', $self);
     }
 }

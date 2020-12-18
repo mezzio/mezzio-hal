@@ -18,6 +18,7 @@ use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -136,7 +137,10 @@ class NestedCollectionResourceGenerationTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                [ 'id' => 101010 ]
+                Argument::that(function (array $params) {
+                    return array_key_exists('id', $params)
+                        && $params['id'] === 101010;
+                })
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
@@ -146,7 +150,10 @@ class NestedCollectionResourceGenerationTest extends TestCase
                     'self',
                     $request->reveal(),
                     'child',
-                    [ 'id' => $i ]
+                    Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('id', $params)
+                            && $params['id'] === $i;
+                    })
                 )
                 ->willReturn(new Link('self', '/api/child/' . $i));
         }
@@ -157,7 +164,7 @@ class NestedCollectionResourceGenerationTest extends TestCase
                 $request->reveal(),
                 'collection',
                 [],
-                []
+                Argument::type('array')
             )
             ->willReturn(new Link('self', '/api/collection'));
 
