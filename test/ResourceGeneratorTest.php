@@ -764,4 +764,50 @@ class ResourceGeneratorTest extends TestCase
         $this->expectExceptionMessage('does not exist, or does not implement');
         $this->generator->addStrategy(TestMetadata::class, 'invalid-strategy');
     }
+
+    public function testPassesAllScalarEntityPropertiesAsRouteParametersWhenGeneratingUri()
+    {
+        $instance      = new TestAsset\FooBar;
+        $instance->id  = 'XXXX-YYYY-ZZZZ';
+        $instance->foo = 'BAR';
+        $instance->bar = [
+            'value' => 'baz',
+        ];
+
+        $metadata = new Metadata\RouteBasedResourceMetadata(
+            TestAsset\FooBar::class,
+            'foo-bar',
+            self::getObjectPropertyHydratorClass(),
+            'id',
+            'foo_bar_id',
+            ['test' => 'param']
+        );
+
+        $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
+        $this->metadataMap->get(TestAsset\FooBar::class)->willReturn($metadata);
+
+        $hydratorClass = self::getObjectPropertyHydratorClass();
+
+        $this->hydrators->get($hydratorClass)->willReturn(new $hydratorClass());
+        $this->linkGenerator
+            ->fromRoute(
+                'self',
+                $this->request->reveal(),
+                'foo-bar',
+                [
+                    'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
+                    'id'         => 'XXXX-YYYY-ZZZZ',
+                    'foo'        => 'BAR',
+                    'test'       => 'param',
+                ]
+            )
+            ->willReturn(new Link('self', '/api/foo-bar/XXXX-YYYY-ZZZZ'));
+
+        $resource = $this->generator->fromObject($instance, $this->request->reveal());
+
+        $this->assertInstanceOf(HalResource::class, $resource);
+
+        $self = $this->getLinkByRel('self', $resource);
+        $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ', $self);
+    }
 }
