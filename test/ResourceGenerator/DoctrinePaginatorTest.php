@@ -10,7 +10,6 @@ namespace MezzioTest\Hal\ResourceGenerator;
 
 use ArrayIterator;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;

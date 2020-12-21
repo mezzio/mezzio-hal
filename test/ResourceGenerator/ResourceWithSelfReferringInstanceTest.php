@@ -14,6 +14,8 @@ use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,6 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
 final class ResourceWithSelfReferringInstanceTest extends TestCase
 {
     use Assertions;
+    use ProphecyTrait;
 
     public function testSelfReferringIsEmbeddedAsResource(): void
     {
@@ -72,6 +75,7 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
             'id',
             'id',
             [],
+            [],
             0
         );
 
@@ -95,7 +99,10 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                [ 'id' => 1234 ]
+                Argument::that(function (array $params): bool {
+                    return array_key_exists('id', $params)
+                        && $params['id'] === 1234;
+                })
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
