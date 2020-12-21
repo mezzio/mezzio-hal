@@ -6,7 +6,7 @@
  * @license   https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md New BSD License
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MezzioTest\Hal\ResourceGenerator;
 
