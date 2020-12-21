@@ -8,11 +8,13 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- Nothing.
+- [#19](https://github.com/mezzio/mezzio-hal/pull/19) extracts the interface `ResourceGeneratorInterface` to describe the behaviors of a resource generator.
 
 ### Changed
 
-- Nothing.
+- [#19](https://github.com/mezzio/mezzio-hal/pull/19) updates all typehints that previously referenced `ResourceGenerator` to now reference `ResourceGeneratorInterface`. This includes `Mezzio\Hal\ResourceGenerator\StrategyInterface` and all of its implementations. The `ExtractCollectionTrait` and `ExtractInstanceTrait` implementations were also updated, however, so if you were using one of those, your extensions will likely be insulated.
+
+- [#19](https://github.com/mezzio/mezzio-hal/pull/19) updates `ResourceGenerator` to implement the new `ResourceGeneratorInterface`.
 
 ### Deprecated
 
