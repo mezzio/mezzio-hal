@@ -262,7 +262,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -435,7 +435,6 @@ class ConfigProvider
         ];
     }
 }</code></pre>
-
 <p>Note that the majority of these service names are <em>virtual</em>; they do not resolve
 to actual classes. PHP allows usage of the <code>::class</code> pseudo-constant anywhere,
 and will resolve the value based on the current namespace. This gives us virtual
@@ -452,7 +451,6 @@ context-specific configuration required.</p>
 <p>You can override the service in an application-specific configuration under
 <code>config/autoload/</code>, specifying a different path!</p>
 <pre class="highlight"><code class="language-php">\Api\UrlHelper::class =&gt; new UrlHelperFactory('/different/path', \Api\Router::class),</code></pre>
-
 </blockquote>
 <h2 id="using-virtual-services-with-a-handler">Using virtual services with a handler</h2>
 <p>Now let's turn to our <code>CreateBookHandler</code>. We'll define it as follows:</p>
@@ -485,7 +483,6 @@ class CreateBookHandler implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $book);
     }
 }</code></pre>
-
 <p>This handler needs a HAL resource generator. More specifically, it needs the one
 specific to our module. As such, we'll define our factory as follows:</p>
 <pre class="highlight"><code class="language-php">// in src/Api/CreateBookHandlerFactory.php:
@@ -504,7 +501,6 @@ class CreateBookHandlerFactory
         );
     }
 }</code></pre>
-
 <p>You can create any number of such handlers for your module; the above
 demonstrates how and where injection of the alternate resource generator occurs.</p>
 <h2 id="creating-our-pipeline-and-routes">Creating our pipeline and routes</h2>
@@ -522,7 +518,6 @@ $app-&gt;pipe('/api', [
     DispatchMiddleware::class,
     \Mezzio\ProblemDetails\ProblemDetailsNotFoundHandler::class,
 ]);</code></pre>
-
 <p>However, we have both the pipeline <em>and</em> routes, and we likely want to indicate
 the exact behavior of this pipeline. Additionally, we may want to re-use this
 pipeline in other applications; pushing this into the application configuration
@@ -570,7 +565,6 @@ class PipelineFactory
         return $pipeline;
     }
 }</code></pre>
-
 <p>Note that the routing definitions do <strong>not</strong> include the prefix <code>/api</code>; this is
 because that prefix will be stripped when we path-segregate our API middleware
 pipeline. All routing will be <em>relative</em> to that path.</p>
@@ -578,7 +572,6 @@ pipeline. All routing will be <em>relative</em> to that path.</p>
 <p>Finally, we will attach our pipeline to the application, using path segregation:</p>
 <pre class="highlight"><code class="language-php">// in config/pipeline.php:
 $app-&gt;pipe('/api', \Api\Pipeline::class);</code></pre>
-
 <p>This statement tells the application to pipe the pipeline returned by our
 <code>PipelineFactory</code> under the path <code>/api</code>; that path will be stripped from
 requests when passed to the underlying middleware.</p>

@@ -262,7 +262,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -388,9 +388,11 @@ following information:</p>
 <li>string <code>$resourceIdentifier = 'id'</code> (name of the property uniquely
   identifying the resource)</li>
 <li>string <code>$routeIdentifierPlaceholder = 'id'</code> (name of the routing parameter
-  that maps to the resource identifier)</li>
+  that maps to the resource identifier; deprecated since 1.4.0 in favor of
+  using the <code>$identifiersToPlacholdersMapping</code>)</li>
 <li>array <code>$routeParams = []</code> (associative array of additional routing
   parameters to substitute when generating the URI)</li>
+<li>array <code>$identifiersToPlacholdersMapping = []</code> (associative array mapping resource properties to route parameters, for use when generating the URI; available since 1.4.0)</li>
 </ul>
 </li>
 <li><code>Mezzio\Hal\Metadata\UrlBasedCollectionMetadata</code>:<ul>
@@ -425,7 +427,6 @@ $booksMetadata = new RouteBasedCollectionMetadata(
 $metadataMap = new MetadataMap();
 $metadataMap-&gt;add($bookMetadata);
 $metadataMap-&gt;add($booksMetadata);</code></pre>
-
 <h3>Configuration-based metadata</h3>
 <p>To automate generation of the <code>MetadataMap</code>, we provide
 <code>Mezzio\Hal\Metadata\MetadataMapFactory</code>. This factory may be used with any
@@ -459,13 +460,13 @@ return [
         ],
     ],
 ];</code></pre>
-
 <p>The rest of the parameters follow underscore delimiter naming convention:</p>
 <ul>
 <li><code>RouteBasedResourceMetadata::class</code><ul>
 <li><code>resource_identifier</code> (name of the property uniquely identifying the resource)</li>
-<li><code>route_identifier_placeholder</code> (name of the routing parameter that maps to the resource identifier)</li>
+<li><code>route_identifier_placeholder</code> (name of the routing parameter that maps to the resource identifier. Deprecated since 1.4.0; use the <code>identifiers_to_placeholders_mapping</code> setting instead)</li>
 <li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
+<li><code>identifiers_to_placeholders_mapping</code> (associative array mapping resource properties to routing parameters, for use when generating the URI; since 1.4.0)</li>
 </ul>
 </li>
 <li><code>RouteBasedCollectionMetadata::class</code><ul>
@@ -499,7 +500,6 @@ your API, you can start generating resources.</p>
     Psr\Container\ContainerInterface $hydrators,
     Mezzio\Hal\LinkGenerator $linkGenerator
 ) {</code></pre>
-
 <p>We described the <code>MetadataMap</code> in the previous section, and the <code>LinkGenerator</code>
 in the <a href="../links-and-resources/#route-based-link-uris">previous chapter</a>.</p>
 <p>Hydrators are defind in the <a href="https://docs.laminas.dev/laminas-hydrator/">laminas-hydrator component</a>,
@@ -509,7 +509,6 @@ and are objects which can <em>hdyrate</em> associative arrays to object instance
 to use the <code>Laminas\Hydrator\HydratorPluginManager</code>.</p>
 <p>Once you have your instance created, you can start generating resources:</p>
 <pre class="highlight"><code class="language-php">$resource = $resourceGenerator-&gt;fromObject($book, $request);</code></pre>
-
 <p>(Where <code>$request</code> is a <code>Psr\Http\Message\ServerRequestInterface</code> instance; the
 instance is passed along to the <code>LinkGenerator</code> in order to generate route-based
 URIs for <code>Link</code> instances.)</p>

@@ -262,7 +262,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -465,7 +465,6 @@ class Album
         }
     }
 }</code></pre>
-
 <p>In order to work with this, we need to provide Doctrine persistence mapping
 configuration. We will do this in the <code>ConfigProvider</code> for this module:</p>
 <pre class="highlight"><code class="language-php">namespace Album;
@@ -508,7 +507,6 @@ class ConfigProvider
         ];
     }
 }</code></pre>
-
 <p>Next, in order to provide a HAL <em>collection</em> representation, we will create a
 custom <code>Doctrine\ORM\Tools\Pagination\Paginator</code> extension:</p>
 <pre class="highlight"><code class="language-php">namespace Album\Entity;
@@ -518,7 +516,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class AlbumCollection extends Paginator
 {
 }</code></pre>
-
 <p>From here, we will add configuration of our HAL metadata map to the
 <code>ConfigProvider</code>. First, we will add the following method to configure both our
 entity and our collection:</p>
@@ -545,7 +542,6 @@ use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
             ],
         ];
     }</code></pre>
-
 <p>Then, within the <code>__invoke()</code> method, we will assign the return value of that
 method to the key <code>MetadataMap::class</code>:</p>
 <pre class="highlight"><code class="language-php">// Add this import to the top of the class file:
@@ -561,7 +557,6 @@ use Mezzio\Hal\Metadata\MetadataMap;
             MetadataMap::class =&gt; $this-&gt;getHalMetadataMap(),
         ];
     }</code></pre>
-
 <p>With these in place, we can write a handler that will display a collection as
 follows:</p>
 <pre class="highlight"><code class="language-php">namespace Album\Handler;
@@ -608,7 +603,6 @@ class ListAlbumsHandler implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
-
 <p>And another handler for displaying an individual album:</p>
 <pre class="highlight"><code class="language-php">namespace Album\Handler;
 
@@ -655,7 +649,6 @@ class ShowAlbumHandler implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
-
 <p>In the above example, we map our <code>Album</code> entity such that:</p>
 <ul>
 <li>it is route-based; we will generate relational links to such entities based on
@@ -709,7 +702,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class AlbumCollection extends ArrayCollection
 {
 }</code></pre>
-
 <p>The only other changes we then need to make are to our <code>ListAlbumsHandler</code>:</p>
 <pre class="highlight"><code class="language-php">    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
@@ -727,7 +719,6 @@ class AlbumCollection extends ArrayCollection
         $resource  = $this-&gt;resourceGenerator-&gt;fromObject($collection, $request);
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }</code></pre>
-
 <p>With these in place, we will now get representation of all items returned by the
 query.</p>
 

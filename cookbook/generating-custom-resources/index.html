@@ -262,7 +262,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -351,7 +351,6 @@ interface StrategyInterface
         ServerRequestInterface $request
     ) : HalResource;
 }</code></pre>
-
 <p>When you register a strategy, you will map a metadata type to the strategy; the
 <code>ResourceGenerator</code> will then call your strategy whenever it encounteres
 metadata of that type.</p>
@@ -359,7 +358,6 @@ metadata of that type.</p>
 
 // or:
 $resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</code></pre>
-
 <p>You can also add your strategies via the configuration:</p>
 <pre class="highlight"><code class="language-php">return [
     'mezzio-hal' =&gt; [
@@ -370,7 +368,6 @@ $resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</c
         ],
     ],
 ];</code></pre>
-
 <p>If a strategy already is mapped for the given metadata type, this method will
 override it.</p>
 <p>To facilitate common operations, this library provides two traits,

@@ -262,7 +262,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -377,7 +377,6 @@ relational links, from PHP objects.</strong></p>
 <h2 id="installation">Installation</h2>
 <p>Use Composer:</p>
 <pre class="highlight"><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
-
 <p>If you are adding this to an Mezzio application, and have the
 <a href="https://docs.laminas.dev/laminas-component-installer/">laminas-component-installer</a>
 package installed, this will prompt you to ask if you wish to add it to your
@@ -387,11 +386,9 @@ factories.</p>
 which provides facilities for extracting associative array representations of
 PHP objects:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-hydrator</code></pre>
-
 <p>Finally, if you want to provide paginated collections, we recommend installing
 <a href="https://docs.laminas.dev/laminas-paginator/">laminas-paginator</a>:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-paginator</code></pre>
-
 <h2 id="quick-start">Quick Start</h2>
 <p>The following examples assume that you have added this package to an Mezzio
 application.</p>
@@ -405,7 +402,6 @@ class Book
     public $title;
     public $author;
 }</code></pre>
-
 <p>Additionally, we'll have a class representing a paginated group of books:</p>
 <pre class="highlight"><code class="language-php">namespace Api\Books;
 
@@ -414,7 +410,6 @@ use Laminas\Paginator\Paginator;
 class BookCollection extends Paginator
 {
 }</code></pre>
-
 <h3>Routes</h3>
 <p>The examples below assume that we have the following routes defined in our
 application somehow:</p>
@@ -455,7 +450,6 @@ MetadataMap::class =&gt; [
         'route' =&gt; 'books',
     ],
 ],</code></pre>
-
 <h3>Manually creating and rendering a resource</h3>
 <p>The following request handler creates a <code>HalResource</code> with its associated links,
 and then manually renders it using <code>Mezzio\Hal\Renderer\JsonRenderer</code>.
@@ -506,7 +500,6 @@ class BookAction implements RequestHandlerInterface
         );
     }
 }</code></pre>
-
 <p>The <code>JsonRenderer</code> returns the JSON string representing the data and links in
 the resource. The payload generated might look like the following:</p>
 <pre class="highlight"><code class="language-json">{
@@ -517,7 +510,6 @@ the resource. The payload generated might look like the following:</p>
     "title": "Hitchhiker's Guide to the Galaxy",
     "author": "Adams, Douglas"
 }</code></pre>
-
 <p>The above example uses no metadata, and manually creates the <code>HalResource</code>
 instance. As the complexity of your objects increase, and the number of objects
 you want to represent via HAL increases, you may not want to manually generate
@@ -575,7 +567,6 @@ class BookAction implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
-
 <p>Note that the <code>$request</code> instance is passed to both the resource generator and
 response factory:</p>
 <ul>
@@ -592,7 +583,6 @@ response factory:</p>
     "title": "Hitchhiker's Guide to the Galaxy",
     "author": "Adams, Douglas"
 }</code></pre>
-
 <h3>Request handler returning a collection</h3>
 <p>Next, we'll create a request handler that returns a <em>collection</em> of books. The
 collection will be <em>paginated</em> (assume our repository class creates a
@@ -643,7 +633,6 @@ class BooksAction implements RequestHandlerInterface
         return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
     }
 }</code></pre>
-
 <p>Note that resource and response generation <em>is exactly the same</em> as our previous
 example! This is because the metadata map takes care of the details of
 extracting the data from our value objects and generating links for us.</p>
@@ -686,7 +675,6 @@ class, we might get back something like the following:</p>
     "_per_page": 25,
     "_total": 407
 }</code></pre>
-
 <h2 id="next-steps">Next steps</h2>
 <p>The above examples demonstrate setting up your application to generate and
 return HAL resources. In the following chapters, we'll cover:</p>

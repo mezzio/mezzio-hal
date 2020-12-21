@@ -262,7 +262,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -436,7 +436,6 @@ that value to be an array of elements, each with the following structure:</p>
     '__class__' =&gt; 'Fully qualified class name of an AbstractMetadata type',
     // additional key/value pairs as required by the metadata type.
 ]</code></pre>
-
 <p>The additional pairs are as follows:</p>
 <ul>
 <li>For <code>UrlBasedResourceMetadata</code>:<ul>
@@ -470,9 +469,11 @@ that value to be an array of elements, each with the following structure:</p>
 <li><code>resource_identifier</code>: what property in the resource represents its
   identifier; defaults to "id".</li>
 <li><code>route_identifier_placeholder</code>: what placeholder in the route string
-  represents the resource identifier; defaults to "id".</li>
+  represents the resource identifier; defaults to "id". Deprecated since
+  1.4.0; use the <code>identifiers_to_placeholders_mapping</code> setting instead.</li>
 <li><code>route_params</code>: an array of additional routing parameters to use when
   generating the self relational link for the resource.</li>
+<li><code>identifiers_to_placeholders_mapping</code> (associative array mapping resource properties to routing parameters, for use when generating the URI; since 1.4.0)</li>
 </ul>
 </li>
 <li>For <code>RouteBasedCollectionMetadata</code>:<ul>
