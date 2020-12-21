@@ -170,8 +170,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -285,8 +285,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -417,8 +417,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -527,8 +527,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -583,8 +583,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -639,8 +639,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -790,8 +790,8 @@ class ResourceGeneratorTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'foo_bar_id',
-            ['test' => 'param']
+            ['test' => 'param'],
+            ['id' => 'foo_bar_id']
         );
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -832,7 +832,6 @@ class ResourceGeneratorTest extends TestCase
             TestAsset\FooBar::class,
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
-            'id',
             'id',
             [],
             [

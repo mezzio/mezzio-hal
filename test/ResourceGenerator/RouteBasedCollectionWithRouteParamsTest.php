@@ -53,8 +53,8 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'bar_id',
-            ['foo_id' => 1234]
+            ['foo_id' => 1234],
+            ['id' => 'bar_id']
         );
 
         $metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
@@ -131,8 +131,8 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'bar_id',
-            ['foo_id' => 1234]
+            ['foo_id' => 1234],
+            ['id' => 'bar_id']
         );
 
         $metadataMap->has(TestAsset\FooBar::class)->willReturn(true);

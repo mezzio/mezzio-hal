@@ -46,12 +46,9 @@ following information:
       use for extracting data from the instance)
     - string `$resourceIdentifier = 'id'` (name of the property uniquely
       identifying the resource)
-    - string `$routeIdentifierPlaceholder = 'id'` (name of the routing parameter
-      that maps to the resource identifier; deprecated since 1.4.0 in favor of
-      using the `$identifiersToPlacholdersMapping`)
     - array `$routeParams = []` (associative array of additional routing
       parameters to substitute when generating the URI)
-    - array `$identifiersToPlacholdersMapping = []` (associative array mapping resource properties to route parameters, for use when generating the URI; available since 1.4.0)
+    - array `$identifiersToPlacholdersMapping = []` (associative array mapping resource properties to route parameters, for use when generating the URI)
     - int `$maxDepth = 10` max allowed nesting levels.
 - `Mezzio\Hal\Metadata\UrlBasedCollectionMetadata`:
     - string `$class`
@@ -128,9 +125,9 @@ The rest of the parameters follow underscore delimiter naming convention:
 
 - `RouteBasedResourceMetadata::class`
     - `resource_identifier` (name of the property uniquely identifying the resource)
-    - `route_identifier_placeholder` (name of the routing parameter that maps to the resource identifier. Deprecated since 1.4.0; use the `identifiers_to_placeholders_mapping` setting instead)
     - `route_params` (associative array of substitutions to use with the designated route)
-    - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI; since 1.4.0)
+    - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI)
+    - `max_depth` (maximum depth to allow when rendering nested resources; defaults to 10)
 - `RouteBasedCollectionMetadata::class`
     - `pagination_param`  (name of the parameter indicating the current page of results)
     - `pagination_param_type` (one of "query" or "placeholder")

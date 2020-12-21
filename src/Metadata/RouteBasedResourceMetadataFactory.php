@@ -39,12 +39,6 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
      *          // Defaults to "id".
      *          'resource_identifier' => 'id',
      *
-     *          // What placeholder in the route string represents the resource
-     *          // identifier. Defaults to "id".
-     *          // Deprecated since 1.4.0; use the 'identifiers_to_placeholders_mapping'
-     *          // setting instead.
-     *          'route_identifier_placeholder' => 'id',
-     *
      *          // An array of additional routing parameters to use when
      *          // generating the self relational link for the collection
      *          // resource. Defaults to an empty array.
@@ -84,7 +78,6 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
             $metadata['route'],
             $metadata['extractor'],
             $metadata['resource_identifier'] ?? 'id',
-            $metadata['route_identifier_placeholder'] ?? 'id',
             $metadata['route_params'] ?? [],
             $metadata['identifiers_to_placeholders_mapping'] ?? ['id' => 'id'],
             $metadata['max_depth'] ?? 10

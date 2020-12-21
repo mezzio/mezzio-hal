@@ -269,7 +269,6 @@ class MetadataMapFactoryTest extends TestCase
                         'route'                        => 'foo',
                         'extractor'                    => 'ObjectProperty',
                         'resource_identifier'          => 'foo_id',
-                        'route_identifier_placeholder' => 'foo_id',
                         'route_params'                 => ['foo' => 'bar'],
                         'identifiers_to_placeholders_mapping' => [
                             'bar' => 'bar_value',
@@ -295,12 +294,10 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame('ObjectProperty', $metadata->getExtractor());
         $this->assertSame('foo', $metadata->getRoute());
         $this->assertSame('foo_id', $metadata->getResourceIdentifier());
-        $this->assertSame('foo_id', $metadata->getRouteIdentifierPlaceholder());
         $this->assertSame(['foo' => 'bar'], $metadata->getRouteParams());
         $this->assertSame([
             'bar'    => 'bar_value',
             'baz'    => 'baz_value',
-            'foo_id' => 'foo_id',
         ], $metadata->getIdentifiersToPlaceholdersMapping());
     }
 
@@ -363,39 +360,5 @@ class MetadataMapFactoryTest extends TestCase
         $metadata = $metadataMap->get(stdClass::class);
 
         $this->assertInstanceOf(TestAsset\TestMetadata::class, $metadata);
-    }
-
-    public function testFactoryRaisesExceptionWhenCreatingRouteBasedResourceMetadataContainingConfigConflicts()
-    {
-        $this->container->has('config')->willReturn(true);
-        $this->container->get('config')->willReturn(
-            [
-                MetadataMap::class => [
-                    [
-                        '__class__'                    => RouteBasedResourceMetadata::class,
-                        'resource_class'               => stdClass::class,
-                        'route'                        => 'foo',
-                        'extractor'                    => 'ObjectProperty',
-                        'resource_identifier'          => 'foo_id',
-                        'route_identifier_placeholder' => 'foo_id',
-                        'route_params'                 => ['foo' => 'bar'],
-                        'identifiers_to_placeholders_mapping' => [
-                            'foo_id' => 'id',
-                            'bar'    => 'bar_value',
-                            'baz'    => 'baz_value',
-                        ],
-                    ],
-                ],
-                'mezzio-hal' => [
-                    'metadata-factories' => [
-                        RouteBasedResourceMetadata::class => RouteBasedResourceMetadataFactory::class,
-                    ],
-                ],
-            ]
-        );
-
-        $this->expectException(InvalidConfigException::class);
-        $this->expectExceptionMessage('"$routeIdentifierPlaceholder"');
-        ($this->factory)($this->container->reveal());
     }
 }
