@@ -358,4 +358,38 @@ class MetadataMapFactoryTest extends TestCase
 
         $this->assertInstanceOf(TestAsset\TestMetadata::class, $metadata);
     }
+
+    public function testFactoryRaisesExceptionWhenCreatingRouteBasedResourceMetadataContainingConfigConflicts()
+    {
+        $this->container->has('config')->willReturn(true);
+        $this->container->get('config')->willReturn(
+            [
+                MetadataMap::class => [
+                    [
+                        '__class__'                    => RouteBasedResourceMetadata::class,
+                        'resource_class'               => stdClass::class,
+                        'route'                        => 'foo',
+                        'extractor'                    => 'ObjectProperty',
+                        'resource_identifier'          => 'foo_id',
+                        'route_identifier_placeholder' => 'foo_id',
+                        'route_params'                 => ['foo' => 'bar'],
+                        'identifiers_to_placeholders_mapping' => [
+                            'foo_id' => 'id',
+                            'bar'    => 'bar_value',
+                            'baz'    => 'baz_value',
+                        ],
+                    ],
+                ],
+                'mezzio-hal' => [
+                    'metadata-factories' => [
+                        RouteBasedResourceMetadata::class => RouteBasedResourceMetadataFactory::class,
+                    ],
+                ],
+            ]
+        );
+
+        $this->expectException(InvalidConfigException::class);
+        $this->expectExceptionMessage('"$routeIdentifierPlaceholder"');
+        ($this->factory)($this->container->reveal());
+    }
 }

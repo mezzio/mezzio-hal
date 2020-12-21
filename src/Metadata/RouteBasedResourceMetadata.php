@@ -48,6 +48,17 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         $this->resourceIdentifier = $resourceIdentifier;
         $this->routeIdentifierPlaceholder = $routeIdentifierPlaceholder;
 
+        if (array_key_exists($resourceIdentifier, $identifiersToPlaceholdersMapping)
+            && $routeIdentifierPlaceholder !== self::DEFAULT_ROUTE_ID_PLACEHOLDER
+            && $identifiersToPlaceholdersMapping[$resourceIdentifier] !== $routeIdentifierPlaceholder
+        ) {
+            throw Exception\InvalidConfigException::dueToConflictingRouteIdentifierPlaceholder(
+                $resourceIdentifier,
+                $routeIdentifierPlaceholder,
+                $identifiersToPlaceholdersMapping[$resourceIdentifier]
+            );
+        }
+
         if (! array_key_exists($resourceIdentifier, $identifiersToPlaceholdersMapping)) {
             $identifiersToPlaceholdersMapping[$resourceIdentifier] = $routeIdentifierPlaceholder;
         }
