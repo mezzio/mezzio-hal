@@ -8,7 +8,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
-- Nothing.
+- [#13](https://github.com/mezzio/mezzio-hal/pull/13) adds a new configuration key, `identifiers_to_placeholders_mapping`, for use with the `RouteBasedResourceMetadata`. The setting is an associative array mapping resource properties/identifiers to the route placeholders they should fill. The setting corresponds to an optional seventh argument to the `RouteBasedResourceMetadata` class, and can be used to replace and extend the `$routeIdentifierPlaceholder` argument and corresponding `route_identifier_placeholder` configuration; it is more flexible, as it allows more than a single mapping to occur.
 
 ### Changed
 
@@ -16,7 +16,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Deprecated
 
-- Nothing.
+- [#13](https://github.com/mezzio/mezzio-hal/pull/13) deprecates both the `RouteBasedResourceMetadata` class `$routeIdentifierPlaceholder` argument and related `route_identifier_placeholder` setting. Please update your code to use the new `$identifiersToPlaceholders` argument and related `identifiers_to_placeholders_mapping` configuration instead. The argument and configuration key will be removed in version 2.0.0.
 
 ### Removed
 

@@ -796,7 +796,6 @@ class ResourceGeneratorTest extends TestCase
                 'foo-bar',
                 [
                     'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
-                    'id'         => 'XXXX-YYYY-ZZZZ',
                     'foo'        => 'BAR',
                     'test'       => 'param',
                 ]
@@ -809,5 +808,53 @@ class ResourceGeneratorTest extends TestCase
 
         $self = $this->getLinkByRel('self', $resource);
         $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ', $self);
+    }
+
+    public function testUsesConfiguredRoutePlaceholderMapToSpecifyRouteParams()
+    {
+        $instance      = new TestAsset\FooBar;
+        $instance->id  = 'XXXX-YYYY-ZZZZ';
+        $instance->foo = 'BAR';
+        $instance->bar = 'BAZ';
+
+        $metadata = new Metadata\RouteBasedResourceMetadata(
+            TestAsset\FooBar::class,
+            'foo-bar',
+            self::getObjectPropertyHydratorClass(),
+            'id',
+            'id',
+            [],
+            [
+                'id'  => 'foo_bar_id',
+                'foo' => 'foo_value',
+                'bar' => 'bar_value',
+            ]
+        );
+
+        $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
+        $this->metadataMap->get(TestAsset\FooBar::class)->willReturn($metadata);
+
+        $hydratorClass = self::getObjectPropertyHydratorClass();
+
+        $this->hydrators->get($hydratorClass)->willReturn(new $hydratorClass());
+        $this->linkGenerator
+            ->fromRoute(
+                'self',
+                $this->request->reveal(),
+                'foo-bar',
+                [
+                    'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
+                    'foo_value'  => 'BAR',
+                    'bar_value'  => 'BAZ',
+                ]
+            )
+            ->willReturn(new Link('self', '/api/foo-bar/XXXX-YYYY-ZZZZ/foo/BAR/bar/BAZ'));
+
+        $resource = $this->generator->fromObject($instance, $this->request->reveal());
+
+        $this->assertInstanceOf(HalResource::class, $resource);
+
+        $self = $this->getLinkByRel('self', $resource);
+        $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ/foo/BAR/bar/BAZ', $self);
     }
 }

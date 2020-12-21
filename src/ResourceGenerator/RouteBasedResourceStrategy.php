@@ -38,19 +38,21 @@ class RouteBasedResourceStrategy implements StrategyInterface
             $request
         );
 
-        $routeParams        = $metadata->getRouteParams();
-        $resourceIdentifier = $metadata->getResourceIdentifier();
-        $routeIdentifier    = $metadata->getRouteIdentifierPlaceholder();
-
-        if (isset($data[$resourceIdentifier])) {
-            $routeParams[$routeIdentifier] = $data[$resourceIdentifier];
-        }
+        $routeParams    = $metadata->getRouteParams();
+        $placeholderMap = $metadata->getIdentifiersToPlaceholdersMapping();
 
         // Inject all scalar entity keys automatically into route parameters
         foreach ($data as $key => $value) {
-            if (is_scalar($value)) {
-                $routeParams[$key] = $value;
+            if (! is_scalar($value)) {
+                continue;
             }
+
+            if (array_key_exists($key, $placeholderMap)) {
+                $routeParams[$placeholderMap[$key]] = $value;
+                continue;
+            }
+
+            $routeParams[$key] = $value;
         }
 
         return new HalResource($data, [
