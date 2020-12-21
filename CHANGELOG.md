@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
-## 1.4.0 - TBD
+## 1.4.0 - 2020-12-21
 
 ### Added
 
@@ -24,9 +24,25 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - [#21](https://github.com/mezzio/mezzio-hal/pull/21) removes support for PHP versions prior to 7.3.
 
-### Fixed
 
-- Nothing.
+-----
+
+### Release Notes for [1.4.0](https://github.com/mezzio/mezzio-hal/milestone/1)
+
+
+
+### 1.4.0
+
+- Total issues resolved: **1**
+- Total pull requests resolved: **3**
+- Total contributors: **3**
+
+#### Enhancement
+
+ - [21: PHP 8 Support](https://github.com/mezzio/mezzio-hal/pull/21) thanks to @agustingomes
+ - [16: Make all entity keys available as route parameters](https://github.com/mezzio/mezzio-hal/pull/16) thanks to @arstom
+ - [14: Fast route with two placeholders](https://github.com/mezzio/mezzio-hal/issues/14) thanks to @arstom
+ - [13: Added an entity properties to route placeholders mapping](https://github.com/mezzio/mezzio-hal/pull/13) thanks to @corentin-larose
 
 ## 1.3.1 - 2019-02-11
 
