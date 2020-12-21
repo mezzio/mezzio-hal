@@ -50,6 +50,7 @@ following information:
       that maps to the resource identifier)
     - array `$routeParams = []` (associative array of additional routing
       parameters to substitute when generating the URI)
+    - array `$identifiersToPlacholdersMapping = []` (associative array mapping resource properties to route parameters, for use when generating the URI; available since 1.4.0)
 - `Mezzio\Hal\Metadata\UrlBasedCollectionMetadata`:
     - string `$class`
     - string `$collectionRelation`
@@ -127,6 +128,7 @@ The rest of the parameters follow underscore delimiter naming convention:
     - `resource_identifier` (name of the property uniquely identifying the resource)
     - `route_identifier_placeholder` (name of the routing parameter that maps to the resource identifier)
     - `route_params` (associative array of substitutions to use with the designated route)
+    - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI)
 - `RouteBasedCollectionMetadata::class`
     - `pagination_param`  (name of the parameter indicating the current page of results)
     - `pagination_param_type` (one of "query" or "placeholder")

@@ -47,6 +47,12 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
      *          // generating the self relational link for the collection
      *          // resource. Defaults to an empty array.
      *          'route_params' => [],
+     *
+     *          // An array mapping resource properties to routing placeholder
+     *          // names. This can also be used to replace the
+     *          // 'route_identifier_placeholder' setting, which will be removed
+     *          // in version 2.0.
+     *          'identifiers_to_placeholders_mapping' => ['id' => 'id'],
      *     ]
      *     </code>
      * @return AbstractMetadata
