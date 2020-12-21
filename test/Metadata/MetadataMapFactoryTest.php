@@ -251,9 +251,6 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame(Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER, $metadata->getPaginationParamType());
     }
 
-    /**
-     *
-     */
     public function testFactoryCanMapRouteBasedResourceMetadata()
     {
         $this->container->has('config')->willReturn(true);
@@ -295,8 +292,9 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame('foo_id', $metadata->getRouteIdentifierPlaceholder());
         $this->assertSame(['foo' => 'bar'], $metadata->getRouteParams());
         $this->assertSame([
-            'bar' => 'bar_value',
-            'baz' => 'baz_value',
+            'bar'    => 'bar_value',
+            'baz'    => 'baz_value',
+            'foo_id' => 'foo_id',
         ], $metadata->getIdentifiersToPlaceholdersMapping());
     }
 

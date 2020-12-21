@@ -796,7 +796,6 @@ class ResourceGeneratorTest extends TestCase
                 'foo-bar',
                 [
                     'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
-                    'id'         => 'XXXX-YYYY-ZZZZ',
                     'foo'        => 'BAR',
                     'test'       => 'param',
                 ]
@@ -845,10 +844,6 @@ class ResourceGeneratorTest extends TestCase
                 'foo-bar',
                 [
                     'foo_bar_id' => 'XXXX-YYYY-ZZZZ',
-                    // This will still be present until we can remove the
-                    // $routeIdentifierPlaceholder from
-                    // RouteBasedResourceMetadata::__construct
-                    'id'         => 'XXXX-YYYY-ZZZZ',
                     'foo_value'  => 'BAR',
                     'bar_value'  => 'BAZ',
                 ]

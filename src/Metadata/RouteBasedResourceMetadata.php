@@ -10,6 +10,9 @@ namespace Mezzio\Hal\Metadata;
 
 class RouteBasedResourceMetadata extends AbstractResourceMetadata
 {
+    private const DEFAULT_RESOURCE_ID = 'id';
+    private const DEFAULT_ROUTE_ID_PLACEHOLDER = 'id';
+
     /** @var array */
     private $identifiersToPlaceHoldersMapping;
 
@@ -25,21 +28,30 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
     /** @var array */
     private $routeParams;
 
+    /**
+     * @param string $routeIdentifierPlaceholder Deprecated; use $identifiersToPlaceholdersMapping instead.
+     */
     public function __construct(
         string $class,
         string $route,
         string $extractor,
-        string $resourceIdentifier = 'id',
-        string $routeIdentifierPlaceholder = 'id',
+        string $resourceIdentifier = self::DEFAULT_RESOURCE_ID,
+        string $routeIdentifierPlaceholder = self::DEFAULT_ROUTE_ID_PLACEHOLDER,
         array $routeParams = [],
-        array $identifiersToPlaceholdersMapping = ['id' => 'id']
+        array $identifiersToPlaceholdersMapping = []
     ) {
         $this->class = $class;
         $this->route = $route;
         $this->extractor = $extractor;
+        $this->routeParams = $routeParams;
+
         $this->resourceIdentifier = $resourceIdentifier;
         $this->routeIdentifierPlaceholder = $routeIdentifierPlaceholder;
-        $this->routeParams = $routeParams;
+
+        if (! array_key_exists($resourceIdentifier, $identifiersToPlaceholdersMapping)) {
+            $identifiersToPlaceholdersMapping[$resourceIdentifier] = $routeIdentifierPlaceholder;
+        }
+
         $this->identifiersToPlaceHoldersMapping = $identifiersToPlaceholdersMapping;
     }
 

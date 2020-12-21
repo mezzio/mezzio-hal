@@ -41,6 +41,8 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
      *
      *          // What placeholder in the route string represents the resource
      *          // identifier. Defaults to "id".
+     *          // Deprecated since 1.4.0; use the 'identifiers_to_placeholders_mapping'
+     *          // setting instead.
      *          'route_identifier_placeholder' => 'id',
      *
      *          // An array of additional routing parameters to use when

@@ -38,14 +38,7 @@ class RouteBasedResourceStrategy implements StrategyInterface
             $request
         );
 
-        $routeParams        = $metadata->getRouteParams();
-        $resourceIdentifier = $metadata->getResourceIdentifier();
-        $routeIdentifier    = $metadata->getRouteIdentifierPlaceholder();
-
-        if (isset($data[$resourceIdentifier])) {
-            $routeParams[$routeIdentifier] = $data[$resourceIdentifier];
-        }
-
+        $routeParams    = $metadata->getRouteParams();
         $placeholderMap = $metadata->getIdentifiersToPlaceholdersMapping();
 
         // Inject all scalar entity keys automatically into route parameters
