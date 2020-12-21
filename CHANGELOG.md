@@ -8,6 +8,8 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Added
 
+- [#21](https://github.com/mezzio/mezzio-hal/pull/21) adds support for PHP 8.0.
+
 - [#13](https://github.com/mezzio/mezzio-hal/pull/13) adds a new configuration key, `identifiers_to_placeholders_mapping`, for use with the `RouteBasedResourceMetadata`. The setting is an associative array mapping resource properties/identifiers to the route placeholders they should fill. The setting corresponds to an optional seventh argument to the `RouteBasedResourceMetadata` class, and can be used to replace and extend the `$routeIdentifierPlaceholder` argument and corresponding `route_identifier_placeholder` configuration; it is more flexible, as it allows more than a single mapping to occur.
 
 ### Changed
@@ -20,7 +22,7 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Removed
 
-- Nothing.
+- [#21](https://github.com/mezzio/mezzio-hal/pull/21) removes support for PHP versions prior to 7.3.
 
 ### Fixed
 
