@@ -16,8 +16,11 @@ use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
 use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
 use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
+use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -26,6 +29,10 @@ use function array_shift;
 class NestedCollectionResourceGenerationTest extends TestCase
 {
     use Assertions;
+
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
 
     public function testNestedCollectionIsEmbeddedAsAnArrayNotAHalCollection()
     {
@@ -68,7 +75,7 @@ class NestedCollectionResourceGenerationTest extends TestCase
             $this->assertInternalType('array', $selfLinks);
             $this->assertNotEmpty($selfLinks);
             $selfLink = array_shift($selfLinks);
-            $this->assertContains('/child/', $selfLink->getHref());
+            $this->assertStringContainsString('/child/', $selfLink->getHref());
         }
     }
 
@@ -136,7 +143,10 @@ class NestedCollectionResourceGenerationTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                [ 'id' => 101010 ]
+                Argument::that(function (array $params) {
+                    return array_key_exists('id', $params)
+                        && $params['id'] === 101010;
+                })
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
@@ -146,7 +156,10 @@ class NestedCollectionResourceGenerationTest extends TestCase
                     'self',
                     $request->reveal(),
                     'child',
-                    [ 'id' => $i ]
+                    Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('id', $params)
+                            && $params['id'] === $i;
+                    })
                 )
                 ->willReturn(new Link('self', '/api/child/' . $i));
         }
@@ -157,7 +170,7 @@ class NestedCollectionResourceGenerationTest extends TestCase
                 $request->reveal(),
                 'collection',
                 [],
-                []
+                Argument::type('array')
             )
             ->willReturn(new Link('self', '/api/collection'));
 

@@ -80,7 +80,7 @@ EOX;
 
         $renderer = new XmlRenderer();
         $xml = $renderer->render($resource);
-        $this->assertContains($dateTime->format('c'), $xml);
+        $this->assertStringContainsString($dateTime->format('c'), $xml);
     }
 
     public function testCanRenderObjectsThatImplementToString()
@@ -94,7 +94,7 @@ EOX;
 
         $renderer = new XmlRenderer();
         $xml = $renderer->render($resource);
-        $this->assertContains((string) $instance, $xml);
+        $this->assertStringContainsString((string) $instance, $xml);
     }
 
     public function testRendersNullValuesAsTagsWithNoContent()
@@ -106,6 +106,6 @@ EOX;
 
         $renderer = new XmlRenderer();
         $xml = $renderer->render($resource);
-        $this->assertContains('<key/>', $xml);
+        $this->assertStringContainsString('<key/>', $xml);
     }
 }

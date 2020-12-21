@@ -106,9 +106,11 @@ The additional pairs are as follows:
     - `resource_identifier`: what property in the resource represents its
       identifier; defaults to "id".
     - `route_identifier_placeholder`: what placeholder in the route string
-      represents the resource identifier; defaults to "id".
+      represents the resource identifier; defaults to "id". Deprecated since
+      1.4.0; use the `identifiers_to_placeholders_mapping` setting instead.
     - `route_params`: an array of additional routing parameters to use when
       generating the self relational link for the resource.
+    - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI; since 1.4.0)
 - For `RouteBasedCollectionMetadata`:
     - `collection_class`: the collection class the metadata describes.
     - `collection_relation`: the embedded relation for the collection in the
@@ -134,13 +136,13 @@ type you wish to support, where `<type>` is your custom class name, minus
 the namespace.
 
 > ### Limitation
-> 
+>
 > There is a [known limitation](https://github.com/zendframework/zend-expressive-hal/issues/5)
 > with laminas-router when using routes with optional parameters (e.g., `/books[/:id]`,
 > where `:id` is optional). In such cases, if no matching parameter is provided
 > (such as when generating a URI without an `:id`), the router will raise an
 > exception due to the missing parameter.
-> 
+>
 > If you encounter this issue, create separate routing entries for each optional
 > parameter. See the issue for a comprehensive example.
 

@@ -101,4 +101,20 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
             implode(', ', $requiredKeys)
         ));
     }
+
+    public static function dueToConflictingRouteIdentifierPlaceholder(
+        string $resourceIdentifier,
+        string $routeIdentifierPlaceholder,
+        string $routeIdentifierPlaceholderFromMapping
+    ) : self {
+        return new self(sprintf(
+            'You have specified both a "$routeIdentifierPlaceholder" value ("%s") and provided one for the'
+            . ' "%s" (resourceIdentifier) key of the $identifiersToPlaceholdersMapping" (with value "%s"),'
+            . ' creating a conflict. Set the correct value in the "$identifiersToPlaceholdersMapping",'
+            . ' and set the "$routeIdentifierPlaceholder" value to "id" to correct the issue.',
+            $routeIdentifierPlaceholder,
+            $resourceIdentifier,
+            $routeIdentifierPlaceholderFromMapping
+        ));
+    }
 }

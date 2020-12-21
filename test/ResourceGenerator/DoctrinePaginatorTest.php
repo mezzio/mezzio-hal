@@ -21,11 +21,14 @@ use Mezzio\Hal\ResourceGenerator\Exception\OutOfBoundsException;
 use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class DoctrinePaginatorTest extends TestCase
 {
-    public function setUp()
+    use ProphecyTrait;
+
+    public function setUp(): void
     {
         $this->metadata      = $this->prophesize(RouteBasedCollectionMetadata::class);
         $this->linkGenerator = $this->prophesize(LinkGenerator::class);

@@ -13,10 +13,15 @@ namespace MezzioTest\Hal;
 use Mezzio\Hal\LinkGenerator;
 use Mezzio\Hal\LinkGeneratorFactory;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
 class LinkGeneratorFactoryTest extends TestCase
 {
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
+
     public function testReturnsLinkGeneratorInstance() : void
     {
         $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class)->reveal();

@@ -12,6 +12,7 @@ use Mezzio\Hal\HalResponseFactory;
 use Mezzio\Hal\Renderer;
 use MezzioTest\Hal\Renderer\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -22,7 +23,9 @@ class HalResponseFactoryTest extends TestCase
 {
     use TestAsset;
 
-    public function setUp()
+    use ProphecyTrait;
+
+    public function setUp(): void
     {
         $this->request      = $this->prophesize(ServerRequestInterface::class);
         $this->response     = $this->prophesize(ResponseInterface::class);

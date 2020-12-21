@@ -11,13 +11,19 @@ namespace MezzioTest\Hal\LinkGenerator;
 use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
+use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
 class MezzioUrlGeneratorTest extends TestCase
 {
+    use PHPUnitDeprecatedAssertions;
+
+    use ProphecyTrait;
+
     public function testCanGenerateUrlWithOnlyUrlHelper()
     {
         $urlHelper = $this->prophesize(UrlHelper::class);

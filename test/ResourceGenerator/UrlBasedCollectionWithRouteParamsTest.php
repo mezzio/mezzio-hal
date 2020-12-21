@@ -20,12 +20,16 @@ use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class UrlBasedCollectionWithRouteParamsTest extends TestCase
 {
     use Assertions;
+
+    use ProphecyTrait;
 
     public function testUsesQueriesWithPaginatorSpecifiedInMetadataWhenGeneratingLinkHref()
     {
@@ -183,10 +187,12 @@ class UrlBasedCollectionWithRouteParamsTest extends TestCase
                     'self',
                     $request->reveal(),
                     'foo-bar',
-                    [
-                        'foo_id' => 1234,
-                        'bar_id' => $i,
-                    ]
+                    Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_id', $params)
+                            && array_key_exists('bar_id', $params)
+                            && $params['foo_id'] === 1234
+                            && $params['bar_id'] === $i;
+                    })
                 )
                 ->willReturn(new Link('self', '/api/foo/1234/bar/' . $i));
         }

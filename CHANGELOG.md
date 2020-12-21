@@ -26,6 +26,43 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - Nothing.
 
+## 1.4.0 - 2020-12-21
+
+### Added
+
+- [#21](https://github.com/mezzio/mezzio-hal/pull/21) adds support for PHP 8.0.
+
+- [#13](https://github.com/mezzio/mezzio-hal/pull/13) adds a new configuration key, `identifiers_to_placeholders_mapping`, for use with the `RouteBasedResourceMetadata`. The setting is an associative array mapping resource properties/identifiers to the route placeholders they should fill. The setting corresponds to an optional seventh argument to the `RouteBasedResourceMetadata` class, and can be used to replace and extend the `$routeIdentifierPlaceholder` argument and corresponding `route_identifier_placeholder` configuration; it is more flexible, as it allows more than a single mapping to occur.
+
+### Changed
+
+- [#16](https://github.com/mezzio/mezzio-hal/pull/16) changes the behavior when route-based resource links are generated. It now passes all scalar properties of the resource as route parameters, allowing the resource to fill in properties required by the route, without the need of seeding metadata. As an example, if you defined the route `/group/:group_id/:user_id`, and `:user_id` is the resource identifier, and your resource also defines `group_id`, the `group_id` value will fill in the associated value in the generated URI.
+
+### Deprecated
+
+- [#13](https://github.com/mezzio/mezzio-hal/pull/13) deprecates both the `RouteBasedResourceMetadata` class `$routeIdentifierPlaceholder` argument and related `route_identifier_placeholder` setting. Please update your code to use the new `$identifiersToPlaceholders` argument and related `identifiers_to_placeholders_mapping` configuration instead. The argument and configuration key will be removed in version 2.0.0.
+
+### Removed
+
+- [#21](https://github.com/mezzio/mezzio-hal/pull/21) removes support for PHP versions prior to 7.3.
+
+-----
+
+### Release Notes for [1.4.0](https://github.com/mezzio/mezzio-hal/milestone/1)
+
+### 1.4.0
+
+- Total issues resolved: **1**
+- Total pull requests resolved: **3**
+- Total contributors: **3**
+
+#### Enhancement
+
+- [21: PHP 8 Support](https://github.com/mezzio/mezzio-hal/pull/21) thanks to @agustingomes
+- [16: Make all entity keys available as route parameters](https://github.com/mezzio/mezzio-hal/pull/16) thanks to @arstom
+- [14: Fast route with two placeholders](https://github.com/mezzio/mezzio-hal/issues/14) thanks to @arstom
+- [13: Added an entity properties to route placeholders mapping](https://github.com/mezzio/mezzio-hal/pull/13) thanks to @corentin-larose
+
 ## 1.3.1 - 2019-02-11
 
 ### Added
@@ -136,28 +173,6 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - [zendframework/zend-expressive-hal#39](https://github.com/zendframework/zend-expressive-hal/pull/39) updates `ResourceGeneratorFactory` to allow passing an alternate service name to use when
   retrieving the `LinkGenerator` dependency.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 1.0.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
 
 ### Deprecated
 

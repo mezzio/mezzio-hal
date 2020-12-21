@@ -20,7 +20,9 @@ use function get_class;
 
 class RouteBasedCollectionStrategy implements StrategyInterface
 {
-    use ExtractCollectionTrait;
+    use ExtractCollectionTrait, GenerateSelfLinkTrait {
+        GenerateSelfLinkTrait::generateSelfLink insteadof ExtractCollectionTrait;
+    }
 
     public function createResource(
         $instance,

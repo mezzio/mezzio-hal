@@ -18,12 +18,16 @@ use Mezzio\Hal\ResourceGenerator;
 use MezzioTest\Hal\Assertions;
 use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ResourceWithNestedInstancesTest extends TestCase
 {
     use Assertions;
+
+    use ProphecyTrait;
 
     public function testNestedObjectInMetadataMapIsEmbeddedAsResource()
     {
@@ -101,7 +105,10 @@ class ResourceWithNestedInstancesTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                [ 'id' => 1234 ]
+                Argument::that(function (array $params) {
+                    return array_key_exists('id', $params)
+                        && $params['id'] === 1234;
+                })
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
@@ -110,7 +117,10 @@ class ResourceWithNestedInstancesTest extends TestCase
                 'self',
                 $request->reveal(),
                 'child',
-                [ 'id' => 9876 ]
+                Argument::that(function (array $params) {
+                    return array_key_exists('id', $params)
+                        && $params['id'] === 9876;
+                })
             )
             ->willReturn(new Link('self', '/api/child/9876'));
 
