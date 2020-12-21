@@ -268,6 +268,10 @@ class MetadataMapFactoryTest extends TestCase
                         'resource_identifier'          => 'foo_id',
                         'route_identifier_placeholder' => 'foo_id',
                         'route_params'                 => ['foo' => 'bar'],
+                        'identifiers_to_placeholders_mapping' => [
+                            'bar' => 'bar_value',
+                            'baz' => 'baz_value',
+                        ],
                     ],
                 ],
                 'mezzio-hal' => [
@@ -290,6 +294,10 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame('foo_id', $metadata->getResourceIdentifier());
         $this->assertSame('foo_id', $metadata->getRouteIdentifierPlaceholder());
         $this->assertSame(['foo' => 'bar'], $metadata->getRouteParams());
+        $this->assertSame([
+            'bar' => 'bar_value',
+            'baz' => 'baz_value',
+        ], $metadata->getIdentifiersToPlaceholdersMapping());
     }
 
     public function testFactoryCanMapRouteBasedCollectionMetadata()
