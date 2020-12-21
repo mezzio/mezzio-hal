@@ -21,5 +21,5 @@ interface ResourceGeneratorInterface
 
     public function fromArray(array $data, string $uri = null) : HalResource;
 
-    public function fromObject($instance, ServerRequestInterface $request) : HalResource;
+    public function fromObject($instance, ServerRequestInterface $request, int $depth = 0) : HalResource;
 }
