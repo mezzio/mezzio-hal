@@ -12,6 +12,12 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
+- [#22](https://github.com/mezzio/mezzio-hal/pull/22) changes the signature of `ResourceGenerator::fromObject()` to accept an additional, optional `int $depth = 0` argument. This is used to help prevent circular references.
+
+- [#22](https://github.com/mezzio/mezzio-hal/pull/22) adds the method `hasReachedMaxDepth()` to each of the `AbstractMetadata` and `AbstractResourceMetadata` classes, and each metadata implementation now also accepts an additional optional `$maxDepth` argument (with related `max_depth` configuration setting). These are used in conjunction with strategy implementations to prevent circular references.
+
+- [#22](https://github.com/mezzio/mezzio-hal/pull/22) adds an optional `$depth` argument as the last argument to `StrategyInterface::createResource()` and the same method on all strategy implementations; the argument is used to prevent circular referencing.
+
 - [#19](https://github.com/mezzio/mezzio-hal/pull/19) updates all typehints that previously referenced `ResourceGenerator` to now reference `ResourceGeneratorInterface`. This includes `Mezzio\Hal\ResourceGenerator\StrategyInterface` and all of its implementations. The `ExtractCollectionTrait` and `ExtractInstanceTrait` implementations were also updated, however, so if you were using one of those, your extensions will likely be insulated.
 
 - [#19](https://github.com/mezzio/mezzio-hal/pull/19) updates `ResourceGenerator` to implement the new `ResourceGeneratorInterface`.
