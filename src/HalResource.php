@@ -10,6 +10,7 @@ namespace Mezzio\Hal;
 
 use InvalidArgumentException;
 use JsonSerializable;
+use Mezzio\Hal\Exception\InvalidResourceValueException;
 use Psr\Link\EvolvableLinkProviderInterface;
 use Psr\Link\LinkInterface;
 use RuntimeException;
@@ -45,7 +46,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     /** @var array All data to represent. */
     private $data = [];
 
-    /** @var HalResource[] */
+    /** @var self[] */
     private $embedded = [];
 
     /**
@@ -315,8 +316,17 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         }
 
         // $resource is an collection; existing individual or collection resource exists
-        if (is_array($resource)) {
+        if (
+            is_array($resource)
+            && array_reduce($resource, function (bool $allAreResources, $resource): bool {
+                return $allAreResources && $resource instanceof HalResource;
+            }, true)
+        ) {
             return $this->aggregateEmbeddedCollection($name, $resource, $context);
+        }
+
+        if (is_array($resource)) {
+            throw InvalidResourceValueException::fromValue($resource);
         }
 
         // $resource is a HalResource; existing resource is also a HalResource
@@ -339,9 +349,13 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         );
         $collection = $this->embedded[$name];
         array_push($collection, $resource);
+
         return $collection;
     }
 
+    /**
+     * @param HalResource[] $collection
+     */
     private function aggregateEmbeddedCollection(string $name, array $collection, string $context): array
     {
         $original = $this->embedded[$name] instanceof self ? [$this->embedded[$name]] : $this->embedded[$name];
@@ -360,7 +374,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * Exists as array_shift is destructive, and we cannot necessarily know the
      * index of the first element.
      *
-     * @param array $resources
+     * @param HalResource[] $resources
      */
     private function firstResource(array $resources): ?HalResource
     {
@@ -371,7 +385,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     }
 
     /**
-     * @param mixed $value
+     * @param null|object|HalResource[] $value
      */
     private function isResourceCollection($value, string $name, string $context): bool
     {
@@ -452,13 +466,19 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     private function serializeEmbeddedResources(): array
     {
         $embedded = [];
-        array_walk($this->embedded, function ($resource, $name) use (&$embedded) {
-            $embedded[$name] = $resource instanceof self
-                ? $resource->toArray()
-                : array_map(function ($item) {
-                    return $item->toArray();
-                }, $resource);
-        });
+        array_walk(
+            $this->embedded,
+            /**
+             * @param array|self $resource
+             */
+            function ($resource, string $name) use (&$embedded): void {
+                $embedded[$name] = $resource instanceof self
+                    ? $resource->toArray()
+                    : array_map(function ($item) {
+                        return $item->toArray();
+                    }, $resource);
+            }
+        );
 
         return $embedded;
     }

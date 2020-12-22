@@ -49,8 +49,6 @@ trait LinkCollection
 
     /**
      * {@inheritDoc}
-     *
-     * @return HalResource
      */
     public function withLink(LinkInterface $link): self
     {
@@ -65,8 +63,6 @@ trait LinkCollection
 
     /**
      * {@inheritDoc}
-     *
-     * @return HalResource
      */
     public function withoutLink(LinkInterface $link): self
     {

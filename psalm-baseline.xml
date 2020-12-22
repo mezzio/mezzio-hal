@@ -16,17 +16,15 @@
     <InvalidPropertyAssignmentValue occurrences="1">
       <code>$new-&gt;embedded</code>
     </InvalidPropertyAssignmentValue>
-    <MissingClosureParamType occurrences="16">
+    <MissingClosureParamType occurrences="14">
       <code>$containsNonLinkItem</code>
       <code>$isResource</code>
-      <code>$item</code>
       <code>$item</code>
       <code>$item</code>
       <code>$key</code>
       <code>$link</code>
       <code>$links</code>
       <code>$matchesCollection</code>
-      <code>$name</code>
       <code>$name</code>
       <code>$name</code>
       <code>$rel</code>
@@ -38,7 +36,7 @@
       <code>function ($item) {</code>
       <code>function (array $byRelation, LinkInterface $link) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="12">
+    <MixedArgument occurrences="14">
       <code>$byRelation[$rel]</code>
       <code>$byRelation[$rel]</code>
       <code>$item</code>
@@ -51,9 +49,12 @@
       <code>$resource</code>
       <code>$this-&gt;embedded[$name]</code>
       <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
+    <MixedArgumentTypeCoercion occurrences="2">
       <code>$name</code>
+      <code>$resource</code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAccess occurrences="2">
       <code>$byRelation[$rel]</code>
@@ -67,25 +68,22 @@
       <code>$relations[$key]</code>
       <code>$resource</code>
     </MixedArrayAssignment>
-    <MixedArrayOffset occurrences="8">
+    <MixedArrayOffset occurrences="7">
       <code>$byRelation[$rel]</code>
       <code>$byRelation[$rel]</code>
       <code>$byRelation[$rel]</code>
       <code>$byRelation[$rel]</code>
-      <code>$embedded[$name]</code>
       <code>$relations[$key]</code>
       <code>$relations[$key]</code>
       <code>$relations[$key]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="5">
+    <MixedAssignment occurrences="4">
       <code>$collection</code>
       <code>$relations</code>
       <code>$relations[$key]</code>
-      <code>$resource</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>?HalResource</code>
+    <MixedInferredReturnType occurrences="1">
       <code>array</code>
     </MixedInferredReturnType>
     <MixedMethodCall occurrences="1">
@@ -96,9 +94,8 @@
       <code>$this-&gt;embedded</code>
       <code>$this-&gt;embedded</code>
     </MixedPropertyTypeCoercion>
-    <MixedReturnStatement occurrences="2">
+    <MixedReturnStatement occurrences="1">
       <code>$embedded</code>
-      <code>$resource</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="3">
       <code>$forceCollection ? [$resource] : $resource</code>
@@ -197,20 +194,12 @@
   </file>
   <file src="src/LinkCollection.php">
     <LessSpecificImplementedReturnType occurrences="2">
-      <code>HalResource</code>
-      <code>HalResource</code>
+      <code>self</code>
+      <code>self</code>
     </LessSpecificImplementedReturnType>
-    <MismatchingDocblockReturnType occurrences="2">
-      <code>HalResource</code>
-      <code>HalResource</code>
-    </MismatchingDocblockReturnType>
     <MissingParamType occurrences="1">
       <code>$rel</code>
     </MissingParamType>
-    <MixedInferredReturnType occurrences="2">
-      <code>HalResource</code>
-      <code>HalResource</code>
-    </MixedInferredReturnType>
   </file>
   <file src="src/LinkGenerator/MezzioUrlGeneratorFactory.php">
     <MixedArgument occurrences="3">
