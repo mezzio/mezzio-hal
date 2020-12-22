@@ -1,7 +1,5 @@
 # Using the ResourceGenerator in path-segregated middleware
 
-- Since 1.1.0.
-
 You may want to develop your API as a separate module that you can then drop in
 to an existing application; you may even want to [path-segregate](https://docs.mezzio.dev/mezzio/v3/features/router/piping/#path-segregation) it.
 
@@ -23,10 +21,8 @@ factories for these services. What should you do?
 
 ## Virtual services
 
-Since version 1.1.0 of this package, and versions 3.1.0 of
-mezzio-router and 5.1.0 of mezzio-helpers, you can now pass
-additional constructor arguments to a number of factories to allow varying the
-service dependencies they look for.
+You can pass additional constructor arguments to a number of factories to allow
+varying the service dependencies they look for.
 
 In our example below, we will create an `Api` module. This module will have its
 own router, and be segregated in the path `/api`; all routes we create will be

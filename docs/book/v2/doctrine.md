@@ -1,7 +1,5 @@
 # Generating HAL from Doctrine
 
-> - Since 1.3.0
-
 [Doctrine](https://www.doctrine-project.org/) is a well-known and popular Object
 Relational Mapper; you will find it in use across pretty much every PHP
 framework. Mezzio is no different.
@@ -302,10 +300,10 @@ class ShowAlbumHandler implements RequestHandlerInterface
 {
     /** @var EntityManager */
     protected $entityManager;
-    
+
     /** @var HalResponseFactory */
     protected $responseFactory;
-    
+
     /** @var ResourceGenerator */
     protected $resourceGenerator;
 

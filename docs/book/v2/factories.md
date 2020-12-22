@@ -27,9 +27,8 @@ configured instances for your use.
 - Depends on:
     - `Mezzio\Hal\LinkGenerator\UrlGeneratorInterface` service
 
-Since version 1.1.0, this factory allows an optional constructor argument,
-`$urlGeneratorServiceName`. It defaults to
-`Mezzio\Hal\LinkGenerator\UrlGeneratorInterface`,
+This factory allows an optional constructor argument, `$urlGeneratorServiceName`.
+It defaults to `Mezzio\Hal\LinkGenerator\UrlGeneratorInterface`,
 but you may specify an alternate service if desired. This may be useful, for
 instance, when using an alternate router in a path-segregated middleware
 pipeline, which would necessitate a different `UrlHelper` instance, and an
@@ -45,7 +44,7 @@ alternate URL generator that consumes it.
     - `Mezzio\Helper\ServerUrlHelper` service (optional; if not provided,
       URIs will be generated without authority information)
 
-Since version 1.1.0, this factory allows an optional constructor argument, `$urlHelperServiceName`.
+This factory allows an optional constructor argument, `$urlHelperServiceName`.
 It defaults to `Mezzio\Helper\UrlHelper`, but you may specify an
 alternate service if desired. This may be useful, for instance, when using an
 alternate router in a path-segregated middleware pipeline, which would
@@ -157,7 +156,7 @@ If you wish to use a container implementation other than the
 `Laminas\Hydrator\HydratorPluginManager`, either register it under that service
 name, or create an alternate factory.
 
-Since version 1.1.0, this factory allows an optional constructor argument, `$linkGeneratorServiceName`.
+This factory allows an optional constructor argument, `$linkGeneratorServiceName`.
 It defaults to `Mezzio\Hal\LinkGenerator`, but you may specify an
 alternate service if desired. This may be useful, for instance, when using an
 alternate router in a path-segregated middleware pipeline, which would
