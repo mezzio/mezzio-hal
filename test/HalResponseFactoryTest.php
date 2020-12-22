@@ -39,7 +39,7 @@ class HalResponseFactoryTest extends TestCase
         );
     }
 
-    public function testReturnsJsonResponseIfNoAcceptHeaderPresent()
+    public function testReturnsJsonResponseIfNoAcceptHeaderPresent(): void
     {
         $resource = $this->createExampleResource();
         $this->jsonRenderer->render($resource)->willReturn('{}');
@@ -73,7 +73,7 @@ class HalResponseFactoryTest extends TestCase
     /**
      * @dataProvider jsonAcceptHeaders
      */
-    public function testReturnsJsonResponseIfAcceptHeaderMatchesJson(string $header)
+    public function testReturnsJsonResponseIfAcceptHeaderMatchesJson(string $header): void
     {
         $resource = $this->createExampleResource();
         $this->jsonRenderer->render($resource)->willReturn('{}');
@@ -108,7 +108,7 @@ class HalResponseFactoryTest extends TestCase
     /**
      * @dataProvider xmlAcceptHeaders
      */
-    public function testReturnsXmlResponseIfAcceptHeaderMatchesXml(string $header)
+    public function testReturnsXmlResponseIfAcceptHeaderMatchesXml(string $header): void
     {
         $resource = $this->createExampleResource();
         $this->xmlRenderer->render($resource)->willReturn('<resource/>');
@@ -148,7 +148,7 @@ class HalResponseFactoryTest extends TestCase
         string $mediaType,
         string $responseBody,
         string $expectedMediaType
-    ) {
+    ): void {
         $resource = $this->createExampleResource();
         switch (true) {
             case strstr($header, 'json'):

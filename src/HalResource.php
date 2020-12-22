@@ -360,7 +360,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * Exists as array_shift is destructive, and we cannot necessarily know the
      * index of the first element.
      *
-     * @param null|HalResource[] $resources
+     * @param array $resources
      */
     private function firstResource(array $resources): ?HalResource
     {

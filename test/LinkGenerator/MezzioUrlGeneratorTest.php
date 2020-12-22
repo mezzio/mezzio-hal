@@ -24,7 +24,7 @@ class MezzioUrlGeneratorTest extends TestCase
 
     use ProphecyTrait;
 
-    public function testCanGenerateUrlWithOnlyUrlHelper()
+    public function testCanGenerateUrlWithOnlyUrlHelper(): void
     {
         $urlHelper = $this->prophesize(UrlHelper::class);
         $urlHelper->generate('test', ['foo' => 'bar'], ['baz' => 'bat'])->willReturn('/test/bar?baz=bat');
@@ -42,7 +42,7 @@ class MezzioUrlGeneratorTest extends TestCase
         ));
     }
 
-    public function testCanGenerateFullyQualifiedURIWhenServerUrlHelperIsComposed()
+    public function testCanGenerateFullyQualifiedURIWhenServerUrlHelperIsComposed(): void
     {
         $uri = $this->prophesize(UriInterface::class);
         $uri->withQuery('')->will([$uri, 'reveal']);

@@ -32,7 +32,7 @@ class ResourceWithNestedInstancesTest extends TestCase
 
     use ProphecyTrait;
 
-    public function testNestedObjectInMetadataMapIsEmbeddedAsResource()
+    public function testNestedObjectInMetadataMapIsEmbeddedAsResource(): void
     {
         $child          = new TestAsset\Child();
         $child->id      = 9876;
@@ -75,10 +75,9 @@ class ResourceWithNestedInstancesTest extends TestCase
     }
 
     /**
-     * @return MetadataMap|ObjectProphecy
-     * @psalm-return MetadataMap&ObjectProphecy
+     * @psalm-return ObjectProphecy<MetadataMap>
      */
-    public function createMetadataMap()
+    public function createMetadataMap(): ObjectProphecy
     {
         $metadataMap = $this->prophesize(MetadataMap::class);
 
@@ -106,10 +105,9 @@ class ResourceWithNestedInstancesTest extends TestCase
     /**
      * @param ServerRequestInterface|ObjectProphecy $request
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
-     * @return LinkGenerator|ObjectProphecy
-     * @psalm-return LinkGenerator&ObjectProphecy
+     * @psalm-return ObjectProphecy<LinkGenerator>
      */
-    public function createLinkGenerator($request)
+    public function createLinkGenerator($request): ObjectProphecy
     {
         $linkGenerator = $this->prophesize(LinkGenerator::class);
 
@@ -141,10 +139,9 @@ class ResourceWithNestedInstancesTest extends TestCase
     }
 
     /**
-     * @return ContainerInterface|ObjectProphecy
-     * @psalm-return ContainerInterface&ObjectProphecy
+     * @psalm-return ObjectProphecy<ContainerInterface>
      */
-    public function createHydrators()
+    public function createHydrators(): ObjectProphecy
     {
         $hydratorClass = self::getObjectPropertyHydratorClass();
 

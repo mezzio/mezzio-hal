@@ -24,16 +24,22 @@ trait LinkCollection
 
     /**
      * {@inheritDoc}
+     *
+     * @return LinkInterface[]
+     * @psalm-return array<array-key, LinkInterface>
      */
-    public function getLinks()
+    public function getLinks(): array
     {
         return $this->links;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return LinkInterface[]
+     * @psalm-return array<array-key, LinkInterface>
      */
-    public function getLinksByRel($rel)
+    public function getLinksByRel($rel): array
     {
         return array_filter($this->links, function (LinkInterface $link) use ($rel) {
             $rels = $link->getRels();
@@ -43,8 +49,10 @@ trait LinkCollection
 
     /**
      * {@inheritDoc}
+     *
+     * @return HalResource
      */
-    public function withLink(LinkInterface $link)
+    public function withLink(LinkInterface $link): self
     {
         if (in_array($link, $this->links, true)) {
             return $this;
@@ -57,8 +65,10 @@ trait LinkCollection
 
     /**
      * {@inheritDoc}
+     *
+     * @return HalResource
      */
-    public function withoutLink(LinkInterface $link)
+    public function withoutLink(LinkInterface $link): self
     {
         if (! in_array($link, $this->links, true)) {
             return $this;

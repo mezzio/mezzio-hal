@@ -112,7 +112,8 @@ class XmlRenderer implements RendererInterface
 
     /**
      * @param mixed $data
-     * @return DOMNode|DOMNode[]
+     * @return ((DOMNode|DOMNode[])[]|DOMNode|false)[]|DOMNode|false
+     * @psalm-return DOMNode|false|list<DOMNode|false|list<DOMNode|array<array-key, DOMNode>>>
      */
     private function createResourceElement(DOMDocument $doc, string $name, $data)
     {

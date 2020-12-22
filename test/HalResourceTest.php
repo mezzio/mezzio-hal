@@ -18,7 +18,7 @@ use function array_values;
 
 class HalResourceTest extends TestCase
 {
-    public function testCanConstructWithData()
+    public function testCanConstructWithData(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $this->assertEquals(['foo' => 'bar'], $resource->getElements());
@@ -39,14 +39,14 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider invalidElementNames
      */
-    public function testInvalidDataNamesRaiseExceptionsDuringConstruction(string $name, string $expectedMessage)
+    public function testInvalidDataNamesRaiseExceptionsDuringConstruction(string $name, string $expectedMessage): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($expectedMessage);
         $resource = new HalResource([$name => 'bar']);
     }
 
-    public function testCanConstructWithDataContainingEmbeddedResources()
+    public function testCanConstructWithDataContainingEmbeddedResources(): void
     {
         $embedded = new HalResource(['foo' => 'bar']);
         $resource = new HalResource(['foo' => $embedded]);
@@ -57,7 +57,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $representation['_embedded']['foo']);
     }
 
-    public function testCanConstructWithLinks()
+    public function testCanConstructWithLinks(): void
     {
         $links    = [
             new Link('self', 'https://example.com/'),
@@ -67,7 +67,7 @@ class HalResourceTest extends TestCase
         $this->assertSame($links, $resource->getLinks());
     }
 
-    public function testNonLinkItemsRaiseExceptionDuringConstruction()
+    public function testNonLinkItemsRaiseExceptionDuringConstruction(): void
     {
         $links = [
             new Link('self', 'https://example.com/'),
@@ -78,7 +78,7 @@ class HalResourceTest extends TestCase
         $resource = new HalResource([], $links);
     }
 
-    public function testCanConstructWithEmbeddedResources()
+    public function testCanConstructWithEmbeddedResources(): void
     {
         $embedded = new HalResource(['foo' => 'bar']);
         $resource = new HalResource([], [], ['foo' => $embedded]);
@@ -89,14 +89,14 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $representation['_embedded']['foo']);
     }
 
-    public function testNonResourceOrCollectionItemsRaiseExceptionDuringConstruction()
+    public function testNonResourceOrCollectionItemsRaiseExceptionDuringConstruction(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid embedded resource');
         $resource = new HalResource([], [], ['foo' => 'bar']);
     }
 
-    public function testEmptyArrayAsDataWillNotBeEmbeddedDuringConstruction()
+    public function testEmptyArrayAsDataWillNotBeEmbeddedDuringConstruction(): void
     {
         $resource = new HalResource(['bar' => []]);
         $this->assertEquals(['bar' => []], $resource->getElements());
@@ -107,15 +107,17 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider invalidElementNames
      */
-    public function testInvalidResourceNamesRaiseExceptionsDuringConstruction(string $name, string $expectedMessage)
-    {
+    public function testInvalidResourceNamesRaiseExceptionsDuringConstruction(
+        string $name,
+        string $expectedMessage
+    ): void {
         $embedded = new HalResource(['foo' => 'bar']);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($expectedMessage);
         $resource = new HalResource([], [], [$name => $embedded]);
     }
 
-    public function testWithLinkReturnsNewInstanceContainingNewLink()
+    public function testWithLinkReturnsNewInstanceContainingNewLink(): void
     {
         $link     = new Link('self');
         $resource = new HalResource();
@@ -125,7 +127,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals([$link], $new->getLinksByRel('self'));
     }
 
-    public function testWithLinkReturnsSameInstanceIfAlreadyContainsLinkInstance()
+    public function testWithLinkReturnsSameInstanceIfAlreadyContainsLinkInstance(): void
     {
         $link     = new Link('self');
         $resource = new HalResource([], [$link]);
@@ -133,7 +135,7 @@ class HalResourceTest extends TestCase
         $this->assertSame($resource, $new);
     }
 
-    public function testWithoutLinkReturnsNewInstanceRemovingLink()
+    public function testWithoutLinkReturnsNewInstanceRemovingLink(): void
     {
         $link     = new Link('self');
         $resource = new HalResource([], [$link]);
@@ -143,7 +145,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals([], $new->getLinksByRel('self'));
     }
 
-    public function testWithoutLinkReturnsSameInstanceIfLinkIsNotPresent()
+    public function testWithoutLinkReturnsSameInstanceIfLinkIsNotPresent(): void
     {
         $link     = new Link('self');
         $resource = new HalResource();
@@ -151,7 +153,7 @@ class HalResourceTest extends TestCase
         $this->assertSame($resource, $new);
     }
 
-    public function testGetLinksByRelReturnsAllLinksWithGivenRelationshipAsArray()
+    public function testGetLinksByRelReturnsAllLinksWithGivenRelationshipAsArray(): void
     {
         $link1    = new Link('self');
         $link2    = new Link('about');
@@ -171,7 +173,7 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider invalidElementNames
      */
-    public function testWithElementRaisesExceptionForInvalidName(string $name, string $expectedMessage)
+    public function testWithElementRaisesExceptionForInvalidName(string $name, string $expectedMessage): void
     {
         $resource = new HalResource();
         $this->expectException(InvalidArgumentException::class);
@@ -179,7 +181,7 @@ class HalResourceTest extends TestCase
         $resource->withElement($name, 'foo');
     }
 
-    public function testWithElementRaisesExceptionIfNameCollidesWithExistingResource()
+    public function testWithElementRaisesExceptionIfNameCollidesWithExistingResource(): void
     {
         $embedded = new HalResource(['foo' => 'bar']);
         $resource = new HalResource(['foo' => $embedded]);
@@ -188,7 +190,7 @@ class HalResourceTest extends TestCase
         $resource->withElement('foo', 'bar');
     }
 
-    public function testWithElementReturnsNewInstanceWithNewElement()
+    public function testWithElementReturnsNewInstanceWithNewElement(): void
     {
         $resource = new HalResource();
         $new      = $resource->withElement('foo', 'bar');
@@ -197,7 +199,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $new->getElements());
     }
 
-    public function testWithElementReturnsNewInstanceOverwritingExistingElementValue()
+    public function testWithElementReturnsNewInstanceOverwritingExistingElementValue(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $new      = $resource->withElement('foo', 'baz');
@@ -206,7 +208,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'baz'], $new->getElements());
     }
 
-    public function testWithElementProxiesToEmbedIfResourceValueProvided()
+    public function testWithElementProxiesToEmbedIfResourceValueProvided(): void
     {
         $embedded = new HalResource(['foo' => 'bar']);
         $resource = new HalResource();
@@ -220,7 +222,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $representation['_embedded']['foo']);
     }
 
-    public function testWithElementProxiesToEmbedIfResourceCollectionValueProvided()
+    public function testWithElementProxiesToEmbedIfResourceCollectionValueProvided(): void
     {
         $resource1  = new HalResource(['foo' => 'bar']);
         $resource2  = new HalResource(['foo' => 'baz']);
@@ -234,7 +236,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $collection], $new->getElements());
     }
 
-    public function testWithElementDoesNotProxyToEmbedIfAnEmptyArrayValueIsProvided()
+    public function testWithElementDoesNotProxyToEmbedIfAnEmptyArrayValueIsProvided(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $new      = $resource->withElement('bar', []);
@@ -246,7 +248,7 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider invalidElementNames
      */
-    public function testEmbedRaisesExceptionForInvalidName(string $name, string $expectedMessage)
+    public function testEmbedRaisesExceptionForInvalidName(string $name, string $expectedMessage): void
     {
         $resource = new HalResource();
         $this->expectException(InvalidArgumentException::class);
@@ -254,7 +256,7 @@ class HalResourceTest extends TestCase
         $resource->embed($name, new HalResource());
     }
 
-    public function testEmbedRaisesExceptionIfNameCollidesWithExistingData()
+    public function testEmbedRaisesExceptionIfNameCollidesWithExistingData(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $this->expectException(RuntimeException::class);
@@ -262,7 +264,7 @@ class HalResourceTest extends TestCase
         $resource->embed('foo', new HalResource());
     }
 
-    public function testEmbedReturnsNewInstanceWithEmbeddedResource()
+    public function testEmbedReturnsNewInstanceWithEmbeddedResource(): void
     {
         $embedded = new HalResource(['foo' => 'bar']);
         $resource = new HalResource();
@@ -272,7 +274,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $embedded], $new->getElements());
     }
 
-    public function testEmbedReturnsNewInstanceWithEmbeddedCollection()
+    public function testEmbedReturnsNewInstanceWithEmbeddedCollection(): void
     {
         $resource1  = new HalResource(['foo' => 'bar']);
         $resource2  = new HalResource(['foo' => 'baz']);
@@ -286,7 +288,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $collection], $new->getElements());
     }
 
-    public function testEmbedReturnsNewInstanceAppendingResourceToExistingResource()
+    public function testEmbedReturnsNewInstanceAppendingResourceToExistingResource(): void
     {
         $resource1 = new HalResource(['foo' => 'bar']);
         $resource2 = new HalResource(['foo' => 'baz']);
@@ -298,7 +300,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => [$resource1, $resource2]], $new->getElements());
     }
 
-    public function testEmbedReturnsNewInstanceAppendingResourceToExistingCollection()
+    public function testEmbedReturnsNewInstanceAppendingResourceToExistingCollection(): void
     {
         $resource1  = new HalResource(['foo' => 'bar']);
         $resource2  = new HalResource(['foo' => 'baz']);
@@ -312,7 +314,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => [$resource1, $resource2, $resource3]], $new->getElements());
     }
 
-    public function testEmbedReturnsNewInstanceAppendingCollectionToExistingCollection()
+    public function testEmbedReturnsNewInstanceAppendingCollectionToExistingCollection(): void
     {
         $resource1   = new HalResource(['foo' => 'bar']);
         $resource2   = new HalResource(['foo' => 'baz']);
@@ -328,7 +330,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $collection1 + $collection2], $new->getElements());
     }
 
-    public function testEmbedRaisesExceptionIfNewResourceDoesNotMatchStructureOfExisting()
+    public function testEmbedRaisesExceptionIfNewResourceDoesNotMatchStructureOfExisting(): void
     {
         $resource1 = new HalResource(['foo' => 'bar']);
         $resource2 = new HalResource(['bar' => 'baz']);
@@ -339,7 +341,7 @@ class HalResourceTest extends TestCase
         $resource->embed('foo', $resource2);
     }
 
-    public function testEmbedRaisesExceptionIfNewResourceDoesNotMatchCollectionResourceStructure()
+    public function testEmbedRaisesExceptionIfNewResourceDoesNotMatchCollectionResourceStructure(): void
     {
         $resource1  = new HalResource(['foo' => 'bar']);
         $resource2  = new HalResource(['foo' => 'baz']);
@@ -352,7 +354,7 @@ class HalResourceTest extends TestCase
         $resource->embed('foo', $resource3);
     }
 
-    public function testEmbedRaisesExceptionIfResourcesInCollectionAreNotOfSameStructure()
+    public function testEmbedRaisesExceptionIfResourcesInCollectionAreNotOfSameStructure(): void
     {
         $resource1  = new HalResource(['foo' => 'bar']);
         $resource2  = new HalResource(['bar' => 'bat']);
@@ -364,7 +366,7 @@ class HalResourceTest extends TestCase
         $resource->embed('foo', $collection);
     }
 
-    public function testWithElementsAddsNewDataToNewResourceInstance()
+    public function testWithElementsAddsNewDataToNewResourceInstance(): void
     {
         $resource = new HalResource();
         $new      = $resource->withElements(['foo' => 'bar']);
@@ -373,7 +375,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $new->getElements());
     }
 
-    public function testWithElementsAddsNewEmbeddedResourcesToNewResourceInstance()
+    public function testWithElementsAddsNewEmbeddedResourcesToNewResourceInstance(): void
     {
         $embedded = new HalResource(['foo' => 'bar']);
         $resource = new HalResource();
@@ -387,7 +389,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $representation['_embedded']['foo']);
     }
 
-    public function testWithElementsOverwritesExistingDataInNewResourceInstance()
+    public function testWithElementsOverwritesExistingDataInNewResourceInstance(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $new      = $resource->withElements(['foo' => 'baz']);
@@ -396,7 +398,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'baz'], $new->getElements());
     }
 
-    public function testWithElementsAppendsEmbeddedResourcesToExistingResourcesInNewResourceInstance()
+    public function testWithElementsAppendsEmbeddedResourcesToExistingResourcesInNewResourceInstance(): void
     {
         $resource1 = new HalResource(['foo' => 'bar']);
         $resource2 = new HalResource(['foo' => 'bar']);
@@ -408,7 +410,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => [$resource1, $resource2]], $new->getElements());
     }
 
-    public function testWithoutElementRemovesDataElementIfItIsPresent()
+    public function testWithoutElementRemovesDataElementIfItIsPresent(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $new      = $resource->withoutElement('foo');
@@ -417,14 +419,14 @@ class HalResourceTest extends TestCase
         $this->assertEquals([], $new->getElements());
     }
 
-    public function testWithoutElementDoesNothingIfElementOrResourceNotPresent()
+    public function testWithoutElementDoesNothingIfElementOrResourceNotPresent(): void
     {
         $resource = new HalResource(['foo' => 'bar']);
         $new      = $resource->withoutElement('bar');
         $this->assertSame($resource, $new);
     }
 
-    public function testWithoutElementRemovesEmbeddedResourceIfItIsPresent()
+    public function testWithoutElementRemovesEmbeddedResourceIfItIsPresent(): void
     {
         $embedded = new HalResource();
         $resource = new HalResource(['foo' => $embedded]);
@@ -434,7 +436,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals([], $new->getElements());
     }
 
-    public function testWithoutElementRemovesEmbeddedCollectionIfPresent()
+    public function testWithoutElementRemovesEmbeddedCollectionIfPresent(): void
     {
         $resource1  = new HalResource();
         $resource2  = new HalResource();
@@ -450,7 +452,7 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider invalidElementNames
      */
-    public function testWithoutElementRaisesExceptionForInvalidElementName(string $name, string $expectedMessage)
+    public function testWithoutElementRaisesExceptionForInvalidElementName(string $name, string $expectedMessage): void
     {
         $resource = new HalResource();
         $this->expectException(InvalidArgumentException::class);
@@ -517,7 +519,7 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider populatedResources
      */
-    public function testToArrayReturnsHalDataStructure(HalResource $resource, array $expected)
+    public function testToArrayReturnsHalDataStructure(HalResource $resource, array $expected): void
     {
         $this->assertEquals($expected, $resource->toArray());
     }
@@ -525,12 +527,12 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider populatedResources
      */
-    public function testJsonSerializeReturnsHalDataStructure(HalResource $resource, array $expected)
+    public function testJsonSerializeReturnsHalDataStructure(HalResource $resource, array $expected): void
     {
         $this->assertEquals($expected, $resource->jsonSerialize());
     }
 
-    public function testAllowsForcingResourceToAggregateAsACollection()
+    public function testAllowsForcingResourceToAggregateAsACollection(): void
     {
         $resource = (new HalResource())
             ->withLink(new Link('self', '/api/foo'))
@@ -561,7 +563,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals($expected, $resource->toArray());
     }
 
-    public function testAllowsForcingLinkToAggregateAsACollection()
+    public function testAllowsForcingLinkToAggregateAsACollection(): void
     {
         $link     = new Link('foo', '/api/foo', false, [Link::AS_COLLECTION => true]);
         $resource = new HalResource(['id' => 'foo'], [$link]);

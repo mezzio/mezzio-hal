@@ -36,7 +36,7 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
 
     use ProphecyTrait;
 
-    public function testUsesRouteParamsAndQueriesWithPaginatorSpecifiedInMetadataWhenGeneratingLinkHref()
+    public function testUsesRouteParamsAndQueriesWithPaginatorSpecifiedInMetadataWhenGeneratingLinkHref(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getAttribute('p', 1)->willReturn(3);
@@ -118,7 +118,7 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
         $this->assertLink('last', '/api/foo/1234/p/5?sort=ASC', $last);
     }
 
-    public function testUsesRouteParamsAndQueriesSpecifiedInMetadataWhenGeneratingLinkHref()
+    public function testUsesRouteParamsAndQueriesSpecifiedInMetadataWhenGeneratingLinkHref(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getAttribute('param_1', 1)->willReturn(3);
@@ -201,7 +201,7 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
      * @psalm-param LinkGenerator&ObjectProphecy $linkGenerator
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
      */
-    private function createLinkGeneratorProphecy($linkGenerator, $request, string $rel, int $page)
+    private function createLinkGeneratorProphecy($linkGenerator, $request, string $rel, int $page): void
     {
         $linkGenerator->fromRoute(
             $rel,
