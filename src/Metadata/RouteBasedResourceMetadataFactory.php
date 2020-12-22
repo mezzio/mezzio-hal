@@ -55,15 +55,14 @@ class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
      *          'max_depth' => 10,
      *     ]
      *     </code>
-     * @return AbstractMetadata
      * @throws Exception\InvalidConfigException
      */
-    public function createMetadata(string $requestedName, array $metadata) : AbstractMetadata
+    public function createMetadata(string $requestedName, array $metadata): AbstractMetadata
     {
         $requiredKeys = [
             'resource_class',
             'route',
-            'extractor'
+            'extractor',
         ];
 
         if ($requiredKeys !== array_intersect($requiredKeys, array_keys($metadata))) {

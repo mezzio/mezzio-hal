@@ -15,7 +15,6 @@ use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
-use function get_class;
 use function http_build_query;
 use function parse_str;
 use function parse_url;
@@ -33,12 +32,12 @@ class UrlBasedCollectionStrategy implements StrategyInterface
     }
 
     public function createResource(
-        $instance,
+        object $instance,
         Metadata\AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         if (! $metadata instanceof Metadata\UrlBasedCollectionMetadata) {
             throw Exception\UnexpectedMetadataTypeException::forMetadata(
                 $metadata,
@@ -48,7 +47,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         }
 
         if (! $instance instanceof Traversable) {
-            throw Exception\InvalidCollectionException::fromInstance($instance, get_class($this));
+            throw Exception\InvalidCollectionException::fromInstance($instance, static::class);
         }
 
         return $this->extractCollection($instance, $metadata, $resourceGenerator, $request, $depth);
@@ -64,7 +63,6 @@ class UrlBasedCollectionStrategy implements StrategyInterface
      *     abstract.
      * @param ServerRequestInterface $request Ignored; required to fulfill
      *     abstract.
-     * @return Link
      */
     protected function generateLinkForPage(
         string $rel,
@@ -72,10 +70,10 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         Metadata\AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) : Link {
+    ): Link {
         $paginationParam = $metadata->getPaginationParam();
-        $paginationType = $metadata->getPaginationParamType();
-        $url = $metadata->getUrl() . '?' . http_build_query($request->getQueryParams());
+        $paginationType  = $metadata->getPaginationParamType();
+        $url             = $metadata->getUrl() . '?' . http_build_query($request->getQueryParams());
 
         switch ($paginationType) {
             case Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER:
@@ -105,9 +103,8 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) {
-
         $queryStringArgs = $request->getQueryParams();
-        $url = $metadata->getUrl();
+        $url             = $metadata->getUrl();
         if ($queryStringArgs !== null) {
             $url .= '?' . http_build_query($queryStringArgs);
         }
@@ -115,7 +112,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         return new Link('self', $url);
     }
 
-    private function stripUrlFragment(string $url) : string
+    private function stripUrlFragment(string $url): string
     {
         $fragment = parse_url($url, PHP_URL_FRAGMENT);
         if (null === $fragment) {
@@ -126,7 +123,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         return str_replace('#' . $fragment, '', $url);
     }
 
-    private function appendPageQueryToUrl(string $url, int $page, string $paginationParam) : string
+    private function appendPageQueryToUrl(string $url, int $page, string $paginationParam): string
     {
         $query = parse_url($url, PHP_URL_QUERY);
         if (null === $query) {

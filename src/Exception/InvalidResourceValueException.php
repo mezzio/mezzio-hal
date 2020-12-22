@@ -18,7 +18,10 @@ use function sprintf;
 
 class InvalidResourceValueException extends RuntimeException implements ExceptionInterface
 {
-    public static function fromValue($value) : self
+    /**
+     * @param mixed $value
+     */
+    public static function fromValue($value): self
     {
         return new self(sprintf(
             'Encountered non-primitive type "%s" when serializing %s instance; unable to serialize',
@@ -30,7 +33,7 @@ class InvalidResourceValueException extends RuntimeException implements Exceptio
     /**
      * @param object $object
      */
-    public static function fromObject($object) : self
+    public static function fromObject($object): self
     {
         return new self(sprintf(
             'Encountered object of type "%s" when serializing %s instance; unable to serialize',

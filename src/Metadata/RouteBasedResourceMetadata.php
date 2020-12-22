@@ -33,41 +33,39 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         array $identifiersToPlaceholdersMapping = [],
         int $maxDepth = 10
     ) {
-        $this->class = $class;
-        $this->route = $route;
-        $this->extractor = $extractor;
-        $this->resourceIdentifier = $resourceIdentifier;
-        $this->routeParams = $routeParams;
+        $this->class                            = $class;
+        $this->route                            = $route;
+        $this->extractor                        = $extractor;
+        $this->resourceIdentifier               = $resourceIdentifier;
+        $this->routeParams                      = $routeParams;
         $this->identifiersToPlaceHoldersMapping = $identifiersToPlaceholdersMapping;
-        $this->maxDepth = $maxDepth;
+        $this->maxDepth                         = $maxDepth;
     }
 
-    public function getRoute() : string
+    public function getRoute(): string
     {
         return $this->route;
     }
 
-    public function getIdentifiersToPlaceholdersMapping() : array
+    public function getIdentifiersToPlaceholdersMapping(): array
     {
         return $this->identifiersToPlaceHoldersMapping;
     }
 
     /**
      * This method has been kept for BC and should be deprecated.
-     *
-     * @return string
      */
-    public function getResourceIdentifier() : string
+    public function getResourceIdentifier(): string
     {
         return $this->resourceIdentifier;
     }
 
-    public function getRouteParams() : array
+    public function getRouteParams(): array
     {
         return $this->routeParams;
     }
 
-    public function setRouteParams(array $routeParams) : void
+    public function setRouteParams(array $routeParams): void
     {
         $this->routeParams = $routeParams;
     }

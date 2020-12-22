@@ -12,6 +12,7 @@ use Laminas\Hydrator\ExtractionInterface;
 use Mezzio\Hal\Metadata\AbstractCollectionMetadata;
 use Mezzio\Hal\Metadata\AbstractMetadata;
 use Mezzio\Hal\ResourceGeneratorInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function get_class;
@@ -20,17 +21,15 @@ use function is_object;
 trait ExtractInstanceTrait
 {
     /**
-     * @param object $instance
-     * @throws \Psr\Container\ContainerExceptionInterface if the extractor
-     *     service cannot be retrieved.
+     * @throws ContainerExceptionInterface If the extractor service cannot be retrieved.
      */
     private function extractInstance(
-        $instance,
+        object $instance,
         AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : array {
+    ): array {
         $hydrators = $resourceGenerator->getHydrators();
         $extractor = $hydrators->get($metadata->getExtractor());
         if (! $extractor instanceof ExtractionInterface) {

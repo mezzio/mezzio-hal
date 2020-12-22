@@ -42,14 +42,10 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 {
     use LinkCollection;
 
-    /**
-     * @var array All data to represent.
-     */
+    /** @var array All data to represent. */
     private $data = [];
 
-    /**
-     * @var HalResource[]
-     */
+    /** @var HalResource[] */
     private $embedded = [];
 
     /**
@@ -59,10 +55,11 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      */
     public function __construct(array $data = [], array $links = [], array $embedded = [])
     {
-        $context = __CLASS__;
+        $context = self::class;
         array_walk($data, function ($value, $name) use ($context) {
             $this->validateElementName($name, $context);
-            if (! empty($value)
+            if (
+                ! empty($value)
                 && ($value instanceof self || $this->isResourceCollection($value, $name, $context))
             ) {
                 $this->embedded[$name] = $value;
@@ -84,9 +81,11 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             $this->embedded[$name] = $resource;
         });
 
-        if (array_reduce($links, function ($containsNonLinkItem, $link) {
-            return $containsNonLinkItem || ! $link instanceof LinkInterface;
-        }, false)) {
+        if (
+            array_reduce($links, function ($containsNonLinkItem, $link) {
+                return $containsNonLinkItem || ! $link instanceof LinkInterface;
+            }, false)
+        ) {
             throw new InvalidArgumentException('Non-Link item provided in $links array');
         }
         $this->links = $links;
@@ -100,10 +99,9 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      *
      * If the element does not exist at all, a null value is returned.
      *
-     * @param string $name
      * @return mixed
-     * @throws InvalidArgumentException if $name is empty
-     * @throws InvalidArgumentException if $name is a reserved keyword
+     * @throws InvalidArgumentException If $name is empty.
+     * @throws InvalidArgumentException If $name is a reserved keyword.
      */
     public function getElement(string $name)
     {
@@ -126,7 +124,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * Returned as a set of key/value pairs. Embedded resources are mixed
      * in as `HalResource` instances under the associated key.
      */
-    public function getElements() : array
+    public function getElements(): array
     {
         return array_merge($this->data, $this->embedded);
     }
@@ -139,19 +137,18 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * If the $name existed in the original instance, it will be overwritten
      * by $value in the returned instance.
      *
-     * @param string $name
      * @param mixed $value
-     * @return HalResource
-     * @throws InvalidArgumentException if $name is empty
-     * @throws InvalidArgumentException if $name is a reserved keyword
-     * @throws RuntimeException if $name is already in use for an embedded
+     * @throws InvalidArgumentException If $name is empty.
+     * @throws InvalidArgumentException If $name is a reserved keyword.
+     * @throws RuntimeException If $name is already in use for an embedded
      *     resource.
      */
-    public function withElement(string $name, $value) : HalResource
+    public function withElement(string $name, $value): HalResource
     {
         $this->validateElementName($name, __METHOD__);
 
-        if (! empty($value)
+        if (
+            ! empty($value)
             && ($value instanceof self || $this->isResourceCollection($value, $name, __METHOD__))
         ) {
             return $this->embed($name, $value);
@@ -159,7 +156,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 
         $this->detectCollisionWithEmbeddedResource($name, __METHOD__);
 
-        $new = clone $this;
+        $new              = clone $this;
         $new->data[$name] = $value;
         return $new;
     }
@@ -167,12 +164,10 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     /**
      * Return an instance removing the named element or embedded resource.
      *
-     * @param string $name
-     * @return HalResource
-     * @throws InvalidArgumentException if $name is empty
-     * @throws InvalidArgumentException if $name is a reserved keyword
+     * @throws InvalidArgumentException If $name is empty.
+     * @throws InvalidArgumentException If $name is a reserved keyword.
      */
-    public function withoutElement(string $name) : HalResource
+    public function withoutElement(string $name): HalResource
     {
         $this->validateElementName($name, __METHOD__);
 
@@ -198,7 +193,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * resource, it will be replaced. Otherwise, the new elements are added to
      * the resource returned.
      */
-    public function withElements(array $elements) : HalResource
+    public function withElements(array $elements): HalResource
     {
         $resource = $this;
         foreach ($elements as $name => $value) {
@@ -209,14 +204,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     }
 
     /**
-     * @param string $name
      * @param HalResource|HalResource[] $resource
      * @param bool $forceCollection Whether or not a single resource or an
      *     array containing a single resource should be represented as an array of
      *     resources during representation.
-     * @return HalResource
      */
-    public function embed(string $name, $resource, bool $forceCollection = false) : HalResource
+    public function embed(string $name, $resource, bool $forceCollection = false): HalResource
     {
         $this->validateElementName($name, __METHOD__);
         $this->detectCollisionWithData($name, __METHOD__);
@@ -224,17 +217,17 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             throw new InvalidArgumentException(sprintf(
                 '%s expects a %s instance or array of %s instances; received %s',
                 __METHOD__,
-                __CLASS__,
-                __CLASS__,
+                self::class,
+                self::class,
                 is_object($resource) ? get_class($resource) : gettype($resource)
             ));
         }
-        $new = clone $this;
+        $new                  = clone $this;
         $new->embedded[$name] = $this->aggregateEmbeddedResource($name, $resource, __METHOD__, $forceCollection);
         return $new;
     }
 
-    public function toArray() : array
+    public function toArray(): array
     {
         $resource = $this->data;
 
@@ -251,16 +244,16 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         return $resource;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
 
     /**
-     * @throws InvalidArgumentException if $name is empty
-     * @throws InvalidArgumentException if $name is a reserved keyword
+     * @throws InvalidArgumentException If $name is empty.
+     * @throws InvalidArgumentException If $name is a reserved keyword.
      */
-    private function validateElementName(string $name, string $context) : void
+    private function validateElementName(string $name, string $context): void
     {
         if (empty($name)) {
             throw new InvalidArgumentException(sprintf(
@@ -277,7 +270,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         }
     }
 
-    private function detectCollisionWithData(string $name, string $context) : void
+    private function detectCollisionWithData(string $name, string $context): void
     {
         if (isset($this->data[$name])) {
             throw new RuntimeException(sprintf(
@@ -288,7 +281,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         }
     }
 
-    private function detectCollisionWithEmbeddedResource(string $name, string $context) : void
+    private function detectCollisionWithEmbeddedResource(string $name, string $context): void
     {
         if (isset($this->embedded[$name])) {
             throw new RuntimeException(sprintf(
@@ -312,6 +305,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * structure of the first element; if they are comparable, then it appends
      * the new one to the list.
      *
+     * @param array|HalResource $resource
      * @return HalResource|HalResource[]
      */
     private function aggregateEmbeddedResource(string $name, $resource, string $context, bool $forceCollection)
@@ -348,7 +342,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         return $collection;
     }
 
-    private function aggregateEmbeddedCollection(string $name, array $collection, string $context) : array
+    private function aggregateEmbeddedCollection(string $name, array $collection, string $context): array
     {
         $original = $this->embedded[$name] instanceof self ? [$this->embedded[$name]] : $this->embedded[$name];
         $this->compareResources(
@@ -365,23 +359,31 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      *
      * Exists as array_shift is destructive, and we cannot necessarily know the
      * index of the first element.
+     *
+     * @param null|HalResource[] $resources
      */
-    private function firstResource(array $resources)
+    private function firstResource(array $resources): ?HalResource
     {
         foreach ($resources as $resource) {
             return $resource;
         }
+        return null;
     }
 
-    private function isResourceCollection($value, string $name, string $context) : bool
+    /**
+     * @param mixed $value
+     */
+    private function isResourceCollection($value, string $name, string $context): bool
     {
         if (! is_array($value)) {
             return false;
         }
 
-        if (! array_reduce($value, function ($isResource, $item) {
-            return $isResource && $item instanceof self;
-        }, true)) {
+        if (
+            ! array_reduce($value, function ($isResource, $item) {
+                return $isResource && $item instanceof self;
+            }, true)
+        ) {
             return false;
         }
 
@@ -391,7 +393,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         }, true);
     }
 
-    private function serializeLinks()
+    private function serializeLinks(): array
     {
         $relations = array_reduce($this->links, function (array $byRelation, LinkInterface $link) {
             $representation = array_merge($link->getAttributes(), [
@@ -447,7 +449,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         return $relations;
     }
 
-    private function serializeEmbeddedResources()
+    private function serializeEmbeddedResources(): array
     {
         $embedded = [];
         array_walk($this->embedded, function ($resource, $name) use (&$embedded) {
@@ -462,9 +464,9 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     }
 
     /**
-     * @throws InvalidArgumentException if $a and $b are not structurally equivalent.
+     * @throws InvalidArgumentException If $a and $b are not structurally equivalent.
      */
-    private function compareResources(self $a, self $b, string $name, string $context) : bool
+    private function compareResources(self $a, self $b, string $name, string $context): bool
     {
         $structureA = array_keys($a->getElements());
         $structureB = array_keys($b->getElements());

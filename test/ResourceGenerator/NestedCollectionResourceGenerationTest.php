@@ -21,9 +21,11 @@ use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_key_exists;
 use function array_shift;
 
 class NestedCollectionResourceGenerationTest extends TestCase
@@ -36,15 +38,15 @@ class NestedCollectionResourceGenerationTest extends TestCase
 
     public function testNestedCollectionIsEmbeddedAsAnArrayNotAHalCollection()
     {
-        $collection = $this->createCollection();
-        $foo = new TestAsset\FooBar;
-        $foo->id = 101010;
-        $foo->foo = 'foo';
+        $collection    = $this->createCollection();
+        $foo           = new TestAsset\FooBar();
+        $foo->id       = 101010;
+        $foo->foo      = 'foo';
         $foo->children = $collection;
 
-        $request = $this->prophesize(ServerRequestInterface::class);
-        $metadataMap = $this->createMetadataMap();
-        $hydrators = $this->createHydrators();
+        $request       = $this->prophesize(ServerRequestInterface::class);
+        $metadataMap   = $this->createMetadataMap();
+        $hydrators     = $this->createHydrators();
         $linkGenerator = $this->createLinkGenerator($request);
 
         $generator = new ResourceGenerator(
@@ -79,18 +81,22 @@ class NestedCollectionResourceGenerationTest extends TestCase
         }
     }
 
-    private function createCollection() : TestAsset\Collection
+    private function createCollection(): TestAsset\Collection
     {
         $items = [];
         for ($i = 1; $i < 11; $i += 1) {
-            $item = new TestAsset\Child;
-            $item->id = $i;
+            $item          = new TestAsset\Child();
+            $item->id      = $i;
             $item->message = 'ack';
-            $items[] = $item;
+            $items[]       = $item;
         }
         return new TestAsset\Collection($items);
     }
 
+    /**
+     * @return MetadataMap|ObjectProphecy
+     * @psalm-return MetadataMap&ObjectProphecy
+     */
     private function createMetadataMap()
     {
         $metadataMap = $this->prophesize(MetadataMap::class);
@@ -125,6 +131,10 @@ class NestedCollectionResourceGenerationTest extends TestCase
         return $metadataMap;
     }
 
+    /**
+     * @return ContainerInterface|ObjectProphecy
+     * @psalm-return ContainerInterface&ObjectProphecy
+     */
     private function createHydrators()
     {
         $hydratorClass = self::getObjectPropertyHydratorClass();
@@ -134,6 +144,12 @@ class NestedCollectionResourceGenerationTest extends TestCase
         return $hydrators;
     }
 
+    /**
+     * @param ServerRequestInterface|ObjectProphecy $request
+     * @psalm-param ServerRequestInterface&ObjectProphecy $request
+     * @return LinkGenerator|ObjectProphecy
+     * @psalm-return LinkGenerator&ObjectProphecy
+     */
     public function createLinkGenerator($request)
     {
         $linkGenerator = $this->prophesize(LinkGenerator::class);

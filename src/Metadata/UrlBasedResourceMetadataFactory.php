@@ -38,10 +38,9 @@ class UrlBasedResourceMetadataFactory implements MetadataFactoryInterface
      *          'max_depth' => 10,
      *     ]
      *     </code>
-     * @return AbstractMetadata
      * @throws Exception\InvalidConfigException
      */
-    public function createMetadata(string $requestedName, array $metadata) : AbstractMetadata
+    public function createMetadata(string $requestedName, array $metadata): AbstractMetadata
     {
         $requiredKeys = [
             'resource_class',

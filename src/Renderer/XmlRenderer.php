@@ -23,15 +23,15 @@ use function trim;
 
 class XmlRenderer implements RendererInterface
 {
-    public function render(HalResource $resource) : string
+    public function render(HalResource $resource): string
     {
-        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom               = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
         $dom->appendChild($this->createResourceNode($dom, $resource->toArray()));
         return trim($dom->saveXML());
     }
 
-    private function createResourceNode(DOMDocument $doc, array $resource, string $resourceRel = 'self') : DOMNode
+    private function createResourceNode(DOMDocument $doc, array $resource, string $resourceRel = 'self'): DOMNode
     {
         // Normalize resource
         $resource['_links']    = $resource['_links'] ?? [];
@@ -79,7 +79,7 @@ class XmlRenderer implements RendererInterface
         return $this->createNodeTree($doc, $node, $resource);
     }
 
-    private function createLinkNode(DOMDocument $doc, string $rel, array $data)
+    private function createLinkNode(DOMDocument $doc, string $rel, array $data): DOMNode
     {
         $link = $doc->createElement('link');
         $link->setAttribute('rel', $rel);
@@ -105,12 +105,13 @@ class XmlRenderer implements RendererInterface
         return $value;
     }
 
-    private function isAssocArray(array $value) : bool
+    private function isAssocArray(array $value): bool
     {
         return array_values($value) !== $value;
     }
 
     /**
+     * @param mixed $data
      * @return DOMNode|DOMNode[]
      */
     private function createResourceElement(DOMDocument $doc, string $name, $data)
@@ -144,7 +145,7 @@ class XmlRenderer implements RendererInterface
         return $elements;
     }
 
-    private function createNodeTree(DOMDocument $doc, DOMNode $node, array $data) : DOMNode
+    private function createNodeTree(DOMDocument $doc, DOMNode $node, array $data): DOMNode
     {
         foreach ($data as $key => $value) {
             $element = $this->createResourceElement($doc, $key, $value);
@@ -165,10 +166,10 @@ class XmlRenderer implements RendererInterface
      *     json_decode(json_encode($object), true), passing the final value
      *     back to createResourceElement()?
      * @param object $object
-     * @throws Exception\InvalidResourceValueException if unable to serialize
+     * @throws Exception\InvalidResourceValueException If unable to serialize
      *     the data to a string.
      */
-    private function createDataFromObject($object) : string
+    private function createDataFromObject($object): string
     {
         if ($object instanceof DateTimeInterface) {
             return $object->format('c');

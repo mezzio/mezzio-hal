@@ -14,12 +14,10 @@ abstract class AbstractMetadata
 {
     use LinkCollection;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $class;
 
-    public function getClass() : string
+    public function getClass(): string
     {
         return $this->class;
     }

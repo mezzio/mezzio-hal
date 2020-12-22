@@ -18,12 +18,14 @@ use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
-use function get_class;
+use function ceil;
+use function count;
 use function in_array;
 use function sprintf;
 
 trait ExtractCollectionTrait
 {
+    /** @var string[] */
     private $paginationTypes = [
         AbstractCollectionMetadata::TYPE_PLACEHOLDER,
         AbstractCollectionMetadata::TYPE_QUERY,
@@ -35,13 +37,13 @@ trait ExtractCollectionTrait
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) : Link;
+    ): Link;
 
     abstract protected function generateSelfLink(
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) : Link;
+    ): Link;
 
     private function extractCollection(
         Traversable $collection,
@@ -49,9 +51,9 @@ trait ExtractCollectionTrait
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         if (! $metadata instanceof AbstractCollectionMetadata) {
-            throw Exception\UnexpectedMetadataTypeException::forCollection($metadata, get_class($this));
+            throw Exception\UnexpectedMetadataTypeException::forCollection($metadata, static::class);
         }
 
         if ($collection instanceof Paginator) {
@@ -68,12 +70,7 @@ trait ExtractCollectionTrait
     /**
      * Generates a paginated hal resource from a collection
      *
-     * @param Paginator $collection
-     * @param AbstractCollectionMetadata $metadata
-     * @param ResourceGeneratorInterface $resourceGenerator
-     * @param ServerRequestInterface $request
-     * @return HalResource
-     * @throws Exception\OutOfBoundsException if requested page if outside the available pages
+     * @throws Exception\OutOfBoundsException If requested page if outside the available pages.
      */
     private function extractPaginator(
         Paginator $collection,
@@ -81,7 +78,7 @@ trait ExtractCollectionTrait
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         $data      = ['_total_items' => $collection->getTotalItemCount()];
         $pageCount = $collection->count();
 
@@ -112,13 +109,13 @@ trait ExtractCollectionTrait
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         $query      = $collection->getQuery();
         $totalItems = count($collection);
         $perPage    = $query->getMaxResults();
         $pageCount  = (int) ceil($totalItems / $perPage);
 
-        $data  = ['_total_items' => $totalItems];
+        $data = ['_total_items' => $totalItems];
 
         return $this->createPaginatedCollectionResource(
             $pageCount,
@@ -140,22 +137,24 @@ trait ExtractCollectionTrait
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         $isCountable = $collection instanceof Countable;
-        $count = $isCountable ? $collection->count() : 0;
+        $count       = $isCountable ? $collection->count() : 0;
 
         $resources = [];
         foreach ($collection as $item) {
             $resources[] = $resourceGenerator->fromObject($item, $request, $depth + 1);
-            $count = $isCountable ? $count : $count + 1;
+            $count       = $isCountable ? $count : $count + 1;
         }
 
-        $data = ['_total_items' => $count];
-        $links = [$this->generateSelfLink(
-            $metadata,
-            $resourceGenerator,
-            $request
-        )];
+        $data  = ['_total_items' => $count];
+        $links = [
+            $this->generateSelfLink(
+                $metadata,
+                $resourceGenerator,
+                $request
+            ),
+        ];
 
         return new HalResource($data, $links, [
             $metadata->getCollectionRelation() => $resources,
@@ -193,7 +192,7 @@ trait ExtractCollectionTrait
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         $links               = [];
         $paginationParamType = $metadata->getPaginationParamType();
 
@@ -211,7 +210,7 @@ trait ExtractCollectionTrait
         }
 
         $paginationParam = $metadata->getPaginationParam();
-        $page = $paginationParamType === AbstractCollectionMetadata::TYPE_QUERY
+        $page            = $paginationParamType === AbstractCollectionMetadata::TYPE_QUERY
             ? (int) ($request->getQueryParams()[$paginationParam] ?? 1)
             : (int) $request->getAttribute($paginationParam, 1);
 
@@ -236,7 +235,7 @@ trait ExtractCollectionTrait
             $links[] = $this->generateLinkForPage('last', $pageCount, $metadata, $resourceGenerator, $request);
         }
 
-        $data['_page'] = $page;
+        $data['_page']       = $page;
         $data['_page_count'] = $pageCount;
 
         return $this->createCollectionResource(
@@ -267,7 +266,7 @@ trait ExtractCollectionTrait
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         $resources = [];
         foreach ($collection as $item) {
             $resources[] = $resourceGenerator->fromObject($item, $request, $depth + 1);

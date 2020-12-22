@@ -21,7 +21,7 @@ class InvalidExtractorException extends RuntimeException implements ExceptionInt
     /**
      * @param mixed $extractor
      */
-    public static function fromInstance($extractor) : self
+    public static function fromInstance($extractor): self
     {
         return new self(sprintf(
             'Invalid extractor "%s" provided in metadata; does not implement %s',

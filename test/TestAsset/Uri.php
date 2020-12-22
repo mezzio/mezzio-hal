@@ -10,6 +10,7 @@ namespace MezzioTest\Hal\TestAsset;
 
 class Uri
 {
+    /** @var strign */
     private $uri;
 
     public function __construct(string $uri)
@@ -17,7 +18,7 @@ class Uri
         $this->uri = $uri;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->uri;
     }

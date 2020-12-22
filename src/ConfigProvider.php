@@ -23,61 +23,60 @@ use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
 use Mezzio\Hal\ResourceGenerator\RouteBasedResourceStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedCollectionStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy;
+use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator;
 
 class ConfigProvider
 {
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
-            'dependencies'        => $this->getDependencies(),
-            'mezzio-hal' => $this->getHalConfig(),
+            'dependencies' => $this->getDependencies(),
+            'mezzio-hal'   => $this->getHalConfig(),
         ];
     }
 
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return [
-            'aliases' => [
-                UrlGeneratorInterface::class => LinkGenerator\MezzioUrlGenerator::class,
+            'aliases'    => [
+                UrlGeneratorInterface::class      => MezzioUrlGenerator::class,
                 ResourceGeneratorInterface::class => ResourceGenerator::class,
 
                 // Legacy Zend Framework aliases
                 \Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface::class => UrlGeneratorInterface::class,
-                \Zend\Expressive\Hal\HalResponseFactory::class => HalResponseFactory::class,
-                \Zend\Expressive\Hal\LinkGenerator::class => LinkGenerator::class,
-                \Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator::class => MezzioUrlGenerator::class,
-                \Zend\Expressive\Hal\Metadata\MetadataMap::class => MetadataMap::class,
-                \Zend\Expressive\Hal\ResourceGenerator::class => ResourceGenerator::class,
-                \Zend\Expressive\Hal\RouteBasedCollectionStrategy::class => RouteBasedCollectionStrategy::class,
-                \Zend\Expressive\Hal\RouteBasedResourceStrategy::class => RouteBasedResourceStrategy::class,
-                \Zend\Expressive\Hal\UrlBasedCollectionStrategy::class => UrlBasedCollectionStrategy::class,
-                \Zend\Expressive\Hal\UrlBasedResourceStrategy::class => UrlBasedResourceStrategy::class,
+                \Zend\Expressive\Hal\HalResponseFactory::class                  => HalResponseFactory::class,
+                \Zend\Expressive\Hal\LinkGenerator::class                       => LinkGenerator::class,
+                ExpressiveUrlGenerator::class                                   => MezzioUrlGenerator::class,
+                \Zend\Expressive\Hal\Metadata\MetadataMap::class                => MetadataMap::class,
+                \Zend\Expressive\Hal\ResourceGenerator::class                   => ResourceGenerator::class,
+                \Zend\Expressive\Hal\RouteBasedCollectionStrategy::class        => RouteBasedCollectionStrategy::class,
+                \Zend\Expressive\Hal\RouteBasedResourceStrategy::class          => RouteBasedResourceStrategy::class,
+                \Zend\Expressive\Hal\UrlBasedCollectionStrategy::class          => UrlBasedCollectionStrategy::class,
+                \Zend\Expressive\Hal\UrlBasedResourceStrategy::class            => UrlBasedResourceStrategy::class,
             ],
-            'factories' => [
-                HalResponseFactory::class     => HalResponseFactoryFactory::class,
-                LinkGenerator::class          => LinkGeneratorFactory::class,
+            'factories'  => [
+                HalResponseFactory::class => HalResponseFactoryFactory::class,
+                LinkGenerator::class      => LinkGeneratorFactory::class,
                 MezzioUrlGenerator::class => LinkGenerator\MezzioUrlGeneratorFactory::class,
-                MetadataMap::class            => Metadata\MetadataMapFactory::class,
-                ResourceGenerator::class      => ResourceGeneratorFactory::class,
+                MetadataMap::class        => Metadata\MetadataMapFactory::class,
+                ResourceGenerator::class  => ResourceGeneratorFactory::class,
             ],
             'invokables' => [
                 RouteBasedCollectionStrategy::class => RouteBasedCollectionStrategy::class,
                 RouteBasedResourceStrategy::class   => RouteBasedResourceStrategy::class,
-
                 UrlBasedCollectionStrategy::class   => UrlBasedCollectionStrategy::class,
-                UrlBasedResourceStrategy::class     => UrlBasedResourceStrategy::class
+                UrlBasedResourceStrategy::class     => UrlBasedResourceStrategy::class,
             ],
         ];
     }
 
-    public function getHalConfig() : array
+    public function getHalConfig(): array
     {
         return [
             'resource-generator' => [
                 'strategies' => [ // The registered strategies and their metadata types
                     RouteBasedCollectionMetadata::class => RouteBasedCollectionStrategy::class,
                     RouteBasedResourceMetadata::class   => RouteBasedResourceStrategy::class,
-
                     UrlBasedCollectionMetadata::class   => UrlBasedCollectionStrategy::class,
                     UrlBasedResourceMetadata::class     => UrlBasedResourceStrategy::class,
                 ],
@@ -85,7 +84,6 @@ class ConfigProvider
             'metadata-factories' => [ // The factories for the metadata types
                 RouteBasedCollectionMetadata::class => RouteBasedCollectionMetadataFactory::class,
                 RouteBasedResourceMetadata::class   => RouteBasedResourceMetadataFactory::class,
-
                 UrlBasedCollectionMetadata::class   => UrlBasedCollectionMetadataFactory::class,
                 UrlBasedResourceMetadata::class     => UrlBasedResourceMetadataFactory::class,
             ],

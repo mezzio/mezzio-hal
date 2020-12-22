@@ -8,6 +8,7 @@
 
 namespace MezzioTest\Hal\ResourceGenerator;
 
+use ArrayObject;
 use Laminas\Paginator\Adapter\ArrayAdapter;
 use Laminas\Paginator\Paginator;
 use Mezzio\Hal\HalResource;
@@ -22,9 +23,11 @@ use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_key_exists;
 use function sprintf;
 
 class RouteBasedCollectionWithRouteParamsTest extends TestCase
@@ -139,7 +142,7 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
         $metadataMap->get(TestAsset\FooBar::class)->willReturn($resourceMetadata);
 
         $collectionMetadata = new RouteBasedCollectionMetadata(
-            \ArrayObject::class,
+            ArrayObject::class,
             'foo-bar',
             'foo-bar',
             'p',
@@ -147,7 +150,7 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             [],
             ['query_2' => 'overridden_2']
         );
-        $linkGenerator = $this->prophesize(LinkGenerator::class);
+        $linkGenerator      = $this->prophesize(LinkGenerator::class);
         $linkGenerator->fromRoute(
             'self',
             $request->reveal(),
@@ -156,15 +159,15 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             ['query_1' => 'value_1', 'query_2' => 'overridden_2']
         )->willReturn(new Link('self', '/api/foo/1234/p/3?query1=value_1&query_2=overridden_2'));
 
-        $metadataMap->has(\ArrayObject::class)->willReturn(true);
-        $metadataMap->get(\ArrayObject::class)->willReturn($collectionMetadata);
+        $metadataMap->has(ArrayObject::class)->willReturn(true);
+        $metadataMap->get(ArrayObject::class)->willReturn($collectionMetadata);
 
         $hydratorClass = self::getObjectPropertyHydratorClass();
 
         $hydrators = $this->prophesize(ContainerInterface::class);
         $hydrators->get($hydratorClass)->willReturn(new $hydratorClass());
 
-        $collection = new \ArrayObject($this->createCollectionItems(
+        $collection = new ArrayObject($this->createCollectionItems(
             $linkGenerator,
             $request
         ));
@@ -192,6 +195,12 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
         $this->assertLink('self', '/api/foo/1234/p/3?query1=value_1&query_2=overridden_2', $self);
     }
 
+    /**
+     * @param LinkGenerator|ObjectProphecy $linkGenerator
+     * @param ServerRequestInterface|ObjectProphecy $request
+     * @psalm-param LinkGenerator&ObjectProphecy $linkGenerator
+     * @psalm-param ServerRequestInterface&ObjectProphecy $request
+     */
     private function createLinkGeneratorProphecy($linkGenerator, $request, string $rel, int $page)
     {
         $linkGenerator->fromRoute(
@@ -208,17 +217,23 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
         )->willReturn(new Link($rel, sprintf('/api/foo/1234/p/%d?sort=ASC', $page)));
     }
 
-    private function createCollectionItems($linkGenerator, $request) : array
+    /**
+     * @param LinkGenerator|ObjectProphecy $linkGenerator
+     * @param ServerRequestInterface|ObjectProphecy $request
+     * @psalm-param LinkGenerator&ObjectProphecy $linkGenerator
+     * @psalm-param ServerRequestInterface&ObjectProphecy $request
+     */
+    private function createCollectionItems($linkGenerator, $request): array
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
 
         $items = [];
         for ($i = 1; $i < 15; $i += 1) {
-            $next = clone $instance;
+            $next     = clone $instance;
             $next->id = $i;
-            $items[] = $next;
+            $items[]  = $next;
 
             $linkGenerator
                 ->fromRoute(

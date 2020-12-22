@@ -16,7 +16,7 @@ use function sprintf;
 
 class UnknownMetadataTypeException extends RuntimeException implements ExceptionInterface
 {
-    public static function forMetadata(AbstractMetadata $metadata) : self
+    public static function forMetadata(AbstractMetadata $metadata): self
     {
         return new self(sprintf(
             'Encountered unknown metadata type %s; no strategy available for creating resource from this metadata',
@@ -24,7 +24,7 @@ class UnknownMetadataTypeException extends RuntimeException implements Exception
         ));
     }
 
-    public static function forInvalidMetadataClass(string $metadata) : self
+    public static function forInvalidMetadataClass(string $metadata): self
     {
         return new self(sprintf(
             'Invalid metadata type "%s"; does not exist, or does not extend %s',

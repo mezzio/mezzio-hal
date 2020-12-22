@@ -35,20 +35,16 @@ class MetadataMapFactoryTest extends TestCase
 
     use ProphecyTrait;
 
-    /**
-     * @var MetadataMapFactory
-     */
+    /** @var MetadataMapFactory */
     private $factory;
 
-    /**
-     * @var ObjectProphecy|ContainerInterface
-     */
+    /** @var ObjectProphecy|ContainerInterface */
     private $container;
 
     public function setUp(): void
     {
         $this->container = $this->prophesize(ContainerInterface::class);
-        $this->factory = new MetadataMapFactory();
+        $this->factory   = new MetadataMapFactory();
     }
 
     public function testFactoryReturnsEmptyMetadataMapWhenNoConfigServicePresent()
@@ -98,9 +94,13 @@ class MetadataMapFactoryTest extends TestCase
     public function testFactoryRaisesExceptionIfTheMetadataClassDoesNotExist()
     {
         $this->container->has('config')->willReturn(true);
-        $this->container->get('config')->willReturn([MetadataMap::class => [[
-            '__class__' => 'not-a-class',
-        ]]]);
+        $this->container->get('config')->willReturn([
+            MetadataMap::class => [
+                [
+                    '__class__' => 'not-a-class',
+                ],
+            ],
+        ]);
         $this->expectException(InvalidConfigException::class);
         $this->expectExceptionMessage('Invalid metadata class provided');
         ($this->factory)($this->container->reveal());
@@ -109,9 +109,13 @@ class MetadataMapFactoryTest extends TestCase
     public function testFactoryRaisesExceptionIfTheMetadataClassIsNotAnAbstractMetadataType()
     {
         $this->container->has('config')->willReturn(true);
-        $this->container->get('config')->willReturn([MetadataMap::class => [[
-            '__class__' => __CLASS__,
-        ]]]);
+        $this->container->get('config')->willReturn([
+            MetadataMap::class => [
+                [
+                    '__class__' => self::class,
+                ],
+            ],
+        ]);
         $this->expectException(InvalidConfigException::class);
         $this->expectExceptionMessage('does not extend ' . Metadata\AbstractMetadata::class);
         ($this->factory)($this->container->reveal());
@@ -120,9 +124,13 @@ class MetadataMapFactoryTest extends TestCase
     public function testFactoryRaisesExceptionIfMetadataClassDoesNotHaveACreationMethodInTheFactory()
     {
         $this->container->has('config')->willReturn(true);
-        $this->container->get('config')->willReturn([MetadataMap::class => [[
-            '__class__' => TestAsset\TestMetadata::class,
-        ]]]);
+        $this->container->get('config')->willReturn([
+            MetadataMap::class => [
+                [
+                    '__class__' => TestAsset\TestMetadata::class,
+                ],
+            ],
+        ]);
         $this->expectException(InvalidConfigException::class);
         $this->expectExceptionMessage('please provide a factory in your configuration');
         ($this->factory)($this->container->reveal());
@@ -134,9 +142,9 @@ class MetadataMapFactoryTest extends TestCase
         $this->container->get('config')->willReturn(
             [
                 MetadataMap::class => [
-                    ['__class__' => TestAsset\TestMetadata::class]
+                    ['__class__' => TestAsset\TestMetadata::class],
                 ],
-                'mezzio-hal' => [
+                'mezzio-hal'       => [
                     'metadata-factories' => [
                         TestAsset\TestMetadata::class => stdClass::class,
                     ],
@@ -148,7 +156,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function invalidMetadata() : Generator
+    public function invalidMetadata(): Generator
     {
         $types = [
             UrlBasedResourceMetadata::class,
@@ -173,11 +181,10 @@ class MetadataMapFactoryTest extends TestCase
         $this->container->get('config')->willReturn(
             [
                 MetadataMap::class => [$metadata],
-                'mezzio-hal' => [
+                'mezzio-hal'       => [
                     'metadata-factories' => [
                         RouteBasedCollectionMetadata::class => RouteBasedCollectionMetadataFactory::class,
                         RouteBasedResourceMetadata::class   => RouteBasedResourceMetadataFactory::class,
-
                         UrlBasedCollectionMetadata::class   => UrlBasedCollectionMetadataFactory::class,
                         UrlBasedResourceMetadata::class     => UrlBasedResourceMetadataFactory::class,
                     ],
@@ -202,7 +209,7 @@ class MetadataMapFactoryTest extends TestCase
                         'extractor'      => 'ObjectProperty',
                     ],
                 ],
-                'mezzio-hal' => [
+                'mezzio-hal'       => [
                     'metadata-factories' => [
                         UrlBasedResourceMetadata::class => UrlBasedResourceMetadataFactory::class,
                     ],
@@ -236,7 +243,7 @@ class MetadataMapFactoryTest extends TestCase
                         'pagination_param_type' => Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER,
                     ],
                 ],
-                'mezzio-hal' => [
+                'mezzio-hal'       => [
                     'metadata-factories' => [
                         UrlBasedCollectionMetadata::class => UrlBasedCollectionMetadataFactory::class,
                     ],
@@ -264,19 +271,19 @@ class MetadataMapFactoryTest extends TestCase
             [
                 MetadataMap::class => [
                     [
-                        '__class__'                    => RouteBasedResourceMetadata::class,
-                        'resource_class'               => stdClass::class,
-                        'route'                        => 'foo',
-                        'extractor'                    => 'ObjectProperty',
-                        'resource_identifier'          => 'foo_id',
-                        'route_params'                 => ['foo' => 'bar'],
+                        '__class__'                           => RouteBasedResourceMetadata::class,
+                        'resource_class'                      => stdClass::class,
+                        'route'                               => 'foo',
+                        'extractor'                           => 'ObjectProperty',
+                        'resource_identifier'                 => 'foo_id',
+                        'route_params'                        => ['foo' => 'bar'],
                         'identifiers_to_placeholders_mapping' => [
                             'bar' => 'bar_value',
                             'baz' => 'baz_value',
                         ],
                     ],
                 ],
-                'mezzio-hal' => [
+                'mezzio-hal'       => [
                     'metadata-factories' => [
                         RouteBasedResourceMetadata::class => RouteBasedResourceMetadataFactory::class,
                     ],
@@ -296,8 +303,8 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame('foo_id', $metadata->getResourceIdentifier());
         $this->assertSame(['foo' => 'bar'], $metadata->getRouteParams());
         $this->assertSame([
-            'bar'    => 'bar_value',
-            'baz'    => 'baz_value',
+            'bar' => 'bar_value',
+            'baz' => 'baz_value',
         ], $metadata->getIdentifiersToPlaceholdersMapping());
     }
 
@@ -318,7 +325,7 @@ class MetadataMapFactoryTest extends TestCase
                         'query_string_arguments' => ['baz' => 'bat'],
                     ],
                 ],
-                'mezzio-hal' => [
+                'mezzio-hal'       => [
                     'metadata-factories' => [
                         RouteBasedCollectionMetadata::class => RouteBasedCollectionMetadataFactory::class,
                     ],

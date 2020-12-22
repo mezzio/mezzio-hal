@@ -23,12 +23,12 @@ use function substr;
 
 class ExceptionTest extends TestCase
 {
-    public function testExceptionInterfaceExtendsHalExceptionInterface() : void
+    public function testExceptionInterfaceExtendsHalExceptionInterface(): void
     {
         self::assertTrue(is_a(ExceptionInterface::class, HalExceptionInterface::class, true));
     }
 
-    public function exception() : Generator
+    public function exception(): Generator
     {
         $namespace = substr(ExceptionInterface::class, 0, strrpos(ExceptionInterface::class, '\\') + 1);
 
@@ -43,7 +43,7 @@ class ExceptionTest extends TestCase
     /**
      * @dataProvider exception
      */
-    public function testExceptionIsInstanceOfExceptionInterface(string $exception) : void
+    public function testExceptionIsInstanceOfExceptionInterface(string $exception): void
     {
         self::assertStringContainsString('Exception', $exception);
         self::assertTrue(is_a($exception, ExceptionInterface::class, true));

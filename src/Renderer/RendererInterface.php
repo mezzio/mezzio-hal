@@ -12,5 +12,5 @@ use Mezzio\Hal\HalResource;
 
 interface RendererInterface
 {
-    public function render(HalResource $resource) : string;
+    public function render(HalResource $resource): string;
 }

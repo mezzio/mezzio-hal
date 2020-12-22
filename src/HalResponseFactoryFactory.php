@@ -10,6 +10,8 @@ namespace Mezzio\Hal;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
+use Zend\Expressive\Hal\Renderer\JsonRenderer;
+use Zend\Expressive\Hal\Renderer\XmlRenderer;
 
 /**
  * Create and return a HalResponseFactory instance.
@@ -24,21 +26,21 @@ use Psr\Http\Message\ResponseInterface;
 class HalResponseFactoryFactory
 {
     /**
-     * @throws RuntimeException if neither a ResponseInterface service is
+     * @throws RuntimeException If neither a ResponseInterface service is
      *     present nor laminas-diactoros is installed.
      */
-    public function __invoke(ContainerInterface $container) : HalResponseFactory
+    public function __invoke(ContainerInterface $container): HalResponseFactory
     {
         $jsonRenderer = $container->has(Renderer\JsonRenderer::class)
             ? $container->get(Renderer\JsonRenderer::class)
-            : ($container->has(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)
-                ? $container->get(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)
+            : ($container->has(JsonRenderer::class)
+                ? $container->get(JsonRenderer::class)
                 : new Renderer\JsonRenderer());
 
         $xmlRenderer = $container->has(Renderer\XmlRenderer::class)
             ? $container->get(Renderer\XmlRenderer::class)
-            : ($container->has(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)
-                ? $container->get(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)
+            : ($container->has(XmlRenderer::class)
+                ? $container->get(XmlRenderer::class)
                 : new Renderer\XmlRenderer());
 
         return new HalResponseFactory(

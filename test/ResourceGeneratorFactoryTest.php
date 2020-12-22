@@ -28,9 +28,7 @@ class ResourceGeneratorFactoryTest extends TestCase
 
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy|ContainerInterface
-     */
+    /** @var ObjectProphecy|ContainerInterface */
     private $container;
 
     public function setUp(): void
@@ -59,31 +57,47 @@ class ResourceGeneratorFactoryTest extends TestCase
         $object($this->container->reveal());
     }
 
-    public function missingOrEmptyStrategiesConfiguration()
+    /**
+     * @psalm-return iterable<
+     *     string,
+     *     array{
+     *         0: array<string, array<string, array<string, array|ArrayObject>>>
+     *     }
+     * >
+     */
+    public function missingOrEmptyStrategiesConfiguration(): iterable
     {
         yield 'missing-top-level' => [[]];
-        yield 'missing-second-level' => [[
-            'mezzio-hal' => [],
-        ]];
-        yield 'missing-third-level' => [[
-            'mezzio-hal' => [
-                'resource-generator' => [],
+        yield 'missing-second-level' => [
+            [
+                'mezzio-hal' => [],
             ],
-        ]];
-        yield 'empty-array' => [[
-            'mezzio-hal' => [
-                'resource-generator' => [
-                    'strategies' => [],
+        ];
+        yield 'missing-third-level' => [
+            [
+                'mezzio-hal' => [
+                    'resource-generator' => [],
                 ],
             ],
-        ]];
-        yield 'empty-array-object' => [[
-            'mezzio-hal' => [
-                'resource-generator' => [
-                    'strategies' => new ArrayObject([]),
+        ];
+        yield 'empty-array' => [
+            [
+                'mezzio-hal' => [
+                    'resource-generator' => [
+                        'strategies' => [],
+                    ],
                 ],
             ],
-        ]];
+        ];
+        yield 'empty-array-object' => [
+            [
+                'mezzio-hal' => [
+                    'resource-generator' => [
+                        'strategies' => new ArrayObject([]),
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -101,7 +115,10 @@ class ResourceGeneratorFactoryTest extends TestCase
         self::assertEmpty($resourceGenerator->getStrategies());
     }
 
-    public function invalidStrategiesConfig()
+    /**
+     * @psalm-return iterable<string, array{0: mixed}>
+     */
+    public function invalidStrategiesConfig(): iterable
     {
         yield 'false'      => [false];
         yield 'true'       => [true];

@@ -19,6 +19,8 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionProperty;
+use Zend\Expressive\Hal\Renderer\JsonRenderer;
+use Zend\Expressive\Hal\Renderer\XmlRenderer;
 
 class HalResponseFactoryFactoryTest extends TestCase
 {
@@ -26,7 +28,7 @@ class HalResponseFactoryFactoryTest extends TestCase
 
     use ProphecyTrait;
 
-    public static function assertResponseFactoryReturns(ResponseInterface $expected, HalResponseFactory $factory) : void
+    public static function assertResponseFactoryReturns(ResponseInterface $expected, HalResponseFactory $factory): void
     {
         $r = new ReflectionProperty($factory, 'responseFactory');
         $r->setAccessible(true);
@@ -34,11 +36,11 @@ class HalResponseFactoryFactoryTest extends TestCase
         Assert::assertSame($expected, $responseFactory());
     }
 
-    public function testReturnsHalResponseFactoryInstance() : void
+    public function testReturnsHalResponseFactoryInstance(): void
     {
-        $jsonRenderer = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
-        $xmlRenderer = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
-        $response = $this->prophesize(ResponseInterface::class)->reveal();
+        $jsonRenderer    = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
+        $xmlRenderer     = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
+        $response        = $this->prophesize(ResponseInterface::class)->reveal();
         $responseFactory = function () use ($response) {
             return $response;
         };
@@ -57,19 +59,18 @@ class HalResponseFactoryFactoryTest extends TestCase
         self::assertResponseFactoryReturns($response, $instance);
     }
 
-
-    public function testReturnsHalResponseFactoryInstanceWithoutConfiguredDependencies() : void
+    public function testReturnsHalResponseFactoryInstanceWithoutConfiguredDependencies(): void
     {
-        $response = $this->prophesize(ResponseInterface::class)->reveal();
+        $response        = $this->prophesize(ResponseInterface::class)->reveal();
         $responseFactory = function () use ($response) {
             return $response;
         };
-        $container = $this->prophesize(ContainerInterface::class);
+        $container       = $this->prophesize(ContainerInterface::class);
         $container->get(ResponseInterface::class)->willReturn($responseFactory);
         $container->has(Renderer\JsonRenderer::class)->willReturn(false);
-        $container->has(\Zend\Expressive\Hal\Renderer\JsonRenderer::class)->willReturn(false);
+        $container->has(JsonRenderer::class)->willReturn(false);
         $container->has(Renderer\XmlRenderer::class)->willReturn(false);
-        $container->has(\Zend\Expressive\Hal\Renderer\XmlRenderer::class)->willReturn(false);
+        $container->has(XmlRenderer::class)->willReturn(false);
 
         $instance = (new HalResponseFactoryFactory())($container->reveal());
         self::assertInstanceOf(HalResponseFactory::class, $instance);
@@ -80,13 +81,13 @@ class HalResponseFactoryFactoryTest extends TestCase
 
     public function testReturnsHalResponseFactoryInstanceWhenResponseInterfaceReturnsFactory()
     {
-        $jsonRenderer = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
-        $xmlRenderer = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
-        $response = $this->prophesize(ResponseInterface::class)->reveal();
+        $jsonRenderer    = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
+        $xmlRenderer     = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
+        $response        = $this->prophesize(ResponseInterface::class)->reveal();
         $responseFactory = function () use ($response) {
             return $response;
         };
-        $stream = new class()
+        $stream          = new class ()
         {
             public function __invoke()
             {
