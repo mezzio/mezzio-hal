@@ -12,6 +12,12 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
+- [#29](https://github.com/mezzio/mezzio-hal/pull/29) makes the following signature changes to the `LinkCollection` class:
+  - `getLinks()` gets an `array` return typehint
+  - `getLinksByRel()` gets an `array` return typehint
+  - `withLink()` gets a `self` return typehint
+  - `withoutLink()` gets a `self` return typehint
+
 - [#28](https://github.com/mezzio/mezzio-hal/pull/28) adds the `object` typehint to the `$instance` argument of the `StrategyInterface::fromObject()` method.
   This also affects each of the shipped implementations:
   - `RouteBasedCollectionStrategy`
