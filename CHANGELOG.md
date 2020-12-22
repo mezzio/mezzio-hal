@@ -28,7 +28,9 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Removed
 
-- Nothing.
+- [#27](https://github.com/mezzio/mezzio-hal/pull/27) removes support for the `route_identifier_placeholder` configuration setting from `RouteBasedResourceMetadataFactory`; users should use the `identifiers_to_placeholders_mapping` configuration instead to map the resource identifier to the route placeholder.
+
+- [#27](https://github.com/mezzio/mezzio-hal/pull/27) removes the `$routeIdentifierPlaceholder` property and constructor argument from `RouteBasedResourceMetadata`, as well as the `getRouteIdentifierPlaceholder()` method. Users should use the `$identiersToPlaceholdersMapping` argument instead to map resource identifiers to the appropriate route placeholder.
 
 ### Fixed
 

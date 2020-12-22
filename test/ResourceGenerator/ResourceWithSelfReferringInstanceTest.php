@@ -73,7 +73,6 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
             'foo-bar',
             self::getObjectPropertyHydratorClass(),
             'id',
-            'id',
             [],
             [],
             0

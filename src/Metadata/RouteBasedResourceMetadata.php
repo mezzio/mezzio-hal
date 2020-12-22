@@ -11,7 +11,6 @@ namespace Mezzio\Hal\Metadata;
 class RouteBasedResourceMetadata extends AbstractResourceMetadata
 {
     private const DEFAULT_RESOURCE_ID = 'id';
-    private const DEFAULT_ROUTE_ID_PLACEHOLDER = 'id';
 
     /** @var array */
     private $identifiersToPlaceHoldersMapping;
@@ -22,21 +21,14 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
     /** @var string */
     private $route;
 
-    /** @var string */
-    private $routeIdentifierPlaceholder;
-
     /** @var array */
     private $routeParams;
 
-    /**
-     * @param string $routeIdentifierPlaceholder Deprecated; use $identifiersToPlaceholdersMapping instead.
-     */
     public function __construct(
         string $class,
         string $route,
         string $extractor,
         string $resourceIdentifier = self::DEFAULT_RESOURCE_ID,
-        string $routeIdentifierPlaceholder = self::DEFAULT_ROUTE_ID_PLACEHOLDER,
         array $routeParams = [],
         array $identifiersToPlaceholdersMapping = [],
         int $maxDepth = 10
@@ -44,28 +36,10 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
         $this->class = $class;
         $this->route = $route;
         $this->extractor = $extractor;
-        $this->routeParams = $routeParams;
-        $this->maxDepth = $maxDepth;
-
         $this->resourceIdentifier = $resourceIdentifier;
-        $this->routeIdentifierPlaceholder = $routeIdentifierPlaceholder;
-
-        if (array_key_exists($resourceIdentifier, $identifiersToPlaceholdersMapping)
-            && $routeIdentifierPlaceholder !== self::DEFAULT_ROUTE_ID_PLACEHOLDER
-            && $identifiersToPlaceholdersMapping[$resourceIdentifier] !== $routeIdentifierPlaceholder
-        ) {
-            throw Exception\InvalidConfigException::dueToConflictingRouteIdentifierPlaceholder(
-                $resourceIdentifier,
-                $routeIdentifierPlaceholder,
-                $identifiersToPlaceholdersMapping[$resourceIdentifier]
-            );
-        }
-
-        if (! array_key_exists($resourceIdentifier, $identifiersToPlaceholdersMapping)) {
-            $identifiersToPlaceholdersMapping[$resourceIdentifier] = $routeIdentifierPlaceholder;
-        }
-
+        $this->routeParams = $routeParams;
         $this->identifiersToPlaceHoldersMapping = $identifiersToPlaceholdersMapping;
+        $this->maxDepth = $maxDepth;
     }
 
     public function getRoute() : string
@@ -86,16 +60,6 @@ class RouteBasedResourceMetadata extends AbstractResourceMetadata
     public function getResourceIdentifier() : string
     {
         return $this->resourceIdentifier;
-    }
-
-    /**
-     * This method has been kept for BC and should be deprecated.
-     *
-     * @return string
-     */
-    public function getRouteIdentifierPlaceholder() : string
-    {
-        return $this->routeIdentifierPlaceholder;
     }
 
     public function getRouteParams() : array
