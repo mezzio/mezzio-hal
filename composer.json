@@ -44,7 +44,9 @@
         "laminas/laminas-paginator": "^2.9",
         "mezzio/mezzio-helpers": "^5.4",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.15.0",
+        "vimeo/psalm": "^4.3"
     },
     "provide": {
         "psr/link-implementation": "1.0"
@@ -72,6 +74,7 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },

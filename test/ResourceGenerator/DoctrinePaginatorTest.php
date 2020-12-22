@@ -18,6 +18,7 @@ use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
 use Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\ResourceGenerator\Exception\OutOfBoundsException;
 use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -41,7 +42,11 @@ class DoctrinePaginatorTest extends TestCase
         $this->strategy = new RouteBasedCollectionStrategy();
     }
 
-    public function mockQuery(): AbstractQuery
+    /**
+     * @return MockObject&mixed
+     * @psalm-return MockObject&MockedType
+     */
+    public function mockQuery()
     {
         return $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
@@ -49,8 +54,12 @@ class DoctrinePaginatorTest extends TestCase
             ->getMockForAbstractClass();
     }
 
-    public function mockLinkGeneration(string $relation, string $route, array $routeParams, array $queryStringArgs)
-    {
+    public function mockLinkGeneration(
+        string $relation,
+        string $route,
+        array $routeParams,
+        array $queryStringArgs
+    ): void {
         $link = $this->prophesize(Link::class)->reveal();
         $this->linkGenerator
             ->fromRoute(
@@ -73,7 +82,7 @@ class DoctrinePaginatorTest extends TestCase
     /**
      * @dataProvider invalidPageCombinations
      */
-    public function testThrowsOutOfBoundsExceptionForInvalidPage(int $page, int $numPages)
+    public function testThrowsOutOfBoundsExceptionForInvalidPage(int $page, int $numPages): void
     {
         $query = $this->mockQuery();
         $query->expects($this->once())
@@ -96,7 +105,7 @@ class DoctrinePaginatorTest extends TestCase
         );
     }
 
-    public function testDoesNotCreateLinksForUnknownPaginationParamType()
+    public function testDoesNotCreateLinksForUnknownPaginationParamType(): void
     {
         $query = $this->mockQuery();
         $query->expects($this->once())
@@ -153,7 +162,7 @@ class DoctrinePaginatorTest extends TestCase
         $this->assertInstanceOf(HalResource::class, $resource);
     }
 
-    public function testCreatesLinksForQueryBasedPagination()
+    public function testCreatesLinksForQueryBasedPagination(): void
     {
         $query = $this->mockQuery();
         $query->expects($this->once())
@@ -222,7 +231,7 @@ class DoctrinePaginatorTest extends TestCase
         $this->assertInstanceOf(HalResource::class, $resource);
     }
 
-    public function testCreatesLinksForRouteBasedPagination()
+    public function testCreatesLinksForRouteBasedPagination(): void
     {
         $query = $this->mockQuery();
         $query->expects($this->once())

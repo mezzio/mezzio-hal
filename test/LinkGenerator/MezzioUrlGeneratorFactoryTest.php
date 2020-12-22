@@ -29,7 +29,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->container = $this->prophesize(ContainerInterface::class);
     }
 
-    public function testFactoryRaisesExceptionIfUrlHelperIsMissingFromContainer()
+    public function testFactoryRaisesExceptionIfUrlHelperIsMissingFromContainer(): void
     {
         $this->container->has(UrlHelper::class)->willReturn(false);
         $this->container->has(\Zend\Expressive\Helper\UrlHelper::class)->willReturn(false);
@@ -44,7 +44,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $factory($this->container->reveal());
     }
 
-    public function testFactoryCanCreateUrlGeneratorWithOnlyUrlHelperPresentInContainer()
+    public function testFactoryCanCreateUrlGeneratorWithOnlyUrlHelperPresentInContainer(): void
     {
         $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
 
@@ -62,7 +62,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->assertAttributeSame($urlHelper, 'urlHelper', $generator);
     }
 
-    public function testFactoryCanCreateUrlGeneratorWithBothUrlHelperAndServerUrlHelper()
+    public function testFactoryCanCreateUrlGeneratorWithBothUrlHelperAndServerUrlHelper(): void
     {
         $urlHelper       = $this->prophesize(UrlHelper::class)->reveal();
         $serverUrlHelper = $this->prophesize(ServerUrlHelper::class)->reveal();
@@ -80,7 +80,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->assertAttributeSame($serverUrlHelper, 'serverUrlHelper', $generator);
     }
 
-    public function testFactoryCanAcceptUrlHelperServiceNameToConstructor()
+    public function testFactoryCanAcceptUrlHelperServiceNameToConstructor(): void
     {
         $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
 
@@ -97,7 +97,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->assertAttributeEmpty('serverUrlHelper', $generator);
     }
 
-    public function testFactoryIsSerializable()
+    public function testFactoryIsSerializable(): void
     {
         $factory = MezzioUrlGeneratorFactory::__set_state([
             'urlHelperServiceName' => CustomUrlHelper::class,

@@ -8,10 +8,10 @@
 
 namespace MezzioTest\Hal\Metadata;
 
+use Generator;
 use Mezzio\Hal\Metadata;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 
 class MetadataMapTest extends TestCase
 {
@@ -34,9 +34,9 @@ class MetadataMapTest extends TestCase
     }
 
     /**
-     * @psalm-return iterable<string, Metadata\AbstractMetadata&ObjectProphecy>
+     * @psalm-return Generator<string, array{0: string, 1: object}, mixed, void>
      */
-    public function validMetadataTypes(): iterable
+    public function validMetadataTypes(): Generator
     {
         foreach ($this->metadataClasses as $class) {
             $metadata = $this->prophesize($class);
@@ -48,7 +48,7 @@ class MetadataMapTest extends TestCase
     /**
      * @dataProvider validMetadataTypes
      */
-    public function testCanAggregateAnyMetadataType(string $class, Metadata\AbstractMetadata $metadata)
+    public function testCanAggregateAnyMetadataType(string $class, Metadata\AbstractMetadata $metadata): void
     {
         $this->assertFalse($this->map->has($class));
         $this->map->add($metadata);
@@ -56,7 +56,7 @@ class MetadataMapTest extends TestCase
         $this->assertSame($metadata, $this->map->get($class));
     }
 
-    public function testAddWillRaiseUndefinedClassExceptionIfClassDoesNotExist()
+    public function testAddWillRaiseUndefinedClassExceptionIfClassDoesNotExist(): void
     {
         $metadata = $this->prophesize(Metadata\AbstractMetadata::class);
         $metadata->getClass()->willReturn('undefined-class');
@@ -66,7 +66,7 @@ class MetadataMapTest extends TestCase
         $this->map->add($metadata->reveal());
     }
 
-    public function testAddWillRaiseDuplicateMetadataExceptionWhenDuplicateMetadataEncountered()
+    public function testAddWillRaiseDuplicateMetadataExceptionWhenDuplicateMetadataEncountered(): void
     {
         $first = $this->prophesize(Metadata\AbstractMetadata::class);
         $first->getClass()->willReturn(self::class);
@@ -82,7 +82,7 @@ class MetadataMapTest extends TestCase
         $this->map->add($second->reveal());
     }
 
-    public function testGetWilRaiseUndefinedMetadataExceptionIfClassNotPresentInMap()
+    public function testGetWilRaiseUndefinedMetadataExceptionIfClassNotPresentInMap(): void
     {
         $this->expectException(Metadata\Exception\UndefinedMetadataException::class);
         $this->expectExceptionMessage(self::class);

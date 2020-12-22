@@ -92,12 +92,12 @@ class ResourceGeneratorTest extends TestCase
         );
     }
 
-    public function testResourceGeneratorImplementsInterface()
+    public function testResourceGeneratorImplementsInterface(): void
     {
         $this->assertInstanceOf(ResourceGeneratorInterface::class, $this->generator);
     }
 
-    public function testCanGenerateResourceWithSelfLinkFromArrayData()
+    public function testCanGenerateResourceWithSelfLinkFromArrayData(): void
     {
         $data = [
             'foo' => 'bar',
@@ -115,7 +115,7 @@ class ResourceGeneratorTest extends TestCase
         $this->assertEquals($data, $resource->getElements());
     }
 
-    public function testCanGenerateUrlBasedResourceFromObjectDefinedInMetadataMap()
+    public function testCanGenerateUrlBasedResourceFromObjectDefinedInMetadataMap(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
@@ -150,7 +150,7 @@ class ResourceGeneratorTest extends TestCase
         ], $resource->getElements());
     }
 
-    public function testCanGenerateRouteBasedResourceFromObjectDefinedInMetadataMap()
+    public function testCanGenerateRouteBasedResourceFromObjectDefinedInMetadataMap(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
@@ -200,7 +200,7 @@ class ResourceGeneratorTest extends TestCase
         ], $resource->getElements());
     }
 
-    public function testCanGenerateUrlBasedCollectionFromObjectDefinedInMetadataMap()
+    public function testCanGenerateUrlBasedCollectionFromObjectDefinedInMetadataMap(): void
     {
         $first      = new TestAsset\FooBar();
         $first->id  = 'XXXX-YYYY-ZZZZ';
@@ -266,7 +266,7 @@ class ResourceGeneratorTest extends TestCase
         ], $ids);
     }
 
-    public function testCanGenerateRouteBasedCollectionFromObjectDefinedInMetadataMap()
+    public function testCanGenerateRouteBasedCollectionFromObjectDefinedInMetadataMap(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
@@ -398,7 +398,7 @@ class ResourceGeneratorTest extends TestCase
         }
     }
 
-    public function testGeneratedRouteBasedCollectionCastsPaginationMetadataToIntegers()
+    public function testGeneratedRouteBasedCollectionCastsPaginationMetadataToIntegers(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
@@ -508,7 +508,7 @@ class ResourceGeneratorTest extends TestCase
         $this->assertSame(5, $resource->getElement('_page_count'));
     }
 
-    public function testGeneratorDoesNotAcceptPageQueryOutOfBounds()
+    public function testGeneratorDoesNotAcceptPageQueryOutOfBounds(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
@@ -564,7 +564,7 @@ class ResourceGeneratorTest extends TestCase
         $this->generator->fromObject($collection, $this->request->reveal());
     }
 
-    public function testGeneratorDoesNotAcceptNegativePageQuery()
+    public function testGeneratorDoesNotAcceptNegativePageQuery(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
@@ -620,7 +620,7 @@ class ResourceGeneratorTest extends TestCase
         $this->generator->fromObject($collection, $this->request->reveal());
     }
 
-    public function testGeneratorAcceptsOnePageWhenCollectionHasNoEmbedded()
+    public function testGeneratorAcceptsOnePageWhenCollectionHasNoEmbedded(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
@@ -669,7 +669,7 @@ class ResourceGeneratorTest extends TestCase
         $this->assertEquals(0, $resource->getElement('_page_count'));
     }
 
-    public function testGeneratorRaisesExceptionForUnknownObjectType()
+    public function testGeneratorRaisesExceptionForUnknownObjectType(): void
     {
         $this->metadataMap->has(self::class)->willReturn(false);
         $this->expectException(InvalidObjectException::class);
@@ -705,7 +705,7 @@ class ResourceGeneratorTest extends TestCase
      * @dataProvider strategyCollection
      * @dataProvider strategyResource
      */
-    public function testUnexpectedMetadataForStrategy(ResourceGenerator\StrategyInterface $strategy)
+    public function testUnexpectedMetadataForStrategy(ResourceGenerator\StrategyInterface $strategy): void
     {
         $this->generator->addStrategy(
             TestMetadata::class,
@@ -730,7 +730,7 @@ class ResourceGeneratorTest extends TestCase
     public function testNotTraversableInstanceForCollectionStrategy(
         ResourceGenerator\StrategyInterface $strategy,
         string $metadata
-    ) {
+    ): void {
         $collectionMetadata = new $metadata(
             TestAsset\FooBar::class,
             'foo-bar',
@@ -747,21 +747,21 @@ class ResourceGeneratorTest extends TestCase
         $this->generator->fromObject($instance, $this->request->reveal());
     }
 
-    public function testAddStrategyRaisesExceptionIfInvalidMetadataClass()
+    public function testAddStrategyRaisesExceptionIfInvalidMetadataClass(): void
     {
         $this->expectException(UnknownMetadataTypeException::class);
         $this->expectExceptionMessage('does not exist, or does not extend');
         $this->generator->addStrategy(stdClass::class, 'invalid-strategy');
     }
 
-    public function testAddStrategyRaisesExceptionIfInvalidStrategyClass()
+    public function testAddStrategyRaisesExceptionIfInvalidStrategyClass(): void
     {
         $this->expectException(InvalidStrategyException::class);
         $this->expectExceptionMessage('does not exist, or does not implement');
         $this->generator->addStrategy(TestMetadata::class, 'invalid-strategy');
     }
 
-    public function testPassesAllScalarEntityPropertiesAsRouteParametersWhenGeneratingUri()
+    public function testPassesAllScalarEntityPropertiesAsRouteParametersWhenGeneratingUri(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
@@ -806,7 +806,7 @@ class ResourceGeneratorTest extends TestCase
         $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ', $self);
     }
 
-    public function testUsesConfiguredRoutePlaceholderMapToSpecifyRouteParams()
+    public function testUsesConfiguredRoutePlaceholderMapToSpecifyRouteParams(): void
     {
         $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';

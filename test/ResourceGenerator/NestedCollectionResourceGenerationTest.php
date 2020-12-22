@@ -36,7 +36,7 @@ class NestedCollectionResourceGenerationTest extends TestCase
 
     use ProphecyTrait;
 
-    public function testNestedCollectionIsEmbeddedAsAnArrayNotAHalCollection()
+    public function testNestedCollectionIsEmbeddedAsAnArrayNotAHalCollection(): void
     {
         $collection    = $this->createCollection();
         $foo           = new TestAsset\FooBar();
@@ -94,10 +94,9 @@ class NestedCollectionResourceGenerationTest extends TestCase
     }
 
     /**
-     * @return MetadataMap|ObjectProphecy
-     * @psalm-return MetadataMap&ObjectProphecy
+     * @psalm-return ObjectProphecy<MetadataMap>
      */
-    private function createMetadataMap()
+    private function createMetadataMap(): ObjectProphecy
     {
         $metadataMap = $this->prophesize(MetadataMap::class);
 
@@ -132,10 +131,9 @@ class NestedCollectionResourceGenerationTest extends TestCase
     }
 
     /**
-     * @return ContainerInterface|ObjectProphecy
-     * @psalm-return ContainerInterface&ObjectProphecy
+     * @psalm-return ObjectProphecy<ContainerInterface>
      */
-    private function createHydrators()
+    private function createHydrators(): ObjectProphecy
     {
         $hydratorClass = self::getObjectPropertyHydratorClass();
 
@@ -147,10 +145,9 @@ class NestedCollectionResourceGenerationTest extends TestCase
     /**
      * @param ServerRequestInterface|ObjectProphecy $request
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
-     * @return LinkGenerator|ObjectProphecy
-     * @psalm-return LinkGenerator&ObjectProphecy
+     * @psalm-return ObjectProphecy<LinkGenerator>
      */
-    public function createLinkGenerator($request)
+    public function createLinkGenerator($request): ObjectProphecy
     {
         $linkGenerator = $this->prophesize(LinkGenerator::class);
 

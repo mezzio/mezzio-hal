@@ -41,7 +41,7 @@ class HalResponseFactoryFactoryTest extends TestCase
         $jsonRenderer    = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
         $xmlRenderer     = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
         $response        = $this->prophesize(ResponseInterface::class)->reveal();
-        $responseFactory = function () use ($response) {
+        $responseFactory = function () use ($response): ResponseInterface {
             return $response;
         };
 
@@ -62,7 +62,7 @@ class HalResponseFactoryFactoryTest extends TestCase
     public function testReturnsHalResponseFactoryInstanceWithoutConfiguredDependencies(): void
     {
         $response        = $this->prophesize(ResponseInterface::class)->reveal();
-        $responseFactory = function () use ($response) {
+        $responseFactory = function () use ($response): ResponseInterface {
             return $response;
         };
         $container       = $this->prophesize(ContainerInterface::class);
@@ -79,12 +79,12 @@ class HalResponseFactoryFactoryTest extends TestCase
         self::assertResponseFactoryReturns($response, $instance);
     }
 
-    public function testReturnsHalResponseFactoryInstanceWhenResponseInterfaceReturnsFactory()
+    public function testReturnsHalResponseFactoryInstanceWhenResponseInterfaceReturnsFactory(): void
     {
         $jsonRenderer    = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
         $xmlRenderer     = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
         $response        = $this->prophesize(ResponseInterface::class)->reveal();
-        $responseFactory = function () use ($response) {
+        $responseFactory = function () use ($response): ResponseInterface {
             return $response;
         };
         $stream          = new class ()

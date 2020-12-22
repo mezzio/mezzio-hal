@@ -17,7 +17,7 @@ class JsonRendererTest extends TestCase
 {
     use TestAsset;
 
-    public function testDelegatesToJsonEncode()
+    public function testDelegatesToJsonEncode(): void
     {
         $renderer = new JsonRenderer();
         $resource = $this->createExampleResource();
@@ -26,7 +26,7 @@ class JsonRendererTest extends TestCase
         $this->assertEquals($expected, $renderer->render($resource));
     }
 
-    public function testRendersUsingJsonFlagsProvidedToConstructor()
+    public function testRendersUsingJsonFlagsProvidedToConstructor(): void
     {
         $jsonFlags = 0;
         $renderer  = new JsonRenderer($jsonFlags);

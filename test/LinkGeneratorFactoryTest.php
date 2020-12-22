@@ -34,7 +34,7 @@ class LinkGeneratorFactoryTest extends TestCase
         self::assertAttributeSame($urlGenerator, 'urlGenerator', $instance);
     }
 
-    public function testConstructorAllowsSpecifyingUrlGeneratorServiceName()
+    public function testConstructorAllowsSpecifyingUrlGeneratorServiceName(): void
     {
         $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class)->reveal();
 
@@ -46,7 +46,7 @@ class LinkGeneratorFactoryTest extends TestCase
         self::assertAttributeSame($urlGenerator, 'urlGenerator', $instance);
     }
 
-    public function testFactoryIsSerializable()
+    public function testFactoryIsSerializable(): void
     {
         $factory = LinkGeneratorFactory::__set_state([
             'urlGeneratorServiceName' => UrlGenerator::class,

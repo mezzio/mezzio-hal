@@ -47,7 +47,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->factory   = new MetadataMapFactory();
     }
 
-    public function testFactoryReturnsEmptyMetadataMapWhenNoConfigServicePresent()
+    public function testFactoryReturnsEmptyMetadataMapWhenNoConfigServicePresent(): void
     {
         $this->container->has('config')->willReturn(false);
         $metadataMap = ($this->factory)($this->container->reveal());
@@ -55,7 +55,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertAttributeSame([], 'map', $metadataMap);
     }
 
-    public function testFactoryReturnsEmptyMetadataMapWhenConfigServiceHasNoMetadataMapEntries()
+    public function testFactoryReturnsEmptyMetadataMapWhenConfigServiceHasNoMetadataMapEntries(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([]);
@@ -64,7 +64,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertAttributeSame([], 'map', $metadataMap);
     }
 
-    public function testFactoryRaisesExceptionIfMetadataMapConfigIsNotAnArray()
+    public function testFactoryRaisesExceptionIfMetadataMapConfigIsNotAnArray(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([MetadataMap::class => 'nope']);
@@ -73,7 +73,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryRaisesExceptionIfMetadataMapItemIsNotAnArray()
+    public function testFactoryRaisesExceptionIfMetadataMapItemIsNotAnArray(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([MetadataMap::class => ['nope']]);
@@ -82,7 +82,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryRaisesExceptionIfAnyMetadataIsMissingAClassEntry()
+    public function testFactoryRaisesExceptionIfAnyMetadataIsMissingAClassEntry(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([MetadataMap::class => [['nope']]]);
@@ -91,7 +91,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryRaisesExceptionIfTheMetadataClassDoesNotExist()
+    public function testFactoryRaisesExceptionIfTheMetadataClassDoesNotExist(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([
@@ -106,7 +106,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryRaisesExceptionIfTheMetadataClassIsNotAnAbstractMetadataType()
+    public function testFactoryRaisesExceptionIfTheMetadataClassIsNotAnAbstractMetadataType(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([
@@ -121,7 +121,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryRaisesExceptionIfMetadataClassDoesNotHaveACreationMethodInTheFactory()
+    public function testFactoryRaisesExceptionIfMetadataClassDoesNotHaveACreationMethodInTheFactory(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([
@@ -136,7 +136,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryRaisesExceptionIfMetadataFactoryDoesNotImplementFactoryInterface()
+    public function testFactoryRaisesExceptionIfMetadataFactoryDoesNotImplementFactoryInterface(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
@@ -176,7 +176,7 @@ class MetadataMapFactoryTest extends TestCase
     public function testFactoryRaisesExceptionIfMetadataIsMissingRequiredElements(
         array $metadata,
         string $expectExceptionString
-    ) {
+    ): void {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
             [
@@ -196,7 +196,7 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container->reveal());
     }
 
-    public function testFactoryCanMapUrlBasedResourceMetadata()
+    public function testFactoryCanMapUrlBasedResourceMetadata(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
@@ -228,7 +228,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame('/test/foo', $metadata->getUrl());
     }
 
-    public function testFactoryCanMapUrlBasedCollectionMetadata()
+    public function testFactoryCanMapUrlBasedCollectionMetadata(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
@@ -264,7 +264,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame(Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER, $metadata->getPaginationParamType());
     }
 
-    public function testFactoryCanMapRouteBasedResourceMetadata()
+    public function testFactoryCanMapRouteBasedResourceMetadata(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
@@ -308,7 +308,7 @@ class MetadataMapFactoryTest extends TestCase
         ], $metadata->getIdentifiersToPlaceholdersMapping());
     }
 
-    public function testFactoryCanMapRouteBasedCollectionMetadata()
+    public function testFactoryCanMapRouteBasedCollectionMetadata(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
@@ -348,7 +348,7 @@ class MetadataMapFactoryTest extends TestCase
         $this->assertSame(['baz' => 'bat'], $metadata->getQueryStringArguments());
     }
 
-    public function testFactoryCanCreateMetadataViaFactoryMethod()
+    public function testFactoryCanCreateMetadataViaFactoryMethod(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(

@@ -58,7 +58,7 @@ class XmlRendererTest extends TestCase
         return $xml;
     }
 
-    public function testRendersExpectedXmlPayload()
+    public function testRendersExpectedXmlPayload(): void
     {
         $resource = $this->createExampleResource();
         $expected = $this->createExampleXmlPayload();
@@ -70,7 +70,7 @@ class XmlRendererTest extends TestCase
     /**
      * @see https://github.com/zendframework/zend-expressive-hal/issues/3
      */
-    public function testCanRenderPhpDateTimeInstances()
+    public function testCanRenderPhpDateTimeInstances(): void
     {
         $dateTime = new DateTime('now');
         $resource = new HalResource([
@@ -83,7 +83,7 @@ class XmlRendererTest extends TestCase
         $this->assertStringContainsString($dateTime->format('c'), $xml);
     }
 
-    public function testCanRenderObjectsThatImplementToString()
+    public function testCanRenderObjectsThatImplementToString(): void
     {
         $instance = new StringSerializable();
 
@@ -97,7 +97,7 @@ class XmlRendererTest extends TestCase
         $this->assertStringContainsString((string) $instance, $xml);
     }
 
-    public function testRendersNullValuesAsTagsWithNoContent()
+    public function testRendersNullValuesAsTagsWithNoContent(): void
     {
         $resource = new HalResource([
             'key' => null,

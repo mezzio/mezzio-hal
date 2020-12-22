@@ -16,13 +16,13 @@ use Psr\Link\EvolvableLinkInterface;
 
 class LinkTest extends TestCase
 {
-    public function testRequiresRelation()
+    public function testRequiresRelation(): void
     {
         $this->expectException(ArgumentCountError::class);
         $link = new Link();
     }
 
-    public function testCanConstructLinkWithRelation()
+    public function testCanConstructLinkWithRelation(): void
     {
         $link = new Link('self');
         $this->assertInstanceOf(Link::class, $link);
@@ -33,28 +33,28 @@ class LinkTest extends TestCase
         $this->assertEquals([], $link->getAttributes());
     }
 
-    public function testCanConstructLinkWithRelationAndUri()
+    public function testCanConstructLinkWithRelationAndUri(): void
     {
         $link = new Link('self', 'https://example.com/api/link');
         $this->assertEquals(['self'], $link->getRels());
         $this->assertEquals('https://example.com/api/link', $link->getHref());
     }
 
-    public function testCanConstructLinkWithRelationAndTemplatedFlag()
+    public function testCanConstructLinkWithRelationAndTemplatedFlag(): void
     {
         $link = new Link('self', '', true);
         $this->assertEquals(['self'], $link->getRels());
         $this->assertTrue($link->isTemplated());
     }
 
-    public function testCanConstructLinkWithRelationAndAttributes()
+    public function testCanConstructLinkWithRelationAndAttributes(): void
     {
         $link = new Link('self', '', false, ['foo' => 'bar']);
         $this->assertEquals(['self'], $link->getRels());
         $this->assertEquals(['foo' => 'bar'], $link->getAttributes());
     }
 
-    public function testCanConstructFullyPopulatedLink()
+    public function testCanConstructFullyPopulatedLink(): void
     {
         $link = new Link(
             ['self', 'link'],
@@ -91,21 +91,21 @@ class LinkTest extends TestCase
      * @dataProvider invalidRelations
      * @param mixed $rel
      */
-    public function testWithRelRaisesExceptionForInvalidRelation($rel)
+    public function testWithRelRaisesExceptionForInvalidRelation($rel): void
     {
         $link = new Link('self');
         $this->expectException(InvalidArgumentException::class);
         $link->withRel($rel);
     }
 
-    public function testWithRelReturnsSameInstanceIfRelationIsAlreadyPresent()
+    public function testWithRelReturnsSameInstanceIfRelationIsAlreadyPresent(): void
     {
         $link = new Link('self');
         $new  = $link->withRel('self');
         $this->assertSame($link, $new);
     }
 
-    public function testWithRelReturnsNewInstanceIfRelationIsNotAlreadyPresent()
+    public function testWithRelReturnsNewInstanceIfRelationIsNotAlreadyPresent(): void
     {
         $link = new Link('self');
         $new  = $link->withRel('link');
@@ -118,21 +118,21 @@ class LinkTest extends TestCase
      * @dataProvider invalidRelations
      * @param mixed $rel
      */
-    public function testWithoutRelReturnsSameInstanceIfRelationIsInvalid($rel)
+    public function testWithoutRelReturnsSameInstanceIfRelationIsInvalid($rel): void
     {
         $link = new Link('self');
         $new  = $link->withoutRel($rel);
         $this->assertSame($link, $new);
     }
 
-    public function testWithoutRelReturnsSameInstanceIfRelationIsNotPresent()
+    public function testWithoutRelReturnsSameInstanceIfRelationIsNotPresent(): void
     {
         $link = new Link('self');
         $new  = $link->withoutRel('link');
         $this->assertSame($link, $new);
     }
 
-    public function testWithoutRelReturnsNewInstanceIfRelationCanBeRemoved()
+    public function testWithoutRelReturnsNewInstanceIfRelationCanBeRemoved(): void
     {
         $link = new Link(['self', 'link']);
         $new  = $link->withoutRel('link');
@@ -163,7 +163,7 @@ class LinkTest extends TestCase
      * @dataProvider invalidUriTypes
      * @param mixed $uri
      */
-    public function testWithHrefRaisesExceptionForInvalidUriType($uri)
+    public function testWithHrefRaisesExceptionForInvalidUriType($uri): void
     {
         $link = new Link('self');
         $this->expectException(InvalidArgumentException::class);
@@ -183,7 +183,7 @@ class LinkTest extends TestCase
      * @dataProvider validUriTypes
      * @param string|object $uri
      */
-    public function testWithHrefReturnsNewInstanceWhenUriIsValid($uri)
+    public function testWithHrefReturnsNewInstanceWhenUriIsValid($uri): void
     {
         $link = new Link('self', 'https://example.com');
         $new  = $link->withHref($uri);
@@ -215,7 +215,7 @@ class LinkTest extends TestCase
      * @dataProvider invalidAttributeNames
      * @param mixed $name
      */
-    public function testWithAttributeRaisesExceptionForInvalidAttributeName($name)
+    public function testWithAttributeRaisesExceptionForInvalidAttributeName($name): void
     {
         $link = new Link('self');
         $this->expectException(InvalidArgumentException::class);
@@ -238,7 +238,7 @@ class LinkTest extends TestCase
      * @dataProvider invalidAttributeValues
      * @param mixed $value
      */
-    public function testWithAttributeRaisesExceptionForInvalidAttributeValue($value)
+    public function testWithAttributeRaisesExceptionForInvalidAttributeValue($value): void
     {
         $link = new Link('self');
         $this->expectException(InvalidArgumentException::class);
@@ -267,7 +267,7 @@ class LinkTest extends TestCase
      * @dataProvider validAttributes
      * @param mixed $value
      */
-    public function testWithAttributeReturnsNewInstanceForValidAttribute(string $name, $value)
+    public function testWithAttributeReturnsNewInstanceForValidAttribute(string $name, $value): void
     {
         $link = new Link('self');
         $new  = $link->withAttribute($name, $value);
@@ -280,21 +280,21 @@ class LinkTest extends TestCase
      * @dataProvider invalidAttributeNames
      * @param mixed $name
      */
-    public function testWithoutAttributeReturnsSameInstanceWhenAttributeNameIsInvalid($name)
+    public function testWithoutAttributeReturnsSameInstanceWhenAttributeNameIsInvalid($name): void
     {
         $link = new Link('self');
         $new  = $link->withoutAttribute($name);
         $this->assertSame($link, $new);
     }
 
-    public function testWithoutAttributeReturnsSameInstanceWhenAttributeIsNotPresent()
+    public function testWithoutAttributeReturnsSameInstanceWhenAttributeIsNotPresent(): void
     {
         $link = new Link('self', '', false, ['foo' => 'bar']);
         $new  = $link->withoutAttribute('bar');
         $this->assertSame($link, $new);
     }
 
-    public function testWithoutAttributeReturnsNewInstanceWhenAttributeCanBeRemoved()
+    public function testWithoutAttributeReturnsNewInstanceWhenAttributeCanBeRemoved(): void
     {
         $link = new Link('self', '', false, ['foo' => 'bar']);
         $new  = $link->withoutAttribute('foo');

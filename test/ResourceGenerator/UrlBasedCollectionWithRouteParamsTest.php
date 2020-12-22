@@ -35,7 +35,7 @@ class UrlBasedCollectionWithRouteParamsTest extends TestCase
 
     use ProphecyTrait;
 
-    public function testUsesQueriesWithPaginatorSpecifiedInMetadataWhenGeneratingLinkHref()
+    public function testUsesQueriesWithPaginatorSpecifiedInMetadataWhenGeneratingLinkHref(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getQueryParams()->willReturn([
@@ -110,7 +110,7 @@ class UrlBasedCollectionWithRouteParamsTest extends TestCase
         $this->assertLink('last', 'http://test.local/collection/?query_1=value_1&p=5&sort=ASC', $last);
     }
 
-    public function testUsesQueriesSpecifiedInMetadataWhenGeneratingLinkHref()
+    public function testUsesQueriesSpecifiedInMetadataWhenGeneratingLinkHref(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getQueryParams()->willReturn([

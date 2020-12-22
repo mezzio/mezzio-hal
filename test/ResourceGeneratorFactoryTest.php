@@ -45,7 +45,7 @@ class ResourceGeneratorFactoryTest extends TestCase
             ->willReturn($this->prophesize(LinkGenerator::class));
     }
 
-    public function testFactoryRaisesExceptionIfMetadataMapConfigIsNotAnArray()
+    public function testFactoryRaisesExceptionIfMetadataMapConfigIsNotAnArray(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(new stdClass());
@@ -103,7 +103,7 @@ class ResourceGeneratorFactoryTest extends TestCase
     /**
      * @dataProvider missingOrEmptyStrategiesConfiguration
      */
-    public function testFactoryWithoutAnyStrategies(array $config)
+    public function testFactoryWithoutAnyStrategies(array $config): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn($config);
@@ -134,7 +134,7 @@ class ResourceGeneratorFactoryTest extends TestCase
      * @dataProvider invalidStrategiesConfig
      * @param mixed $strategies
      */
-    public function testFactoryRaisesExceptionIfStrategiesConfigIsNonTraversable($strategies)
+    public function testFactoryRaisesExceptionIfStrategiesConfigIsNonTraversable($strategies): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn([
@@ -152,7 +152,7 @@ class ResourceGeneratorFactoryTest extends TestCase
         $factory($this->container->reveal());
     }
 
-    public function testFactoryWithRouteBasedCollectionStrategy()
+    public function testFactoryWithRouteBasedCollectionStrategy(): void
     {
         $this->container->has('config')->willReturn(true);
         $this->container->get('config')->willReturn(
@@ -185,7 +185,7 @@ class ResourceGeneratorFactoryTest extends TestCase
         );
     }
 
-    public function testConstructorAllowsSpecifyingLinkGeneratorServiceName()
+    public function testConstructorAllowsSpecifyingLinkGeneratorServiceName(): void
     {
         $container = $this->prophesize(ContainerInterface::class);
 
@@ -212,7 +212,7 @@ class ResourceGeneratorFactoryTest extends TestCase
         $this->assertAttributeSame($linkGenerator, 'linkGenerator', $generator);
     }
 
-    public function testFactoryIsSerializable()
+    public function testFactoryIsSerializable(): void
     {
         $factory = ResourceGeneratorFactory::__set_state([
             'linkGeneratorServiceName' => CustomLinkGenerator::class,

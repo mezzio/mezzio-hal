@@ -92,7 +92,7 @@ class MetadataMapFactory
      * @throws Exception\InvalidConfigException If no matching `create*()`
      *     method is found for the "__class__" entry.
      */
-    private function injectMetadata(MetadataMap $metadataMap, array $metadata, array $metadataFactories)
+    private function injectMetadata(MetadataMap $metadataMap, array $metadata, array $metadataFactories): void
     {
         if (! isset($metadata['__class__'])) {
             throw Exception\InvalidConfigException::dueToMissingMetadataClass();

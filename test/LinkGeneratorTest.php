@@ -18,7 +18,7 @@ class LinkGeneratorTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testUsesComposedUrlGeneratorToGenerateHrefForLink()
+    public function testUsesComposedUrlGeneratorToGenerateHrefForLink(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
 
@@ -48,7 +48,7 @@ class LinkGeneratorTest extends TestCase
         $this->assertFalse($link->isTemplated());
     }
 
-    public function testUsesComposedUrlGeneratorToGenerateHrefForTemplatedLink()
+    public function testUsesComposedUrlGeneratorToGenerateHrefForTemplatedLink(): void
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
 
