@@ -21,9 +21,8 @@ use function strstr;
 
 class HalResponseFactoryTest extends TestCase
 {
-    use TestAsset;
-
     use ProphecyTrait;
+    use TestAsset;
 
     public function setUp(): void
     {
@@ -59,7 +58,10 @@ class HalResponseFactoryTest extends TestCase
         $this->assertSame($this->response->reveal(), $response);
     }
 
-    public function jsonAcceptHeaders()
+    /**
+     * @psalm-return array<string, array{0: string}>
+     */
+    public function jsonAcceptHeaders(): array
     {
         return [
             'application/json'             => ['application/json'],
@@ -90,7 +92,10 @@ class HalResponseFactoryTest extends TestCase
         $this->assertSame($this->response->reveal(), $response);
     }
 
-    public function xmlAcceptHeaders()
+    /**
+     * @psalm-return array<string, array{0: string}>
+     */
+    public function xmlAcceptHeaders(): array
     {
         return [
             'application/xml'             => ['application/xml'],
@@ -122,7 +127,10 @@ class HalResponseFactoryTest extends TestCase
         $this->assertSame($this->response->reveal(), $response);
     }
 
-    public function customMediaTypes()
+    /**
+     * @psalm-return array<string, array{0: string, 1: string, 2: string, 3: string}>
+     */
+    public function customMediaTypes(): array
     {
         // @codingStandardsIgnoreStart
         return [
@@ -143,11 +151,11 @@ class HalResponseFactoryTest extends TestCase
     ) {
         $resource = $this->createExampleResource();
         switch (true) {
-            case (strstr($header, 'json')):
+            case strstr($header, 'json'):
                 $this->jsonRenderer->render($resource)->willReturn($responseBody);
                 $this->xmlRenderer->render($resource)->shouldNotBeCalled();
                 break;
-            case (strstr($header, 'xml')):
+            case strstr($header, 'xml'):
                 $this->xmlRenderer->render($resource)->willReturn($responseBody);
                 $this->jsonRenderer->render($resource)->shouldNotBeCalled();
                 // fall-through

@@ -20,6 +20,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_key_exists;
+
 final class ResourceWithSelfReferringInstanceTest extends TestCase
 {
     use Assertions;
@@ -27,15 +29,15 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
 
     public function testSelfReferringIsEmbeddedAsResource(): void
     {
-        $parent = new TestAsset\FooBar;
-        $parent->id = 1234;
+        $parent      = new TestAsset\FooBar();
+        $parent->id  = 1234;
         $parent->foo = 'FOO';
         $parent->bar = $parent;
 
         $request = $this->prophesize(ServerRequestInterface::class);
 
-        $metadataMap = $this->createMetadataMap();
-        $hydrators = $this->createHydrators();
+        $metadataMap   = $this->createMetadataMap();
+        $hydrators     = $this->createHydrators();
         $linkGenerator = $this->createLinkGenerator($request);
 
         $generator = new ResourceGenerator(
@@ -85,8 +87,6 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
     }
 
     /**
-     * @param ObjectProphecy $request
-     *
      * @return LinkGenerator|ObjectProphecy
      */
     public function createLinkGenerator(ObjectProphecy $request)

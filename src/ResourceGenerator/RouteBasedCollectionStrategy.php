@@ -16,7 +16,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
 use function array_merge;
-use function get_class;
 
 class RouteBasedCollectionStrategy implements StrategyInterface
 {
@@ -25,12 +24,12 @@ class RouteBasedCollectionStrategy implements StrategyInterface
     }
 
     public function createResource(
-        $instance,
+        object $instance,
         Metadata\AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         if (! $metadata instanceof Metadata\RouteBasedCollectionMetadata) {
             throw Exception\UnexpectedMetadataTypeException::forMetadata(
                 $metadata,
@@ -40,7 +39,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         }
 
         if (! $instance instanceof Traversable) {
-            throw Exception\InvalidCollectionException::fromInstance($instance, get_class($this));
+            throw Exception\InvalidCollectionException::fromInstance($instance, static::class);
         }
 
         return $this->extractCollection($instance, $metadata, $resourceGenerator, $request, $depth);
@@ -56,7 +55,6 @@ class RouteBasedCollectionStrategy implements StrategyInterface
      *     generator in order to generate link based on routing information.
      * @param ServerRequestInterface $request Passed to link generator when
      *     generating link based on routing information.
-     * @return Link
      */
     protected function generateLinkForPage(
         string $rel,
@@ -64,18 +62,18 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         Metadata\AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) : Link {
-        $route = $metadata->getRoute();
-        $paginationType = $metadata->getPaginationParamType();
+    ): Link {
+        $route           = $metadata->getRoute();
+        $paginationType  = $metadata->getPaginationParamType();
         $paginationParam = $metadata->getPaginationParam();
-        $routeParams = $metadata->getRouteParams();
+        $routeParams     = $metadata->getRouteParams();
         $queryStringArgs = $metadata->getQueryStringArguments();
 
         $paramsWithPage = [$paginationParam => $page];
-        $routeParams = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER
+        $routeParams    = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER
             ? array_merge($routeParams, $paramsWithPage)
             : $routeParams;
-        $queryParams = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_QUERY
+        $queryParams    = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_QUERY
             ? array_merge($queryStringArgs, $paramsWithPage)
             : $queryStringArgs;
 
@@ -104,8 +102,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) {
-
-        $routeParams = $metadata->getRouteParams() ?? [];
+        $routeParams     = $metadata->getRouteParams() ?? [];
         $queryStringArgs = array_merge($request->getQueryParams() ?? [], $metadata->getQueryStringArguments() ?? []);
 
         return $resourceGenerator

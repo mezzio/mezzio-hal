@@ -10,8 +10,8 @@ namespace Mezzio\Hal\Metadata;
 
 abstract class AbstractCollectionMetadata extends AbstractMetadata
 {
-    const TYPE_PLACEHOLDER = 'placeholder';
-    const TYPE_QUERY = 'query';
+    public const TYPE_PLACEHOLDER = 'placeholder';
+    public const TYPE_QUERY       = 'query';
 
     /** @var string */
     protected $collectionRelation;
@@ -22,17 +22,17 @@ abstract class AbstractCollectionMetadata extends AbstractMetadata
     /** @var string */
     protected $paginationParamType;
 
-    public function getCollectionRelation() : string
+    public function getCollectionRelation(): string
     {
         return $this->collectionRelation;
     }
 
-    public function getPaginationParam() : string
+    public function getPaginationParam(): string
     {
         return $this->paginationParam;
     }
 
-    public function getPaginationParamType() : string
+    public function getPaginationParamType(): string
     {
         return $this->paginationParamType;
     }

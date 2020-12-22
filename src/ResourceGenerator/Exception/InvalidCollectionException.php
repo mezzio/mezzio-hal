@@ -20,7 +20,7 @@ class InvalidCollectionException extends RuntimeException implements ExceptionIn
     /**
      * @param mixed $instance The invalid collection instance or value.
      */
-    public static function fromInstance($instance, string $class) : self
+    public static function fromInstance($instance, string $class): self
     {
         return new self(sprintf(
             '%s is unable to create a resource for collection of type "%s"; not a Traversable',

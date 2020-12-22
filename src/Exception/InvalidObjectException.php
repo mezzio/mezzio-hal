@@ -19,7 +19,7 @@ class InvalidObjectException extends InvalidArgumentException implements Excepti
     /**
      * @param mixed $value Non-object value.
      */
-    public static function forNonObject($value) : self
+    public static function forNonObject($value): self
     {
         return new self(sprintf(
             'Cannot generate %s for non-object value of type "%s"',
@@ -28,7 +28,7 @@ class InvalidObjectException extends InvalidArgumentException implements Excepti
         ));
     }
 
-    public static function forUnknownType(string $class) : self
+    public static function forUnknownType(string $class): self
     {
         return new self(sprintf(
             'Cannot generate %s for object of type %s; not in metadata map',

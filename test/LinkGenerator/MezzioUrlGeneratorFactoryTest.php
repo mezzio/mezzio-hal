@@ -55,7 +55,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->container->get(ServerUrlHelper::class)->shouldNotBeCalled();
         $this->container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)->shouldNotBeCalled();
 
-        $factory = new MezzioUrlGeneratorFactory();
+        $factory   = new MezzioUrlGeneratorFactory();
         $generator = $factory($this->container->reveal());
 
         $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
@@ -64,7 +64,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
 
     public function testFactoryCanCreateUrlGeneratorWithBothUrlHelperAndServerUrlHelper()
     {
-        $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
+        $urlHelper       = $this->prophesize(UrlHelper::class)->reveal();
         $serverUrlHelper = $this->prophesize(ServerUrlHelper::class)->reveal();
 
         $this->container->has(UrlHelper::class)->willReturn(true);
@@ -72,7 +72,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->container->has(ServerUrlHelper::class)->willReturn(true);
         $this->container->get(ServerUrlHelper::class)->willReturn($serverUrlHelper);
 
-        $factory = new MezzioUrlGeneratorFactory();
+        $factory   = new MezzioUrlGeneratorFactory();
         $generator = $factory($this->container->reveal());
 
         $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
@@ -89,7 +89,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $this->container->has(ServerUrlHelper::class)->willReturn(false);
         $this->container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)->willReturn(false);
 
-        $factory = new MezzioUrlGeneratorFactory(CustomUrlHelper::class);
+        $factory   = new MezzioUrlGeneratorFactory(CustomUrlHelper::class);
         $generator = $factory($this->container->reveal());
 
         $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);

@@ -23,16 +23,17 @@ use function is_object;
 use function sprintf;
 use function var_export;
 
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.Trait.Suffix
 trait Assertions
 {
-    public static function getObjectPropertyHydratorClass() : string
+    public static function getObjectPropertyHydratorClass(): string
     {
         return class_exists(ObjectPropertyHydrator::class)
             ? ObjectPropertyHydrator::class
             : ObjectProperty::class;
     }
 
-    public static function getLinkByRel(string $rel, HalResource $resource) : Link
+    public static function getLinkByRel(string $rel, HalResource $resource): Link
     {
         $links = $resource->getLinksByRel($rel);
         self::assertIsArray($links, sprintf("Did not receive list of links for rel %s", $rel));
@@ -44,7 +45,10 @@ trait Assertions
         return array_shift($links);
     }
 
-    public static function assertLink(string $expectedRel, string $expectedHref, $actual) : void
+    /**
+     * @param mixed $actual
+     */
+    public static function assertLink(string $expectedRel, string $expectedHref, $actual): void
     {
         self::assertThat($actual instanceof Link, self::isTrue(), sprintf(
             'Invalid link encountered of type %s',

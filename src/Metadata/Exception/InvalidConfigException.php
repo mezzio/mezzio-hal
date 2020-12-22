@@ -26,7 +26,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
     /**
      * @param mixed $config
      */
-    public static function dueToNonArray($config) : self
+    public static function dueToNonArray($config): self
     {
         return new self(sprintf(
             'Invalid %s configuration; expected an array, but received %s',
@@ -35,7 +35,10 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function dueToNonArrayMetadata($metadata) : self
+    /**
+     * @param mixed $metadata
+     */
+    public static function dueToNonArrayMetadata($metadata): self
     {
         return new self(sprintf(
             'Invalid %s metadata item configuration; expected an array, but received %s',
@@ -44,7 +47,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function dueToMissingMetadataClass() : self
+    public static function dueToMissingMetadataClass(): self
     {
         return new self('Unable to generate metadata; missing "__class__" element');
     }
@@ -52,7 +55,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
     /**
      * @param mixed $class
      */
-    public static function dueToInvalidMetadataClass($class) : self
+    public static function dueToInvalidMetadataClass($class): self
     {
         $className = $class;
         if (! is_string($className)) {
@@ -64,7 +67,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function dueToNonMetadataClass(string $class) : self
+    public static function dueToNonMetadataClass(string $class): self
     {
         return new self(sprintf(
             '%s is not a valid metadata class; does not extend %s',
@@ -73,7 +76,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function dueToInvalidMetadataFactoryClass(string $class) : self
+    public static function dueToInvalidMetadataFactoryClass(string $class): self
     {
         return new self(sprintf(
             '%s is not a valid metadata factory class; does not implement %s',
@@ -82,7 +85,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function dueToUnrecognizedMetadataClass(string $class) : self
+    public static function dueToUnrecognizedMetadataClass(string $class): self
     {
         return new self(sprintf(
             '%s does not know how to construct a %s instance; please provide a '
@@ -92,7 +95,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function dueToMissingMetadata(string $type, array $requiredKeys) : self
+    public static function dueToMissingMetadata(string $type, array $requiredKeys): self
     {
         return new self(sprintf(
             'Unable to create HAL metadata of type %s; one or more of the '
@@ -106,7 +109,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         string $resourceIdentifier,
         string $routeIdentifierPlaceholder,
         string $routeIdentifierPlaceholderFromMapping
-    ) : self {
+    ): self {
         return new self(sprintf(
             'You have specified both a "$routeIdentifierPlaceholder" value ("%s") and provided one for the'
             . ' "%s" (resourceIdentifier) key of the $identifiersToPlaceholdersMapping" (with value "%s"),'

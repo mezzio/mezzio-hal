@@ -18,7 +18,7 @@ use function sprintf;
 
 class InvalidStrategyException extends InvalidArgumentException implements ExceptionInterface
 {
-    public static function forType(string $strategy) : self
+    public static function forType(string $strategy): self
     {
         return new self(sprintf(
             'Invalid strategy "%s"; does not exist, or does not implement %s',
@@ -30,7 +30,7 @@ class InvalidStrategyException extends InvalidArgumentException implements Excep
     /**
      * @param mixed $strategy
      */
-    public static function forInstance($strategy) : self
+    public static function forInstance($strategy): self
     {
         return new self(sprintf(
             'Invalid strategy of type "%s"; does not implement %s',

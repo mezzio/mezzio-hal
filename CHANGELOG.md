@@ -12,6 +12,21 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Changed
 
+- [#28](https://github.com/mezzio/mezzio-hal/pull/28) adds the `object` typehint to the `$instance` argument of the `StrategyInterface::fromObject()` method.
+  This also affects each of the shipped implementations:
+  - `RouteBasedCollectionStrategy`
+  - `RouteBasedResourceStrategy`
+  - `UrlBasedCollectionStrategy`
+  - `UrlBasedResourceStrategy`
+
+- [#28](https://github.com/mezzio/mezzio-hal/pull/28) adds the `string` typehint to the `$class` argument and a `self` return typehint to `UndefinedMetadataException::create()`.
+
+- [#28](https://github.com/mezzio/mezzio-hal/pull/28) adds the `string` typehint to the `$class` argument and a `self` return typehint to `UndefinedClassException::create()`.
+
+- [#28](https://github.com/mezzio/mezzio-hal/pull/28) adds a `self` return typehint to `DuplicateMetadataException::create()`.
+
+- [#28](https://github.com/mezzio/mezzio-hal/pull/28) adds an `array` return typehint to `HalResource::jsonSerialize()`. It was implied before, but is now made explicit.
+
 - [#22](https://github.com/mezzio/mezzio-hal/pull/22) changes the signature of `ResourceGenerator::fromObject()` to accept an additional, optional `int $depth = 0` argument. This is used to help prevent circular references.
 
 - [#22](https://github.com/mezzio/mezzio-hal/pull/22) adds the method `hasReachedMaxDepth()` to each of the `AbstractMetadata` and `AbstractResourceMetadata` classes, and each metadata implementation now also accepts an additional optional `$maxDepth` argument (with related `max_depth` configuration setting). These are used in conjunction with strategy implementations to prevent circular references.

@@ -46,10 +46,9 @@ class UrlBasedCollectionMetadataFactory implements MetadataFactoryInterface
      *          'pagination_param_type' => AbstractCollectionMetadata::TYPE_QUERY,
      *     ]
      *     </code>
-     * @return AbstractMetadata
      * @throws Exception\InvalidConfigException
      */
-    public function createMetadata(string $requestedName, array $metadata) : AbstractMetadata
+    public function createMetadata(string $requestedName, array $metadata): AbstractMetadata
     {
         $requiredKeys = [
             'collection_class',

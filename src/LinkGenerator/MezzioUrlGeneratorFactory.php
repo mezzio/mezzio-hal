@@ -23,7 +23,7 @@ class MezzioUrlGeneratorFactory
     /**
      * Allow serialization
      */
-    public static function __set_state(array $data) : self
+    public static function __set_state(array $data): self
     {
         return new self(
             $data['urlHelperServiceName'] ?? UrlHelper::class
@@ -38,12 +38,12 @@ class MezzioUrlGeneratorFactory
         $this->urlHelperServiceName = $urlHelperServiceName;
     }
 
-    public function __invoke(ContainerInterface $container) : MezzioUrlGenerator
+    public function __invoke(ContainerInterface $container): MezzioUrlGenerator
     {
         if (! $container->has($this->urlHelperServiceName)) {
             throw new RuntimeException(sprintf(
                 '%s requires a %s in order to generate a %s instance; none found',
-                __CLASS__,
+                self::class,
                 $this->urlHelperServiceName,
                 MezzioUrlGenerator::class
             ));

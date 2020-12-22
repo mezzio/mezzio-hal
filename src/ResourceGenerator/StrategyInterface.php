@@ -17,14 +17,14 @@ interface StrategyInterface
 {
     /**
      * @param object $instance Instance from which to create HalResource.
-     * @throws Exception\UnexpectedMetadataTypeException for metadata types the
+     * @throws Exception\UnexpectedMetadataTypeException For metadata types the
      *     strategy cannot handle.
      */
     public function createResource(
-        $instance,
+        object $instance,
         Metadata\AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource;
+    ): HalResource;
 }

@@ -21,7 +21,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
     /**
      * @param mixed $config
      */
-    public static function dueToNonArray($config) : self
+    public static function dueToNonArray($config): self
     {
         return new self(sprintf(
             'Invalid %s configuration; expected an array or ArrayAccess instance, but received %s',
@@ -33,7 +33,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
     /**
      * @param mixed $strategies
      */
-    public static function dueToInvalidStrategies($strategies) : self
+    public static function dueToInvalidStrategies($strategies): self
     {
         return new self(sprintf(
             'Invalid mezzio-hal.resource-generator.strategies configuration; '

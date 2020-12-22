@@ -18,7 +18,7 @@ class LinkGeneratorFactory
     /**
      * Allow serialization
      */
-    public static function __set_state(array $data) : self
+    public static function __set_state(array $data): self
     {
         return new self(
             $data['urlGeneratorServiceName'] ?? LinkGenerator\UrlGeneratorInterface::class
@@ -33,7 +33,7 @@ class LinkGeneratorFactory
         $this->urlGeneratorServiceName = $urlGeneratorServiceName;
     }
 
-    public function __invoke(ContainerInterface $container) : LinkGenerator
+    public function __invoke(ContainerInterface $container): LinkGenerator
     {
         return new LinkGenerator(
             $container->get($this->urlGeneratorServiceName)

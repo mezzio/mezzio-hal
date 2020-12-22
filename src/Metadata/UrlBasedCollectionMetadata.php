@@ -17,6 +17,7 @@ class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
 {
     /**
      * URL to use for the `self` relation of the collection.
+     *
      * @var string
      */
     private $url;
@@ -52,7 +53,7 @@ class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
         $this->paginationParamType = $paginationParamType;
     }
 
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->url;
     }

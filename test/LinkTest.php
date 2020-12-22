@@ -8,6 +8,7 @@
 
 namespace MezzioTest\Hal;
 
+use ArgumentCountError;
 use InvalidArgumentException;
 use Mezzio\Hal\Link;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +18,7 @@ class LinkTest extends TestCase
 {
     public function testRequiresRelation()
     {
-        $this->expectException(\ArgumentCountError::class);
+        $this->expectException(ArgumentCountError::class);
         $link = new Link();
     }
 
@@ -67,7 +68,10 @@ class LinkTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $link->getAttributes());
     }
 
-    public function invalidRelations()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidRelations(): array
     {
         return [
             'null'         => [null],
@@ -85,6 +89,7 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider invalidRelations
+     * @param mixed $rel
      */
     public function testWithRelRaisesExceptionForInvalidRelation($rel)
     {
@@ -111,6 +116,7 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider invalidRelations
+     * @param mixed $rel
      */
     public function testWithoutRelReturnsSameInstanceIfRelationIsInvalid($rel)
     {
@@ -135,7 +141,10 @@ class LinkTest extends TestCase
         $this->assertEquals(['self'], $new->getRels());
     }
 
-    public function invalidUriTypes()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidUriTypes(): array
     {
         return [
             'null'         => [null],
@@ -152,6 +161,7 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider invalidUriTypes
+     * @param mixed $uri
      */
     public function testWithHrefRaisesExceptionForInvalidUriType($uri)
     {
@@ -160,7 +170,10 @@ class LinkTest extends TestCase
         $link->withHref($uri);
     }
 
-    public function validUriTypes()
+    /**
+     * @psalm-return iterable<string, array{0: string|object}>
+     */
+    public function validUriTypes(): iterable
     {
         yield 'string' => ['https://example.com/api/link'];
         yield 'castable-object' => [new TestAsset\Uri('https://example.com/api/link')];
@@ -168,17 +181,21 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider validUriTypes
+     * @param string|object $uri
      */
     public function testWithHrefReturnsNewInstanceWhenUriIsValid($uri)
     {
         $link = new Link('self', 'https://example.com');
-        $new = $link->withHref($uri);
+        $new  = $link->withHref($uri);
         $this->assertNotSame($link, $new);
         $this->assertNotEquals((string) $uri, $link->getHref());
         $this->assertEquals((string) $uri, $new->getHref());
     }
 
-    public function invalidAttributeNames()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidAttributeNames(): array
     {
         return [
             'null'         => [null],
@@ -196,6 +213,7 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider invalidAttributeNames
+     * @param mixed $name
      */
     public function testWithAttributeRaisesExceptionForInvalidAttributeName($name)
     {
@@ -205,16 +223,20 @@ class LinkTest extends TestCase
         $link->withAttribute($name, 'foo');
     }
 
-    public function invalidAttributeValues()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidAttributeValues(): array
     {
         return [
             'array-with-non-string-values' => [[null, false, true, 0, 0.0, 1, 1.1, 'foo']],
-            'object' => [(object) ['name' => 'attribute']],
+            'object'                       => [(object) ['name' => 'attribute']],
         ];
     }
 
     /**
      * @dataProvider invalidAttributeValues
+     * @param mixed $value
      */
     public function testWithAttributeRaisesExceptionForInvalidAttributeValue($value)
     {
@@ -224,7 +246,10 @@ class LinkTest extends TestCase
         $link->withAttribute('foo', $value);
     }
 
-    public function validAttributes()
+    /**
+     * @psalm-return array<string, array{0: string, 1: mixed}>
+     */
+    public function validAttributes(): array
     {
         return [
             'false'      => ['foo', false],
@@ -240,11 +265,12 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider validAttributes
+     * @param mixed $value
      */
-    public function testWithAttributeReturnsNewInstanceForValidAttribute($name, $value)
+    public function testWithAttributeReturnsNewInstanceForValidAttribute(string $name, $value)
     {
         $link = new Link('self');
-        $new = $link->withAttribute($name, $value);
+        $new  = $link->withAttribute($name, $value);
         $this->assertNotSame($link, $new);
         $this->assertEquals([], $link->getAttributes());
         $this->assertEquals([$name => $value], $new->getAttributes());
@@ -252,25 +278,26 @@ class LinkTest extends TestCase
 
     /**
      * @dataProvider invalidAttributeNames
+     * @param mixed $name
      */
     public function testWithoutAttributeReturnsSameInstanceWhenAttributeNameIsInvalid($name)
     {
         $link = new Link('self');
-        $new = $link->withoutAttribute($name);
+        $new  = $link->withoutAttribute($name);
         $this->assertSame($link, $new);
     }
 
     public function testWithoutAttributeReturnsSameInstanceWhenAttributeIsNotPresent()
     {
         $link = new Link('self', '', false, ['foo' => 'bar']);
-        $new = $link->withoutAttribute('bar');
+        $new  = $link->withoutAttribute('bar');
         $this->assertSame($link, $new);
     }
 
     public function testWithoutAttributeReturnsNewInstanceWhenAttributeCanBeRemoved()
     {
         $link = new Link('self', '', false, ['foo' => 'bar']);
-        $new = $link->withoutAttribute('foo');
+        $new  = $link->withoutAttribute('foo');
         $this->assertNotSame($link, $new);
         $this->assertEquals(['foo' => 'bar'], $link->getAttributes());
         $this->assertEquals([], $new->getAttributes());

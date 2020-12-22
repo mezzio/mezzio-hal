@@ -27,7 +27,6 @@ interface MetadataFactoryInterface
      *
      *     The '__class__' key decides which AbstractMetadata should be used
      *     (and which corresponding factory will be called to create it).
-     * @return AbstractMetadata
      */
-    public function createMetadata(string $requestedName, array $metadata) : AbstractMetadata;
+    public function createMetadata(string $requestedName, array $metadata): AbstractMetadata;
 }

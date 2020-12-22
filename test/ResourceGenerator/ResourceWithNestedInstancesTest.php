@@ -20,8 +20,11 @@ use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+
+use function array_key_exists;
 
 class ResourceWithNestedInstancesTest extends TestCase
 {
@@ -31,19 +34,19 @@ class ResourceWithNestedInstancesTest extends TestCase
 
     public function testNestedObjectInMetadataMapIsEmbeddedAsResource()
     {
-        $child = new TestAsset\Child;
-        $child->id = 9876;
+        $child          = new TestAsset\Child();
+        $child->id      = 9876;
         $child->message = 'ack';
 
-        $parent = new TestAsset\FooBar;
-        $parent->id = 1234;
+        $parent      = new TestAsset\FooBar();
+        $parent->id  = 1234;
         $parent->foo = 'FOO';
         $parent->bar = $child;
 
         $request = $this->prophesize(ServerRequestInterface::class);
 
-        $metadataMap = $this->createMetadataMap();
-        $hydrators = $this->createHydrators();
+        $metadataMap   = $this->createMetadataMap();
+        $hydrators     = $this->createHydrators();
         $linkGenerator = $this->createLinkGenerator($request);
 
         $generator = new ResourceGenerator(
@@ -71,6 +74,10 @@ class ResourceWithNestedInstancesTest extends TestCase
         $this->assertEquals($child->message, $childResource->getElement('message'));
     }
 
+    /**
+     * @return MetadataMap|ObjectProphecy
+     * @psalm-return MetadataMap&ObjectProphecy
+     */
     public function createMetadataMap()
     {
         $metadataMap = $this->prophesize(MetadataMap::class);
@@ -96,6 +103,12 @@ class ResourceWithNestedInstancesTest extends TestCase
         return $metadataMap;
     }
 
+    /**
+     * @param ServerRequestInterface|ObjectProphecy $request
+     * @psalm-param ServerRequestInterface&ObjectProphecy $request
+     * @return LinkGenerator|ObjectProphecy
+     * @psalm-return LinkGenerator&ObjectProphecy
+     */
     public function createLinkGenerator($request)
     {
         $linkGenerator = $this->prophesize(LinkGenerator::class);
@@ -127,6 +140,10 @@ class ResourceWithNestedInstancesTest extends TestCase
         return $linkGenerator;
     }
 
+    /**
+     * @return ContainerInterface|ObjectProphecy
+     * @psalm-return ContainerInterface&ObjectProphecy
+     */
     public function createHydrators()
     {
         $hydratorClass = self::getObjectPropertyHydratorClass();

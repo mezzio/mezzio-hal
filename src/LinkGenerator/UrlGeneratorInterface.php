@@ -32,5 +32,5 @@ interface UrlGeneratorInterface
         string $routeName,
         array $routeParams = [],
         array $queryParams = []
-    ) : string;
+    ): string;
 }

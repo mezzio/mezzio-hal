@@ -19,9 +19,12 @@ class HalResponseFactory
     /**
      * @var string Default mediatype to use as the base Content-Type, minus the format.
      */
-    const DEFAULT_CONTENT_TYPE = 'application/hal';
+    public const DEFAULT_CONTENT_TYPE = 'application/hal';
 
-    const NEGOTIATION_PRIORITIES = [
+    /**
+     * @var string[]
+     */
+    public const NEGOTIATION_PRIORITIES = [
         'application/json',
         'application/*+json',
         'application/xml',
@@ -43,35 +46,35 @@ class HalResponseFactory
 
     public function __construct(
         callable $responseFactory,
-        Renderer\JsonRenderer $jsonRenderer = null,
-        Renderer\XmlRenderer $xmlRenderer = null
+        ?Renderer\JsonRenderer $jsonRenderer = null,
+        ?Renderer\XmlRenderer $xmlRenderer = null
     ) {
         // Ensures type safety of the composed factory
-        $this->responseFactory = function () use ($responseFactory) : ResponseInterface {
+        $this->responseFactory = function () use ($responseFactory): ResponseInterface {
             return $responseFactory();
         };
-        $this->jsonRenderer = $jsonRenderer ?: new Renderer\JsonRenderer();
-        $this->xmlRenderer = $xmlRenderer ?: new Renderer\XmlRenderer();
+        $this->jsonRenderer    = $jsonRenderer ?: new Renderer\JsonRenderer();
+        $this->xmlRenderer     = $xmlRenderer ?: new Renderer\XmlRenderer();
     }
 
     public function createResponse(
         ServerRequestInterface $request,
         HalResource $resource,
         string $mediaType = self::DEFAULT_CONTENT_TYPE
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $accept      = $request->getHeaderLine('Accept') ?: '*/*';
         $matchedType = (new Negotiator())->getBest($accept, self::NEGOTIATION_PRIORITIES);
 
         switch (true) {
-            case ($matchedType && strstr($matchedType->getValue(), 'json')):
-                $renderer = $this->jsonRenderer;
-                $mediaType = $mediaType . '+json';
+            case $matchedType && strstr($matchedType->getValue(), 'json'):
+                $renderer   = $this->jsonRenderer;
+                $mediaType .= '+json';
                 break;
-            case (! $matchedType):
+            case ! $matchedType:
                 // fall-through
             default:
-                $renderer = $this->xmlRenderer;
-                $mediaType = $mediaType . '+xml';
+                $renderer   = $this->xmlRenderer;
+                $mediaType .= '+xml';
                 break;
         }
 

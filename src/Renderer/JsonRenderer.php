@@ -29,7 +29,7 @@ class JsonRenderer implements RendererInterface
         $this->jsonFlags = $jsonFlags;
     }
 
-    public function render(HalResource $resource) : string
+    public function render(HalResource $resource): string
     {
         return json_encode($resource, $this->jsonFlags);
     }

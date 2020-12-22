@@ -31,6 +31,8 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use stdClass;
 
+use function array_key_exists;
+
 /**
  * @todo Create tests for cases where resources embed other resources.
  */
@@ -42,38 +44,28 @@ class ResourceGeneratorTest extends TestCase
 
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy|ServerRequestInterface
-     */
+    /** @var ObjectProphecy|ServerRequestInterface */
     private $request;
 
-    /**
-     * @var ObjectProphecy|ContainerInterface
-     */
+    /** @var ObjectProphecy|ContainerInterface */
     private $hydrators;
 
-    /**
-     * @var ObjectProphecy|LinkGenerator
-     */
+    /** @var ObjectProphecy|LinkGenerator */
     private $linkGenerator;
 
-    /**
-     * @var ObjectProphecy|Metadata\MetadataMap
-     */
+    /** @var ObjectProphecy|Metadata\MetadataMap */
     private $metadataMap;
 
-    /**
-     * @var ObjectProphecy|ResourceGenerator
-     */
+    /** @var ObjectProphecy|ResourceGenerator */
     private $generator;
 
     public function setUp(): void
     {
-        $this->request = $this->prophesize(ServerRequestInterface::class);
-        $this->hydrators = $this->prophesize(ContainerInterface::class);
+        $this->request       = $this->prophesize(ServerRequestInterface::class);
+        $this->hydrators     = $this->prophesize(ContainerInterface::class);
         $this->linkGenerator = $this->prophesize(LinkGenerator::class);
-        $this->metadataMap = $this->prophesize(Metadata\MetadataMap::class);
-        $this->generator = new ResourceGenerator(
+        $this->metadataMap   = $this->prophesize(Metadata\MetadataMap::class);
+        $this->generator     = new ResourceGenerator(
             $this->metadataMap->reveal(),
             $this->hydrators->reveal(),
             $this->linkGenerator->reveal()
@@ -125,7 +117,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testCanGenerateUrlBasedResourceFromObjectDefinedInMetadataMap()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
@@ -160,7 +152,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testCanGenerateRouteBasedResourceFromObjectDefinedInMetadataMap()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
@@ -210,15 +202,15 @@ class ResourceGeneratorTest extends TestCase
 
     public function testCanGenerateUrlBasedCollectionFromObjectDefinedInMetadataMap()
     {
-        $first      = new TestAsset\FooBar;
+        $first      = new TestAsset\FooBar();
         $first->id  = 'XXXX-YYYY-ZZZZ';
         $first->foo = 'BAR';
         $first->bar = 'BAZ';
 
-        $second = clone $first;
+        $second     = clone $first;
         $second->id = 'XXXX-YYYY-ZZZA';
-        $third = clone $first;
-        $third->id = 'XXXX-YYYY-ZZZB';
+        $third      = clone $first;
+        $third->id  = 'XXXX-YYYY-ZZZB';
 
         $resourceMetadata = new Metadata\UrlBasedResourceMetadata(
             TestAsset\FooBar::class,
@@ -276,7 +268,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testCanGenerateRouteBasedCollectionFromObjectDefinedInMetadataMap()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
 
@@ -294,8 +286,8 @@ class ResourceGeneratorTest extends TestCase
 
         $instances = [];
         for ($i = 1; $i < 15; $i += 1) {
-            $next = clone $instance;
-            $next->id = $i;
+            $next        = clone $instance;
+            $next->id    = $i;
             $instances[] = $next;
 
             $this->linkGenerator
@@ -408,7 +400,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testGeneratedRouteBasedCollectionCastsPaginationMetadataToIntegers()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
 
@@ -426,8 +418,8 @@ class ResourceGeneratorTest extends TestCase
 
         $instances = [];
         for ($i = 1; $i <= 5; $i += 1) {
-            $next = clone $instance;
-            $next->id = $i;
+            $next        = clone $instance;
+            $next->id    = $i;
             $instances[] = $next;
 
             $this->linkGenerator
@@ -518,7 +510,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testGeneratorDoesNotAcceptPageQueryOutOfBounds()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
 
@@ -536,8 +528,8 @@ class ResourceGeneratorTest extends TestCase
 
         $instances = [];
         for ($i = 1; $i < 15; $i += 1) {
-            $next = clone $instance;
-            $next->id = $i;
+            $next        = clone $instance;
+            $next->id    = $i;
             $instances[] = $next;
 
             $this->linkGenerator
@@ -547,7 +539,7 @@ class ResourceGeneratorTest extends TestCase
                     'foo-bar',
                     [
                         'foo_bar_id' => $i,
-                        'test' => 'param',
+                        'test'       => 'param',
                     ]
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
@@ -574,7 +566,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testGeneratorDoesNotAcceptNegativePageQuery()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
 
@@ -592,8 +584,8 @@ class ResourceGeneratorTest extends TestCase
 
         $instances = [];
         for ($i = 1; $i < 2; $i += 1) {
-            $next = clone $instance;
-            $next->id = $i;
+            $next        = clone $instance;
+            $next->id    = $i;
             $instances[] = $next;
 
             $this->linkGenerator
@@ -603,7 +595,7 @@ class ResourceGeneratorTest extends TestCase
                     'foo-bar',
                     [
                         'foo_bar_id' => $i,
-                        'test' => 'param',
+                        'test'       => 'param',
                     ]
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
@@ -630,7 +622,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testGeneratorAcceptsOnePageWhenCollectionHasNoEmbedded()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
 
@@ -677,22 +669,15 @@ class ResourceGeneratorTest extends TestCase
         $this->assertEquals(0, $resource->getElement('_page_count'));
     }
 
-    public function testGeneratorRaisesExceptionForNonObjectType()
-    {
-        $this->expectException(InvalidObjectException::class);
-        $this->expectExceptionMessage('non-object');
-        $this->generator->fromObject('foo', $this->request->reveal());
-    }
-
     public function testGeneratorRaisesExceptionForUnknownObjectType()
     {
-        $this->metadataMap->has(__CLASS__)->willReturn(false);
+        $this->metadataMap->has(self::class)->willReturn(false);
         $this->expectException(InvalidObjectException::class);
         $this->expectExceptionMessage('not in metadata map');
         $this->generator->fromObject($this, $this->request->reveal());
     }
 
-    public function strategyCollection() : Generator
+    public function strategyCollection(): Generator
     {
         yield 'route-based-collection' => [
             new ResourceGenerator\RouteBasedCollectionStrategy(),
@@ -705,7 +690,7 @@ class ResourceGeneratorTest extends TestCase
         ];
     }
 
-    public function strategyResource() : Generator
+    public function strategyResource(): Generator
     {
         yield 'route-based-resource' => [
             new ResourceGenerator\RouteBasedResourceStrategy(),
@@ -723,11 +708,11 @@ class ResourceGeneratorTest extends TestCase
     public function testUnexpectedMetadataForStrategy(ResourceGenerator\StrategyInterface $strategy)
     {
         $this->generator->addStrategy(
-            TestAsset\TestMetadata::class,
+            TestMetadata::class,
             $strategy
         );
 
-        $collectionMetadata = new TestAsset\TestMetadata();
+        $collectionMetadata = new TestMetadata();
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
         $this->metadataMap->get(TestAsset\FooBar::class)->willReturn($collectionMetadata);
@@ -778,7 +763,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testPassesAllScalarEntityPropertiesAsRouteParametersWhenGeneratingUri()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
         $instance->foo = 'BAR';
         $instance->bar = [
@@ -823,7 +808,7 @@ class ResourceGeneratorTest extends TestCase
 
     public function testUsesConfiguredRoutePlaceholderMapToSpecifyRouteParams()
     {
-        $instance      = new TestAsset\FooBar;
+        $instance      = new TestAsset\FooBar();
         $instance->id  = 'XXXX-YYYY-ZZZZ';
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';

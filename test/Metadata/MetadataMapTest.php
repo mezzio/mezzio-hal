@@ -11,11 +11,13 @@ namespace MezzioTest\Hal\Metadata;
 use Mezzio\Hal\Metadata;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class MetadataMapTest extends TestCase
 {
     use ProphecyTrait;
 
+    /** @psalm-var string[] */
     private $metadataClasses = [
         Metadata\AbstractMetadata::class,
         Metadata\AbstractCollectionMetadata::class,
@@ -31,7 +33,10 @@ class MetadataMapTest extends TestCase
         $this->map = new Metadata\MetadataMap();
     }
 
-    public function validMetadataTypes()
+    /**
+     * @psalm-return iterable<string, Metadata\AbstractMetadata&ObjectProphecy>
+     */
+    public function validMetadataTypes(): iterable
     {
         foreach ($this->metadataClasses as $class) {
             $metadata = $this->prophesize($class);
@@ -64,23 +69,23 @@ class MetadataMapTest extends TestCase
     public function testAddWillRaiseDuplicateMetadataExceptionWhenDuplicateMetadataEncountered()
     {
         $first = $this->prophesize(Metadata\AbstractMetadata::class);
-        $first->getClass()->willReturn(__CLASS__);
+        $first->getClass()->willReturn(self::class);
 
         $this->map->add($first->reveal());
-        $this->assertSame($first->reveal(), $this->map->get(__CLASS__));
+        $this->assertSame($first->reveal(), $this->map->get(self::class));
 
         $second = $this->prophesize(Metadata\AbstractMetadata::class);
-        $second->getClass()->willReturn(__CLASS__);
+        $second->getClass()->willReturn(self::class);
 
         $this->expectException(Metadata\Exception\DuplicateMetadataException::class);
-        $this->expectExceptionMessage(__CLASS__);
+        $this->expectExceptionMessage(self::class);
         $this->map->add($second->reveal());
     }
 
     public function testGetWilRaiseUndefinedMetadataExceptionIfClassNotPresentInMap()
     {
         $this->expectException(Metadata\Exception\UndefinedMetadataException::class);
-        $this->expectExceptionMessage(__CLASS__);
-        $this->map->get(__CLASS__);
+        $this->expectExceptionMessage(self::class);
+        $this->map->get(self::class);
     }
 }

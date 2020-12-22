@@ -11,15 +11,16 @@ namespace MezzioTest\Hal\Renderer;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.Trait.Suffix
 trait TestAsset
 {
-    public function createExampleResource() : HalResource
+    public function createExampleResource(): HalResource
     {
         $resource = new HalResource([
             'id'      => 'XXXX-YYYY-ZZZZ-ABAB',
             'example' => true,
             'foo'     => 'bar',
-            'list'     => [1, 2, 3]
+            'list'    => [1, 2, 3],
         ]);
         $resource = $resource->withLink(new Link('self', '/example/XXXX-YYYY-ZZZZ-ABAB'));
         $resource = $resource->withLink(new Link('shift', '/example/XXXX-YYYY-ZZZZ-ABAB/shift'));
@@ -34,12 +35,12 @@ trait TestAsset
 
         $baz = [];
         for ($i = 0; $i < 3; $i += 1) {
-            $temp = new HalResource([
-                'id' => 'XXXX-' . $i,
+            $temp  = new HalResource([
+                'id'  => 'XXXX-' . $i,
                 'baz' => true,
             ]);
-            $temp = $temp->withLink(new Link('self', '/baz/XXXX-' . $i));
-            $temp = $temp->withLink(new Link('doc', '/doc/baz'));
+            $temp  = $temp->withLink(new Link('self', '/baz/XXXX-' . $i));
+            $temp  = $temp->withLink(new Link('doc', '/doc/baz'));
             $baz[] = $temp;
         }
 

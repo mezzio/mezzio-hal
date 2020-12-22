@@ -48,7 +48,7 @@ use function sprintf;
  */
 class MetadataMapFactory
 {
-    public function __invoke(ContainerInterface $container) : MetadataMap
+    public function __invoke(ContainerInterface $container): MetadataMap
     {
         $config            = $container->has('config') ? $container->get('config') : [];
         $metadataMapConfig = $config[MetadataMap::class] ?? [];
@@ -70,7 +70,7 @@ class MetadataMapFactory
         MetadataMap $metadataMap,
         array $metadataMapConfig,
         array $metadataFactories
-    ) : MetadataMap {
+    ): MetadataMap {
         foreach ($metadataMapConfig as $metadata) {
             if (! is_array($metadata)) {
                 throw Exception\InvalidConfigException::dueToNonArrayMetadata($metadata);
@@ -83,13 +83,13 @@ class MetadataMapFactory
     }
 
     /**
-     * @throws Exception\InvalidConfigException if the metadata is missing a
+     * @throws Exception\InvalidConfigException If the metadata is missing a
      *     "__class__" entry.
-     * @throws Exception\InvalidConfigException if the "__class__" entry is not
+     * @throws Exception\InvalidConfigException If the "__class__" entry is not
      *     a class.
-     * @throws Exception\InvalidConfigException if the "__class__" entry is not
+     * @throws Exception\InvalidConfigException If the "__class__" entry is not
      *     an AbstractMetadata class.
-     * @throws Exception\InvalidConfigException if no matching `create*()`
+     * @throws Exception\InvalidConfigException If no matching `create*()`
      *     method is found for the "__class__" entry.
      */
     private function injectMetadata(MetadataMap $metadataMap, array $metadata, array $metadataFactories)
@@ -127,22 +127,19 @@ class MetadataMapFactory
     /**
      * Uses the registered factory class to create the metadata instance.
      *
-     * @param string $metadataClass
-     * @param string $factoryClass
      * @param array  $metadata
-     * @return AbstractMetadata
      */
     private function createMetadataViaFactoryClass(
         string $metadataClass,
         array $metadata,
         string $factoryClass
-    ) : AbstractMetadata {
+    ): AbstractMetadata {
         if (! in_array(MetadataFactoryInterface::class, class_implements($factoryClass), true)) {
             throw Exception\InvalidConfigException::dueToInvalidMetadataFactoryClass($factoryClass);
         }
 
         $factory = new $factoryClass();
-        /* @var $factory MetadataFactoryInterface */
+        /** @var MetadataFactoryInterface $factory */
         return $factory->createMetadata($metadataClass, $metadata);
     }
 
@@ -151,11 +148,9 @@ class MetadataMapFactory
      *
      * This function is to ensure backwards compatibility with versions prior to 0.6.0.
      *
-     * @param string $metadataClass
      * @param array  $metadata
-     * @return AbstractMetadata
      */
-    private function createMetadataViaFactoryMethod(string $metadataClass, array $metadata) : AbstractMetadata
+    private function createMetadataViaFactoryMethod(string $metadataClass, array $metadata): AbstractMetadata
     {
         $normalizedClass = $this->stripNamespaceFromClass($metadataClass);
         $method          = sprintf('create%s', $normalizedClass);
@@ -167,7 +162,7 @@ class MetadataMapFactory
         return $this->$method($metadata);
     }
 
-    private function stripNamespaceFromClass(string $class) : string
+    private function stripNamespaceFromClass(string $class): string
     {
         $segments = explode('\\', $class);
         return array_pop($segments);

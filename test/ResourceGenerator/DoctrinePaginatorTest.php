@@ -23,6 +23,9 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_map;
+use function range;
+
 class DoctrinePaginatorTest extends TestCase
 {
     use ProphecyTrait;
@@ -35,10 +38,10 @@ class DoctrinePaginatorTest extends TestCase
         $this->request       = $this->prophesize(ServerRequestInterface::class);
         $this->paginator     = $this->prophesize(Paginator::class);
 
-        $this->strategy      = new RouteBasedCollectionStrategy();
+        $this->strategy = new RouteBasedCollectionStrategy();
     }
 
-    public function mockQuery()
+    public function mockQuery(): AbstractQuery
     {
         return $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
@@ -60,7 +63,7 @@ class DoctrinePaginatorTest extends TestCase
             ->willReturn($link);
     }
 
-    public function invalidPageCombinations() : iterable
+    public function invalidPageCombinations(): iterable
     {
         yield 'negative'   => [-1, 100];
         yield 'zero'       => [0, 100];

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 
 /**
  * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository

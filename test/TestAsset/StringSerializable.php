@@ -12,7 +12,7 @@ namespace MezzioTest\Hal\TestAsset;
 
 class StringSerializable
 {
-    public function __toString()
+    public function __toString(): string
     {
         return __METHOD__;
     }

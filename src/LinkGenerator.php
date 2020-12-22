@@ -12,9 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class LinkGenerator
 {
-    /**
-     * @var LinkGenerator\UrlGeneratorInterface
-     */
+    /** @var LinkGenerator\UrlGeneratorInterface */
     private $urlGenerator;
 
     public function __construct(LinkGenerator\UrlGeneratorInterface $urlGenerator)
@@ -29,7 +27,7 @@ class LinkGenerator
         array $routeParams = [],
         array $queryParams = [],
         array $attributes = []
-    ) : Link {
+    ): Link {
         return new Link($relation, $this->urlGenerator->generate(
             $request,
             $routeName,
@@ -48,7 +46,7 @@ class LinkGenerator
         array $routeParams = [],
         array $queryParams = [],
         array $attributes = []
-    ) : Link {
+    ): Link {
         return new Link($relation, $this->urlGenerator->generate(
             $request,
             $routeName,

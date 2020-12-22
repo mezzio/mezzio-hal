@@ -8,16 +8,28 @@ use PHPUnit\Framework\ExpectationFailedException;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
+use function array_key_exists;
+use function class_exists;
+use function debug_backtrace;
+use function gettype;
+use function is_object;
+use function is_string;
+use function preg_match;
+use function sprintf;
+
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.Trait.Suffix
 trait PHPUnitDeprecatedAssertions
 {
     /**
      * Asserts that a variable is of a given type.
      *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
      * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3369
+     *
+     * @param mixed $actual
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public static function assertInternalType(string $expected, $actual, string $message = ''): void
     {
@@ -32,12 +44,11 @@ trait PHPUnitDeprecatedAssertions
      * Asserts that a static attribute of a class or an attribute of an object
      * is empty.
      *
-     * @param object|string $haystackClassOrObject
-     *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
      * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+     *
+     * @param object|string $haystackClassOrObject
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public static function assertAttributeEmpty(
         string $haystackAttributeName,
@@ -53,12 +64,11 @@ trait PHPUnitDeprecatedAssertions
     /**
      * Asserts that an attribute is of a given type.
      *
-     * @param object|string $classOrObject
-     *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
      * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+     *
+     * @param object|string $classOrObject
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public static function assertAttributeInstanceOf(
         string $expected,
@@ -77,12 +87,12 @@ trait PHPUnitDeprecatedAssertions
      * Asserts that a variable and an attribute of an object have the same type
      * and value.
      *
-     * @param object|string $actualClassOrObject
-     *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
      * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+     *
+     * @param mixed $expected
+     * @param object|string $actualClassOrObject
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public static function assertAttributeSame(
         $expected,
@@ -101,11 +111,11 @@ trait PHPUnitDeprecatedAssertions
      * Returns the value of an attribute of a class or an object.
      * This also works for attributes that are declared protected or private.
      *
-     * @param object|string $classOrObject
-     *
-     * @throws Exception
-     *
      * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+     *
+     * @param object|string $classOrObject
+     * @return mixed
+     * @throws Exception
      */
     public static function readAttribute($classOrObject, string $attributeName)
     {
@@ -113,8 +123,8 @@ trait PHPUnitDeprecatedAssertions
             throw self::invalidArgument(2, 'valid attribute name');
         }
 
-        if (\is_string($classOrObject)) {
-            if (! \class_exists($classOrObject)) {
+        if (is_string($classOrObject)) {
+            if (! class_exists($classOrObject)) {
                 throw self::invalidArgument(
                     1,
                     'class name'
@@ -127,7 +137,7 @@ trait PHPUnitDeprecatedAssertions
             );
         }
 
-        if (\is_object($classOrObject)) {
+        if (is_object($classOrObject)) {
             return static::getObjectAttribute(
                 $classOrObject,
                 $attributeName
@@ -144,14 +154,15 @@ trait PHPUnitDeprecatedAssertions
      * Returns the value of a static attribute.
      * This also works for attributes that are declared protected or private.
      *
+     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+     *
+     * @return mixed
      * @throws Exception
      * @throws ReflectionException
-     *
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
      */
     public static function getStaticAttribute(string $className, string $attributeName)
     {
-        if (! \class_exists($className)) {
+        if (! class_exists($className)) {
             throw self::invalidArgument(1, 'class name');
         }
 
@@ -164,7 +175,7 @@ trait PHPUnitDeprecatedAssertions
         while ($class) {
             $attributes = $class->getStaticProperties();
 
-            if (\array_key_exists($attributeName, $attributes)) {
+            if (array_key_exists($attributeName, $attributes)) {
                 return $attributes[$attributeName];
             }
 
@@ -172,7 +183,7 @@ trait PHPUnitDeprecatedAssertions
         }
 
         throw new Exception(
-            \sprintf(
+            sprintf(
                 'Attribute "%s" not found in class.',
                 $attributeName
             )
@@ -183,15 +194,15 @@ trait PHPUnitDeprecatedAssertions
      * Returns the value of an object's attribute.
      * This also works for attributes that are declared protected or private.
      *
-     * @param object $object
-     *
-     * @throws Exception
-     *
      * @deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+     *
+     * @param object $object
+     * @return mixed
+     * @throws Exception
      */
     public static function getObjectAttribute($object, string $attributeName)
     {
-        if (! \is_object($object)) {
+        if (! is_object($object)) {
             throw self::invalidArgument(1, 'object');
         }
 
@@ -222,7 +233,7 @@ trait PHPUnitDeprecatedAssertions
         }
 
         throw new Exception(
-            \sprintf(
+            sprintf(
                 'Attribute "%s" not found in object.',
                 $attributeName
             )
@@ -231,18 +242,21 @@ trait PHPUnitDeprecatedAssertions
 
     private static function isValidClassAttributeName(string $attributeName): bool
     {
-        return \preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $attributeName);
+        return preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $attributeName);
     }
 
+    /**
+     * @param mixed $value
+     */
     private static function invalidArgument(int $argument, string $type, $value = null): Exception
     {
-        $stack = \debug_backtrace();
+        $stack = debug_backtrace();
 
         return new Exception(
-            \sprintf(
+            sprintf(
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
-                $value !== null ? ' (' . \gettype($value) . '#' . $value . ')' : ' (No Value) ',
+                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
                 $stack[1]['class'],
                 $stack[1]['function'],
                 $type

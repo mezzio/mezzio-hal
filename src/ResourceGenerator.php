@@ -21,24 +21,16 @@ use function is_string;
 
 class ResourceGenerator implements ResourceGeneratorInterface
 {
-    /**
-     * @var ContainerInterface Service locator for hydrators.
-     */
+    /** @var ContainerInterface Service locator for hydrators. */
     private $hydrators;
 
-    /**
-     * @var LinkGenerator Route-based link generation.
-     */
+    /** @var LinkGenerator Route-based link generation. */
     private $linkGenerator;
 
-    /**
-     * @var Metadata\MetadataMap Metadata on known objects.
-     */
+    /** @var Metadata\MetadataMap Metadata on known objects. */
     private $metadataMap;
 
-    /**
-     * @var ResourceGenerator\StrategyInterface[]
-     */
+    /** @var ResourceGenerator\StrategyInterface[] */
     private $strategies = [];
 
     public function __construct(
@@ -46,22 +38,22 @@ class ResourceGenerator implements ResourceGeneratorInterface
         ContainerInterface $hydrators,
         LinkGenerator $linkGenerator
     ) {
-        $this->metadataMap = $metadataMap;
-        $this->hydrators = $hydrators;
+        $this->metadataMap   = $metadataMap;
+        $this->hydrators     = $hydrators;
         $this->linkGenerator = $linkGenerator;
     }
 
-    public function getHydrators() : ContainerInterface
+    public function getHydrators(): ContainerInterface
     {
         return $this->hydrators;
     }
 
-    public function getLinkGenerator() : LinkGenerator
+    public function getLinkGenerator(): LinkGenerator
     {
         return $this->linkGenerator;
     }
 
-    public function getMetadataMap() : Metadata\MetadataMap
+    public function getMetadataMap(): Metadata\MetadataMap
     {
         return $this->metadataMap;
     }
@@ -69,18 +61,19 @@ class ResourceGenerator implements ResourceGeneratorInterface
     /**
      * Link a metadata type to a strategy that can create a resource for it.
      *
-     * @param string $metadataType
      * @param string|ResourceGenerator\StrategyInterface $strategy
      */
-    public function addStrategy(string $metadataType, $strategy) : void
+    public function addStrategy(string $metadataType, $strategy): void
     {
-        if (! class_exists($metadataType)
+        if (
+            ! class_exists($metadataType)
             || ! in_array(Metadata\AbstractMetadata::class, class_parents($metadataType), true)
         ) {
             throw Exception\UnknownMetadataTypeException::forInvalidMetadataClass($metadataType);
         }
 
-        if (is_string($strategy)
+        if (
+            is_string($strategy)
             && (
                 ! class_exists($strategy)
                 || ! in_array(ResourceGenerator\StrategyInterface::class, class_implements($strategy), true)
@@ -103,12 +96,12 @@ class ResourceGenerator implements ResourceGeneratorInterface
     /**
      * Returns the registered strategies.
      */
-    public function getStrategies() : array
+    public function getStrategies(): array
     {
         return $this->strategies;
     }
 
-    public function fromArray(array $data, string $uri = null) : HalResource
+    public function fromArray(array $data, ?string $uri = null): HalResource
     {
         $resource = new HalResource($data);
 
@@ -122,9 +115,8 @@ class ResourceGenerator implements ResourceGeneratorInterface
     /**
      * @param object $instance An object of any type; the type will be checked
      *     against types registered in the metadata map.
-     * @param ServerRequestInterface $request
      */
-    public function fromObject($instance, ServerRequestInterface $request, int $depth = 0) : HalResource
+    public function fromObject(object $instance, ServerRequestInterface $request, int $depth = 0): HalResource
     {
         if (! is_object($instance)) {
             throw Exception\InvalidObjectException::forNonObject($instance);
@@ -135,7 +127,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
             throw Exception\InvalidObjectException::forUnknownType($class);
         }
 
-        $metadata = $this->metadataMap->get($class);
+        $metadata     = $this->metadataMap->get($class);
         $metadataType = get_class($metadata);
 
         if (! isset($this->strategies[$metadataType])) {

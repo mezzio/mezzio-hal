@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.NamingConventions.Trait.Suffix
 
 /**
  * @see       https://github.com/mezzio/mezzio-hal for the canonical source repository
@@ -8,7 +8,6 @@
 
 namespace Mezzio\Hal;
 
-use Psr\Link\EvolvableLinkProviderInterface;
 use Psr\Link\LinkInterface;
 
 use function array_filter;
@@ -20,9 +19,7 @@ use function in_array;
  */
 trait LinkCollection
 {
-    /**
-     * @var LinkInterface[]
-     */
+    /** @var LinkInterface[] */
     private $links = [];
 
     /**
@@ -53,7 +50,7 @@ trait LinkCollection
             return $this;
         }
 
-        $new = clone $this;
+        $new          = clone $this;
         $new->links[] = $link;
         return $new;
     }
@@ -67,7 +64,7 @@ trait LinkCollection
             return $this;
         }
 
-        $new = clone $this;
+        $new        = clone $this;
         $new->links = array_filter($this->links, function (LinkInterface $compare) use ($link) {
             return $link !== $compare;
         });

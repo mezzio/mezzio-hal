@@ -28,26 +28,26 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
         array $routeParams = [],
         array $queryStringArguments = []
     ) {
-        $this->class = $class;
-        $this->collectionRelation = $collectionRelation;
-        $this->route = $route;
-        $this->paginationParam = $paginationParam;
-        $this->paginationParamType = $paginationParamType;
-        $this->routeParams = $routeParams;
+        $this->class                = $class;
+        $this->collectionRelation   = $collectionRelation;
+        $this->route                = $route;
+        $this->paginationParam      = $paginationParam;
+        $this->paginationParamType  = $paginationParamType;
+        $this->routeParams          = $routeParams;
         $this->queryStringArguments = $queryStringArguments;
     }
 
-    public function getRoute() : string
+    public function getRoute(): string
     {
         return $this->route;
     }
 
-    public function getRouteParams() : array
+    public function getRouteParams(): array
     {
         return $this->routeParams;
     }
 
-    public function getQueryStringArguments() : array
+    public function getQueryStringArguments(): array
     {
         return $this->queryStringArguments;
     }
@@ -58,7 +58,7 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
      * In particular, this is useful for setting a parent identifier
      * in the route when dealing with child resources.
      */
-    public function setRouteParams(array $routeParams) : void
+    public function setRouteParams(array $routeParams): void
     {
         $this->routeParams = $routeParams;
     }
@@ -69,7 +69,7 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
      * In particular, this is useful for setting query string arguments for
      * searches, sorts, limits, etc.
      */
-    public function setQueryStringArguments(array $query) : void
+    public function setQueryStringArguments(array $query): void
     {
         $this->queryStringArguments = $query;
     }

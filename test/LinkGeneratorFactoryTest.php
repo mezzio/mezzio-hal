@@ -22,7 +22,7 @@ class LinkGeneratorFactoryTest extends TestCase
 
     use ProphecyTrait;
 
-    public function testReturnsLinkGeneratorInstance() : void
+    public function testReturnsLinkGeneratorInstance(): void
     {
         $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class)->reveal();
 

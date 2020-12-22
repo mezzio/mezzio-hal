@@ -17,7 +17,7 @@ use function sprintf;
 
 class UnexpectedMetadataTypeException extends RuntimeException implements ExceptionInterface
 {
-    public static function forMetadata(AbstractMetadata $metadata, string $strategy, string $expected) : self
+    public static function forMetadata(AbstractMetadata $metadata, string $strategy, string $expected): self
     {
         return new self(sprintf(
             'Unexpected metadata of type %s was mapped to %s (expects %s)',
@@ -27,7 +27,7 @@ class UnexpectedMetadataTypeException extends RuntimeException implements Except
         ));
     }
 
-    public static function forCollection(AbstractMetadata $metadata, string $strategyClass) : self
+    public static function forCollection(AbstractMetadata $metadata, string $strategyClass): self
     {
         return new self(sprintf(
             'Error extracting collection via strategy %s; expected %s instance, but received %s',

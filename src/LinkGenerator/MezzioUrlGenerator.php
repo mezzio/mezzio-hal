@@ -14,19 +14,15 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class MezzioUrlGenerator implements UrlGeneratorInterface
 {
-    /**
-     * @var null|ServerUrlHelper
-     */
+    /** @var null|ServerUrlHelper */
     private $serverUrlHelper;
 
-    /**
-     * @var UrlHelper
-     */
+    /** @var UrlHelper */
     private $urlHelper;
 
-    public function __construct(UrlHelper $urlHelper, ServerUrlHelper $serverUrlHelper = null)
+    public function __construct(UrlHelper $urlHelper, ?ServerUrlHelper $serverUrlHelper = null)
     {
-        $this->urlHelper = $urlHelper;
+        $this->urlHelper       = $urlHelper;
         $this->serverUrlHelper = $serverUrlHelper;
     }
 
@@ -35,7 +31,7 @@ class MezzioUrlGenerator implements UrlGeneratorInterface
         string $routeName,
         array $routeParams = [],
         array $queryParams = []
-    ) : string {
+    ): string {
         $path = $this->urlHelper->generate($routeName, $routeParams, $queryParams);
 
         if (! $this->serverUrlHelper) {

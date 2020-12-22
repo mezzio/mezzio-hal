@@ -24,7 +24,7 @@ class ResourceGeneratorFactory
     /**
      * Allow serialization
      */
-    public static function __set_state(array $data) : self
+    public static function __set_state(array $data): self
     {
         return new self(
             $data['linkGeneratorServiceName'] ?? LinkGenerator::class
@@ -39,7 +39,7 @@ class ResourceGeneratorFactory
         $this->linkGeneratorServiceName = $linkGeneratorServiceName;
     }
 
-    public function __invoke(ContainerInterface $container) : ResourceGenerator
+    public function __invoke(ContainerInterface $container): ResourceGenerator
     {
         $generator = new ResourceGenerator(
             $container->get(Metadata\MetadataMap::class),
@@ -53,12 +53,12 @@ class ResourceGeneratorFactory
     }
 
     /**
-     * @throws InvalidConfigException if the config service is not an array or
+     * @throws InvalidConfigException If the config service is not an array or
      *     ArrayAccess implementation.
-     * @throws InvalidConfigException if the configured strategies value is not
+     * @throws InvalidConfigException If the configured strategies value is not
      *     an array or traversable.
      */
-    private function injectStrategies(ContainerInterface $container, ResourceGenerator $generator) : void
+    private function injectStrategies(ContainerInterface $container, ResourceGenerator $generator): void
     {
         if (! $container->has('config')) {
             return;

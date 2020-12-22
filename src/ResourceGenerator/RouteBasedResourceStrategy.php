@@ -13,17 +13,20 @@ use Mezzio\Hal\Metadata;
 use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_key_exists;
+use function is_scalar;
+
 class RouteBasedResourceStrategy implements StrategyInterface
 {
     use ExtractInstanceTrait;
 
     public function createResource(
-        $instance,
+        object $instance,
         Metadata\AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         if (! $metadata instanceof Metadata\RouteBasedResourceMetadata) {
             throw Exception\UnexpectedMetadataTypeException::forMetadata(
                 $metadata,
@@ -67,7 +70,7 @@ class RouteBasedResourceStrategy implements StrategyInterface
                 $request,
                 $metadata->getRoute(),
                 $routeParams
-            )
+            ),
         ]);
     }
 }

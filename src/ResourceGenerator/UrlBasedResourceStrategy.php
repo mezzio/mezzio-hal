@@ -19,12 +19,12 @@ class UrlBasedResourceStrategy implements StrategyInterface
     use ExtractInstanceTrait;
 
     public function createResource(
-        $instance,
+        object $instance,
         Metadata\AbstractMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request,
         int $depth = 0
-    ) : HalResource {
+    ): HalResource {
         if (! $metadata instanceof Metadata\UrlBasedResourceMetadata) {
             throw Exception\UnexpectedMetadataTypeException::forMetadata(
                 $metadata,
