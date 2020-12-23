@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
-    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/">
+    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v1/representations/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>mezzio-hal - Laminas Docs</title>
+    <title>Representations - mezzio-hal - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -115,7 +115,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">mezzio-hal</a>
+            <a href="../..">mezzio-hal</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -125,10 +125,18 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/" class="subnavigation__link">Introduction</a>
+        <a href="../" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -139,58 +147,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/hal/" class="subnavigation__link">HAL</a>
+        <a href="../hal/" class="subnavigation__link">HAL</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/links-and-resources/" class="subnavigation__link">Links and Resources</a>
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/resource-generator/" class="subnavigation__link">Generating Resources</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Representations</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/representations/" class="subnavigation__link">Representations</a>
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="v2/factories/" class="subnavigation__link">Factories</a>
-    </li>
-
-            
-        </ul>
-    </li>
-
-                    
-                        
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Migration</span>
-        <ul class="subnavigation__list">
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="v2/migration/" class="subnavigation__link">Migration from V1</a>
+        <a href="../factories/" class="subnavigation__link">Factories</a>
     </li>
 
             
@@ -205,27 +198,19 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             
@@ -274,13 +259,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v1
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="v2/" class="dropdown-item">
+                    <a href="../../v2/" class="dropdown-item">
                         
                             v2 (latest)
                         
@@ -288,7 +273,7 @@
                 
             
                 
-                    <a href="v1/" class="dropdown-item">
+                    <a href="../" class="dropdown-item active">
                         
                             v1
                         
@@ -318,6 +303,36 @@
             <div class="col-md-9 col-sm-12 content" role="main">
                 
                 
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#renderers" class="toc__link nav-link">Renderers</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#halresponsefactory" class="toc__link nav-link">HalResponseFactory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#using-the-factory" class="toc__link nav-link">Using the factory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#forcing-collections-for-relations" class="toc__link nav-link">Forcing collections for relations</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
 
                 
                     <nav aria-label="breadcrumb">
@@ -327,7 +342,23 @@
             <li class="breadcrumb-item"><a href="https://docs.mezzio.dev/">Mezzio</a></li>
 
             
-                <li class="breadcrumb-item">mezzio-hal</li>
+                <li class="breadcrumb-item"><a href="../..">mezzio-hal</a></li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Representations</li>
             
         
     </ol>
@@ -335,24 +366,167 @@
 
 
 
+    <div class="alert alert-danger" role="alert">
+        <h4>Caution</h4>
+        <p>
+            The documentation you are viewing is for an older version of this component.<br>
+            <a href="../..">Switch to the latest (v2) version.</a>
+        </p>
+    </div>
 
 
-    <h1>mezzio-hal</h1>
-<p>Hypertext Application Language for PSR-7 Applications</p>
 
 
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
 
+    <h1 id="generating-representations">Generating Representations</h1>
+<p>This component provides two renderers, one each for creating JSON and XML
+payloads.</p>
+<p>Additionally, as noted in the <a href="intro.md">introduction</a> examples, this component
+provides <code>Mezzio\Hal\HalResponseFactory</code> for generating a
+<a href="https://www.php-fig.org/psr/psr-7/">PSR-7</a> response containing the HAL
+representation. This chapter dives into that with more detail.</p>
+<h2 id="renderers">Renderers</h2>
+<p>All renderers implement <code>Mezzio\Hal\Renderer\RendererInterface</code>:</p>
+<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\Renderer;
 
-<h2>Support</h2>
+use Mezzio\Hal\HalResource;
+
+interface RendererInterface
+{
+    public function render(HalResource $resource) : string;
+}</code></pre>
+<p>Two implementations are provided, <code>Mezzio\Hal\Renderer\JsonRenderer</code> and
+<code>Mezzio\Hal\Renderer\XmlRenderer</code></p>
+<h3>JsonRenderer</h3>
+<p>The <code>JsonRenderer</code> constructor allows you to specify a bitmask of flags for use
+with <code>json_encode()</code>. By default, if none are provided, it uses the value of
+<code>JsonRenderer::DEFAULT_JSON_FLAGS</code>, which evaluates to:</p>
+<pre class="highlight"><code class="language-php">JSON_UNESCAPED_SLASHES
+| JSON_UNESCAPED_UNICODE
+| JSON_PRESERVE_ZERO_FRACTION</code></pre>
+<p>When your application is in "debug" mode, it also adds the <code>JSON_PRETTY_PRINT</code>
+flag to the default list, in order to provide human-readable JSON output.</p>
+<h3>XmlRenderer</h3>
+<p>The <code>XmlRenderer</code> produces XML representations of HAL resources. It has no
+constructor arguments at this time.</p>
+<h2 id="halresponsefactory">HalResponseFactory</h2>
+<p><code>HalResponseFactory</code> generates a PSR-7 response containing a representation of
+the provided <code>HalResource</code> instance. In order to keep the component agnostic of
+PSR-7 implementation, <code>HalResponseFactory</code> itself composes a callable factory
+capable of producing an empty PSR-7 response.</p>
+<p>As an example:</p>
+<pre class="highlight"><code class="language-php">use Slim\Http\Response;
+use Slim\Http\Stream;
+use Mezzio\Hal\HalResponseFactory;
+
+$factory = new HalResponseFactory(
+    function () {
+        return new Response();
+    }
+);</code></pre>
+<p>Additionally, the <code>HalResponseFactory</code> constructor can accept the following
+arguments, with the described defaults if none is provided:</p>
 <ul>
-    <li>Issues: <a href="https://github.com/mezzio/mezzio-hal/issues">github.com/mezzio/mezzio-hal/issues</a></li>
-    <li>Source: <a href="https://github.com/mezzio/mezzio-hal/">github.com/mezzio/mezzio-hal/</a></li>
-    <li>Chat: <a href="https://laminas.dev/chat">laminas.dev/chat</a></li>
-    <li>Forum: <a href="https://discourse.laminas.dev/">discourse.laminas.dev</a></li>
+<li>A <code>JsonRenderer</code> instance is created if none is provided.</li>
+<li>An <code>XmlRenderer</code> instance is created if none is provided.</li>
 </ul>
+<p>We provide a <a href="https://www.php-fig.org/psr/psr-11">PSR-11</a> compatible factory for
+generating the <code>HalResponseFactory</code>, described in <a href="../factories/#laminasmezziohalhalresponsefactoryfactory">the factories
+chapter</a>.</p>
+<h2 id="using-the-factory">Using the factory</h2>
+<p>The factory exposes one method:</p>
+<pre class="highlight"><code class="language-php">use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Mezzio\Hal\HalResource;
+
+public function createResponse(
+    ServerRequestInterface $request,
+    HalResource $resource,
+    string $mediaType = self::DEFAULT_CONTENT_TYPE
+) : ResponseInterface {</code></pre>
+<p>Generally speaking, you'll pass the current request instance, and the resource
+for which you want to generate a response, and the factory will return a
+response based on its response prototype, with the following:</p>
+<ul>
+<li>A <code>Content-Type</code> header with the base media type of <code>application/hal</code>.</li>
+<li>A message body containing the representation.</li>
+</ul>
+<p>The request instance is used to determine what representation to create, based
+on the <code>Accept</code> header. If it matches a JSON media type, a JSON representation
+is created, and the <code>Content-Type</code> will be appended with <code>+json</code>; for XML, an
+XML representation is created, and the <code>Content-Type</code> will be appended with
+<code>+xml</code>. If no media type is matched, XML is generated.</p>
+<p>One practice often used is to provide a <em>custom media type</em> for your
+representations. While they will still be HAL, this allows you to document the
+specific structure of your resources, and potentially even validate them against
+JSON schema.</p>
+<p>To do this, pass the media type when creating the response:</p>
+<pre class="highlight"><code class="language-php">$response = $factory-&gt;createResponse(
+    $request,
+    $resource,
+    'application/vnd.book'
+);</code></pre>
+<p><em>Do not</em> pass the format (e.g., <code>+json</code>, <code>+xml</code>) when doing so; the factory will
+append the appropriate one based on content negotiation.</p>
+<h2 id="forcing-collections-for-relations">Forcing collections for relations</h2>
+<p>HAL allows links and embedded resources to be represented as:</p>
+<ul>
+<li>a single object</li>
+<li>an array of objects of the same type</li>
+</ul>
+<p>Internally, this package checks to see if only one of the item exists, and, if
+so, it will render it by itself. However, there are times you may want to force
+an array representation. As an example, if your resource models a car, and you
+have a <code>wheels</code> relation, it would not make sense to return a single wheel, even
+if that's all the car currently has associated with it.</p>
+<p>To accommodate this, we provide two features.</p>
+<p>For links, you may pass a special attribute, <code>Mezzio\Hal\Link::AS_COLLECTION</code>,
+with a boolean value of <code>true</code>; when encountered, this will then be rendered as
+an array of links, even if only one link for that relation is present.</p>
+<pre class="highlight"><code class="language-php">$link = new Link(
+    'wheels',
+    '/api/car/XXXX-YYYY-ZZZZ/wheels/111',
+    false,
+    [Link::AS_COLLECTION =&gt; true]
+);
+
+$resource = $resource-&gt;withLink($link);</code></pre>
+<p>In the above, you will then get the following within your representation:</p>
+<pre class="highlight"><code class="language-json">"_links": {
+  "wheels": [
+    {"href": "/api/car/XXXX-YYYY-ZZZZ/wheels/111"}
+  ]
+}</code></pre>
+<p>To force an embedded resource to be rendered within an array, you have two
+options.</p>
+<p>First, and simplest, pass the resource within an array when calling
+<code>withElement()</code>, <code>embed()</code>, or passing data to the constructor:</p>
+<pre class="highlight"><code class="language-php">// Constructor:
+$resource = new HalResource(['wheels' =&gt; [$wheel]]);
+
+// withElement():
+$resource = $resource-&gt;withElement('wheels', [$wheel]);
+
+// embed():
+$resource = $resource-&gt;embed('wheels', [$wheel]);</code></pre>
+<p>Alternately, you can call the <code>HalResource::embed</code> method with only the
+resource, passing the method a third argument, a flag indicating whether or not
+to force an array:</p>
+<pre class="highlight"><code class="language-php">$resource = $resource-&gt;embed('wheels', $wheel, true);</code></pre>
+<p>In each of these cases, assuming no other wheels were provided to the final
+resource, you might get a representation such as the following:</p>
+<pre class="highlight"><code class="language-json">"_embedded": {
+  "wheels": [
+    {
+      "_links" =&gt; {"self": {"href": "..."}}
+      "id": "..."
+    },
+  ]
+}</code></pre>
 
 
 
@@ -363,12 +537,16 @@
         
         <li class="page-nav__item">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../cookbook/generating-custom-resources/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
         </li>
 
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v2/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../doctrine/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -378,6 +556,15 @@
 
 
 
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v1/representations.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
 
                 
             </div>
@@ -402,7 +589,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">mezzio-hal</a>
+            <a href="../..">mezzio-hal</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -412,10 +599,18 @@
 
                 
                 
+
+                    
+                    
+                
+            
+
+                
+                
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/" class="subnavigation__link">Introduction</a>
+        <a href="../" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -426,58 +621,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/hal/" class="subnavigation__link">HAL</a>
+        <a href="../hal/" class="subnavigation__link">HAL</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/links-and-resources/" class="subnavigation__link">Links and Resources</a>
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/resource-generator/" class="subnavigation__link">Generating Resources</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Representations</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/representations/" class="subnavigation__link">Representations</a>
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="v2/factories/" class="subnavigation__link">Factories</a>
-    </li>
-
-            
-        </ul>
-    </li>
-
-                    
-                        
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Migration</span>
-        <ul class="subnavigation__list">
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="v2/migration/" class="subnavigation__link">Migration from V1</a>
+        <a href="../factories/" class="subnavigation__link">Factories</a>
     </li>
 
             
@@ -492,27 +672,19 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
     </li>
 
             
         </ul>
     </li>
 
-                    
-                
-            
-
-                
-                
-
-                    
                     
                 
             
@@ -601,13 +773,13 @@
 </footer>
 
     <script>
-        let base_url = '.',
+        let base_url = '../..',
             project  = "mezzio",
             siteName = 'mezzio-hal';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="search/main.js"></script>
+        <script src="../../search/main.js"></script>
     
 
     
@@ -636,8 +808,3 @@
 
 
 </html>
-
-<!--
-MkDocs version : 1.1.2
-Build Date UTC : 2020-12-23 18:26:46.274020+00:00
--->

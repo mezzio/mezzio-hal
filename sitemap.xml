@@ -1,47 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/hal/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/links-and-resources/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/resource-generator/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/cookbook/generating-custom-resources/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/representations/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/doctrine/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/factories/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/migration/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/cookbook/generating-custom-links-in-middleware/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v2/cookbook/path-segregated-uri-generation/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/hal/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/links-and-resources/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/resource-generator/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/cookbook/generating-custom-resources/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/representations/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/doctrine/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/factories/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/cookbook/generating-custom-links-in-middleware/</loc>
+     <lastmod>2020-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.mezzio.dev/mezzio-hal/v1/cookbook/path-segregated-uri-generation/</loc>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/intro/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/hal/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/links-and-resources/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/resource-generator/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/cookbook/generating-custom-resources/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/representations/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/doctrine/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/factories/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/cookbook/generating-custom-links-in-middleware/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.mezzio.dev/mezzio-hal/cookbook/path-segregated-uri-generation/</loc>
-     <lastmod>2020-12-21</lastmod>
+     <lastmod>2020-12-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

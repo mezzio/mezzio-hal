@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
-    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/">
+    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v2/migration/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>mezzio-hal - Laminas Docs</title>
+    <title>Migration from V1 - mezzio-hal - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -115,7 +115,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">mezzio-hal</a>
+            <a href="../..">mezzio-hal</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -128,7 +128,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/" class="subnavigation__link">Introduction</a>
+        <a href="../" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -139,43 +139,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/hal/" class="subnavigation__link">HAL</a>
+        <a href="../hal/" class="subnavigation__link">HAL</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/links-and-resources/" class="subnavigation__link">Links and Resources</a>
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/resource-generator/" class="subnavigation__link">Generating Resources</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/representations/" class="subnavigation__link">Representations</a>
+        <a href="../representations/" class="subnavigation__link">Representations</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/factories/" class="subnavigation__link">Factories</a>
+        <a href="../factories/" class="subnavigation__link">Factories</a>
     </li>
 
             
@@ -189,8 +189,8 @@
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v2/migration/" class="subnavigation__link">Migration from V1</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration from V1</a>
     </li>
 
             
@@ -205,13 +205,13 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
     </li>
 
             
@@ -280,7 +280,7 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="v2/" class="dropdown-item">
+                    <a href="../" class="dropdown-item active">
                         
                             v2 (latest)
                         
@@ -288,7 +288,7 @@
                 
             
                 
-                    <a href="v1/" class="dropdown-item">
+                    <a href="../../v1/" class="dropdown-item">
                         
                             v1
                         
@@ -318,6 +318,32 @@
             <div class="col-md-9 col-sm-12 content" role="main">
                 
                 
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#new-classes-and-interfaces" class="toc__link nav-link">New classes and interfaces</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#signature-changes" class="toc__link nav-link">Signature changes</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#configuration-changes" class="toc__link nav-link">Configuration changes</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
 
                 
                     <nav aria-label="breadcrumb">
@@ -327,7 +353,23 @@
             <li class="breadcrumb-item"><a href="https://docs.mezzio.dev/">Mezzio</a></li>
 
             
-                <li class="breadcrumb-item">mezzio-hal</li>
+                <li class="breadcrumb-item"><a href="../..">mezzio-hal</a></li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Migration</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Migration from V1</li>
             
         
     </ol>
@@ -337,22 +379,232 @@
 
 
 
-    <h1>mezzio-hal</h1>
-<p>Hypertext Application Language for PSR-7 Applications</p>
 
+    
+    
+        <h2 class="chapter__headline">Migration</h2>
+    
 
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
+    <h1 id="migration-from-version-1">Migration From Version 1</h1>
+<p>While we strive to reduce backwards compatibility breaks, occasionally we find them necessary in order to either correct problems, make usage more predictable, or simplify maintenance.
+Such changes are reserved for new major releases.</p>
+<h2 id="new-classes-and-interfaces">New classes and interfaces</h2>
+<p>We extracted a new interface, <code>Mezzio\Hal\ResourceGeneratorInterface</code>, from the public API of <code>Mezzio\Hal\ResourceGenerator</code>.
+Doing so allows providing alternate implementations in your own applications without requiring class extension.
+The new interface has the following definition:</p>
+<pre class="highlight"><code class="language-php">namespace Mezzio\Hal;
 
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-<h2>Support</h2>
+interface ResourceGeneratorInterface
+{
+    public function getHydrators(): ContainerInterface;
+
+    public function getMetadataMap(): Metadata\MetadataMap;
+
+    public function getLinkGenerator(): LinkGenerator;
+
+    public function fromArray(array $data, ?string $uri = null): HalResource;
+
+    public function fromObject(object $instance, ServerRequestInterface $request, int $depth = 0): HalResource;
+}</code></pre>
+<p>Please note that the <code>fromObject()</code> method changes slightly:</p>
 <ul>
-    <li>Issues: <a href="https://github.com/mezzio/mezzio-hal/issues">github.com/mezzio/mezzio-hal/issues</a></li>
-    <li>Source: <a href="https://github.com/mezzio/mezzio-hal/">github.com/mezzio/mezzio-hal/</a></li>
-    <li>Chat: <a href="https://laminas.dev/chat">laminas.dev/chat</a></li>
-    <li>Forum: <a href="https://discourse.laminas.dev/">discourse.laminas.dev</a></li>
+<li><code>$instance</code> now has the <code>object</code> typeint</li>
+<li>it adds the optional argument <code>int $depth = 0</code>; this argument is used to help identify and protect against circular references in nested resources.</li>
 </ul>
+<p><code>Mezzio\Hal\ResourceGenerator</code> now implements this interface.</p>
+<h2 id="signature-changes">Signature changes</h2>
+<h3>Mezzio\Hal\ResourceGenerator</h3>
+<p>As noted in the previous section, the signature of the <code>fromObject()</code> method changes from:</p>
+<pre class="highlight"><code class="language-php">public function fromObject(
+    $instance,
+    Psr\Http\Message\ServerRequestInterface $request
+): Mezzio\Hal\HalResource;</code></pre>
+<p>to:</p>
+<pre class="highlight"><code class="language-php">public function fromObject(
+    object $instance,
+    Psr\Http\Message\ServerRequestInterface $request
+    int $depth = 0
+): Mezzio\Hal\HalResource;</code></pre>
+<p>These changes should only impact users extending the <code>ResourceGenerator</code> class.</p>
+<h3>Mezzio\Hal\LinkCollection</h3>
+<p>The trait <code>Mezzio\Hal\LinkCollection</code> provides implementation of the <a href="https://www.php-fig.org/psr/psr-13/">PSR-13</a> <code>EvolvableLinkProviderInterface</code> that other classes may compose.
+PHP allows adding return typehints to methods defined by an interface so long as the typehint is narrower than the original.
+In the specification, these methods did not have an explicit return typehint, but did provide one via annotations.
+As such, the following method signatures were updated to have the associated return typehints:</p>
+<ul>
+<li><code>getLinks(): array</code></li>
+<li><code>getLinksByRel($rel): array</code></li>
+<li><code>withLink(Psr\Link\LinkInterface $link): self</code></li>
+<li><code>withoutLink(Psr\Link\LinkInterface $link): self</code></li>
+</ul>
+<p>These changes should not have any effect on users, as signatures of overridden trait methods do not need to match.</p>
+<h3>Mezzio\Hal\ResourceGenerator\StrategyInterface</h3>
+<p>The signature of the <code>fromObject()</code> method originally was:</p>
+<pre class="highlight"><code class="language-php">public function createResource(
+    $instance,
+    Mezzio\Hal\Metadata\AbstractMetadata $metadata,
+    Mezzio\Hal\ResourceGenerator $resourceGenerator,
+    Psr\Http\Message\ServerRequestInterface $request
+): Mezzio\Hal\HalResource;</code></pre>
+<p>and is now:</p>
+<pre class="highlight"><code class="language-php">public function createResource(
+    object $instance,
+    Mezzio\Hal\Metadata\AbstractMetadata $metadata,
+    Mezzio\Hal\ResourceGeneratorInterface $resourceGenerator,
+    Psr\Http\Message\ServerRequestInterface $request,
+    int $depth = 0
+): Mezzio\Hal\HalResource;</code></pre>
+<p>The changes:</p>
+<ul>
+<li>Enforce that the <code>$instance</code> value MUST be an object.</li>
+<li>Allow for alternate resource generator implementations so long as they implement the new <code>ResourceGeneratorInterface</code>.</li>
+<li>Provide the ability to protect against circular references in nested resources via the <code>$depth</code> value, which will generally be provided when the <code>$resourceGenerator</code> calls on a strategy implementation.</li>
+</ul>
+<p>These changes also affect all shipped implementations of the <code>StrategyInterface</code>, including the following:</p>
+<ul>
+<li><code>Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy</code></li>
+<li><code>Mezzio\Hal\ResourceGenerator\RouteBasedResourceStrategy</code></li>
+<li><code>Mezzio\Hal\ResourceGenerator\UrlBasedCollectionStrategy</code></li>
+<li><code>Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy</code></li>
+</ul>
+<p>These changes will impact users who are extending one of the above classes, or providing their own <code>StrategyInterface</code> implementation.</p>
+<h3>Mezzio\Hal\Metadata\AbstractMetadata</h3>
+<p>The <code>Mezzio\Hal\Metadata\AbstractMetadata</code> class, from which all other metadata classes derive, adds a new method, <code>hasReachedMaxDepth(int $currentDepth): bool</code>.
+Extensions can override this method to provide logic for determining if traversal has reached the maximum depth, and is called by the resource generator in order to help prevent circular references in nested resources.</p>
+<p>This change will only affect users creating their own metadata implementations; developers should look at how each of the shipped implementations define the method to determine how they should do so in their own classes.</p>
+<h3>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</h3>
+<p>The signature of the <code>__construct</code> method changes from:</p>
+<pre class="highlight"><code class="language-php">public function __construct(
+    string $class,
+    string $route,
+    string $extractor,
+    string $resourceIdentifier = 'id',
+    string $routeIdentifierPlaceholder = 'id',
+    array $routeParams = [],
+    array $identifiersToPlaceholdersMapping = [],
+    int $maxDepth = 10
+) {</code></pre>
+<p>to:</p>
+<pre class="highlight"><code class="language-php">public function __construct(
+    string $class,
+    string $route,
+    string $extractor,
+    string $resourceIdentifier = 'id',
+    array $routeParams = [],
+    array $identifiersToPlaceholdersMapping = [],
+    int $maxDepth = 10
+) {</code></pre>
+<p>Note the removal of the <code>$routeIdentifierPlaceholder</code> argument.</p>
+<p>If you were previously using this argument, you will need to instead populate the <code>$identifiersToPlaceholdersMapping</code> argument.
+As an example, if you had an entity that defined an "id" property as an identifier, but your route definition used "calc_id" as the equivalent (e.g., <code>/calculation/{calc_id:\d+}</code>), you might have called the constructor as follows:</p>
+<pre class="highlight"><code class="language-php">$metadata = new RouteBasedResourceMetadata(
+    CalculationEntity::class,
+    'calculation',
+    ObjectHydrator::class,
+    'id',
+    'calc_id'
+);</code></pre>
+<p>This would change to:</p>
+<pre class="highlight"><code class="language-php">$metadata = new RouteBasedResourceMetadata(
+    CalculationEntity::class,
+    'calculation',
+    ObjectHydrator::class,
+    'id',
+    [],
+    ['id' =&gt; 'calc_id']
+);</code></pre>
+<p>The new logic provides an explicit mapping of any resource property to their corresponding route placeholders, no longer limiting you to only mapping resource identifiers.</p>
+<h3>Mezzio\Hal\HalResource</h3>
+<p>The method <code>jsonSerialize()</code> now has a return typehint of <code>array</code>; this was implied previously by the <code>JsonSerializable</code> interface the method provides an implementation for, but is now explicit.</p>
+<p>This change will only affect those extending the <code>HalResource</code> class.</p>
+<h3>Mezzio\Hal\Exception\UndefinedMetadataException</h3>
+<p>The signature of the <code>create()</code> method changes from:</p>
+<pre class="highlight"><code class="language-php">public static function create($class)</code></pre>
+<p>to:</p>
+<pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
+<p>This change will only affect extensions to this class.</p>
+<h3>Mezzio\Hal\Exception\UndefinedClassException</h3>
+<p>The signature of the <code>create()</code> method changes from:</p>
+<pre class="highlight"><code class="language-php">public static function create($class)</code></pre>
+<p>to:</p>
+<pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
+<p>This change will only affect extensions to this class.</p>
+<h3>Mezzio\Hal\Exception\DuplicateMetadataException</h3>
+<p>The signature of the <code>create()</code> method changes from:</p>
+<pre class="highlight"><code class="language-php">public static function create(string $class)</code></pre>
+<p>to:</p>
+<pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
+<p>This change will only affect extensions to this class.</p>
+<h2 id="configuration-changes">Configuration changes</h2>
+<h3>route_identifier_placeholder removed</h3>
+<p>In version 1, the configuration setting <code>route_identifier_placeholder</code> could be used when configuring <code>RouteBasedResourceMetadata</code>, and was used to indicate the route placeholder that corresponded with the resource identifier.</p>
+<p>Version 2 removes this setting.
+Users should instead use the <code>identifiers_to_placeholders_mapping</code> setting introduced in the 1.4 series.
+This configuration allows you to map not just the resource identifier to its route placeholder; with it, you can map ANY resource property that has associated route placeholders.
+This is particularly interesting when creating nested resources, where the parent resource identifier may be present in the resource itself, allowing routing to the nested resource easily.</p>
+<p>As an initial example, we'll cover the original use case for a <code>route_identifier_placeholder</code> on its own.
+Let's consider an entity that defined an "id" property as an identifier, but your route definition used "calc_id" as the equivalent (e.g., <code>/calculation/{calc_id:\d+}</code>).
+You might have configured it as follows:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Hydrator\ObjectHydrator;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+
+return [
+    MetadataMap::class =&gt; [
+        [
+            '__class__'                    =&gt; RouteBasedResourceMetadata::class,
+            'resource_class'               =&gt; CalculationEntity::class,
+            'route'                        =&gt; 'calculation',
+            'extractor'                    =&gt; ObjectHydrator::class,
+            'resource_identifier'          =&gt; 'id',
+            'route_identifier_placeholder' =&gt; 'calc_id',
+        ]
+    ],
+];</code></pre>
+<p>With v2, this should be rewritten as:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Hydrator\ObjectHydrator;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+
+return [
+    MetadataMap::class =&gt; [
+        [
+            '__class__'                           =&gt; RouteBasedResourceMetadata::class,
+            'resource_class'                      =&gt; CalculationEntity::class,
+            'route'                               =&gt; 'calculation',
+            'extractor'                           =&gt; ObjectHydrator::class,
+            'resource_identifier'                 =&gt; 'id',
+            'identifiers_to_placeholders_mapping' =&gt; [
+                'id' =&gt; 'calc_id',
+            ],
+        ]
+    ],
+];</code></pre>
+<p>To expand on this example, and demonstrate the new capabilities possible, let's consider a route definition that also expected a value for an "id" associated with the resource's "transaction_id" property (e.g., <code>/transaction/{id:\d+}/calculation/{calc_id:\d+}</code>).
+You could configure that as follows:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Hydrator\ObjectHydrator;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+
+return [
+    MetadataMap::class =&gt; [
+        [
+            '__class__'                           =&gt; RouteBasedResourceMetadata::class,
+            'resource_class'                      =&gt; CalculationEntity::class,
+            'route'                               =&gt; 'calculation',
+            'extractor'                           =&gt; ObjectHydrator::class,
+            'resource_identifier'                 =&gt; 'id',
+            'identifiers_to_placeholders_mapping' =&gt; [
+                'id'             =&gt; 'calc_id',
+                'transaction_id' =&gt; 'id',
+            ],
+        ]
+    ],
+];</code></pre>
+<p>In this scenario, the <code>id</code> property of the resource will be substituted for the <code>calc_id</code> route placeholder, and the <code>transaction_id</code> property will be substituted for the <code>id</code> route placeholder.</p>
 
 
 
@@ -363,12 +615,16 @@
         
         <li class="page-nav__item">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../factories/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
         </li>
 
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v2/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../cookbook/generating-custom-links-in-middleware/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -378,6 +634,15 @@
 
 
 
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v2/migration.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
 
                 
             </div>
@@ -402,7 +667,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">mezzio-hal</a>
+            <a href="../..">mezzio-hal</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -415,7 +680,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/" class="subnavigation__link">Introduction</a>
+        <a href="../" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -426,43 +691,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/hal/" class="subnavigation__link">HAL</a>
+        <a href="../hal/" class="subnavigation__link">HAL</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/links-and-resources/" class="subnavigation__link">Links and Resources</a>
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/resource-generator/" class="subnavigation__link">Generating Resources</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/representations/" class="subnavigation__link">Representations</a>
+        <a href="../representations/" class="subnavigation__link">Representations</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/factories/" class="subnavigation__link">Factories</a>
+        <a href="../factories/" class="subnavigation__link">Factories</a>
     </li>
 
             
@@ -476,8 +741,8 @@
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v2/migration/" class="subnavigation__link">Migration from V1</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration from V1</a>
     </li>
 
             
@@ -492,13 +757,13 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
     </li>
 
             
@@ -601,13 +866,13 @@
 </footer>
 
     <script>
-        let base_url = '.',
+        let base_url = '../..',
             project  = "mezzio",
             siteName = 'mezzio-hal';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="search/main.js"></script>
+        <script src="../../search/main.js"></script>
     
 
     
@@ -636,8 +901,3 @@
 
 
 </html>
-
-<!--
-MkDocs version : 1.1.2
-Build Date UTC : 2020-12-23 18:26:46.274020+00:00
--->

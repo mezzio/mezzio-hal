@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
-    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/">
+    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v2/factories/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>mezzio-hal - Laminas Docs</title>
+    <title>Factories - mezzio-hal - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -115,7 +115,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">mezzio-hal</a>
+            <a href="../..">mezzio-hal</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -128,7 +128,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/" class="subnavigation__link">Introduction</a>
+        <a href="../" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -139,43 +139,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/hal/" class="subnavigation__link">HAL</a>
+        <a href="../hal/" class="subnavigation__link">HAL</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/links-and-resources/" class="subnavigation__link">Links and Resources</a>
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/resource-generator/" class="subnavigation__link">Generating Resources</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/representations/" class="subnavigation__link">Representations</a>
+        <a href="../representations/" class="subnavigation__link">Representations</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
     </li>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v2/factories/" class="subnavigation__link">Factories</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Factories</a>
     </li>
 
             
@@ -190,7 +190,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/migration/" class="subnavigation__link">Migration from V1</a>
+        <a href="../migration/" class="subnavigation__link">Migration from V1</a>
     </li>
 
             
@@ -205,13 +205,13 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
     </li>
 
             
@@ -280,7 +280,7 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="v2/" class="dropdown-item">
+                    <a href="../" class="dropdown-item active">
                         
                             v2 (latest)
                         
@@ -288,7 +288,7 @@
                 
             
                 
-                    <a href="v1/" class="dropdown-item">
+                    <a href="../../v1/" class="dropdown-item">
                         
                             v1
                         
@@ -318,6 +318,44 @@
             <div class="col-md-9 col-sm-12 content" role="main">
                 
                 
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#mezziohalhalresponsefactoryfactory" class="toc__link nav-link">Mezzio\Hal\HalResponseFactoryFactory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#mezziohallinkgeneratorfactory" class="toc__link nav-link">Mezzio\Hal\LinkGeneratorFactory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#mezziohallinkgeneratormezziourlgeneratorfactory" class="toc__link nav-link">Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#mezziohallinkgeneratorurlgeneratorinterface" class="toc__link nav-link">Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#mezziohalmetadatametadatamapfactory" class="toc__link nav-link">Mezzio\Hal\Metadata\MetadataMapFactory</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#mezziohalresourcegeneratorfactory" class="toc__link nav-link">Mezzio\Hal\ResourceGeneratorFactory</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
 
                 
                     <nav aria-label="breadcrumb">
@@ -327,7 +365,23 @@
             <li class="breadcrumb-item"><a href="https://docs.mezzio.dev/">Mezzio</a></li>
 
             
-                <li class="breadcrumb-item">mezzio-hal</li>
+                <li class="breadcrumb-item"><a href="../..">mezzio-hal</a></li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Factories</li>
             
         
     </ol>
@@ -337,22 +391,182 @@
 
 
 
-    <h1>mezzio-hal</h1>
-<p>Hypertext Application Language for PSR-7 Applications</p>
 
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
 
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
-
-
-<h2>Support</h2>
+    <h1 id="provided-factories">Provided factories</h1>
+<p>This component provides a number of factories for use with
+<a href="https://www.php-fig.org/psr/psr-11/">PSR-11</a>, in order to generate fully
+configured instances for your use.</p>
+<h2 id="mezziohalhalresponsefactoryfactory">Mezzio\Hal\HalResponseFactoryFactory</h2>
 <ul>
-    <li>Issues: <a href="https://github.com/mezzio/mezzio-hal/issues">github.com/mezzio/mezzio-hal/issues</a></li>
-    <li>Source: <a href="https://github.com/mezzio/mezzio-hal/">github.com/mezzio/mezzio-hal/</a></li>
-    <li>Chat: <a href="https://laminas.dev/chat">laminas.dev/chat</a></li>
-    <li>Forum: <a href="https://discourse.laminas.dev/">discourse.laminas.dev</a></li>
+<li>Registered as service: <code>Mezzio\Hal\HalResponseFactory</code></li>
+<li>Generates instance of: <code>Mezzio\Hal\HalResponseFactory</code></li>
+<li>Depends on:<ul>
+<li><code>Psr\Http\Message\ResponseInterface</code> service. The service must resolve to
+  a PHP callable capable of generating a <a href="https://www.php-fig.org/psr/psr-7/">PSR-7</a>
+  <code>ResponseInterface</code> instance; it must not resolve to a <code>ResponseInterface</code>
+  instance directly. This service is <strong>required</strong>, and must be supplied by
+  the application. If you are using with mezzio v3 and above, the
+  service will already be registered.</li>
+<li><code>Mezzio\Hal\Renderer\JsonRenderer</code> service. If the service is not
+  present, it instantiates an instance itself.</li>
+<li><code>Mezzio\Hal\Renderer\XmlRenderer</code> service. If the service is not
+  present, it instantiates an instance itself.</li>
 </ul>
+</li>
+</ul>
+<h2 id="mezziohallinkgeneratorfactory">Mezzio\Hal\LinkGeneratorFactory</h2>
+<ul>
+<li>Registered as service: <code>Mezzio\Hal\LinkGenerator</code></li>
+<li>Generates instance of: <code>Mezzio\Hal\LinkGenerator</code></li>
+<li>Depends on:<ul>
+<li><code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code> service</li>
+</ul>
+</li>
+</ul>
+<p>This factory allows an optional constructor argument, <code>$urlGeneratorServiceName</code>.
+It defaults to <code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code>,
+but you may specify an alternate service if desired. This may be useful, for
+instance, when using an alternate router in a path-segregated middleware
+pipeline, which would necessitate a different <code>UrlHelper</code> instance, and an
+alternate URL generator that consumes it.</p>
+<h2 id="mezziohallinkgeneratormezziourlgeneratorfactory">Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory</h2>
+<ul>
+<li>Registered as service: <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code></li>
+<li>Generates instance of: <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code></li>
+<li>Depends on:<ul>
+<li><a href="https://github.com/mezzio/mezzio-helpers">mezzio/mezzio-helpers</a> package</li>
+<li><code>Mezzio\Helper\UrlHelper</code> service</li>
+<li><code>Mezzio\Helper\ServerUrlHelper</code> service (optional; if not provided,
+  URIs will be generated without authority information)</li>
+</ul>
+</li>
+</ul>
+<p>This factory allows an optional constructor argument, <code>$urlHelperServiceName</code>.
+It defaults to <code>Mezzio\Helper\UrlHelper</code>, but you may specify an
+alternate service if desired. This may be useful, for instance, when using an
+alternate router in a path-segregated middleware pipeline, which would
+necessitate a different <code>UrlHelper</code> instance.</p>
+<h2 id="mezziohallinkgeneratorurlgeneratorinterface">Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</h2>
+<ul>
+<li>Registered as service: <code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code></li>
+<li>Aliased to service: <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code></li>
+</ul>
+<p>You can either define an alternate alias, or map the <code>UrlGeneratorInterface</code> service
+directly to a factory that will return a valid instance.</p>
+<h2 id="mezziohalmetadatametadatamapfactory">Mezzio\Hal\Metadata\MetadataMapFactory</h2>
+<ul>
+<li>Registered as service: <code>Mezzio\Hal\Metadata\MetadataMap</code></li>
+<li>Generates instance of: <code>Mezzio\Hal\Metadata\MetadataMap</code></li>
+<li>Depends on:<ul>
+<li><code>config</code> service; if not present, will use an empty array</li>
+</ul>
+</li>
+</ul>
+<p>This service uses the <code>Mezzio\Hal\Metadata\MetadataMap</code> key of the <code>config</code> service in
+order to configure and return a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance. It expects
+that value to be an array of elements, each with the following structure:</p>
+<pre class="highlight"><code class="language-php">[
+    '__class__' =&gt; 'Fully qualified class name of an AbstractMetadata type',
+    // additional key/value pairs as required by the metadata type.
+]</code></pre>
+<p>The additional pairs are as follows:</p>
+<ul>
+<li>For <code>UrlBasedResourceMetadata</code>:<ul>
+<li><code>resource_class</code>: the resource class the metadata describes.</li>
+<li><code>url</code>: the URL to use when generating a self-relational link for the
+  resource.</li>
+<li><code>extractor</code>: the extractor/hydrator service to use to extract resource
+  data.</li>
+</ul>
+</li>
+<li>For <code>UrlBasedCollectionMetadata</code>:<ul>
+<li><code>collection_class</code>: the collection class the metadata describes.</li>
+<li><code>collection_relation</code>: the embedded relation for the collection in the
+  generated resource.</li>
+<li><code>url</code>: the URL to use when generating a self-relational link for the
+  collection resource.</li>
+<li><code>pagination_param</code>: the name of the parameter indicating what page of data
+  is present. Defaults to "page".</li>
+<li><code>pagination_param_type</code>: whether the pagination parameter is a query string
+  or path placeholder; use either <code>AbstractCollectionMetadata::TYPE_QUERY</code>
+  ("query") or <code>AbstractCollectionMetadata::TYPE_PLACEHOLDER</code> ("placeholder");
+  default is "query".</li>
+</ul>
+</li>
+<li>For <code>RouteBasedResourceMetadata</code>:<ul>
+<li><code>resource_class</code>: the resource class the metadata describes.</li>
+<li><code>route</code>: the route to use when generating a self relational link for the
+  resource.</li>
+<li><code>extractor</code>: the extractor/hydrator service to use to extract resource
+  data.</li>
+<li><code>resource_identifier</code>: what property in the resource represents its
+  identifier; defaults to "id".</li>
+<li><code>route_params</code>: an array of additional routing parameters to use when
+  generating the self relational link for the resource.</li>
+<li><code>identifiers_to_placeholders_mapping</code> (associative array mapping resource properties to routing parameters, for use when generating the URI)</li>
+<li><code>max_depth</code>: the number of nesting levels processed. Defaults to 10.</li>
+</ul>
+</li>
+<li>For <code>RouteBasedCollectionMetadata</code>:<ul>
+<li><code>collection_class</code>: the collection class the metadata describes.</li>
+<li><code>collection_relation</code>: the embedded relation for the collection in the
+  generated resource.</li>
+<li><code>route</code>: the route to use when generating a self relational link for the
+  collection resource.</li>
+<li><code>pagination_param</code>: the name of the parameter indicating what page of data
+  is present. Defaults to "page".</li>
+<li><code>pagination_param_type</code>: whether the pagination parameter is a query string
+  or path placeholder; use either <code>AbstractCollectionMetadata::TYPE_QUERY</code>
+  ("query") or <code>AbstractCollectionMetadata::TYPE_PLACEHOLDER</code> ("placeholder");
+  default is "query".</li>
+<li><code>route_params</code>: an array of additional routing parameters to use when
+  generating the self relational link for the collection resource. Defaults
+  to an empty array.</li>
+<li><code>query_string_arguments</code>: an array of query string parameters to include
+  when generating the self relational link for the collection resource.
+  Defaults to an empty array.</li>
+</ul>
+</li>
+</ul>
+<p>If you have created custom metadata types, you can extend this class to
+support them. Create <code>create&lt;type&gt;(array $metadata)</code> methods for each
+type you wish to support, where <code>&lt;type&gt;</code> is your custom class name, minus
+the namespace.</p>
+<blockquote>
+<h3>Limitation</h3>
+<p>There is a <a href="https://github.com/zendframework/zend-expressive-hal/issues/5">known limitation</a>
+with laminas-router when using routes with optional parameters (e.g., <code>/books[/:id]</code>,
+where <code>:id</code> is optional). In such cases, if no matching parameter is provided
+(such as when generating a URI without an <code>:id</code>), the router will raise an
+exception due to the missing parameter.</p>
+<p>If you encounter this issue, create separate routing entries for each optional
+parameter. See the issue for a comprehensive example.</p>
+</blockquote>
+<h2 id="mezziohalresourcegeneratorfactory">Mezzio\Hal\ResourceGeneratorFactory</h2>
+<ul>
+<li>Registered as service: <code>Mezzio\Hal\ResourceGenerator</code></li>
+<li>Generates instance of: <code>Mezzio\Hal\ResourceGenerator</code></li>
+<li>Depends on:<ul>
+<li><code>Mezzio\Hal\Metadata\MetadataMap</code> service</li>
+<li><code>Laminas\Hydrator\HydratorPluginManager</code> service</li>
+<li><code>Mezzio\Hal\LinkGenerator</code> service</li>
+</ul>
+</li>
+</ul>
+<p>If you wish to use a container implementation other than the
+<code>Laminas\Hydrator\HydratorPluginManager</code>, either register it under that service
+name, or create an alternate factory.</p>
+<p>This factory allows an optional constructor argument, <code>$linkGeneratorServiceName</code>.
+It defaults to <code>Mezzio\Hal\LinkGenerator</code>, but you may specify an
+alternate service if desired. This may be useful, for instance, when using an
+alternate router in a path-segregated middleware pipeline, which would
+necessitate a different <code>UrlHelper</code> instance, an alternate URL generator that
+consumes it, and an alternate <code>LinkGenerator</code> consuming the URL generator.</p>
 
 
 
@@ -363,12 +577,16 @@
         
         <li class="page-nav__item">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../doctrine/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
         </li>
 
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v2/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../migration/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -378,6 +596,15 @@
 
 
 
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v2/factories.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
 
                 
             </div>
@@ -402,7 +629,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href=".">mezzio-hal</a>
+            <a href="../..">mezzio-hal</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -415,7 +642,7 @@
                     
                         
     <li class="subnavigation__list-item ">
-        <a href="v2/" class="subnavigation__link">Introduction</a>
+        <a href="../" class="subnavigation__link">Introduction</a>
     </li>
 
                     
@@ -426,43 +653,43 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/hal/" class="subnavigation__link">HAL</a>
+        <a href="../hal/" class="subnavigation__link">HAL</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/links-and-resources/" class="subnavigation__link">Links and Resources</a>
+        <a href="../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/resource-generator/" class="subnavigation__link">Generating Resources</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/representations/" class="subnavigation__link">Representations</a>
+        <a href="../representations/" class="subnavigation__link">Representations</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
+        <a href="../doctrine/" class="subnavigation__link">Generating HAL for Doctrine Entities</a>
     </li>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="v2/factories/" class="subnavigation__link">Factories</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Factories</a>
     </li>
 
             
@@ -477,7 +704,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/migration/" class="subnavigation__link">Migration from V1</a>
+        <a href="../migration/" class="subnavigation__link">Migration from V1</a>
     </li>
 
             
@@ -492,13 +719,13 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="v2/cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
     </li>
 
             
@@ -601,13 +828,13 @@
 </footer>
 
     <script>
-        let base_url = '.',
+        let base_url = '../..',
             project  = "mezzio",
             siteName = 'mezzio-hal';
     </script>
     <script src="https://docs.laminas.dev/js/scripts.js"></script>
     
-        <script src="search/main.js"></script>
+        <script src="../../search/main.js"></script>
     
 
     
@@ -636,8 +863,3 @@
 
 
 </html>
-
-<!--
-MkDocs version : 1.1.2
-Build Date UTC : 2020-12-23 18:26:46.274020+00:00
--->
