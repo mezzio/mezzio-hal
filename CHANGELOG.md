@@ -24,7 +24,21 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 ### Fixed
 
-- Nothing.
+## 2.0.1 - 2020-12-23
+
+### Release Notes for [2.0.1](https://github.com/mezzio/mezzio-hal/milestone/5)
+
+2.0.x bugfix release (patch)
+
+### 2.0.1
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Bug,Documentation
+
+- [31: Fix broken mkdocs.yml](https://github.com/mezzio/mezzio-hal/pull/31) thanks to @weierophinney
 
 ## 2.0.0 - 2020-12-23
 
