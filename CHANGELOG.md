@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
-## 2.0.0 - TBD
+## 2.0.0 - 2020-12-23
 
 ### Added
 
@@ -43,19 +43,57 @@ Versions prior to 0.4.0 were released as the package "weierophinney/hal".
 
 - [#19](https://github.com/mezzio/mezzio-hal/pull/19) updates `ResourceGenerator` to implement the new `ResourceGeneratorInterface`.
 
-### Deprecated
-
-- Nothing.
-
 ### Removed
 
 - [#27](https://github.com/mezzio/mezzio-hal/pull/27) removes support for the `route_identifier_placeholder` configuration setting from `RouteBasedResourceMetadataFactory`; users should use the `identifiers_to_placeholders_mapping` configuration instead to map the resource identifier to the route placeholder.
 
 - [#27](https://github.com/mezzio/mezzio-hal/pull/27) removes the `$routeIdentifierPlaceholder` property and constructor argument from `RouteBasedResourceMetadata`, as well as the `getRouteIdentifierPlaceholder()` method. Users should use the `$identiersToPlaceholdersMapping` argument instead to map resource identifiers to the appropriate route placeholder.
 
-### Fixed
 
-- Nothing.
+-----
+
+### Release Notes for [2.0.0](https://github.com/mezzio/mezzio-hal/milestone/2)
+
+
+
+### 2.0.0
+
+- Total issues resolved: **6**
+- Total pull requests resolved: **6**
+- Total contributors: **5**
+
+#### Documentation
+
+ - [30: V2 documentation](https://github.com/mezzio/mezzio-hal/pull/30) thanks to @weierophinney
+
+#### BC Break,Enhancement
+
+ - [29: Provide Psalm integration](https://github.com/mezzio/mezzio-hal/pull/29) thanks to @weierophinney
+
+#### Enhancement
+
+ - [28: Update to laminas-coding-standard 2.1 series](https://github.com/mezzio/mezzio-hal/pull/28) thanks to @weierophinney
+ - [24: Update to laminas-coding-standard 2.0.0+](https://github.com/mezzio/mezzio-hal/issues/24) thanks to @weierophinney
+
+#### BC Break,Feature Removal
+
+ - [27: Remove deprecated functionality in preparation for 2.0.0](https://github.com/mezzio/mezzio-hal/pull/27) thanks to @weierophinney
+
+#### Documentation,Enhancement
+
+ - [25: Version documentation for v2.0](https://github.com/mezzio/mezzio-hal/issues/25) thanks to @weierophinney
+
+#### BC Break,Bug,Enhancement
+
+ - [22: Unable to convert self-referring instances to resources](https://github.com/mezzio/mezzio-hal/pull/22) thanks to @tobias-trozowski and @weierophinney
+
+#### BC Break,Documentation Needed,Enhancement
+
+ - [19: ResourceGenerator implements an interface to allow composition](https://github.com/mezzio/mezzio-hal/pull/19) thanks to @jguittard
+
+#### Feature Request
+
+ - [9: Resource Generator abstract class](https://github.com/mezzio/mezzio-hal/issues/9) thanks to @bkilinc
 
 ## 1.4.0 - 2020-12-21
 
