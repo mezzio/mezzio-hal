@@ -325,7 +325,7 @@ class ShowAlbumHandler implements RequestHandlerInterface
 
         $result = $entityRepository->find($request->getAttribute('id'));
 
-        if (empty($return)) {
+        if (empty($result)) {
             throw new RuntimeException('Not Found', 404);
         }
 
