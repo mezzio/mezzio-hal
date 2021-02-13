@@ -45,19 +45,28 @@ class ResourceGeneratorTest extends TestCase
 
     use ProphecyTrait;
 
-    /** @var ObjectProphecy|ServerRequestInterface */
+    /**
+     * @var ObjectProphecy|ServerRequestInterface
+     * @psalm-var ObjectProphecy<ServerRequestInterface>
+     */
     private $request;
 
-    /** @var ObjectProphecy|ContainerInterface */
+    /**
+     * @var ObjectProphecy|ContainerInterface
+     * @psalm-var ObjectProphecy<ContainerInterface>
+     */
     private $hydrators;
 
     /** @var ObjectProphecy|LinkGenerator */
     private $linkGenerator;
 
-    /** @var ObjectProphecy|Metadata\MetadataMap */
+    /**
+     * @var ObjectProphecy|Metadata\MetadataMap
+     * @psalm-var ObjectProphecy<Metadata\MetadataMap>
+     */
     private $metadataMap;
 
-    /** @var ObjectProphecy|ResourceGenerator */
+    /** @var ResourceGenerator */
     private $generator;
 
     public function setUp(): void

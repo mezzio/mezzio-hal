@@ -26,6 +26,9 @@ use function var_export;
 // phpcs:ignore WebimpressCodingStandard.NamingConventions.Trait.Suffix
 trait Assertions
 {
+    /**
+     * @psalm-return ObjectPropertyHydrator::class|ObjectProperty::class
+     */
     public static function getObjectPropertyHydratorClass(): string
     {
         return class_exists(ObjectPropertyHydrator::class)

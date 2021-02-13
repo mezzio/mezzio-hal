@@ -68,7 +68,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
     {
         if (
             ! class_exists($metadataType)
-            || ! in_array(Metadata\AbstractMetadata::class, class_parents($metadataType), true)
+            || ! in_array(AbstractMetadata::class, class_parents($metadataType), true)
         ) {
             throw Exception\UnknownMetadataTypeException::forInvalidMetadataClass($metadataType);
         }
