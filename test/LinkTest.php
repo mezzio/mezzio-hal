@@ -19,7 +19,7 @@ class LinkTest extends TestCase
     public function testRequiresRelation(): void
     {
         $this->expectException(ArgumentCountError::class);
-        $link = new Link();
+        new Link();
     }
 
     public function testCanConstructLinkWithRelation(): void
@@ -188,8 +188,13 @@ class LinkTest extends TestCase
         $link = new Link('self', 'https://example.com');
         $new  = $link->withHref($uri);
         $this->assertNotSame($link, $new);
-        $this->assertNotEquals((string) $uri, $link->getHref());
-        $this->assertEquals((string) $uri, $new->getHref());
+
+        /**
+         * @psalm-suppress PossiblyInvalidCast
+         */
+        $stringHref = (string) $uri;
+        $this->assertNotEquals($stringHref, $link->getHref());
+        $this->assertEquals($stringHref, $new->getHref());
     }
 
     /**

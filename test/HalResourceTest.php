@@ -43,7 +43,7 @@ class HalResourceTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($expectedMessage);
-        $resource = new HalResource([$name => 'bar']);
+        new HalResource([$name => 'bar']);
     }
 
     public function testCanConstructWithDataContainingEmbeddedResources(): void
@@ -75,7 +75,7 @@ class HalResourceTest extends TestCase
         ];
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$links');
-        $resource = new HalResource([], $links);
+        new HalResource([], $links);
     }
 
     public function testCanConstructWithEmbeddedResources(): void
@@ -93,7 +93,7 @@ class HalResourceTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid embedded resource');
-        $resource = new HalResource([], [], ['foo' => 'bar']);
+        new HalResource([], [], ['foo' => 'bar']);
     }
 
     public function testEmptyArrayAsDataWillNotBeEmbeddedDuringConstruction(): void
@@ -114,7 +114,10 @@ class HalResourceTest extends TestCase
         $embedded = new HalResource(['foo' => 'bar']);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($expectedMessage);
-        $resource = new HalResource([], [], [$name => $embedded]);
+        /**
+         * @psalm-suppress InvalidArgument
+         */
+        new HalResource([], [], [$name => $embedded]);
     }
 
     public function testWithLinkReturnsNewInstanceContainingNewLink(): void
