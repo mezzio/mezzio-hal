@@ -1,7 +1,6 @@
 # Hypertext Application Language (HAL) for PSR-7 Applications
 
-[![Build Status](https://travis-ci.com/mezzio/mezzio-hal.svg?branch=master)](https://travis-ci.com/mezzio/mezzio-hal)
-[![Coverage Status](https://coveralls.io/repos/github/mezzio/mezzio-hal/badge.svg?branch=master)](https://coveralls.io/github/mezzio/mezzio-hal?branch=master)
+[![Build Status](https://github.com/mezzio/mezzio-hal/workflows/continuous-integration.yml/badge.svg)](https://github.com/mezzio/mezzio-hal/actions/workflows/continuous-integration.yml)
 
 This library provides utilities for modeling HAL resources with links and
 generating [PSR-7](http://www.php-fig.org/psr/psr-7/) responses representing
