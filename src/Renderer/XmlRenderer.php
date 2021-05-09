@@ -52,6 +52,10 @@ class XmlRenderer implements RendererInterface
             unset($resource['_links']['self']);
         }
 
+        /**
+         * @var string $rel
+         * @var array<string, mixed> $linkData
+         */
         foreach ($resource['_links'] as $rel => $linkData) {
             if ($this->isAssocArray($linkData)) {
                 $node->appendChild($this->createLinkNode($doc, $rel, $linkData));
@@ -64,6 +68,10 @@ class XmlRenderer implements RendererInterface
         }
         unset($resource['_links']);
 
+        /**
+         * @var string $rel
+         * @var array<string, mixed> $childData
+         */
         foreach ($resource['_embedded'] as $rel => $childData) {
             if ($this->isAssocArray($childData)) {
                 $node->appendChild($this->createResourceNode($doc, $childData, $rel));

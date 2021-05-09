@@ -420,28 +420,29 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             $linkRels = $link->getRels();
             array_walk($linkRels, function ($rel) use (&$byRelation, $representation) {
                 $forceCollection = array_key_exists(Link::AS_COLLECTION, $representation)
-                    ? (bool) $representation[Link::AS_COLLECTION]
-                    : false;
+                    && $representation[Link::AS_COLLECTION];
                 unset($representation[Link::AS_COLLECTION]);
 
-                if (isset($byRelation[$rel])) {
-                    $byRelation[$rel][] = $representation;
-                } else {
-                    $byRelation[$rel] = [$representation];
+                if (! isset($byRelation[$rel])) {
+                    $byRelation[$rel] = [];
                 }
+
+                /** @var array<int|string, mixed> $relation */
+                $relation   = &$byRelation[$rel];
+                $relation[] = $representation;
 
                 // If we're forcing a collection, and the current relation only
                 // has one item, mark the relation to force a collection
-                if (1 === count($byRelation[$rel]) && $forceCollection) {
-                    $byRelation[$rel][Link::AS_COLLECTION] = true;
+                if (1 === count($relation) && $forceCollection) {
+                    $relation[Link::AS_COLLECTION] = true;
                 }
 
                 // If we have more than one link for the relation, and the
                 // marker for forcing a collection is present, remove the
                 // marker; it's redundant. Check for a count greater than 2,
                 // as the marker itself will affect the count!
-                if (2 < count($byRelation[$rel]) && isset($byRelation[$rel][Link::AS_COLLECTION])) {
-                    unset($byRelation[$rel][Link::AS_COLLECTION]);
+                if (2 < count($relation) && isset($relation[Link::AS_COLLECTION])) {
+                    unset($relation[Link::AS_COLLECTION]);
                 }
             });
 
