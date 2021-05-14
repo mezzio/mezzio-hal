@@ -416,7 +416,7 @@ interface ResourceGeneratorInterface
 </ul>
 <p><code>Mezzio\Hal\ResourceGenerator</code> now implements this interface.</p>
 <h2 id="signature-changes">Signature changes</h2>
-<h3>Mezzio\Hal\ResourceGenerator</h3>
+<h3 id="mezziohalresourcegenerator">Mezzio\Hal\ResourceGenerator</h3>
 <p>As noted in the previous section, the signature of the <code>fromObject()</code> method changes from:</p>
 <pre class="highlight"><code class="language-php">public function fromObject(
     $instance,
@@ -429,7 +429,7 @@ interface ResourceGeneratorInterface
     int $depth = 0
 ): Mezzio\Hal\HalResource;</code></pre>
 <p>These changes should only impact users extending the <code>ResourceGenerator</code> class.</p>
-<h3>Mezzio\Hal\LinkCollection</h3>
+<h3 id="mezziohallinkcollection">Mezzio\Hal\LinkCollection</h3>
 <p>The trait <code>Mezzio\Hal\LinkCollection</code> provides implementation of the <a href="https://www.php-fig.org/psr/psr-13/">PSR-13</a> <code>EvolvableLinkProviderInterface</code> that other classes may compose.
 PHP allows adding return typehints to methods defined by an interface so long as the typehint is narrower than the original.
 In the specification, these methods did not have an explicit return typehint, but did provide one via annotations.
@@ -441,7 +441,7 @@ As such, the following method signatures were updated to have the associated ret
 <li><code>withoutLink(Psr\Link\LinkInterface $link): self</code></li>
 </ul>
 <p>These changes should not have any effect on users, as signatures of overridden trait methods do not need to match.</p>
-<h3>Mezzio\Hal\ResourceGenerator\StrategyInterface</h3>
+<h3 id="mezziohalresourcegeneratorstrategyinterface">Mezzio\Hal\ResourceGenerator\StrategyInterface</h3>
 <p>The signature of the <code>fromObject()</code> method originally was:</p>
 <pre class="highlight"><code class="language-php">public function createResource(
     $instance,
@@ -471,11 +471,11 @@ As such, the following method signatures were updated to have the associated ret
 <li><code>Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy</code></li>
 </ul>
 <p>These changes will impact users who are extending one of the above classes, or providing their own <code>StrategyInterface</code> implementation.</p>
-<h3>Mezzio\Hal\Metadata\AbstractMetadata</h3>
+<h3 id="mezziohalmetadataabstractmetadata">Mezzio\Hal\Metadata\AbstractMetadata</h3>
 <p>The <code>Mezzio\Hal\Metadata\AbstractMetadata</code> class, from which all other metadata classes derive, adds a new method, <code>hasReachedMaxDepth(int $currentDepth): bool</code>.
 Extensions can override this method to provide logic for determining if traversal has reached the maximum depth, and is called by the resource generator in order to help prevent circular references in nested resources.</p>
 <p>This change will only affect users creating their own metadata implementations; developers should look at how each of the shipped implementations define the method to determine how they should do so in their own classes.</p>
-<h3>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</h3>
+<h3 id="mezziohalmetadataroutebasedresourcemetadata">Mezzio\Hal\Metadata\RouteBasedResourceMetadata</h3>
 <p>The signature of the <code>__construct</code> method changes from:</p>
 <pre class="highlight"><code class="language-php">public function __construct(
     string $class,
@@ -517,29 +517,29 @@ As an example, if you had an entity that defined an "id" property as an identifi
     ['id' =&gt; 'calc_id']
 );</code></pre>
 <p>The new logic provides an explicit mapping of any resource property to their corresponding route placeholders, no longer limiting you to only mapping resource identifiers.</p>
-<h3>Mezzio\Hal\HalResource</h3>
+<h3 id="mezziohalhalresource">Mezzio\Hal\HalResource</h3>
 <p>The method <code>jsonSerialize()</code> now has a return typehint of <code>array</code>; this was implied previously by the <code>JsonSerializable</code> interface the method provides an implementation for, but is now explicit.</p>
 <p>This change will only affect those extending the <code>HalResource</code> class.</p>
-<h3>Mezzio\Hal\Exception\UndefinedMetadataException</h3>
+<h3 id="mezziohalexceptionundefinedmetadataexception">Mezzio\Hal\Exception\UndefinedMetadataException</h3>
 <p>The signature of the <code>create()</code> method changes from:</p>
 <pre class="highlight"><code class="language-php">public static function create($class)</code></pre>
 <p>to:</p>
 <pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
 <p>This change will only affect extensions to this class.</p>
-<h3>Mezzio\Hal\Exception\UndefinedClassException</h3>
+<h3 id="mezziohalexceptionundefinedclassexception">Mezzio\Hal\Exception\UndefinedClassException</h3>
 <p>The signature of the <code>create()</code> method changes from:</p>
 <pre class="highlight"><code class="language-php">public static function create($class)</code></pre>
 <p>to:</p>
 <pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
 <p>This change will only affect extensions to this class.</p>
-<h3>Mezzio\Hal\Exception\DuplicateMetadataException</h3>
+<h3 id="mezziohalexceptionduplicatemetadataexception">Mezzio\Hal\Exception\DuplicateMetadataException</h3>
 <p>The signature of the <code>create()</code> method changes from:</p>
 <pre class="highlight"><code class="language-php">public static function create(string $class)</code></pre>
 <p>to:</p>
 <pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
 <p>This change will only affect extensions to this class.</p>
 <h2 id="configuration-changes">Configuration changes</h2>
-<h3>route_identifier_placeholder removed</h3>
+<h3 id="route_identifier_placeholder-removed">route_identifier_placeholder removed</h3>
 <p>In version 1, the configuration setting <code>route_identifier_placeholder</code> could be used when configuring <code>RouteBasedResourceMetadata</code>, and was used to indicate the route placeholder that corresponded with the resource identifier.</p>
 <p>Version 2 removes this setting.
 Users should instead use the <code>identifiers_to_placeholders_mapping</code> setting introduced in the 1.4 series.
@@ -784,6 +784,7 @@ return [
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -856,7 +857,7 @@ return [
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
