@@ -8,6 +8,7 @@
 
 namespace Mezzio\Hal;
 
+use Mezzio\Hal\Metadata\AbstractMetadata;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -67,7 +68,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
     {
         if (
             ! class_exists($metadataType)
-            || ! in_array(Metadata\AbstractMetadata::class, class_parents($metadataType), true)
+            || ! in_array(AbstractMetadata::class, class_parents($metadataType), true)
         ) {
             throw Exception\UnknownMetadataTypeException::forInvalidMetadataClass($metadataType);
         }
@@ -122,12 +123,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
             throw Exception\InvalidObjectException::forNonObject($instance);
         }
 
-        $class = get_class($instance);
-        if (! $this->metadataMap->has($class)) {
-            throw Exception\InvalidObjectException::forUnknownType($class);
-        }
-
-        $metadata     = $this->metadataMap->get($class);
+        $metadata     = $this->getClassMetadata($instance);
         $metadataType = get_class($metadata);
 
         if (! isset($this->strategies[$metadataType])) {
@@ -142,5 +138,20 @@ class ResourceGenerator implements ResourceGeneratorInterface
             $request,
             $depth
         );
+    }
+
+    private function getClassMetadata(object $instance): AbstractMetadata
+    {
+        $class = get_class($instance);
+        if (! $this->metadataMap->has($class)) {
+            foreach (class_parents($instance) as $parent) {
+                if ($this->metadataMap->has($parent)) {
+                    return $this->metadataMap->get($parent);
+                }
+            }
+            throw Exception\InvalidObjectException::forUnknownType($class);
+        }
+
+        return $this->metadataMap->get($class);
     }
 }
