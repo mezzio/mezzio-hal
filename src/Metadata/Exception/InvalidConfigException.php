@@ -91,6 +91,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
+    /** @psalm-param string[] $requiredKeys */
     public static function dueToMissingMetadata(string $type, array $requiredKeys): self
     {
         return new self(sprintf(

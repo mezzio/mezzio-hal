@@ -7,10 +7,11 @@ namespace MezzioTest\Hal;
 use Mezzio\Hal\HalResponseFactory;
 use Mezzio\Hal\HalResponseFactoryFactory;
 use Mezzio\Hal\Renderer;
-use PHPUnit\Framework\Assert;
+use Mezzio\Hal\Response\CallableResponseFactoryDecorator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionProperty;
 use Zend\Expressive\Hal\Renderer\JsonRenderer;
@@ -27,7 +28,9 @@ class HalResponseFactoryFactoryTest extends TestCase
         $r = new ReflectionProperty($factory, 'responseFactory');
         $r->setAccessible(true);
         $responseFactory = $r->getValue($factory);
-        Assert::assertSame($expected, $responseFactory());
+
+        self::assertInstanceOf(CallableResponseFactoryDecorator::class, $responseFactory);
+        self::assertSame($expected, $responseFactory->getResponseFromCallable());
     }
 
     public function testReturnsHalResponseFactoryInstance(): void
@@ -40,6 +43,7 @@ class HalResponseFactoryFactoryTest extends TestCase
         };
 
         $container = $this->prophesize(ContainerInterface::class);
+        $container->has(ResponseFactoryInterface::class)->willReturn(false);
         $container->get(ResponseInterface::class)->willReturn($responseFactory);
         $container->has(Renderer\JsonRenderer::class)->willReturn(true);
         $container->get(Renderer\JsonRenderer::class)->willReturn($jsonRenderer);
@@ -47,7 +51,6 @@ class HalResponseFactoryFactoryTest extends TestCase
         $container->get(Renderer\XmlRenderer::class)->willReturn($xmlRenderer);
 
         $instance = (new HalResponseFactoryFactory())($container->reveal());
-        self::assertInstanceOf(HalResponseFactory::class, $instance);
         self::assertAttributeSame($jsonRenderer, 'jsonRenderer', $instance);
         self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance);
         self::assertResponseFactoryReturns($response, $instance);
@@ -60,6 +63,7 @@ class HalResponseFactoryFactoryTest extends TestCase
             return $response;
         };
         $container       = $this->prophesize(ContainerInterface::class);
+        $container->has(ResponseFactoryInterface::class)->willReturn(false);
         $container->get(ResponseInterface::class)->willReturn($responseFactory);
         $container->has(Renderer\JsonRenderer::class)->willReturn(false);
         $container->has(JsonRenderer::class)->willReturn(false);
@@ -67,7 +71,6 @@ class HalResponseFactoryFactoryTest extends TestCase
         $container->has(XmlRenderer::class)->willReturn(false);
 
         $instance = (new HalResponseFactoryFactory())($container->reveal());
-        self::assertInstanceOf(HalResponseFactory::class, $instance);
         self::assertAttributeInstanceOf(Renderer\JsonRenderer::class, 'jsonRenderer', $instance);
         self::assertAttributeInstanceOf(Renderer\XmlRenderer::class, 'xmlRenderer', $instance);
         self::assertResponseFactoryReturns($response, $instance);
@@ -89,6 +92,7 @@ class HalResponseFactoryFactoryTest extends TestCase
         };
 
         $container = $this->prophesize(ContainerInterface::class);
+        $container->has(ResponseFactoryInterface::class)->willReturn(false);
         $container->has(Renderer\JsonRenderer::class)->willReturn(true);
         $container->get(Renderer\JsonRenderer::class)->willReturn($jsonRenderer);
         $container->has(Renderer\XmlRenderer::class)->willReturn(true);
@@ -99,7 +103,6 @@ class HalResponseFactoryFactoryTest extends TestCase
         $container->get(StreamInterface::class)->willReturn($stream);
 
         $instance = (new HalResponseFactoryFactory())($container->reveal());
-        self::assertInstanceOf(HalResponseFactory::class, $instance);
         self::assertAttributeSame($jsonRenderer, 'jsonRenderer', $instance);
         self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance);
     }
