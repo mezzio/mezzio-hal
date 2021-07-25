@@ -38,4 +38,20 @@ class MezzioUrlGenerator implements UrlGeneratorInterface
         $serverUrlHelper->setUri($request->getUri());
         return $serverUrlHelper($path);
     }
+
+    /**
+     * @internal This should only be used in unit tests.
+     */
+    public function getServerUrlHelper(): ?ServerUrlHelper
+    {
+        return $this->serverUrlHelper;
+    }
+
+    /**
+     * @internal This should only be used in unit tests.
+     */
+    public function getUrlHelper(): UrlHelper
+    {
+        return $this->urlHelper;
+    }
 }

@@ -49,6 +49,10 @@
 
         <InternalMethod>
             <errorLevel type="suppress">
+                <referencedMethod name="Mezzio\Hal\LinkGenerator\MezzioUrlGenerator::getServerUrlHelper"/>
+                <referencedMethod name="Mezzio\Hal\LinkGenerator\MezzioUrlGenerator::getUrlHelper"/>
+                <referencedMethod name="Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory::getUrlHelperServiceName"/>
+                <referencedMethod name="Mezzio\Hal\Metadata\MetadataMap::getMap"/>
                 <referencedMethod name="Mezzio\Hal\Response\CallableResponseFactoryDecorator::getResponseFromCallable"/>
                 <referencedMethod name="PHPUnit\Framework\Exception::__construct"/>
             </errorLevel>
