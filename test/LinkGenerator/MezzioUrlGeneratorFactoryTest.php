@@ -42,7 +42,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
 
     public function testFactoryCanCreateUrlGeneratorWithOnlyUrlHelperPresentInContainer(): void
     {
-        $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
+        $urlHelper = $this->createMock(UrlHelper::class);
 
         $this->container->has(UrlHelper::class)->willReturn(true);
         $this->container->get(UrlHelper::class)->willReturn($urlHelper);
@@ -60,8 +60,8 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
 
     public function testFactoryCanCreateUrlGeneratorWithBothUrlHelperAndServerUrlHelper(): void
     {
-        $urlHelper       = $this->prophesize(UrlHelper::class)->reveal();
-        $serverUrlHelper = $this->prophesize(ServerUrlHelper::class)->reveal();
+        $urlHelper       = $this->createMock(UrlHelper::class);
+        $serverUrlHelper = $this->createMock(ServerUrlHelper::class);
 
         $this->container->has(UrlHelper::class)->willReturn(true);
         $this->container->get(UrlHelper::class)->willReturn($urlHelper);
@@ -78,7 +78,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
 
     public function testFactoryCanAcceptUrlHelperServiceNameToConstructor(): void
     {
-        $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
+        $urlHelper = $this->createMock(UrlHelper::class);
 
         $this->container->has(CustomUrlHelper::class)->willReturn(true);
         $this->container->get(CustomUrlHelper::class)->willReturn($urlHelper);

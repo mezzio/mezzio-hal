@@ -56,7 +56,7 @@ class DoctrinePaginatorTest extends TestCase
         array $routeParams,
         array $queryStringArgs
     ): void {
-        $link = $this->prophesize(Link::class)->reveal();
+        $link = $this->createMock(Link::class);
         $this->linkGenerator
             ->fromRoute(
                 $relation,

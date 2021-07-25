@@ -35,9 +35,9 @@ class HalResponseFactoryFactoryTest extends TestCase
 
     public function testReturnsHalResponseFactoryInstance(): void
     {
-        $jsonRenderer    = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
-        $xmlRenderer     = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
-        $response        = $this->prophesize(ResponseInterface::class)->reveal();
+        $jsonRenderer    = $this->createMock(Renderer\JsonRenderer::class);
+        $xmlRenderer     = $this->createMock(Renderer\XmlRenderer::class);
+        $response        = $this->createMock(ResponseInterface::class);
         $responseFactory = function () use ($response): ResponseInterface {
             return $response;
         };
@@ -58,7 +58,7 @@ class HalResponseFactoryFactoryTest extends TestCase
 
     public function testReturnsHalResponseFactoryInstanceWithoutConfiguredDependencies(): void
     {
-        $response        = $this->prophesize(ResponseInterface::class)->reveal();
+        $response        = $this->createMock(ResponseInterface::class);
         $responseFactory = function () use ($response): ResponseInterface {
             return $response;
         };
@@ -78,9 +78,9 @@ class HalResponseFactoryFactoryTest extends TestCase
 
     public function testReturnsHalResponseFactoryInstanceWhenResponseInterfaceReturnsFactory(): void
     {
-        $jsonRenderer    = $this->prophesize(Renderer\JsonRenderer::class)->reveal();
-        $xmlRenderer     = $this->prophesize(Renderer\XmlRenderer::class)->reveal();
-        $response        = $this->prophesize(ResponseInterface::class)->reveal();
+        $jsonRenderer    = $this->createMock(Renderer\JsonRenderer::class);
+        $xmlRenderer     = $this->createMock(Renderer\XmlRenderer::class);
+        $response        = $this->createMock(ResponseInterface::class);
         $responseFactory = function () use ($response): ResponseInterface {
             return $response;
         };
