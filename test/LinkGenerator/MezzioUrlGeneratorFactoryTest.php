@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MezzioTest\Hal\LinkGenerator;
 
 use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;

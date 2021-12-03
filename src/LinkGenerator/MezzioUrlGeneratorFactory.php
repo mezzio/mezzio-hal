@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezzio\Hal\LinkGenerator;
 
 use Mezzio\Helper\ServerUrlHelper;

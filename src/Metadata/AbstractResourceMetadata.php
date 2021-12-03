@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezzio\Hal\Metadata;
 
 abstract class AbstractResourceMetadata extends AbstractMetadata
