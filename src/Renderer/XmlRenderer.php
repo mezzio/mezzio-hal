@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezzio\Hal\Renderer;
 
 use DateTimeInterface;
@@ -120,12 +122,12 @@ class XmlRenderer implements RendererInterface
     private function createResourceElement(DOMDocument $doc, string $name, $data)
     {
         if ($data === null) {
-            return $doc->createElement($name, $data);
+            return $doc->createElement($name);
         }
 
         if (is_scalar($data)) {
             $data = $this->normalizeConstantValue($data);
-            return $doc->createElement($name, $data);
+            return $doc->createElement($name, (string) $data);
         }
 
         if (is_object($data)) {

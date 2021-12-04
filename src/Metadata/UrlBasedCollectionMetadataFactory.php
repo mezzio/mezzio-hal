@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mezzio\Hal\Metadata;
 
 use function array_intersect;
