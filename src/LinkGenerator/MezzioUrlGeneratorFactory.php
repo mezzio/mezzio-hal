@@ -54,12 +54,4 @@ class MezzioUrlGeneratorFactory
                     : null)
         );
     }
-
-    /**
-     * @internal This should only be used in unit tests.
-     */
-    public function getUrlHelperServiceName(): string
-    {
-        return $this->urlHelperServiceName;
-    }
 }

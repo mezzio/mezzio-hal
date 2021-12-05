@@ -51,12 +51,4 @@ class MetadataMap
 
         return $this->map[$class];
     }
-
-    /**
-     * @internal This should only be used in unit tests.
-     */
-    public function getMap(): array
-    {
-        return $this->map;
-    }
 }

@@ -21,6 +21,7 @@ use MezzioTest\Hal\TestAsset;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use ReflectionProperty;
 use stdClass;
 
 class MetadataMapFactoryTest extends TestCase
@@ -40,7 +41,10 @@ class MetadataMapFactoryTest extends TestCase
     public function testFactoryReturnsEmptyMetadataMapWhenNoConfigServicePresent(): void
     {
         $metadataMap = ($this->factory)($this->container);
-        self::assertSame([], $metadataMap->getMap());
+
+        $r = new ReflectionProperty($metadataMap, 'map');
+        $r->setAccessible(true);
+        self::assertSame([], $r->getValue($metadataMap));
     }
 
     public function testFactoryReturnsEmptyMetadataMapWhenConfigServiceHasNoMetadataMapEntries(): void
@@ -48,7 +52,10 @@ class MetadataMapFactoryTest extends TestCase
         $this->populateConfiguration($this->container, []);
 
         $metadataMap = ($this->factory)($this->container);
-        self::assertSame([], $metadataMap->getMap());
+
+        $r = new ReflectionProperty($metadataMap, 'map');
+        $r->setAccessible(true);
+        self::assertSame([], $r->getValue($metadataMap));
     }
 
     public function testFactoryRaisesExceptionIfMetadataMapConfigIsNotAnArray(): void
