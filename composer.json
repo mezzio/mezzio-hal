@@ -11,6 +11,7 @@
         "psr-7",
         "psr-11",
         "psr-13",
+        "psr-17",
         "rest"
     ],
     "homepage": "https://mezzio.dev",
