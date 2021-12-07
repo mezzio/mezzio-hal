@@ -5,18 +5,15 @@ The basic building blocks of this component are links and resources:
 - `Mezzio\Hal\Link`
 - `Mezzio\Hal\HalResource`
 
-> ### Note on naming
->
-> Why `HalResource` and not the simpler `Resource`? The answer: PHP. As of PHP
-> 7, `resource` has been designated a potential future language keyword. In
-> order to be forwards compatible, we opted to name our class `HalResource`.
+INFO: **Note on naming**
+Why `HalResource` and not the simpler `Resource`?
+The answer: PHP.
+As of PHP 7, `resource` has been designated a potential future language keyword.
+In order to be forwards compatible, we opted to name our class `HalResource`.
 
-> ### PSR-13
-> 
-> mezzio/mezzio-hal implements [PSR-13](https://www.php-fig.org/psr/psr-13/),
-> which provides interfaces for relational links and collections of relational
-> links. `Mezzio\Hal\Link` implements `Psr\Link\EvolvableLinkInterface`, and
-> `Mezzio\Hal\HalResource` implements `Psr\Link\EvolvableLinkProviderInterface`.
+INFO: **PSR-13**
+mezzio/mezzio-hal implements [PSR-13](https://www.php-fig.org/psr/psr-13/), which provides interfaces for relational links and collections of relational links.
+`Mezzio\Hal\Link` implements `Psr\Link\EvolvableLinkInterface`, and `Mezzio\Hal\HalResource` implements `Psr\Link\EvolvableLinkProviderInterface`.
 
 Resources compose links, so we'll cover links first.
 
@@ -143,13 +140,13 @@ If you need to generate custom links based on routing, we recommend composing
 the `LinkGenerator` in your own classes to do so.
 
 > ### Limitation
-> 
+>
 > There is a [known limitation](https://github.com/zendframework/zend-expressive-hal/issues/5)
 > with laminas-router when using routes with optional parameters (e.g., `/books[/:id]`,
 > where `:id` is optional). In such cases, if no matching parameter is provided
 > (such as when generating a URI without an `:id`), the router will raise an
 > exception due to the missing parameter.
-> 
+>
 > If you encounter this issue, create separate routing entries for each optional
 > parameter. See the issue for a comprehensive example.
 

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-file -->
 <noscript><meta http-equiv="refresh" content="0; url=/mezzio-hal/v1/cookbook/path-segregated-uri-generation/"></noscript>
 <script>
   document.addEventListener("DOMContentLoaded", function (event) {
