@@ -15,17 +15,51 @@
     </projectFiles>
 
     <issueHandlers>
+        <InternalClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Mezzio\Hal\Response\CallableResponseFactoryDecorator"/>
+            </errorLevel>
+        </InternalClass>
+
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Mezzio\Hal\Response\CallableResponseFactoryDecorator"/>
+            </errorLevel>
+        </DeprecatedClass>
+
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Mezzio\Container\ResponseFactoryFactory"/>
+                <referencedClass name="Zend\Expressive\Hal\HalResponseFactory"/>
+                <referencedClass name="Zend\Expressive\Hal\LinkGenerator"/>
+                <referencedClass name="Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator"/>
+                <referencedClass name="Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface"/>
+                <referencedClass name="Zend\Expressive\Hal\Metadata\MetadataMap"/>
+                <referencedClass name="Zend\Expressive\Hal\Renderer\JsonRenderer"/>
+                <referencedClass name="Zend\Expressive\Hal\Renderer\XmlRenderer"/>
+                <referencedClass name="Zend\Expressive\Hal\ResourceGenerator"/>
+                <referencedClass name="Zend\Expressive\Hal\RouteBasedCollectionStrategy"/>
+                <referencedClass name="Zend\Expressive\Hal\RouteBasedResourceStrategy"/>
+                <referencedClass name="Zend\Expressive\Hal\UrlBasedCollectionStrategy"/>
+                <referencedClass name="Zend\Expressive\Hal\UrlBasedResourceStrategy"/>
+                <referencedClass name="Zend\Expressive\Helper\ServerUrlHelper"/>
+                <referencedClass name="Zend\Expressive\Helper\UrlHelper"/>
+            </errorLevel>
+        </UndefinedClass>
+
         <InternalMethod>
             <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::method"/>
-            </errorLevel>
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::willReturn"/>
-            </errorLevel>
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::with"/>
+                <referencedMethod name="Mezzio\Hal\Response\CallableResponseFactoryDecorator::getResponseFromCallable"/>
+                <referencedMethod name="PHPUnit\Framework\Exception::__construct"/>
             </errorLevel>
         </InternalMethod>
+
+        <DeprecatedTrait>
+            <errorLevel type="suppress">
+                <file name="src/HalResponseFactoryFactory.php"/>
+                <file name="test/TestAsset/Psr17ResponseFactoryTraitImplementation.php"/>
+            </errorLevel>
+        </DeprecatedTrait>
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

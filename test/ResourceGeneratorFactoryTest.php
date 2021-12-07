@@ -193,7 +193,7 @@ class ResourceGeneratorFactoryTest extends TestCase
             ->get(HydratorPluginManager::class)
             ->willReturn($this->prophesize(ContainerInterface::class)->reveal());
 
-        $linkGenerator = $this->prophesize(LinkGenerator::class)->reveal();
+        $linkGenerator = $this->createMock(LinkGenerator::class);
         $container
             ->get(CustomLinkGenerator::class)
             ->willReturn($linkGenerator);

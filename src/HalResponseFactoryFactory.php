@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mezzio\Hal;
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Zend\Expressive\Hal\Renderer\JsonRenderer;
 use Zend\Expressive\Hal\Renderer\XmlRenderer;
 
@@ -21,6 +20,8 @@ use Zend\Expressive\Hal\Renderer\XmlRenderer;
  */
 class HalResponseFactoryFactory
 {
+    use Psr17ResponseFactoryTrait;
+
     /**
      * @throws RuntimeException If neither a ResponseInterface service is
      *     present nor laminas-diactoros is installed.
@@ -40,7 +41,7 @@ class HalResponseFactoryFactory
                 : new Renderer\XmlRenderer());
 
         return new HalResponseFactory(
-            $container->get(ResponseInterface::class),
+            $this->detectResponseFactory($container),
             $jsonRenderer,
             $xmlRenderer
         );

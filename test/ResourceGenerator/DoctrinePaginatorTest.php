@@ -16,56 +16,56 @@ use Mezzio\Hal\ResourceGenerator\Exception\OutOfBoundsException;
 use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function array_map;
+use function assert;
+use function count;
 use function range;
 
 class DoctrinePaginatorTest extends TestCase
 {
-    use ProphecyTrait;
+    /** @var RouteBasedCollectionMetadata&MockObject */
+    private $metadata;
+
+    /** @var LinkGenerator&MockObject */
+    private $linkGenerator;
+
+    /** @var ResourceGenerator&MockObject */
+    private $generator;
+
+    /** @var ServerRequestInterface&MockObject */
+    private $request;
+
+    /** @var Paginator&MockObject */
+    private $paginator;
+
+    /** @var RouteBasedCollectionStrategy */
+    private $strategy;
 
     public function setUp(): void
     {
-        $this->metadata      = $this->prophesize(RouteBasedCollectionMetadata::class);
-        $this->linkGenerator = $this->prophesize(LinkGenerator::class);
-        $this->generator     = $this->prophesize(ResourceGenerator::class);
-        $this->request       = $this->prophesize(ServerRequestInterface::class);
-        $this->paginator     = $this->prophesize(Paginator::class);
+        $this->metadata      = $this->createMock(RouteBasedCollectionMetadata::class);
+        $this->linkGenerator = $this->createMock(LinkGenerator::class);
+        $this->generator     = $this->createMock(ResourceGenerator::class);
+        $this->request       = $this->createMock(ServerRequestInterface::class);
+        $this->paginator     = $this->createMock(Paginator::class);
 
         $this->strategy = new RouteBasedCollectionStrategy();
     }
 
     /**
-     * @return MockObject&mixed
-     * @psalm-return MockObject&MockedType
+     * @psalm-return AbstractQuery&MockObject
      */
-    public function mockQuery()
+    public function mockQuery(): AbstractQuery
     {
-        return $this->getMockBuilder(AbstractQuery::class)
+        $mock = $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
             ->setMethods(['getMaxResults', 'setFirstResult'])
             ->getMockForAbstractClass();
-    }
 
-    public function mockLinkGeneration(
-        string $relation,
-        string $route,
-        array $routeParams,
-        array $queryStringArgs
-    ): void {
-        $link = $this->prophesize(Link::class)->reveal();
-        $this->linkGenerator
-            ->fromRoute(
-                $relation,
-                $this->request->reveal(),
-                $route,
-                $routeParams,
-                $queryStringArgs
-            )
-            ->willReturn($link);
+        assert($mock instanceof AbstractQuery && $mock instanceof MockObject);
+        return $mock;
     }
 
     public function invalidPageCombinations(): iterable
@@ -81,23 +81,38 @@ class DoctrinePaginatorTest extends TestCase
     public function testThrowsOutOfBoundsExceptionForInvalidPage(int $page, int $numPages): void
     {
         $query = $this->mockQuery();
-        $query->expects($this->once())
+        $query
+            ->expects($this->once())
             ->method('getMaxResults')
             ->with()
             ->willReturn(15);
-        $this->paginator->getQuery()->willReturn($query);
-        $this->paginator->count()->willReturn($numPages);
 
-        $this->metadata->getPaginationParamType()->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
-        $this->metadata->getPaginationParam()->willReturn('page_num');
-        $this->request->getQueryParams()->willReturn(['page_num' => $page]);
+        $this->paginator
+            ->method('getQuery')
+            ->willReturn($query);
+
+        $this->paginator
+            ->method('count')
+            ->willReturn($numPages);
+
+        $this->metadata
+            ->method('getPaginationParamType')
+            ->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
+
+        $this->metadata
+            ->method('getPaginationParam')
+            ->willReturn('page_num');
+
+        $this->request
+            ->method('getQueryParams')
+            ->willReturn(['page_num' => $page]);
 
         $this->expectException(OutOfBoundsException::class);
         $this->strategy->createResource(
-            $this->paginator->reveal(),
-            $this->metadata->reveal(),
-            $this->generator->reveal(),
-            $this->request->reveal()
+            $this->paginator,
+            $this->metadata,
+            $this->generator,
+            $this->request
         );
     }
 
@@ -108,103 +123,189 @@ class DoctrinePaginatorTest extends TestCase
             ->method('getMaxResults')
             ->with()
             ->willReturn(15);
-        $this->paginator->getQuery()->willReturn($query);
-        $this->paginator->count()->willReturn(100);
+        $this->paginator
+            ->method('getQuery')
+            ->willReturn($query);
 
-        $this->metadata->getPaginationParamType()->willReturn('unknown');
-        $this->metadata->getPaginationParam()->shouldNotBeCalled();
-        $this->metadata->getRouteParams()->willReturn([]);
-        $this->metadata->getQueryStringArguments()->willReturn([]);
-        $this->metadata->getRoute()->willReturn('test');
-        $this->metadata->getCollectionRelation()->willReturn('test');
+        $this->paginator
+            ->method('count')
+            ->willReturn(100);
+
+        $this->metadata
+            ->method('getPaginationParamType')
+            ->willReturn('unknown');
+
+        $this->metadata
+            ->expects(self::never())
+            ->method('getPaginationParam');
+
+        $this->metadata
+            ->method('getRouteParams')
+            ->willReturn([]);
+
+        $this->metadata
+            ->method('getQueryStringArguments')
+            ->willReturn([]);
+
+        $this->metadata
+            ->method('getRoute')
+            ->willReturn('test');
+
+        $this->metadata
+            ->method('getCollectionRelation')
+            ->willReturn('test');
 
         $this->request
-            ->getQueryParams()
-            ->willReturn(['page' => 3])
-            ->shouldBeCalledTimes(1);
-        $this->request->getAttribute(Argument::any(), Argument::any())->shouldNotBeCalled();
+            ->expects(self::once())
+            ->method('getQueryParams')
+            ->willReturn(['page' => 3]);
+
+        $this->request
+            ->expects(self::never())
+            ->method('getAttribute');
 
         $values = array_map(function ($value) {
             return (object) ['value' => $value];
         }, range(46, 60));
-        $this->paginator->getIterator()->willReturn(new ArrayIterator($values));
+        $this->paginator
+            ->method('getIterator')
+            ->willReturn(new ArrayIterator($values));
 
-        $testCase = $this;
+        $consecutiveGeneratorArguments = [];
         foreach (range(46, 60) as $value) {
-            $this->generator
-                ->fromObject(
-                    (object) ['value' => $value],
-                    Argument::that([$this->request, 'reveal']),
-                    1
-                )
-                ->will(function () use ($testCase) {
-                    $resource = $testCase->prophesize(HalResource::class);
-                    $resource->getElements()->willReturn(['test' => true]);
-                    return $resource->reveal();
-                })
-                ->shouldBeCalledTimes(1);
+            $consecutiveGeneratorArguments[] = [
+                (object) ['value' => $value],
+                $this->request,
+                1,
+            ];
         }
-        $this->generator->getLinkGenerator()->will([$this->linkGenerator, 'reveal']);
 
-        $this->mockLinkGeneration('self', 'test', [], ['page' => 3]);
+        $this->generator
+            ->expects(self::exactly(count($consecutiveGeneratorArguments)))
+            ->method('fromObject')
+            ->withConsecutive(
+                ...$consecutiveGeneratorArguments
+            )
+            ->willReturnCallback(function (): HalResource {
+                $resource = $this->createMock(HalResource::class);
+                $resource
+                    ->method('getElements')
+                    ->willReturn(['test' => true]);
 
-        $resource = $this->strategy->createResource(
-            $this->paginator->reveal(),
-            $this->metadata->reveal(),
-            $this->generator->reveal(),
-            $this->request->reveal()
+                return $resource;
+            });
+
+        $this->generator
+            ->method('getLinkGenerator')
+            ->willReturn($this->linkGenerator);
+
+        $link = $this->createMock(Link::class);
+        $this->linkGenerator
+            ->method('fromRoute')
+            ->with(
+                'self',
+                $this->request,
+                'test',
+                [],
+                ['page' => 3]
+            )
+            ->willReturn($link);
+
+        $this->strategy->createResource(
+            $this->paginator,
+            $this->metadata,
+            $this->generator,
+            $this->request
         );
-
-        $this->assertInstanceOf(HalResource::class, $resource);
     }
 
     public function testCreatesLinksForQueryBasedPagination(): void
     {
         $query = $this->mockQuery();
-        $query->expects($this->once())
+        $query
+            ->expects($this->once())
             ->method('getMaxResults')
             ->with()
             ->willReturn(15);
-        $query->expects($this->once())
+        $query
+            ->expects($this->once())
             ->method('setFirstResult')
             ->with(30);
-        $this->paginator->getQuery()->willReturn($query);
-        $this->paginator->count()->willReturn(100);
 
-        $this->metadata->getPaginationParamType()->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
-        $this->metadata->getPaginationParam()->willReturn('page_num');
-        $this->metadata->getRouteParams()->willReturn([]);
-        $this->metadata->getQueryStringArguments()->willReturn([]);
-        $this->metadata->getRoute()->willReturn('test');
-        $this->metadata->getCollectionRelation()->willReturn('test');
+        $this->paginator
+            ->method('getQuery')
+            ->willReturn($query);
+
+        $this->paginator
+            ->method('count')
+            ->willReturn(100);
+
+        $this->metadata
+            ->method('getPaginationParamType')
+            ->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
+
+        $this->metadata
+            ->method('getPaginationParam')
+            ->willReturn('page_num');
+
+        $this->metadata
+            ->method('getRouteParams')
+            ->willReturn([]);
+
+        $this->metadata
+            ->method('getQueryStringArguments')
+            ->willReturn([]);
+
+        $this->metadata
+            ->method('getRoute')
+            ->willReturn('test');
+
+        $this->metadata
+            ->method('getCollectionRelation')
+            ->willReturn('test');
 
         $this->request
-            ->getQueryParams()
-            ->willReturn(['page_num' => 3])
-            ->shouldBeCalledTimes(1);
-        $this->request->getAttribute(Argument::any(), Argument::any())->shouldNotBeCalled();
+            ->expects(self::once())
+            ->method('getQueryParams')
+            ->willReturn(['page_num' => 3]);
+
+        $this->request
+            ->expects(self::never())
+            ->method('getAttribute');
 
         $values = array_map(function ($value) {
             return (object) ['value' => $value];
         }, range(46, 60));
-        $this->paginator->getIterator()->willReturn(new ArrayIterator($values));
 
-        $testCase = $this;
+        $this->paginator
+            ->method('getIterator')
+            ->willReturn(new ArrayIterator($values));
+
+        $testCase                      = $this;
+        $consecutiveGeneratorArguments = [];
         foreach (range(46, 60) as $value) {
-            $this->generator
-                ->fromObject(
-                    (object) ['value' => $value],
-                    Argument::that([$this->request, 'reveal']),
-                    1
-                )
-                ->will(function () use ($testCase) {
-                    $resource = $testCase->prophesize(HalResource::class);
-                    $resource->getElements()->willReturn(['test' => true]);
-                    return $resource->reveal();
-                })
-                ->shouldBeCalledTimes(1);
+            $consecutiveGeneratorArguments[] = [
+                (object) ['value' => $value],
+                $this->request,
+                1,
+            ];
         }
-        $this->generator->getLinkGenerator()->will([$this->linkGenerator, 'reveal']);
+
+        $this->generator
+            ->expects(self::exactly(count($consecutiveGeneratorArguments)))
+            ->method('fromObject')
+            ->withConsecutive(
+                ...$consecutiveGeneratorArguments
+            )
+            ->willReturnCallback(function () use ($testCase): HalResource {
+                $resource = $testCase->createMock(HalResource::class);
+                $resource->method('getElements')->willReturn(['test' => true]);
+                return $resource;
+            });
+
+        $this->generator
+            ->method('getLinkGenerator')
+            ->willReturn($this->linkGenerator);
 
         $paginationLinks = [
             'self'  => ['page_num' => 3],
@@ -213,67 +314,118 @@ class DoctrinePaginatorTest extends TestCase
             'next'  => ['page_num' => 4],
             'last'  => ['page_num' => 7],
         ];
+
+        $consecutiveLinkGenerationArguments = [];
         foreach ($paginationLinks as $relation => $queryStringArgs) {
-            $this->mockLinkGeneration($relation, 'test', [], $queryStringArgs);
+            $consecutiveLinkGenerationArguments[] = [
+                $relation,
+                $this->request,
+                'test',
+                [],
+                $queryStringArgs,
+            ];
         }
 
+        $link = $this->createMock(Link::class);
+        $this->linkGenerator
+            ->expects(self::exactly(count($consecutiveLinkGenerationArguments)))
+            ->method('fromRoute')
+            ->withConsecutive(...$consecutiveLinkGenerationArguments)
+            ->willReturn($link);
+
         $resource = $this->strategy->createResource(
-            $this->paginator->reveal(),
-            $this->metadata->reveal(),
-            $this->generator->reveal(),
-            $this->request->reveal()
+            $this->paginator,
+            $this->metadata,
+            $this->generator,
+            $this->request
         );
 
-        $this->assertInstanceOf(HalResource::class, $resource);
+        self::assertInstanceOf(HalResource::class, $resource);
     }
 
     public function testCreatesLinksForRouteBasedPagination(): void
     {
         $query = $this->mockQuery();
-        $query->expects($this->once())
+        $query
+            ->expects($this->once())
             ->method('getMaxResults')
             ->with()
             ->willReturn(15);
-        $query->expects($this->once())
+
+        $query
+            ->expects($this->once())
             ->method('setFirstResult')
             ->with(30);
-        $this->paginator->getQuery()->willReturn($query);
-        $this->paginator->count()->willReturn(100);
+        $this->paginator
+            ->method('getQuery')
+            ->willReturn($query);
+        $this->paginator->method('count')->willReturn(100);
 
-        $this->metadata->getPaginationParamType()->willReturn(RouteBasedCollectionMetadata::TYPE_PLACEHOLDER);
-        $this->metadata->getPaginationParam()->willReturn('page_num');
-        $this->metadata->getRouteParams()->willReturn([]);
-        $this->metadata->getQueryStringArguments()->willReturn([]);
-        $this->metadata->getRoute()->willReturn('test');
-        $this->metadata->getCollectionRelation()->willReturn('test');
+        $this->metadata
+            ->method('getPaginationParamType')
+            ->willReturn(RouteBasedCollectionMetadata::TYPE_PLACEHOLDER);
 
-        $this->request->getQueryParams()->shouldNotBeCalled();
+        $this->metadata
+            ->method('getPaginationParam')
+            ->willReturn('page_num');
+
+        $this->metadata
+            ->method('getRouteParams')
+            ->willReturn([]);
+
+        $this->metadata
+            ->method('getQueryStringArguments')
+            ->willReturn([]);
+
+        $this->metadata
+            ->method('getRoute')
+            ->willReturn('test');
+
+        $this->metadata
+            ->method('getCollectionRelation')
+            ->willReturn('test');
+
         $this->request
-            ->getAttribute('page_num', 1)
-            ->willReturn(3)
-            ->shouldBeCalledTimes(1);
+            ->expects(self::never())
+            ->method('getQueryParams');
+
+        $this->request
+            ->expects(self::once())
+            ->method('getAttribute')
+            ->with('page_num', 1)
+            ->willReturn(3);
 
         $values = array_map(function ($value) {
             return (object) ['value' => $value];
         }, range(46, 60));
-        $this->paginator->getIterator()->willReturn(new ArrayIterator($values));
+
+        $this->paginator
+            ->method('getIterator')
+            ->willReturn(new ArrayIterator($values));
 
         $testCase = $this;
+
+        $consecutiveGeneratorArguments = [];
         foreach (range(46, 60) as $value) {
-            $this->generator
-                ->fromObject(
-                    (object) ['value' => $value],
-                    Argument::that([$this->request, 'reveal']),
-                    1
-                )
-                ->will(function () use ($testCase) {
-                    $resource = $testCase->prophesize(HalResource::class);
-                    $resource->getElements()->willReturn(['test' => true]);
-                    return $resource->reveal();
-                })
-                ->shouldBeCalledTimes(1);
+            $consecutiveGeneratorArguments[] = [
+                (object) ['value' => $value],
+                $this->request,
+                1,
+            ];
         }
-        $this->generator->getLinkGenerator()->will([$this->linkGenerator, 'reveal']);
+        $this->generator
+            ->expects(self::exactly(count($consecutiveGeneratorArguments)))
+            ->method('fromObject')
+            ->withConsecutive(...$consecutiveGeneratorArguments)
+            ->willReturnCallback(function () use ($testCase): HalResource {
+                $resource = $testCase->createMock(HalResource::class);
+                $resource->method('getElements')->willReturn(['test' => true]);
+                return $resource;
+            });
+
+        $this->generator
+            ->method('getLinkGenerator')
+            ->willReturn($this->linkGenerator);
 
         $paginationLinks = [
             'self'  => ['page_num' => 3],
@@ -282,17 +434,33 @@ class DoctrinePaginatorTest extends TestCase
             'next'  => ['page_num' => 4],
             'last'  => ['page_num' => 7],
         ];
+
+        $consecutiveLinkGenerationArguments = [];
         foreach ($paginationLinks as $relation => $routeParams) {
-            $this->mockLinkGeneration($relation, 'test', $routeParams, []);
+            $consecutiveLinkGenerationArguments[] = [
+                $relation,
+                $this->request,
+                'test',
+                $routeParams,
+                [],
+            ];
         }
 
+        $link = $this->createMock(Link::class);
+        $this->linkGenerator
+            ->method('fromRoute')
+            ->withConsecutive(
+                ...$consecutiveLinkGenerationArguments
+            )
+            ->willReturn($link);
+
         $resource = $this->strategy->createResource(
-            $this->paginator->reveal(),
-            $this->metadata->reveal(),
-            $this->generator->reveal(),
-            $this->request->reveal()
+            $this->paginator,
+            $this->metadata,
+            $this->generator,
+            $this->request
         );
 
-        $this->assertInstanceOf(HalResource::class, $resource);
+        self::assertInstanceOf(HalResource::class, $resource);
     }
 }

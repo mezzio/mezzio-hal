@@ -10,6 +10,7 @@ use Mezzio\Hal\Exception\InvalidResourceValueException;
 use Psr\Link\EvolvableLinkProviderInterface;
 use Psr\Link\LinkInterface;
 use RuntimeException;
+use Webmozart\Assert\Assert;
 
 use function array_key_exists;
 use function array_keys;
@@ -42,7 +43,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     /** @var array All data to represent. */
     private $data = [];
 
-    /** @var self[] */
+    /** @var array<array-key, self|array<array-key, self>> */
     private $embedded = [];
 
     /**
@@ -336,14 +337,26 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return [$this->embedded[$name], $resource];
         }
 
+        $collection = $this->embedded[$name];
+        Assert::allIsInstanceOf($collection, self::class);
+
+        $collectionFirstResource = $this->firstResource($collection);
+        if (null === $collectionFirstResource) {
+            throw new InvalidArgumentException(sprintf(
+                '%s detected structurally inequivalent resources for element %s',
+                $context,
+                $name
+            ));
+        }
+
         // $resource is a HalResource; existing collection present
         $this->compareResources(
-            $this->firstResource($this->embedded[$name]),
+            $collectionFirstResource,
             $resource,
             $name,
             $context
         );
-        $collection = $this->embedded[$name];
+
         array_push($collection, $resource);
 
         return $collection;
@@ -355,9 +368,25 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     private function aggregateEmbeddedCollection(string $name, array $collection, string $context): array
     {
         $original = $this->embedded[$name] instanceof self ? [$this->embedded[$name]] : $this->embedded[$name];
+
+        $originalFirstResource   = $this->firstResource($original);
+        $collectionFirstResource = $this->firstResource($collection);
+
+        if (null === $originalFirstResource && null === $collectionFirstResource) {
+            return [];
+        }
+
+        if (null === $originalFirstResource || null === $collectionFirstResource) {
+            throw new InvalidArgumentException(sprintf(
+                '%s detected structurally inequivalent resources for element %s',
+                $context,
+                $name
+            ));
+        }
+
         $this->compareResources(
-            $this->firstResource($original),
-            $this->firstResource($collection),
+            $originalFirstResource,
+            $collectionFirstResource,
             $name,
             $context
         );

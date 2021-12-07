@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.7.2@83a0325c0a95c0ab531d6b90c877068b464377b5">
-  <file src="src/ConfigProvider.php">
-    <UndefinedClass occurrences="4">
-      <code>\Zend\Expressive\Hal\RouteBasedCollectionStrategy</code>
-      <code>\Zend\Expressive\Hal\RouteBasedResourceStrategy</code>
-      <code>\Zend\Expressive\Hal\UrlBasedCollectionStrategy</code>
-      <code>\Zend\Expressive\Hal\UrlBasedResourceStrategy</code>
-    </UndefinedClass>
-  </file>
+<files psalm-version="v4.14.0@14dcbc908ab2625cd7a74258ee6c740cbecc6140">
   <file src="src/HalResource.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>$this-&gt;embedded[$name]</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>is_object($resource)</code>
     </DocblockTypeContradiction>
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>$new-&gt;embedded</code>
-    </InvalidPropertyAssignmentValue>
     <MissingClosureParamType occurrences="14">
       <code>$containsNonLinkItem</code>
       <code>$isResource</code>
@@ -36,7 +24,7 @@
       <code>function ($item) {</code>
       <code>function (array $byRelation, LinkInterface $link) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="12">
+    <MixedArgument occurrences="11">
       <code>$item</code>
       <code>$links</code>
       <code>$links</code>
@@ -45,7 +33,6 @@
       <code>$relations</code>
       <code>$resource</code>
       <code>$resource</code>
-      <code>$this-&gt;embedded[$name]</code>
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
@@ -58,11 +45,10 @@
       <code>$byRelation[$rel]</code>
       <code>$relations[$key]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="4">
+    <MixedArrayAssignment occurrences="3">
       <code>$byRelation[$rel]</code>
       <code>$embedded[$name]</code>
       <code>$relations[$key]</code>
-      <code>$resource</code>
     </MixedArrayAssignment>
     <MixedArrayOffset occurrences="6">
       <code>$byRelation[$rel]</code>
@@ -72,8 +58,7 @@
       <code>$relations[$key]</code>
       <code>$relations[$key]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="4">
-      <code>$collection</code>
+    <MixedAssignment occurrences="3">
       <code>$relations</code>
       <code>$relations[$key]</code>
       <code>$value</code>
@@ -97,15 +82,10 @@
       <code>$this-&gt;aggregateEmbeddedCollection($name, $resource, $context)</code>
       <code>HalResource|HalResource[]</code>
     </MixedReturnTypeCoercion>
-    <PossiblyNullArgument occurrences="4">
+    <PossiblyNullArgument occurrences="1">
       <code>$resource</code>
-      <code>$this-&gt;firstResource($collection)</code>
-      <code>$this-&gt;firstResource($original)</code>
-      <code>$this-&gt;firstResource($this-&gt;embedded[$name])</code>
     </PossiblyNullArgument>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>$this-&gt;embedded[$name] instanceof self</code>
-      <code>$this-&gt;embedded[$name] instanceof self</code>
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>gettype($resource)</code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -113,29 +93,12 @@
     <MixedArgument occurrences="1">
       <code>$matchedType-&gt;getValue()</code>
     </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$response</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>ResponseInterface</code>
-      <code>ResponseInterface</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="3">
-      <code>getBody</code>
-      <code>withHeader</code>
-      <code>write</code>
-    </MixedMethodCall>
-    <MixedReturnStatement occurrences="2">
-      <code>$response-&gt;withHeader('Content-Type', $mediaType)</code>
-      <code>$responseFactory()</code>
-    </MixedReturnStatement>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getValue</code>
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/HalResponseFactoryFactory.php">
-    <MixedArgument occurrences="3">
-      <code>$container-&gt;get(ResponseInterface::class)</code>
+    <MixedArgument occurrences="2">
       <code>$jsonRenderer</code>
       <code>$xmlRenderer</code>
     </MixedArgument>
@@ -307,9 +270,6 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <PossibleRawObjectIteration occurrences="1">
-      <code>$resource['_links']</code>
-    </PossibleRawObjectIteration>
     <PossiblyFalseArgument occurrences="1">
       <code>$element</code>
     </PossiblyFalseArgument>
@@ -326,10 +286,9 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
-    <MixedArgument occurrences="3">
+    <MixedArgument occurrences="2">
       <code>$item</code>
       <code>$item</code>
-      <code>$metadata</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$links</code>
@@ -348,17 +307,11 @@
       <code>$perPage</code>
     </PossiblyNullOperand>
     <TraitMethodSignatureMismatch occurrences="1"/>
-    <TypeDoesNotContainType occurrences="1">
-      <code>$metadata instanceof AbstractCollectionMetadata</code>
-    </TypeDoesNotContainType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>count</code>
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/ResourceGenerator/ExtractInstanceTrait.php">
-    <InvalidThrow occurrences="1">
-      <code>ContainerExceptionInterface</code>
-    </InvalidThrow>
     <MixedArgument occurrences="1">
       <code>$metadata-&gt;getExtractor()</code>
     </MixedArgument>
@@ -395,8 +348,7 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>$request-&gt;getQueryParams()</code>
     </RedundantConditionGivenDocblockType>
-    <TraitMethodSignatureMismatch occurrences="2">
-      <code>$resourceGenerator</code>
+    <TraitMethodSignatureMismatch occurrences="1">
       <code>protected function generateSelfLink(</code>
     </TraitMethodSignatureMismatch>
     <UndefinedMethod occurrences="6">
@@ -429,8 +381,7 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>$queryStringArgs !== null</code>
     </RedundantConditionGivenDocblockType>
-    <TraitMethodSignatureMismatch occurrences="2">
-      <code>$resourceGenerator</code>
+    <TraitMethodSignatureMismatch occurrences="1">
       <code>protected function generateSelfLink(</code>
     </TraitMethodSignatureMismatch>
     <UndefinedMethod occurrences="2">
@@ -442,21 +393,19 @@
     <MissingDependency occurrences="1">
       <code>HydratorPluginManager</code>
     </MissingDependency>
-    <MixedArgument occurrences="8">
+    <MixedArgument occurrences="7">
       <code>$container-&gt;get($strategy)</code>
       <code>$container-&gt;get($this-&gt;linkGeneratorServiceName)</code>
       <code>$container-&gt;get(HydratorPluginManager::class)</code>
       <code>$container-&gt;get(Metadata\MetadataMap::class)</code>
       <code>$data['linkGeneratorServiceName'] ?? LinkGenerator::class</code>
-      <code>$metadataType</code>
       <code>$strategy</code>
       <code>HydratorPluginManager::class</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="1">
       <code>$config['mezzio-hal']['resource-generator']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="2">
-      <code>$metadataType</code>
+    <MixedAssignment occurrences="1">
       <code>$strategy</code>
     </MixedAssignment>
   </file>
@@ -487,9 +436,6 @@
     </RedundantCondition>
   </file>
   <file src="test/ExceptionTest.php">
-    <InvalidLiteralArgument occurrences="1">
-      <code>ExceptionInterface::class</code>
-    </InvalidLiteralArgument>
     <MixedInferredReturnType occurrences="1">
       <code>Generator</code>
     </MixedInferredReturnType>
@@ -525,200 +471,22 @@
       <code>self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance)</code>
       <code>self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance)</code>
     </DeprecatedMethod>
-    <MixedAssignment occurrences="1">
-      <code>$responseFactory</code>
-    </MixedAssignment>
-    <MixedFunctionCall occurrences="1">
-      <code>$responseFactory()</code>
-    </MixedFunctionCall>
     <UndefinedClass occurrences="2">
       <code>StreamInterface</code>
       <code>StreamInterface</code>
     </UndefinedClass>
   </file>
-  <file src="test/HalResponseFactoryTest.php">
-    <MixedAssignment occurrences="4">
-      <code>$response</code>
-      <code>$response</code>
-      <code>$response</code>
-      <code>$response</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="56">
-      <code>createResponse</code>
-      <code>createResponse</code>
-      <code>createResponse</code>
-      <code>createResponse</code>
-      <code>getBody</code>
-      <code>getBody</code>
-      <code>getBody</code>
-      <code>getBody</code>
-      <code>getHeaderLine</code>
-      <code>getHeaderLine</code>
-      <code>getHeaderLine</code>
-      <code>getHeaderLine</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>render</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>withHeader</code>
-      <code>withHeader</code>
-      <code>withHeader</code>
-      <code>withHeader</code>
-    </MixedMethodCall>
-    <UndefinedThisPropertyAssignment occurrences="5">
-      <code>$this-&gt;factory</code>
-      <code>$this-&gt;jsonRenderer</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;response</code>
-      <code>$this-&gt;xmlRenderer</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="22">
-      <code>$this-&gt;factory</code>
-      <code>$this-&gt;factory</code>
-      <code>$this-&gt;factory</code>
-      <code>$this-&gt;factory</code>
-      <code>$this-&gt;jsonRenderer</code>
-      <code>$this-&gt;jsonRenderer</code>
-      <code>$this-&gt;jsonRenderer</code>
-      <code>$this-&gt;jsonRenderer</code>
-      <code>$this-&gt;jsonRenderer</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;response</code>
-      <code>$this-&gt;response</code>
-      <code>$this-&gt;response</code>
-      <code>$this-&gt;response</code>
-      <code>$this-&gt;xmlRenderer</code>
-      <code>$this-&gt;xmlRenderer</code>
-      <code>$this-&gt;xmlRenderer</code>
-      <code>$this-&gt;xmlRenderer</code>
-      <code>$this-&gt;xmlRenderer</code>
-    </UndefinedThisPropertyFetch>
-  </file>
   <file src="test/LinkGenerator/MezzioUrlGeneratorFactoryTest.php">
-    <DeprecatedMethod occurrences="6">
-      <code>assertAttributeEmpty</code>
-      <code>assertAttributeSame</code>
-      <code>assertAttributeSame</code>
-      <code>assertAttributeSame</code>
-      <code>assertAttributeSame</code>
-      <code>assertAttributeSame</code>
-    </DeprecatedMethod>
-    <MixedArgument occurrences="5">
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
+    <MixedArgument occurrences="1">
       <code>CustomUrlHelper::class</code>
     </MixedArgument>
-    <MixedMethodCall occurrences="44">
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>has</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-    </MixedMethodCall>
-    <UndefinedClass occurrences="5">
+    <UndefinedClass occurrences="3">
       <code>CustomUrlHelper</code>
       <code>CustomUrlHelper</code>
       <code>CustomUrlHelper</code>
       <code>CustomUrlHelper</code>
       <code>CustomUrlHelper</code>
     </UndefinedClass>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;container</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="4">
-      <code>$this-&gt;container</code>
-      <code>$this-&gt;container</code>
-      <code>$this-&gt;container</code>
-      <code>$this-&gt;container</code>
-    </UndefinedThisPropertyFetch>
-  </file>
-  <file src="test/LinkGenerator/MezzioUrlGeneratorTest.php">
-    <DeprecatedMethod occurrences="1">
-      <code>assertAttributeEmpty</code>
-    </DeprecatedMethod>
-    <MissingClosureParamType occurrences="1">
-      <code>$fragment</code>
-    </MissingClosureParamType>
   </file>
   <file src="test/LinkGeneratorFactoryTest.php">
     <DeprecatedMethod occurrences="3">
@@ -757,9 +525,6 @@
     </TooFewArguments>
   </file>
   <file src="test/Metadata/ExceptionTest.php">
-    <InvalidLiteralArgument occurrences="1">
-      <code>ExceptionInterface::class</code>
-    </InvalidLiteralArgument>
     <MixedInferredReturnType occurrences="1">
       <code>Generator</code>
     </MixedInferredReturnType>
@@ -768,108 +533,9 @@
     </PossiblyFalseOperand>
   </file>
   <file src="test/Metadata/MetadataMapFactoryTest.php">
-    <DeprecatedMethod occurrences="2">
-      <code>assertAttributeSame</code>
-      <code>assertAttributeSame</code>
-    </DeprecatedMethod>
-    <MixedArgument occurrences="15">
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-      <code>$this-&gt;container-&gt;reveal()</code>
-    </MixedArgument>
     <MixedInferredReturnType occurrences="1">
       <code>Generator</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="14">
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-    </MixedMethodCall>
-    <PossiblyInvalidMethodCall occurrences="15">
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-    </PossiblyInvalidMethodCall>
-    <PossiblyUndefinedMethod occurrences="15">
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-    </PossiblyUndefinedMethod>
-  </file>
-  <file src="test/Metadata/MetadataMapTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$class</code>
-    </ArgumentTypeCoercion>
-    <InvalidArgument occurrences="1">
-      <code>testCanAggregateAnyMetadataType</code>
-    </InvalidArgument>
-    <MixedMethodCall occurrences="9">
-      <code>add</code>
-      <code>add</code>
-      <code>add</code>
-      <code>add</code>
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>has</code>
-      <code>has</code>
-    </MixedMethodCall>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;map</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="4">
-      <code>$this-&gt;map</code>
-      <code>$this-&gt;map</code>
-      <code>$this-&gt;map</code>
-      <code>$this-&gt;map</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/PHPUnitDeprecatedAssertions.php">
     <ArgumentTypeCoercion occurrences="1">
@@ -884,10 +550,6 @@
       <code>is_object($object)</code>
     </DocblockTypeContradiction>
     <InternalClass occurrences="3"/>
-    <MixedArgument occurrences="2">
-      <code>$stack[1]['class']</code>
-      <code>$stack[1]['function']</code>
-    </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
@@ -897,189 +559,16 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_object($classOrObject)</code>
     </RedundantConditionGivenDocblockType>
-    <TypeDoesNotContainType occurrences="1">
-      <code>! $attribute</code>
-    </TypeDoesNotContainType>
   </file>
   <file src="test/ResourceGenerator/DoctrinePaginatorTest.php">
     <DeprecatedMethod occurrences="1">
       <code>setMethods</code>
     </DeprecatedMethod>
-    <InvalidReturnStatement occurrences="1"/>
-    <InvalidReturnType occurrences="1">
-      <code>MockObject&amp;MockedType</code>
-    </InvalidReturnType>
     <MixedInferredReturnType occurrences="1">
       <code>iterable</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="117">
-      <code>count</code>
-      <code>count</code>
-      <code>count</code>
-      <code>count</code>
-      <code>createResource</code>
-      <code>createResource</code>
-      <code>createResource</code>
-      <code>createResource</code>
-      <code>fromObject</code>
-      <code>fromObject</code>
-      <code>fromObject</code>
-      <code>fromRoute</code>
-      <code>getAttribute</code>
-      <code>getAttribute</code>
-      <code>getAttribute</code>
-      <code>getCollectionRelation</code>
-      <code>getCollectionRelation</code>
-      <code>getCollectionRelation</code>
-      <code>getIterator</code>
-      <code>getIterator</code>
-      <code>getIterator</code>
-      <code>getLinkGenerator</code>
-      <code>getLinkGenerator</code>
-      <code>getLinkGenerator</code>
-      <code>getPaginationParam</code>
-      <code>getPaginationParam</code>
-      <code>getPaginationParam</code>
-      <code>getPaginationParam</code>
-      <code>getPaginationParamType</code>
-      <code>getPaginationParamType</code>
-      <code>getPaginationParamType</code>
-      <code>getPaginationParamType</code>
-      <code>getQuery</code>
-      <code>getQuery</code>
-      <code>getQuery</code>
-      <code>getQuery</code>
-      <code>getQueryParams</code>
-      <code>getQueryParams</code>
-      <code>getQueryParams</code>
-      <code>getQueryParams</code>
-      <code>getQueryStringArguments</code>
-      <code>getQueryStringArguments</code>
-      <code>getQueryStringArguments</code>
-      <code>getRoute</code>
-      <code>getRoute</code>
-      <code>getRoute</code>
-      <code>getRouteParams</code>
-      <code>getRouteParams</code>
-      <code>getRouteParams</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>shouldBeCalledTimes</code>
-      <code>shouldBeCalledTimes</code>
-      <code>shouldBeCalledTimes</code>
-      <code>shouldBeCalledTimes</code>
-      <code>shouldBeCalledTimes</code>
-      <code>shouldBeCalledTimes</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>will</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-    </MixedMethodCall>
-    <UndefinedDocblockClass occurrences="7">
-      <code>$query</code>
-      <code>$query</code>
-      <code>$query</code>
-      <code>$query</code>
-      <code>$query</code>
-      <code>$query</code>
-      <code>MockObject&amp;MockedType</code>
-    </UndefinedDocblockClass>
-    <UndefinedThisPropertyAssignment occurrences="6">
-      <code>$this-&gt;generator</code>
-      <code>$this-&gt;linkGenerator</code>
-      <code>$this-&gt;metadata</code>
-      <code>$this-&gt;paginator</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;strategy</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="25">
-      <code>$this-&gt;generator</code>
-      <code>$this-&gt;generator</code>
-      <code>$this-&gt;generator</code>
-      <code>$this-&gt;generator</code>
-      <code>$this-&gt;linkGenerator</code>
-      <code>$this-&gt;linkGenerator</code>
-      <code>$this-&gt;linkGenerator</code>
-      <code>$this-&gt;linkGenerator</code>
-      <code>$this-&gt;metadata</code>
-      <code>$this-&gt;metadata</code>
-      <code>$this-&gt;metadata</code>
-      <code>$this-&gt;metadata</code>
-      <code>$this-&gt;paginator</code>
-      <code>$this-&gt;paginator</code>
-      <code>$this-&gt;paginator</code>
-      <code>$this-&gt;paginator</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;request</code>
-      <code>$this-&gt;strategy</code>
-      <code>$this-&gt;strategy</code>
-      <code>$this-&gt;strategy</code>
-      <code>$this-&gt;strategy</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/ResourceGenerator/ExceptionTest.php">
-    <InvalidLiteralArgument occurrences="1">
-      <code>ExceptionInterface::class</code>
-    </InvalidLiteralArgument>
     <MixedInferredReturnType occurrences="1">
       <code>Generator</code>
     </MixedInferredReturnType>

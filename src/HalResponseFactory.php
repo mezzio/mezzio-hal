@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal;
 
+use Mezzio\Hal\Response\CallableResponseFactoryDecorator;
 use Negotiation\Negotiator;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function is_callable;
 use function strstr;
 
 class HalResponseFactory
@@ -33,22 +36,31 @@ class HalResponseFactory
     /**
      * A callable capable of producing an empty ResponseInterface instance.
      *
-     * @var callable
+     * @var ResponseFactoryInterface
      */
     private $responseFactory;
 
     /** @var Renderer\XmlRenderer */
     private $xmlRenderer;
 
+    /**
+     * @param (callable():ResponseInterface)|ResponseFactoryInterface $responseFactory
+     */
     public function __construct(
-        callable $responseFactory,
+        $responseFactory,
         ?Renderer\JsonRenderer $jsonRenderer = null,
         ?Renderer\XmlRenderer $xmlRenderer = null
     ) {
-        // Ensures type safety of the composed factory
-        $this->responseFactory = function () use ($responseFactory): ResponseInterface {
-            return $responseFactory();
-        };
+        if (is_callable($responseFactory)) {
+            // Ensures type safety of the composed factory
+            $responseFactory = new CallableResponseFactoryDecorator(
+                static function () use ($responseFactory): ResponseInterface {
+                    return $responseFactory();
+                }
+            );
+        }
+
+        $this->responseFactory = $responseFactory;
         $this->jsonRenderer    = $jsonRenderer ?: new Renderer\JsonRenderer();
         $this->xmlRenderer     = $xmlRenderer ?: new Renderer\XmlRenderer();
     }
@@ -74,7 +86,7 @@ class HalResponseFactory
                 break;
         }
 
-        $response = ($this->responseFactory)();
+        $response = $this->responseFactory->createResponse();
         $response->getBody()->write($renderer->render($resource));
         return $response->withHeader('Content-Type', $mediaType);
     }

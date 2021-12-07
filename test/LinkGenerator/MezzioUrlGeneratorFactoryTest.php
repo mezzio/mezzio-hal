@@ -4,102 +4,191 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\LinkGenerator;
 
-use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
 use Mezzio\Hal\LinkGenerator\MezzioUrlGeneratorFactory;
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
-use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use RuntimeException;
 
 class MezzioUrlGeneratorFactoryTest extends TestCase
 {
-    use PHPUnitDeprecatedAssertions;
-
-    use ProphecyTrait;
+    /** @var ContainerInterface&MockObject */
+    private $container;
 
     public function setUp(): void
     {
-        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->container = $this->createMock(ContainerInterface::class);
     }
 
     public function testFactoryRaisesExceptionIfUrlHelperIsMissingFromContainer(): void
     {
-        $this->container->has(UrlHelper::class)->willReturn(false);
-        $this->container->has(\Zend\Expressive\Helper\UrlHelper::class)->willReturn(false);
-        $this->container->get(UrlHelper::class)->shouldNotBeCalled();
-        $this->container->get(\Zend\Expressive\Helper\UrlHelper::class)->shouldNotBeCalled();
-        $this->container->has(ServerUrlHelper::class)->shouldNotBeCalled();
-        $this->container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)->shouldNotBeCalled();
+        $this->container
+            ->expects(self::once())
+            ->method('has')
+            ->withConsecutive([UrlHelper::class])
+            ->willReturn(false);
+
+        $this->container
+            ->expects(self::never())
+            ->method('get');
 
         $factory = new MezzioUrlGeneratorFactory();
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(UrlHelper::class);
-        $factory($this->container->reveal());
+        $factory($this->container);
     }
 
     public function testFactoryCanCreateUrlGeneratorWithOnlyUrlHelperPresentInContainer(): void
     {
-        $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
+        $urlHelper = $this->createMock(UrlHelper::class);
+        $request   = $this->createMock(ServerRequestInterface::class);
 
-        $this->container->has(UrlHelper::class)->willReturn(true);
-        $this->container->get(UrlHelper::class)->willReturn($urlHelper);
-        $this->container->has(ServerUrlHelper::class)->willReturn(false);
-        $this->container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)->willReturn(false);
-        $this->container->get(ServerUrlHelper::class)->shouldNotBeCalled();
-        $this->container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)->shouldNotBeCalled();
+        $this->container
+            ->expects(self::exactly(3))
+            ->method('has')
+            ->withConsecutive(
+                [UrlHelper::class],
+                [ServerUrlHelper::class],
+                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+            )
+            ->willReturnOnConsecutiveCalls(true, false, false);
+        $this->container
+            ->expects(self::once())
+            ->method('get')
+            ->with(UrlHelper::class)
+            ->willReturn($urlHelper);
+
+        $urlHelper
+            ->expects(self::once())
+            ->method('generate')
+            ->with('foobar', [], [])
+            ->willReturn('/baz');
 
         $factory   = new MezzioUrlGeneratorFactory();
-        $generator = $factory($this->container->reveal());
+        $generator = $factory($this->container);
 
-        $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
-        $this->assertAttributeSame($urlHelper, 'urlHelper', $generator);
+        self::assertSame('/baz', $generator->generate($request, 'foobar'));
     }
 
     public function testFactoryCanCreateUrlGeneratorWithBothUrlHelperAndServerUrlHelper(): void
     {
-        $urlHelper       = $this->prophesize(UrlHelper::class)->reveal();
-        $serverUrlHelper = $this->prophesize(ServerUrlHelper::class)->reveal();
+        $urlHelper       = $this->createMock(UrlHelper::class);
+        $serverUrlHelper = $this->createMock(ServerUrlHelper::class);
+        $request         = $this->createMock(ServerRequestInterface::class);
+        $uri             = $this->createMock(UriInterface::class);
 
-        $this->container->has(UrlHelper::class)->willReturn(true);
-        $this->container->get(UrlHelper::class)->willReturn($urlHelper);
-        $this->container->has(ServerUrlHelper::class)->willReturn(true);
-        $this->container->get(ServerUrlHelper::class)->willReturn($serverUrlHelper);
+        $this->container
+            ->expects(self::exactly(2))
+            ->method('has')
+            ->withConsecutive(
+                [UrlHelper::class],
+                [ServerUrlHelper::class]
+            )->willReturn(true);
+
+        $this->container
+            ->expects(self::exactly(2))
+            ->method('get')
+            ->withConsecutive(
+                [UrlHelper::class],
+                [ServerUrlHelper::class]
+            )->willReturnOnConsecutiveCalls($urlHelper, $serverUrlHelper);
+
+        $urlHelper
+            ->expects(self::once())
+            ->method('generate')
+            ->with('foobar', [], [])
+            ->willReturn('/baz');
+
+        $serverUrlHelper
+            ->expects(self::once())
+            ->method('setUri')
+            ->with($uri);
+
+        $serverUrlHelper
+            ->expects(self::once())
+            ->method('__invoke')
+            ->with('/baz')
+            ->willReturn('https://example.com/baz');
+
+        $request
+            ->expects(self::once())
+            ->method('getUri')
+            ->willReturn($uri);
 
         $factory   = new MezzioUrlGeneratorFactory();
-        $generator = $factory($this->container->reveal());
+        $generator = $factory($this->container);
 
-        $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
-        $this->assertAttributeSame($urlHelper, 'urlHelper', $generator);
-        $this->assertAttributeSame($serverUrlHelper, 'serverUrlHelper', $generator);
+        self::assertSame('https://example.com/baz', $generator->generate($request, 'foobar'));
     }
 
     public function testFactoryCanAcceptUrlHelperServiceNameToConstructor(): void
     {
-        $urlHelper = $this->prophesize(UrlHelper::class)->reveal();
+        $urlHelper = $this->createMock(UrlHelper::class);
+        $request   = $this->createMock(ServerRequestInterface::class);
 
-        $this->container->has(CustomUrlHelper::class)->willReturn(true);
-        $this->container->get(CustomUrlHelper::class)->willReturn($urlHelper);
-        $this->container->has(ServerUrlHelper::class)->willReturn(false);
-        $this->container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)->willReturn(false);
+        $this->container
+            ->expects(self::exactly(3))
+            ->method('has')
+            ->withConsecutive(
+                [CustomUrlHelper::class],
+                [ServerUrlHelper::class],
+                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+            )->willReturnOnConsecutiveCalls(true, false, false);
+
+        $this->container
+            ->expects(self::once())
+            ->method('get')
+            ->with(CustomUrlHelper::class)
+            ->willReturn($urlHelper);
+
+        $urlHelper
+            ->expects(self::once())
+            ->method('generate')
+            ->with('foobar', [], [])
+            ->willReturn('/baz');
 
         $factory   = new MezzioUrlGeneratorFactory(CustomUrlHelper::class);
-        $generator = $factory($this->container->reveal());
+        $generator = $factory($this->container);
 
-        $this->assertInstanceOf(MezzioUrlGenerator::class, $generator);
-        $this->assertAttributeSame($urlHelper, 'urlHelper', $generator);
-        $this->assertAttributeEmpty('serverUrlHelper', $generator);
+        self::assertSame('/baz', $generator->generate($request, 'foobar'));
     }
 
     public function testFactoryIsSerializable(): void
     {
+        $urlHelper = $this->createMock(UrlHelper::class);
+        $request   = $this->createMock(ServerRequestInterface::class);
+
+        $this->container
+            ->expects(self::exactly(3))
+            ->method('has')
+            ->withConsecutive(
+                ['customUrlHelper'],
+                [ServerUrlHelper::class],
+                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+            )->willReturnOnConsecutiveCalls(true, false, false);
+
+        $this->container
+            ->expects(self::once())
+            ->method('get')
+            ->with('customUrlHelper')
+            ->willReturn($urlHelper);
+
+        $urlHelper
+            ->expects(self::once())
+            ->method('generate')
+            ->with('route-from-custom-helper', [], [])
+            ->willReturn('/custom');
+
         $factory = MezzioUrlGeneratorFactory::__set_state([
-            'urlHelperServiceName' => CustomUrlHelper::class,
+            'urlHelperServiceName' => 'customUrlHelper',
         ]);
 
-        $this->assertInstanceOf(MezzioUrlGeneratorFactory::class, $factory);
-        $this->assertAttributeSame(CustomUrlHelper::class, 'urlHelperServiceName', $factory);
+        $generator = $factory($this->container);
+
+        self::assertSame('/custom', $generator->generate($request, 'route-from-custom-helper'));
     }
 }

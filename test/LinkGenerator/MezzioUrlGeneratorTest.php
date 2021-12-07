@@ -7,31 +7,30 @@ namespace MezzioTest\Hal\LinkGenerator;
 use Mezzio\Hal\LinkGenerator\MezzioUrlGenerator;
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
-use MezzioTest\Hal\PHPUnitDeprecatedAssertions;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use ReflectionProperty;
 
 class MezzioUrlGeneratorTest extends TestCase
 {
-    use PHPUnitDeprecatedAssertions;
-
-    use ProphecyTrait;
-
     public function testCanGenerateUrlWithOnlyUrlHelper(): void
     {
-        $urlHelper = $this->prophesize(UrlHelper::class);
-        $urlHelper->generate('test', ['foo' => 'bar'], ['baz' => 'bat'])->willReturn('/test/bar?baz=bat');
+        $urlHelper = $this->createMock(UrlHelper::class);
+        $urlHelper
+            ->method('generate')
+            ->with('test', ['foo' => 'bar'], ['baz' => 'bat'])
+            ->willReturn('/test/bar?baz=bat');
 
-        $request = $this->prophesize(ServerRequestInterface::class);
-        $request->getUri()->shouldNotBeCalled();
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects(self::never())
+            ->method('getUri');
 
-        $generator = new MezzioUrlGenerator($urlHelper->reveal());
+        $generator = new MezzioUrlGenerator($urlHelper);
 
-        $this->assertSame('/test/bar?baz=bat', $generator->generate(
-            $request->reveal(),
+        self::assertSame('/test/bar?baz=bat', $generator->generate(
+            $request,
             'test',
             ['foo' => 'bar'],
             ['baz' => 'bat']
@@ -40,33 +39,51 @@ class MezzioUrlGeneratorTest extends TestCase
 
     public function testCanGenerateFullyQualifiedURIWhenServerUrlHelperIsComposed(): void
     {
-        $uri = $this->prophesize(UriInterface::class);
-        $uri->withQuery('')->will([$uri, 'reveal']);
-        $uri->withFragment('')->will([$uri, 'reveal'])->shouldBeCalledTimes(1);
-        $uri->getPath()->willReturn('/some/path');
-        $uri->withPath('/test/bar')->will([$uri, 'reveal']);
-        $uri->withQuery('baz=bat')->will([$uri, 'reveal']);
+        $uri = $this->createMock(UriInterface::class);
 
         $uri
-            ->withFragment(Argument::that(function ($fragment) {
-                return ! empty($fragment);
-            }))
-            ->shouldNotBeCalled();
+            ->expects(self::once())
+            ->method('withFragment')
+            ->with('')
+            ->willReturnSelf();
 
-        $uri->__toString()->willReturn('https://api.example.com/test/bar?baz=bat');
+        $uri
+            ->method('getPath')
+            ->willReturn('/some/path');
 
-        $request = $this->prophesize(ServerRequestInterface::class);
-        $request->getUri()->will([$uri, 'reveal']);
+        $uri
+            ->method('withPath')
+            ->with('/test/bar')
+            ->willReturnSelf();
 
-        $urlHelper = $this->prophesize(UrlHelper::class);
-        $urlHelper->generate('test', ['foo' => 'bar'], ['baz' => 'bat'])->willReturn('/test/bar?baz=bat');
+        $uri
+            ->expects(self::exactly(2))
+            ->method('withQuery')
+            ->withConsecutive([''], ['baz=bat'])
+            ->willReturnSelf();
+
+        $uri
+            ->method('__toString')
+            ->willReturn('https://api.example.com/test/bar?baz=bat');
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->method('getUri')
+            ->willReturn($uri);
+
+        $urlHelper = $this->createMock(UrlHelper::class);
+
+        $urlHelper
+            ->method('generate')
+            ->with('test', ['foo' => 'bar'], ['baz' => 'bat'])
+            ->willReturn('/test/bar?baz=bat');
 
         $serverUrlHelper = new ServerUrlHelper();
 
-        $generator = new MezzioUrlGenerator($urlHelper->reveal(), $serverUrlHelper);
+        $generator = new MezzioUrlGenerator($urlHelper, $serverUrlHelper);
 
-        $this->assertSame('https://api.example.com/test/bar?baz=bat', $generator->generate(
-            $request->reveal(),
+        self::assertSame('https://api.example.com/test/bar?baz=bat', $generator->generate(
+            $request,
             'test',
             ['foo' => 'bar'],
             ['baz' => 'bat']
@@ -74,6 +91,8 @@ class MezzioUrlGeneratorTest extends TestCase
 
         // The helper should be cloned on each invocation, ensuring that the URI
         // is not persisted.
-        $this->assertAttributeEmpty('uri', $serverUrlHelper);
+        $reflectionProperty = new ReflectionProperty($serverUrlHelper, 'uri');
+        $reflectionProperty->setAccessible(true);
+        self::assertNull($reflectionProperty->getValue($serverUrlHelper));
     }
 }

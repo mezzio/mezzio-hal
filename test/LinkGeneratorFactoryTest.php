@@ -18,7 +18,7 @@ class LinkGeneratorFactoryTest extends TestCase
 
     public function testReturnsLinkGeneratorInstance(): void
     {
-        $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class)->reveal();
+        $urlGenerator = $this->createMock(LinkGenerator\UrlGeneratorInterface::class);
 
         $container = $this->prophesize(ContainerInterface::class);
         $container->get(LinkGenerator\UrlGeneratorInterface::class)->willReturn($urlGenerator);
@@ -30,7 +30,7 @@ class LinkGeneratorFactoryTest extends TestCase
 
     public function testConstructorAllowsSpecifyingUrlGeneratorServiceName(): void
     {
-        $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class)->reveal();
+        $urlGenerator = $this->createMock(LinkGenerator\UrlGeneratorInterface::class);
 
         $container = $this->prophesize(ContainerInterface::class);
         $container->get(UrlGenerator::class)->willReturn($urlGenerator);

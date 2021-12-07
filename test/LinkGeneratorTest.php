@@ -16,7 +16,7 @@ class LinkGeneratorTest extends TestCase
 
     public function testUsesComposedUrlGeneratorToGenerateHrefForLink(): void
     {
-        $request = $this->prophesize(ServerRequestInterface::class)->reveal();
+        $request = $this->createMock(ServerRequestInterface::class);
 
         $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class);
         $urlGenerator->generate(
@@ -46,7 +46,7 @@ class LinkGeneratorTest extends TestCase
 
     public function testUsesComposedUrlGeneratorToGenerateHrefForTemplatedLink(): void
     {
-        $request = $this->prophesize(ServerRequestInterface::class)->reveal();
+        $request = $this->createMock(ServerRequestInterface::class);
 
         $urlGenerator = $this->prophesize(LinkGenerator\UrlGeneratorInterface::class);
         $urlGenerator->generate(

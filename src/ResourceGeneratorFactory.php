@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 use Traversable;
 
 use function is_array;
+use function is_string;
 
 class ResourceGeneratorFactory
 {
@@ -77,6 +78,10 @@ class ResourceGeneratorFactory
         }
 
         foreach ($strategies as $metadataType => $strategy) {
+            if (! is_string($metadataType) || empty($metadataType)) {
+                continue;
+            }
+
             $generator->addStrategy(
                 $metadataType,
                 $container->get($strategy)

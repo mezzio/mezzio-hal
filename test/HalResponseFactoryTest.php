@@ -7,8 +7,8 @@ namespace MezzioTest\Hal;
 use Mezzio\Hal\HalResponseFactory;
 use Mezzio\Hal\Renderer;
 use MezzioTest\Hal\Renderer\TestAsset;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -17,41 +17,78 @@ use function strstr;
 
 class HalResponseFactoryTest extends TestCase
 {
-    use ProphecyTrait;
     use TestAsset;
+
+    /** @var ServerRequestInterface&MockObject */
+    private $request;
+
+    /** @var ResponseInterface&MockObject */
+    private $response;
+
+    /** @var Renderer\JsonRenderer&MockObject */
+    private $jsonRenderer;
+
+    /** @var Renderer\XmlRenderer&MockObject */
+    private $xmlRenderer;
+
+    /** @var HalResponseFactory */
+    private $factory;
 
     public function setUp(): void
     {
-        $this->request      = $this->prophesize(ServerRequestInterface::class);
-        $this->response     = $this->prophesize(ResponseInterface::class);
-        $this->jsonRenderer = $this->prophesize(Renderer\JsonRenderer::class);
-        $this->xmlRenderer  = $this->prophesize(Renderer\XmlRenderer::class);
+        $this->request  = $this->createMock(ServerRequestInterface::class);
+        $this->response = $this->createMock(ResponseInterface::class);
+        $this->response->method('withStatus')->willReturnSelf();
+        $this->jsonRenderer = $this->createMock(Renderer\JsonRenderer::class);
+        $this->xmlRenderer  = $this->createMock(Renderer\XmlRenderer::class);
         $this->factory      = new HalResponseFactory(
-            function () {
-                return $this->response->reveal();
+            function (): ResponseInterface {
+                return $this->response;
             },
-            $this->jsonRenderer->reveal(),
-            $this->xmlRenderer->reveal()
+            $this->jsonRenderer,
+            $this->xmlRenderer
         );
     }
 
     public function testReturnsJsonResponseIfNoAcceptHeaderPresent(): void
     {
         $resource = $this->createExampleResource();
-        $this->jsonRenderer->render($resource)->willReturn('{}');
-        $this->xmlRenderer->render($resource)->shouldNotBeCalled();
-        $this->request->getHeaderLine('Accept')->willReturn('');
+        $this->jsonRenderer
+            ->method('render')
+            ->with($resource)
+            ->willReturn('{}');
 
-        $stream = $this->prophesize(StreamInterface::class);
-        $stream->write('{}')->shouldBeCalled();
-        $this->response->getBody()->will([$stream, 'reveal']);
-        $this->response->withHeader('Content-Type', 'application/hal+json')->will([$this->response, 'reveal']);
+        $this->xmlRenderer
+            ->expects(self::never())
+            ->method('render');
+
+        $this->request
+            ->method('getHeaderLine')
+            ->with('Accept')
+            ->willReturn('');
+
+        $stream = $this->createMock(StreamInterface::class);
+        $stream
+            ->expects(self::once())
+            ->method('write')
+            ->with('{}')
+            ->willReturnSelf();
+
+        $this->response
+            ->method('getBody')
+            ->willReturn($stream);
+
+        $this->response
+            ->method('withHeader')
+            ->with('Content-Type', 'application/hal+json')
+            ->willReturnSelf();
 
         $response = $this->factory->createResponse(
-            $this->request->reveal(),
+            $this->request,
             $resource
         );
-        $this->assertSame($this->response->reveal(), $response);
+
+        self::assertSame($this->response, $response);
     }
 
     /**
@@ -72,20 +109,42 @@ class HalResponseFactoryTest extends TestCase
     public function testReturnsJsonResponseIfAcceptHeaderMatchesJson(string $header): void
     {
         $resource = $this->createExampleResource();
-        $this->jsonRenderer->render($resource)->willReturn('{}');
-        $this->xmlRenderer->render($resource)->shouldNotBeCalled();
-        $this->request->getHeaderLine('Accept')->willReturn($header);
+        $this->jsonRenderer
+            ->method('render')
+            ->with($resource)
+            ->willReturn('{}');
 
-        $stream = $this->prophesize(StreamInterface::class);
-        $stream->write('{}')->shouldBeCalled();
-        $this->response->getBody()->will([$stream, 'reveal']);
-        $this->response->withHeader('Content-Type', 'application/hal+json')->will([$this->response, 'reveal']);
+        $this->xmlRenderer
+            ->expects(self::never())
+            ->method('render');
+
+        $this->request
+            ->method('getHeaderLine')
+            ->with('Accept')
+            ->willReturn($header);
+
+        $stream = $this->createMock(StreamInterface::class);
+        $stream
+            ->expects(self::once())
+            ->method('write')
+            ->with('{}')
+            ->willReturnSelf();
+
+        $this->response
+            ->method('getBody')
+            ->willReturn($stream);
+
+        $this->response
+            ->expects(self::once())
+            ->method('withHeader')
+            ->with('Content-Type', 'application/hal+json')
+            ->willReturnSelf();
 
         $response = $this->factory->createResponse(
-            $this->request->reveal(),
+            $this->request,
             $resource
         );
-        $this->assertSame($this->response->reveal(), $response);
+        self::assertSame($this->response, $response);
     }
 
     /**
@@ -107,20 +166,42 @@ class HalResponseFactoryTest extends TestCase
     public function testReturnsXmlResponseIfAcceptHeaderMatchesXml(string $header): void
     {
         $resource = $this->createExampleResource();
-        $this->xmlRenderer->render($resource)->willReturn('<resource/>');
-        $this->jsonRenderer->render($resource)->shouldNotBeCalled();
-        $this->request->getHeaderLine('Accept')->willReturn($header);
+        $this->xmlRenderer
+            ->method('render')
+            ->with($resource)
+            ->willReturn('<resource/>');
 
-        $stream = $this->prophesize(StreamInterface::class);
-        $stream->write('<resource/>')->shouldBeCalled();
-        $this->response->getBody()->will([$stream, 'reveal']);
-        $this->response->withHeader('Content-Type', 'application/hal+xml')->will([$this->response, 'reveal']);
+        $this->jsonRenderer
+            ->expects(self::never())
+            ->method('render');
+
+        $this->request
+            ->method('getHeaderLine')
+            ->with('Accept')
+            ->willReturn($header);
+
+        $stream = $this->createMock(StreamInterface::class);
+        $stream
+            ->expects(self::once())
+            ->method('write')
+            ->with('<resource/>')
+            ->willReturnSelf();
+
+        $this->response
+            ->method('getBody')
+            ->wilLReturn($stream);
+
+        $this->response
+            ->expects(self::once())
+            ->method('withHeader')
+            ->with('Content-Type', 'application/hal+xml')
+            ->willReturnSelf();
 
         $response = $this->factory->createResponse(
-            $this->request->reveal(),
+            $this->request,
             $resource
         );
-        $this->assertSame($this->response->reveal(), $response);
+        self::assertSame($this->response, $response);
     }
 
     /**
@@ -148,28 +229,55 @@ class HalResponseFactoryTest extends TestCase
         $resource = $this->createExampleResource();
         switch (true) {
             case strstr($header, 'json'):
-                $this->jsonRenderer->render($resource)->willReturn($responseBody);
-                $this->xmlRenderer->render($resource)->shouldNotBeCalled();
+                $this->jsonRenderer
+                    ->expects(self::once())
+                    ->method('render')
+                    ->with($resource)
+                    ->willReturn($responseBody);
+                $this->xmlRenderer
+                    ->expects(self::never())
+                    ->method('render');
                 break;
             case strstr($header, 'xml'):
-                $this->xmlRenderer->render($resource)->willReturn($responseBody);
-                $this->jsonRenderer->render($resource)->shouldNotBeCalled();
+                $this->xmlRenderer
+                    ->expects(self::once())
+                    ->method('render')
+                    ->with($resource)
+                    ->willReturn($responseBody);
+                $this->jsonRenderer
+                    ->expects(self::never())
+                    ->method('render');
                 // fall-through
             default:
                 break;
         }
-        $this->request->getHeaderLine('Accept')->willReturn($header);
+        $this->request
+            ->method('getHeaderLine')
+            ->with('Accept')
+            ->willReturn($header);
 
-        $stream = $this->prophesize(StreamInterface::class);
-        $stream->write($responseBody)->shouldBeCalled();
-        $this->response->getBody()->will([$stream, 'reveal']);
-        $this->response->withHeader('Content-Type', $expectedMediaType)->will([$this->response, 'reveal']);
+        $stream = $this->createMock(StreamInterface::class);
+        $stream
+            ->expects(self::once())
+            ->method('write')
+            ->with($responseBody)
+            ->willReturnSelf();
+
+        $this->response
+            ->method('getBody')
+            ->willReturn($stream);
+
+        $this->response
+            ->expects(self::once())
+            ->method('withHeader')
+            ->with('Content-Type', $expectedMediaType)
+            ->willReturnSelf();
 
         $response = $this->factory->createResponse(
-            $this->request->reveal(),
+            $this->request,
             $resource,
             $mediaType
         );
-        $this->assertSame($this->response->reveal(), $response);
+        self::assertSame($this->response, $response);
     }
 }

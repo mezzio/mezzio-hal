@@ -2,9 +2,8 @@
 
 [![Build Status](https://github.com/mezzio/mezzio-hal/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/mezzio/mezzio-hal/actions/workflows/continuous-integration.yml)
 
-This library provides utilities for modeling HAL resources with links and
-generating [PSR-7](http://www.php-fig.org/psr/psr-7/) responses representing
-both JSON and XML serializations of them.
+This library provides utilities for modeling HAL resources with links and generating [PSR-7](https://www.php-fig.org/psr/psr-7/) responses representing both JSON and XML serializations of them.
+(The library consumes [PSR-17](https://www.php-fig.org/psr/psr-17/) `ResponseFactoryInterface` implementations in order to provide HAL response instances.)
 
 ## Installation
 

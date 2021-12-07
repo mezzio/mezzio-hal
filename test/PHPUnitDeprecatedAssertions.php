@@ -216,10 +216,14 @@ trait PHPUnitDeprecatedAssertions
             $reflector = new ReflectionObject($object);
 
             do {
+                if (! $reflector->hasProperty($attributeName)) {
+                    continue;
+                }
+
                 try {
                     $attribute = $reflector->getProperty($attributeName);
 
-                    if (! $attribute || $attribute->isPublic()) {
+                    if ($attribute->isPublic()) {
                         return $object->$attributeName;
                     }
 
@@ -262,7 +266,7 @@ trait PHPUnitDeprecatedAssertions
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'],
+                $stack[1]['class'] ?? '',
                 $stack[1]['function'],
                 $type
             )

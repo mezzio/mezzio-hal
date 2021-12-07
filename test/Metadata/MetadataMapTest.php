@@ -6,14 +6,15 @@ namespace MezzioTest\Hal\Metadata;
 
 use Generator;
 use Mezzio\Hal\Metadata;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 
+/**
+ * @see MockObject
+ */
 class MetadataMapTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /** @psalm-var string[] */
+    /** @psalm-var non-empty-list<class-string<Metadata\AbstractMetadata>> */
     private $metadataClasses = [
         Metadata\AbstractMetadata::class,
         Metadata\AbstractCollectionMetadata::class,
@@ -24,20 +25,29 @@ class MetadataMapTest extends TestCase
         Metadata\UrlBasedResourceMetadata::class,
     ];
 
+    /** @var Metadata\MetadataMap */
+    private $map;
+
     public function setUp(): void
     {
         $this->map = new Metadata\MetadataMap();
     }
 
     /**
-     * @psalm-return Generator<string, array{0: string, 1: object}, mixed, void>
+     * @psalm-return Generator<class-string<Metadata\AbstractMetadata>, array{
+     *  0: class-string<Metadata\AbstractMetadata>,
+     *  1: Metadata\AbstractMetadata&MockObject
+     * }>
      */
     public function validMetadataTypes(): Generator
     {
         foreach ($this->metadataClasses as $class) {
-            $metadata = $this->prophesize($class);
-            $metadata->getClass()->willReturn($class);
-            yield $class => [$class, $metadata->reveal()];
+            $metadata = $this->createMock($class);
+            $metadata
+                ->method('getClass')
+                ->willReturn($class);
+
+            yield $class => [$class, $metadata];
         }
     }
 
@@ -46,36 +56,42 @@ class MetadataMapTest extends TestCase
      */
     public function testCanAggregateAnyMetadataType(string $class, Metadata\AbstractMetadata $metadata): void
     {
-        $this->assertFalse($this->map->has($class));
+        self::assertFalse($this->map->has($class));
         $this->map->add($metadata);
-        $this->assertTrue($this->map->has($class));
-        $this->assertSame($metadata, $this->map->get($class));
+        self::assertTrue($this->map->has($class));
+        self::assertSame($metadata, $this->map->get($class));
     }
 
     public function testAddWillRaiseUndefinedClassExceptionIfClassDoesNotExist(): void
     {
-        $metadata = $this->prophesize(Metadata\AbstractMetadata::class);
-        $metadata->getClass()->willReturn('undefined-class');
+        $metadata = $this->createMock(Metadata\AbstractMetadata::class);
+        $metadata
+            ->method('getClass')
+            ->willReturn('undefined-class');
 
         $this->expectException(Metadata\Exception\UndefinedClassException::class);
         $this->expectExceptionMessage('undefined-class');
-        $this->map->add($metadata->reveal());
+        $this->map->add($metadata);
     }
 
     public function testAddWillRaiseDuplicateMetadataExceptionWhenDuplicateMetadataEncountered(): void
     {
-        $first = $this->prophesize(Metadata\AbstractMetadata::class);
-        $first->getClass()->willReturn(self::class);
+        $first = $this->createMock(Metadata\AbstractMetadata::class);
+        $first
+            ->method('getClass')
+            ->willReturn(self::class);
 
-        $this->map->add($first->reveal());
-        $this->assertSame($first->reveal(), $this->map->get(self::class));
+        $this->map->add($first);
+        self::assertSame($first, $this->map->get(self::class));
 
-        $second = $this->prophesize(Metadata\AbstractMetadata::class);
-        $second->getClass()->willReturn(self::class);
+        $second = $this->createMock(Metadata\AbstractMetadata::class);
+        $second
+            ->method('getClass')
+            ->willReturn(self::class);
 
         $this->expectException(Metadata\Exception\DuplicateMetadataException::class);
         $this->expectExceptionMessage(self::class);
-        $this->map->add($second->reveal());
+        $this->map->add($second);
     }
 
     public function testGetWilRaiseUndefinedMetadataExceptionIfClassNotPresentInMap(): void
