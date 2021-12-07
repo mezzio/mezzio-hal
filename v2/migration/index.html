@@ -392,23 +392,24 @@ Such changes are reserved for new major releases.</p>
 <p>We extracted a new interface, <code>Mezzio\Hal\ResourceGeneratorInterface</code>, from the public API of <code>Mezzio\Hal\ResourceGenerator</code>.
 Doing so allows providing alternate implementations in your own applications without requiring class extension.
 The new interface has the following definition:</p>
-<pre class="highlight"><code class="language-php">namespace Mezzio\Hal;
+<div class="highlight"><pre><span></span><code><span class="x">namespace Mezzio\Hal;</span>
 
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
+<span class="x">use Psr\Container\ContainerInterface;</span>
+<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
 
-interface ResourceGeneratorInterface
-{
-    public function getHydrators(): ContainerInterface;
+<span class="x">interface ResourceGeneratorInterface</span>
+<span class="x">{</span>
+<span class="x">    public function getHydrators(): ContainerInterface;</span>
 
-    public function getMetadataMap(): Metadata\MetadataMap;
+<span class="x">    public function getMetadataMap(): Metadata\MetadataMap;</span>
 
-    public function getLinkGenerator(): LinkGenerator;
+<span class="x">    public function getLinkGenerator(): LinkGenerator;</span>
 
-    public function fromArray(array $data, ?string $uri = null): HalResource;
+<span class="x">    public function fromArray(array $data, ?string $uri = null): HalResource;</span>
 
-    public function fromObject(object $instance, ServerRequestInterface $request, int $depth = 0): HalResource;
-}</code></pre>
+<span class="x">    public function fromObject(object $instance, ServerRequestInterface $request, int $depth = 0): HalResource;</span>
+<span class="x">}</span>
+</code></pre></div>
 <p>Please note that the <code>fromObject()</code> method changes slightly:</p>
 <ul>
 <li><code>$instance</code> now has the <code>object</code> typeint</li>
@@ -418,16 +419,18 @@ interface ResourceGeneratorInterface
 <h2 id="signature-changes">Signature changes</h2>
 <h3 id="mezziohalresourcegenerator">Mezzio\Hal\ResourceGenerator</h3>
 <p>As noted in the previous section, the signature of the <code>fromObject()</code> method changes from:</p>
-<pre class="highlight"><code class="language-php">public function fromObject(
-    $instance,
-    Psr\Http\Message\ServerRequestInterface $request
-): Mezzio\Hal\HalResource;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function fromObject(</span>
+<span class="x">    $instance,</span>
+<span class="x">    Psr\Http\Message\ServerRequestInterface $request</span>
+<span class="x">): Mezzio\Hal\HalResource;</span>
+</code></pre></div>
 <p>to:</p>
-<pre class="highlight"><code class="language-php">public function fromObject(
-    object $instance,
-    Psr\Http\Message\ServerRequestInterface $request
-    int $depth = 0
-): Mezzio\Hal\HalResource;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function fromObject(</span>
+<span class="x">    object $instance,</span>
+<span class="x">    Psr\Http\Message\ServerRequestInterface $request</span>
+<span class="x">    int $depth = 0</span>
+<span class="x">): Mezzio\Hal\HalResource;</span>
+</code></pre></div>
 <p>These changes should only impact users extending the <code>ResourceGenerator</code> class.</p>
 <h3 id="mezziohallinkcollection">Mezzio\Hal\LinkCollection</h3>
 <p>The trait <code>Mezzio\Hal\LinkCollection</code> provides implementation of the <a href="https://www.php-fig.org/psr/psr-13/">PSR-13</a> <code>EvolvableLinkProviderInterface</code> that other classes may compose.
@@ -443,20 +446,22 @@ As such, the following method signatures were updated to have the associated ret
 <p>These changes should not have any effect on users, as signatures of overridden trait methods do not need to match.</p>
 <h3 id="mezziohalresourcegeneratorstrategyinterface">Mezzio\Hal\ResourceGenerator\StrategyInterface</h3>
 <p>The signature of the <code>fromObject()</code> method originally was:</p>
-<pre class="highlight"><code class="language-php">public function createResource(
-    $instance,
-    Mezzio\Hal\Metadata\AbstractMetadata $metadata,
-    Mezzio\Hal\ResourceGenerator $resourceGenerator,
-    Psr\Http\Message\ServerRequestInterface $request
-): Mezzio\Hal\HalResource;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function createResource(</span>
+<span class="x">    $instance,</span>
+<span class="x">    Mezzio\Hal\Metadata\AbstractMetadata $metadata,</span>
+<span class="x">    Mezzio\Hal\ResourceGenerator $resourceGenerator,</span>
+<span class="x">    Psr\Http\Message\ServerRequestInterface $request</span>
+<span class="x">): Mezzio\Hal\HalResource;</span>
+</code></pre></div>
 <p>and is now:</p>
-<pre class="highlight"><code class="language-php">public function createResource(
-    object $instance,
-    Mezzio\Hal\Metadata\AbstractMetadata $metadata,
-    Mezzio\Hal\ResourceGeneratorInterface $resourceGenerator,
-    Psr\Http\Message\ServerRequestInterface $request,
-    int $depth = 0
-): Mezzio\Hal\HalResource;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function createResource(</span>
+<span class="x">    object $instance,</span>
+<span class="x">    Mezzio\Hal\Metadata\AbstractMetadata $metadata,</span>
+<span class="x">    Mezzio\Hal\ResourceGeneratorInterface $resourceGenerator,</span>
+<span class="x">    Psr\Http\Message\ServerRequestInterface $request,</span>
+<span class="x">    int $depth = 0</span>
+<span class="x">): Mezzio\Hal\HalResource;</span>
+</code></pre></div>
 <p>The changes:</p>
 <ul>
 <li>Enforce that the <code>$instance</code> value MUST be an object.</li>
@@ -477,66 +482,76 @@ Extensions can override this method to provide logic for determining if traversa
 <p>This change will only affect users creating their own metadata implementations; developers should look at how each of the shipped implementations define the method to determine how they should do so in their own classes.</p>
 <h3 id="mezziohalmetadataroutebasedresourcemetadata">Mezzio\Hal\Metadata\RouteBasedResourceMetadata</h3>
 <p>The signature of the <code>__construct</code> method changes from:</p>
-<pre class="highlight"><code class="language-php">public function __construct(
-    string $class,
-    string $route,
-    string $extractor,
-    string $resourceIdentifier = 'id',
-    string $routeIdentifierPlaceholder = 'id',
-    array $routeParams = [],
-    array $identifiersToPlaceholdersMapping = [],
-    int $maxDepth = 10
-) {</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function __construct(</span>
+<span class="x">    string $class,</span>
+<span class="x">    string $route,</span>
+<span class="x">    string $extractor,</span>
+<span class="x">    string $resourceIdentifier = &#39;id&#39;,</span>
+<span class="x">    string $routeIdentifierPlaceholder = &#39;id&#39;,</span>
+<span class="x">    array $routeParams = [],</span>
+<span class="x">    array $identifiersToPlaceholdersMapping = [],</span>
+<span class="x">    int $maxDepth = 10</span>
+<span class="x">) {</span>
+</code></pre></div>
 <p>to:</p>
-<pre class="highlight"><code class="language-php">public function __construct(
-    string $class,
-    string $route,
-    string $extractor,
-    string $resourceIdentifier = 'id',
-    array $routeParams = [],
-    array $identifiersToPlaceholdersMapping = [],
-    int $maxDepth = 10
-) {</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function __construct(</span>
+<span class="x">    string $class,</span>
+<span class="x">    string $route,</span>
+<span class="x">    string $extractor,</span>
+<span class="x">    string $resourceIdentifier = &#39;id&#39;,</span>
+<span class="x">    array $routeParams = [],</span>
+<span class="x">    array $identifiersToPlaceholdersMapping = [],</span>
+<span class="x">    int $maxDepth = 10</span>
+<span class="x">) {</span>
+</code></pre></div>
 <p>Note the removal of the <code>$routeIdentifierPlaceholder</code> argument.</p>
 <p>If you were previously using this argument, you will need to instead populate the <code>$identifiersToPlaceholdersMapping</code> argument.
 As an example, if you had an entity that defined an "id" property as an identifier, but your route definition used "calc_id" as the equivalent (e.g., <code>/calculation/{calc_id:\d+}</code>), you might have called the constructor as follows:</p>
-<pre class="highlight"><code class="language-php">$metadata = new RouteBasedResourceMetadata(
-    CalculationEntity::class,
-    'calculation',
-    ObjectHydrator::class,
-    'id',
-    'calc_id'
-);</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">$metadata = new RouteBasedResourceMetadata(</span>
+<span class="x">    CalculationEntity::class,</span>
+<span class="x">    &#39;calculation&#39;,</span>
+<span class="x">    ObjectHydrator::class,</span>
+<span class="x">    &#39;id&#39;,</span>
+<span class="x">    &#39;calc_id&#39;</span>
+<span class="x">);</span>
+</code></pre></div>
 <p>This would change to:</p>
-<pre class="highlight"><code class="language-php">$metadata = new RouteBasedResourceMetadata(
-    CalculationEntity::class,
-    'calculation',
-    ObjectHydrator::class,
-    'id',
-    [],
-    ['id' =&gt; 'calc_id']
-);</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">$metadata = new RouteBasedResourceMetadata(</span>
+<span class="x">    CalculationEntity::class,</span>
+<span class="x">    &#39;calculation&#39;,</span>
+<span class="x">    ObjectHydrator::class,</span>
+<span class="x">    &#39;id&#39;,</span>
+<span class="x">    [],</span>
+<span class="x">    [&#39;id&#39; =&gt; &#39;calc_id&#39;]</span>
+<span class="x">);</span>
+</code></pre></div>
 <p>The new logic provides an explicit mapping of any resource property to their corresponding route placeholders, no longer limiting you to only mapping resource identifiers.</p>
 <h3 id="mezziohalhalresource">Mezzio\Hal\HalResource</h3>
 <p>The method <code>jsonSerialize()</code> now has a return typehint of <code>array</code>; this was implied previously by the <code>JsonSerializable</code> interface the method provides an implementation for, but is now explicit.</p>
 <p>This change will only affect those extending the <code>HalResource</code> class.</p>
 <h3 id="mezziohalexceptionundefinedmetadataexception">Mezzio\Hal\Exception\UndefinedMetadataException</h3>
 <p>The signature of the <code>create()</code> method changes from:</p>
-<pre class="highlight"><code class="language-php">public static function create($class)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public static function create($class)</span>
+</code></pre></div>
 <p>to:</p>
-<pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public static function create(string $class): self</span>
+</code></pre></div>
 <p>This change will only affect extensions to this class.</p>
 <h3 id="mezziohalexceptionundefinedclassexception">Mezzio\Hal\Exception\UndefinedClassException</h3>
 <p>The signature of the <code>create()</code> method changes from:</p>
-<pre class="highlight"><code class="language-php">public static function create($class)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public static function create($class)</span>
+</code></pre></div>
 <p>to:</p>
-<pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public static function create(string $class): self</span>
+</code></pre></div>
 <p>This change will only affect extensions to this class.</p>
 <h3 id="mezziohalexceptionduplicatemetadataexception">Mezzio\Hal\Exception\DuplicateMetadataException</h3>
 <p>The signature of the <code>create()</code> method changes from:</p>
-<pre class="highlight"><code class="language-php">public static function create(string $class)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public static function create(string $class)</span>
+</code></pre></div>
 <p>to:</p>
-<pre class="highlight"><code class="language-php">public static function create(string $class): self</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public static function create(string $class): self</span>
+</code></pre></div>
 <p>This change will only affect extensions to this class.</p>
 <h2 id="configuration-changes">Configuration changes</h2>
 <h3 id="route_identifier_placeholder-removed">route_identifier_placeholder removed</h3>
@@ -548,62 +563,65 @@ This is particularly interesting when creating nested resources, where the paren
 <p>As an initial example, we'll cover the original use case for a <code>route_identifier_placeholder</code> on its own.
 Let's consider an entity that defined an "id" property as an identifier, but your route definition used "calc_id" as the equivalent (e.g., <code>/calculation/{calc_id:\d+}</code>).
 You might have configured it as follows:</p>
-<pre class="highlight"><code class="language-php">use Laminas\Hydrator\ObjectHydrator;
-use Mezzio\Hal\Metadata\MetadataMap;
-use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+<div class="highlight"><pre><span></span><code><span class="x">use Laminas\Hydrator\ObjectHydrator;</span>
+<span class="x">use Mezzio\Hal\Metadata\MetadataMap;</span>
+<span class="x">use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
 
-return [
-    MetadataMap::class =&gt; [
-        [
-            '__class__'                    =&gt; RouteBasedResourceMetadata::class,
-            'resource_class'               =&gt; CalculationEntity::class,
-            'route'                        =&gt; 'calculation',
-            'extractor'                    =&gt; ObjectHydrator::class,
-            'resource_identifier'          =&gt; 'id',
-            'route_identifier_placeholder' =&gt; 'calc_id',
-        ]
-    ],
-];</code></pre>
+<span class="x">return [</span>
+<span class="x">    MetadataMap::class =&gt; [</span>
+<span class="x">        [</span>
+<span class="x">            &#39;__class__&#39;                    =&gt; RouteBasedResourceMetadata::class,</span>
+<span class="x">            &#39;resource_class&#39;               =&gt; CalculationEntity::class,</span>
+<span class="x">            &#39;route&#39;                        =&gt; &#39;calculation&#39;,</span>
+<span class="x">            &#39;extractor&#39;                    =&gt; ObjectHydrator::class,</span>
+<span class="x">            &#39;resource_identifier&#39;          =&gt; &#39;id&#39;,</span>
+<span class="x">            &#39;route_identifier_placeholder&#39; =&gt; &#39;calc_id&#39;,</span>
+<span class="x">        ]</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
 <p>With v2, this should be rewritten as:</p>
-<pre class="highlight"><code class="language-php">use Laminas\Hydrator\ObjectHydrator;
-use Mezzio\Hal\Metadata\MetadataMap;
-use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+<div class="highlight"><pre><span></span><code><span class="x">use Laminas\Hydrator\ObjectHydrator;</span>
+<span class="x">use Mezzio\Hal\Metadata\MetadataMap;</span>
+<span class="x">use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
 
-return [
-    MetadataMap::class =&gt; [
-        [
-            '__class__'                           =&gt; RouteBasedResourceMetadata::class,
-            'resource_class'                      =&gt; CalculationEntity::class,
-            'route'                               =&gt; 'calculation',
-            'extractor'                           =&gt; ObjectHydrator::class,
-            'resource_identifier'                 =&gt; 'id',
-            'identifiers_to_placeholders_mapping' =&gt; [
-                'id' =&gt; 'calc_id',
-            ],
-        ]
-    ],
-];</code></pre>
+<span class="x">return [</span>
+<span class="x">    MetadataMap::class =&gt; [</span>
+<span class="x">        [</span>
+<span class="x">            &#39;__class__&#39;                           =&gt; RouteBasedResourceMetadata::class,</span>
+<span class="x">            &#39;resource_class&#39;                      =&gt; CalculationEntity::class,</span>
+<span class="x">            &#39;route&#39;                               =&gt; &#39;calculation&#39;,</span>
+<span class="x">            &#39;extractor&#39;                           =&gt; ObjectHydrator::class,</span>
+<span class="x">            &#39;resource_identifier&#39;                 =&gt; &#39;id&#39;,</span>
+<span class="x">            &#39;identifiers_to_placeholders_mapping&#39; =&gt; [</span>
+<span class="x">                &#39;id&#39; =&gt; &#39;calc_id&#39;,</span>
+<span class="x">            ],</span>
+<span class="x">        ]</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
 <p>To expand on this example, and demonstrate the new capabilities possible, let's consider a route definition that also expected a value for an "id" associated with the resource's "transaction_id" property (e.g., <code>/transaction/{id:\d+}/calculation/{calc_id:\d+}</code>).
 You could configure that as follows:</p>
-<pre class="highlight"><code class="language-php">use Laminas\Hydrator\ObjectHydrator;
-use Mezzio\Hal\Metadata\MetadataMap;
-use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+<div class="highlight"><pre><span></span><code><span class="x">use Laminas\Hydrator\ObjectHydrator;</span>
+<span class="x">use Mezzio\Hal\Metadata\MetadataMap;</span>
+<span class="x">use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
 
-return [
-    MetadataMap::class =&gt; [
-        [
-            '__class__'                           =&gt; RouteBasedResourceMetadata::class,
-            'resource_class'                      =&gt; CalculationEntity::class,
-            'route'                               =&gt; 'calculation',
-            'extractor'                           =&gt; ObjectHydrator::class,
-            'resource_identifier'                 =&gt; 'id',
-            'identifiers_to_placeholders_mapping' =&gt; [
-                'id'             =&gt; 'calc_id',
-                'transaction_id' =&gt; 'id',
-            ],
-        ]
-    ],
-];</code></pre>
+<span class="x">return [</span>
+<span class="x">    MetadataMap::class =&gt; [</span>
+<span class="x">        [</span>
+<span class="x">            &#39;__class__&#39;                           =&gt; RouteBasedResourceMetadata::class,</span>
+<span class="x">            &#39;resource_class&#39;                      =&gt; CalculationEntity::class,</span>
+<span class="x">            &#39;route&#39;                               =&gt; &#39;calculation&#39;,</span>
+<span class="x">            &#39;extractor&#39;                           =&gt; ObjectHydrator::class,</span>
+<span class="x">            &#39;resource_identifier&#39;                 =&gt; &#39;id&#39;,</span>
+<span class="x">            &#39;identifiers_to_placeholders_mapping&#39; =&gt; [</span>
+<span class="x">                &#39;id&#39;             =&gt; &#39;calc_id&#39;,</span>
+<span class="x">                &#39;transaction_id&#39; =&gt; &#39;id&#39;,</span>
+<span class="x">            ],</span>
+<span class="x">        ]</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
 <p>In this scenario, the <code>id</code> property of the resource will be substituted for the <code>calc_id</code> route placeholder, and the <code>transaction_id</code> property will be substituted for the <code>id</code> route placeholder.</p>
 
 
@@ -633,16 +651,6 @@ return [
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v2/migration.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>

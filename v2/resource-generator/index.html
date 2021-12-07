@@ -406,64 +406,57 @@ class to represent; all metadata are expected to inherit from this class.</p>
 <p>The component also provides four concrete metadata types, requiring the
 following information:</p>
 <ul>
-<li><code>Mezzio\Hal\Metadata\RouteBasedCollectionMetadata</code>:<ul>
+<li><code>Mezzio\Hal\Metadata\RouteBasedCollectionMetadata</code>:</li>
 <li>string <code>$class</code></li>
 <li>string <code>$collectionRelation</code></li>
 <li>string <code>$route</code></li>
 <li>string <code>$paginationParam = 'page'</code> (name of the parameter indicating the
-  current page of results)</li>
+    current page of results)</li>
 <li>string <code>$paginationParamType = self::TYPE_QUERY</code> (one of "query" or "placeholder")</li>
 <li>array <code>$routeParams = []</code> (associative array of substitutions to use with
-  the designated route)</li>
+    the designated route)</li>
 <li>array <code>$queryStringArguments = []</code> (associative array of query string
-  arguments to include in the generated URI)</li>
-</ul>
-</li>
-<li><code>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</code>:<ul>
+    arguments to include in the generated URI)</li>
+<li><code>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</code>:</li>
 <li>string <code>$class</code></li>
 <li>string <code>$route</code></li>
 <li>string <code>$extractor</code> (string service name of the laminas-hydrator hydrator to
-  use for extracting data from the instance)</li>
+    use for extracting data from the instance)</li>
 <li>string <code>$resourceIdentifier = 'id'</code> (name of the property uniquely
-  identifying the resource)</li>
+    identifying the resource)</li>
 <li>array <code>$routeParams = []</code> (associative array of additional routing
-  parameters to substitute when generating the URI)</li>
+    parameters to substitute when generating the URI)</li>
 <li>array <code>$identifiersToPlacholdersMapping = []</code> (associative array mapping resource properties to route parameters, for use when generating the URI)</li>
 <li>int <code>$maxDepth = 10</code> max allowed nesting levels.</li>
-</ul>
-</li>
-<li><code>Mezzio\Hal\Metadata\UrlBasedCollectionMetadata</code>:<ul>
+<li><code>Mezzio\Hal\Metadata\UrlBasedCollectionMetadata</code>:</li>
 <li>string <code>$class</code></li>
 <li>string <code>$collectionRelation</code></li>
 <li>string <code>$url</code></li>
 <li>string <code>$paginationParam = 'page'</code> (name of the parameter indicating the
-  current page of results)</li>
+    current page of results)</li>
 <li>string <code>$paginationParamType = self::TYPE_QUERY</code> (one of "query" or "placeholder")</li>
-</ul>
-</li>
-<li><code>Mezzio\Hal\Metadata\UrlBasedResourceMetadata</code><ul>
+<li><code>Mezzio\Hal\Metadata\UrlBasedResourceMetadata</code></li>
 <li>string <code>$class</code></li>
 <li>string <code>$url</code></li>
 <li>string <code>$extractor</code> (string service name of the laminas-hydrator hydrator to
     use for extracting data from the instance)</li>
 </ul>
-</li>
-</ul>
 <p>We aggregate metadata in a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance:</p>
-<pre class="highlight"><code class="language-php">$bookMetadata = new RouteBasedResourceMetadata(
-    Book::class,
-    'book',
-    ObjectPropertyHydrator::class
-);
-$booksMetadata = new RouteBasedCollectionMetadata(
-    BookCollection::class,
-    'book',
-    'books',
-);
+<div class="highlight"><pre><span></span><code><span class="x">$bookMetadata = new RouteBasedResourceMetadata(</span>
+<span class="x">    Book::class,</span>
+<span class="x">    &#39;book&#39;,</span>
+<span class="x">    ObjectPropertyHydrator::class</span>
+<span class="x">);</span>
+<span class="x">$booksMetadata = new RouteBasedCollectionMetadata(</span>
+<span class="x">    BookCollection::class,</span>
+<span class="x">    &#39;book&#39;,</span>
+<span class="x">    &#39;books&#39;,</span>
+<span class="x">);</span>
 
-$metadataMap = new MetadataMap();
-$metadataMap-&gt;add($bookMetadata);
-$metadataMap-&gt;add($booksMetadata);</code></pre>
+<span class="x">$metadataMap = new MetadataMap();</span>
+<span class="x">$metadataMap-&gt;add($bookMetadata);</span>
+<span class="x">$metadataMap-&gt;add($booksMetadata);</span>
+</code></pre></div>
 <h3 id="configuration-based-metadata">Configuration-based metadata</h3>
 <p>To automate generation of the <code>MetadataMap</code>, we provide
 <code>Mezzio\Hal\Metadata\MetadataMapFactory</code>. This factory may be used with any
@@ -474,69 +467,63 @@ service, and pulls its configuration from a key named after the
 describe which metadata class to create, and the remaining properties will then
 be used to generate an instance. As an example, the above could be configured as
 follows:</p>
-<pre class="highlight"><code class="language-php">use Api\Books\Book;
-use Api\Books\BookCollection;
-use Mezzio\Hal\Metadata\MetadataMap;
-use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
-use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
-use Laminas\Hydrator\ObjectProperty;
+<div class="highlight"><pre><span></span><code><span class="x">use Api\Books\Book;</span>
+<span class="x">use Api\Books\BookCollection;</span>
+<span class="x">use Mezzio\Hal\Metadata\MetadataMap;</span>
+<span class="x">use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;</span>
+<span class="x">use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
+<span class="x">use Laminas\Hydrator\ObjectProperty;</span>
 
-return [
-    'Mezzio\Hal\Metadata\MetadataMap' =&gt; [
-        [
-            '__class__' =&gt; RouteBasedResourceMetadata::class,
-            'resource_class' =&gt; Book::class,
-            'route' =&gt; 'book',
-            'extractor' =&gt; ObjectProperty::class,
-        ],
-        [
-            '__class__' =&gt; RouteBasedCollectionMetadata::class,
-            'collection_class' =&gt; BookCollection::class,
-            'collection_relation' =&gt; 'book',
-            'route' =&gt; 'books',
-        ],
-    ],
-];</code></pre>
+<span class="x">return [</span>
+<span class="x">    &#39;Mezzio\Hal\Metadata\MetadataMap&#39; =&gt; [</span>
+<span class="x">        [</span>
+<span class="x">            &#39;__class__&#39; =&gt; RouteBasedResourceMetadata::class,</span>
+<span class="x">            &#39;resource_class&#39; =&gt; Book::class,</span>
+<span class="x">            &#39;route&#39; =&gt; &#39;book&#39;,</span>
+<span class="x">            &#39;extractor&#39; =&gt; ObjectProperty::class,</span>
+<span class="x">        ],</span>
+<span class="x">        [</span>
+<span class="x">            &#39;__class__&#39; =&gt; RouteBasedCollectionMetadata::class,</span>
+<span class="x">            &#39;collection_class&#39; =&gt; BookCollection::class,</span>
+<span class="x">            &#39;collection_relation&#39; =&gt; &#39;book&#39;,</span>
+<span class="x">            &#39;route&#39; =&gt; &#39;books&#39;,</span>
+<span class="x">        ],</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
 <p>The rest of the parameters follow underscore delimiter naming convention:</p>
 <ul>
-<li><code>RouteBasedResourceMetadata::class</code><ul>
+<li><code>RouteBasedResourceMetadata::class</code></li>
 <li><code>resource_identifier</code> (name of the property uniquely identifying the resource)</li>
 <li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
 <li><code>identifiers_to_placeholders_mapping</code> (associative array mapping resource properties to routing parameters, for use when generating the URI)</li>
 <li><code>max_depth</code> (maximum depth to allow when rendering nested resources; defaults to 10)</li>
-</ul>
-</li>
-<li><code>RouteBasedCollectionMetadata::class</code><ul>
+<li><code>RouteBasedCollectionMetadata::class</code></li>
 <li><code>pagination_param</code>  (name of the parameter indicating the current page of results)</li>
 <li><code>pagination_param_type</code> (one of "query" or "placeholder")</li>
 <li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
 <li><code>query_string_arguments</code> (associative array of additional routing parameters to substitute when generating the URI)</li>
-</ul>
-</li>
-<li><code>UrlBasedResourceMetadata::class</code><ul>
+<li><code>UrlBasedResourceMetadata::class</code></li>
 <li><code>resource_class</code></li>
 <li><code>url</code></li>
 <li><code>extractor</code></li>
-</ul>
-</li>
-<li><code>UrlBasedCollectionMetadata::class</code><ul>
+<li><code>UrlBasedCollectionMetadata::class</code></li>
 <li><code>collection_class</code></li>
 <li><code>collection_relation</code></li>
 <li><code>url</code></li>
 <li><code>pagination_param</code> (name of the parameter indicating the current page of results)</li>
 <li><code>pagination_param_type</code> (one of "query" or "placeholder")</li>
 </ul>
-</li>
-</ul>
 <h2 id="resourcegenerator">ResourceGenerator</h2>
 <p>Once you have defined the metadata for the various objects you will represent in
 your API, you can start generating resources.</p>
 <p><code>Mezzio\Hal\ResourceGenerator</code> has the following constructor:</p>
-<pre class="highlight"><code class="language-php">public function __construct(
-    Mezzio\Hal\Metadata\MetadataMap $metadataMap,
-    Psr\Container\ContainerInterface $hydrators,
-    Mezzio\Hal\LinkGenerator $linkGenerator
-) {</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">public function __construct(</span>
+<span class="x">    Mezzio\Hal\Metadata\MetadataMap $metadataMap,</span>
+<span class="x">    Psr\Container\ContainerInterface $hydrators,</span>
+<span class="x">    Mezzio\Hal\LinkGenerator $linkGenerator</span>
+<span class="x">) {</span>
+</code></pre></div>
 <p>We described the <code>MetadataMap</code> in the previous section, and the <code>LinkGenerator</code>
 in the <a href="../links-and-resources/#route-based-link-uris">previous chapter</a>.</p>
 <p>Hydrators are defind in the <a href="https://docs.laminas.dev/laminas-hydrator/">laminas-hydrator component</a>,
@@ -545,7 +532,8 @@ and are objects which can <em>hdyrate</em> associative arrays to object instance
 <code>$hydrators</code> instance may be any PSR-11 container, but you will generally want
 to use the <code>Laminas\Hydrator\HydratorPluginManager</code>.</p>
 <p>Once you have your instance created, you can start generating resources:</p>
-<pre class="highlight"><code class="language-php">$resource = $resourceGenerator-&gt;fromObject($book, $request);</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">$resource = $resourceGenerator-&gt;fromObject($book, $request);</span>
+</code></pre></div>
 <p>(Where <code>$request</code> is a <code>Psr\Http\Message\ServerRequestInterface</code> instance; the
 instance is passed along to the <code>LinkGenerator</code> in order to generate route-based
 URIs for <code>Link</code> instances.)</p>
@@ -577,16 +565,6 @@ URIs for <code>Link</code> instances.)</p>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v2/resource-generator.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>

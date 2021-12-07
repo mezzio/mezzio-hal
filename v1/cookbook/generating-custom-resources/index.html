@@ -362,44 +362,47 @@
     <h1 id="generating-custom-resources">Generating custom resources</h1>
 <p>The <code>ResourceGenerator</code> allows composing <code>Mezzio\Hal\ResourceGenerator\StrategyInterface</code>
 instances. The <code>StrategyInterface</code> defines the following:</p>
-<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\ResourceGenerator;
+<div class="highlight"><pre><span></span><code><span class="x">namespace Mezzio\Hal\ResourceGenerator;</span>
 
-use Psr\Http\Message\ServerRequestInterface;
-use Mezzio\Hal\HalResource;
-use Mezzio\Hal\Metadata;
-use Mezzio\Hal\ResourceGenerator;
+<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
+<span class="x">use Mezzio\Hal\HalResource;</span>
+<span class="x">use Mezzio\Hal\Metadata;</span>
+<span class="x">use Mezzio\Hal\ResourceGenerator;</span>
 
-interface StrategyInterface
-{
-    /**
-     * @param object $instance Instance from which to create Resource.
-     * @throws Exception\UnexpectedMetadataTypeException for metadata types the
-     *     strategy cannot handle.
-     */
-    public function createResource(
-        $instance,
-        Metadata\AbstractMetadata $metadata,
-        ResourceGenerator $resourceGenerator,
-        ServerRequestInterface $request
-    ) : HalResource;
-}</code></pre>
+<span class="x">interface StrategyInterface</span>
+<span class="x">{</span>
+<span class="x">    /**</span>
+<span class="x">     * @param object $instance Instance from which to create Resource.</span>
+<span class="x">     * @throws Exception\UnexpectedMetadataTypeException for metadata types the</span>
+<span class="x">     *     strategy cannot handle.</span>
+<span class="x">     */</span>
+<span class="x">    public function createResource(</span>
+<span class="x">        $instance,</span>
+<span class="x">        Metadata\AbstractMetadata $metadata,</span>
+<span class="x">        ResourceGenerator $resourceGenerator,</span>
+<span class="x">        ServerRequestInterface $request</span>
+<span class="x">    ) : HalResource;</span>
+<span class="x">}</span>
+</code></pre></div>
 <p>When you register a strategy, you will map a metadata type to the strategy; the
 <code>ResourceGenerator</code> will then call your strategy whenever it encounteres
 metadata of that type.</p>
-<pre class="highlight"><code class="language-php">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);
+<div class="highlight"><pre><span></span><code><span class="x">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);</span>
 
-// or:
-$resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</code></pre>
+<span class="x">// or:</span>
+<span class="x">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</span>
+</code></pre></div>
 <p>You can also add your strategies via the configuration:</p>
-<pre class="highlight"><code class="language-php">return [
-    'mezzio-hal' =&gt; [
-        'resource-generator' =&gt; [
-            'strategies' =&gt; [
-                CustomMetadata::class =&gt; CustomStrategy::class,
-            ],
-        ],
-    ],
-];</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">return [</span>
+<span class="x">    &#39;mezzio-hal&#39; =&gt; [</span>
+<span class="x">        &#39;resource-generator&#39; =&gt; [</span>
+<span class="x">            &#39;strategies&#39; =&gt; [</span>
+<span class="x">                CustomMetadata::class =&gt; CustomStrategy::class,</span>
+<span class="x">            ],</span>
+<span class="x">        ],</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
 <p>If a strategy already is mapped for the given metadata type, this method will
 override it.</p>
 <p>To facilitate common operations, this library provides two traits,
@@ -409,13 +412,14 @@ decide to write your own strategies.</p>
 <p>In order for the <code>MetadataMap</code> to be able to use your <code>CustomMetadata</code> you need to register 
 a factory (implementing <code>Mezzio\Hal\Metadata\MetadataFactoryInterface</code>) for it.
 You can register them via the configuration:</p>
-<pre class="highlight"><code class="language-php">return [
-    'mezzio-hal' =&gt; [
-        'metadata-factories' =&gt; [
-            CustomMetadata::class =&gt; CustomMetadataFactory::class,
-        ],
-    ],
-];</code></pre>
+<div class="highlight"><pre><span></span><code><span class="x">return [</span>
+<span class="x">    &#39;mezzio-hal&#39; =&gt; [</span>
+<span class="x">        &#39;metadata-factories&#39; =&gt; [</span>
+<span class="x">            CustomMetadata::class =&gt; CustomMetadataFactory::class,</span>
+<span class="x">        ],</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
 
 
 
@@ -444,16 +448,6 @@ You can register them via the configuration:</p>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v1/cookbook/generating-custom-resources.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>

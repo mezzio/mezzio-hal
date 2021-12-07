@@ -399,18 +399,20 @@ original specification targets JSON, an additional IETF proposal
 for a resource into a subkey (e.g., "data", "collection.items", etc.), HAL
 specifies resources as the primary payload.</p>
 <p>As such, a resource is simply a <em>document</em>:</p>
-<pre class="highlight"><code class="language-json">{
-  "id": "XXXX-YYYY-ZZZZ-AAAA",
-  "title": "Life, the Universe, and Everything",
-  "author": "Adams, Douglas"
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;XXXX-YYYY-ZZZZ-AAAA&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Life, the Universe, and Everything&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Adams, Douglas&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>For XML documents, the element <code>&lt;resource&gt;</code> is reserved to detail the resource;
 every other element represents the document:</p>
-<pre class="highlight"><code class="language-xml">&lt;resource&gt;
-  &lt;id&gt;XXXX-YYYY-ZZZZ-AAAA&lt;/id&gt;
-  &lt;title&gt;Life, the Universe, and Everything&lt;/title&gt;
-  &lt;author&gt;Adams, Douglas&lt;/author&gt;
-&lt;/resource&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;resource&gt;</span>
+  <span class="nt">&lt;id&gt;</span>XXXX-YYYY-ZZZZ-AAAA<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Life, the Universe, and Everything<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;author&gt;</span>Adams, Douglas<span class="nt">&lt;/author&gt;</span>
+<span class="nt">&lt;/resource&gt;</span>
+</code></pre></div>
 <p>This decision makes both consuming and generating HAL payloads trivial.</p>
 <h2 id="links">Links</h2>
 <p>One goal of REST is to allow any given resource to provide <em>hypertext controls</em>,
@@ -433,12 +435,13 @@ structure for how links are represented. Each element of the <code>_links</code>
 is named for the link relation, and the value is either an array, or a link
 object. A link object contains minimally an <code>href</code> property, with several other
 properties allowed. As an example:</p>
-<pre class="highlight"><code class="language-json">{
-  "_links": {
-    "self": { "href": "/api/books/XXXX-YYYY-ZZZZ-AAAA" },
-    "books": { "href": "/api/books" }
-  }
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/XXXX-YYYY-ZZZZ-AAAA&quot;</span> <span class="p">},</span>
+    <span class="nt">&quot;books&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books&quot;</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>At this point, the consumer knows they can access the current resource via the
 "self" relation, and a collection of "books" via the URI "/api/books".</p>
 <p>HAL addresses links in XML with two semantics. First, the <code>&lt;resource&gt;</code> element
@@ -448,9 +451,10 @@ is defined in the <code>&lt;resource&gt;</code> element. Second, the specificati
 the <code>&lt;link&gt;</code> element; the relation, URI, and other attributes become attributes
 of that XML element.</p>
 <p>An equivalent XML document to the JSON document above looks like the following:</p>
-<pre class="highlight"><code class="language-xml">&lt;resource rel="self" href="/api/books/XXXX-YYYY-ZZZZ-AAAA"&gt;
-  &lt;link rel="books" href="/api/books"/&gt;
-&lt;/resource&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;resource</span> <span class="na">rel=</span><span class="s">&quot;self&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books/XXXX-YYYY-ZZZZ-AAAA&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;books&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/resource&gt;</span>
+</code></pre></div>
 <h2 id="child-resources">Child Resources</h2>
 <p>An API payload may have <em>child resources</em> for several reasons:</p>
 <ul>
@@ -466,65 +470,67 @@ an object, with the keys being the <em>relations</em>, and the values either res
 or arrays of resources. Each resource follows the same structure as a basic
 HAL resource, with a <code>_links</code> member, other members representing the resource,
 and optionally an <code>_embedded</code> member.</p>
-<pre class="highlight"><code class="language-json">{
-    "_links": {
-        "self": { "href": "/api/books?page=7" },
-        "first": { "href": "/api/books?page=1" },
-        "prev": { "href": "/api/books?page=6" },
-        "next": { "href": "/api/books?page=8" },
-        "last": { "href": "/api/books?page=17" }
-        "search": {
-            "href": "/api/books?query={searchTerms}",
-            "templated": true
-        }
-    },
-    "_embedded": {
-        "book": [
-            {
-                "_links": {
-                    "self": { "href": "/api/books/1234" }
-                }
-                "id": 1234,
-                "title": "Hitchhiker's Guide to the Galaxy",
-                "author": "Adams, Douglas"
-            },
-            {
-                "_links": {
-                    "self": { "href": "/api/books/6789" }
-                }
-                "id": 6789,
-                "title": "Ancillary Justice",
-                "author": "Leckie, Ann"
-            }
-        ]
-    },
-    "_page": 7,
-    "_per_page": 2,
-    "_total": 33
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=7&quot;</span> <span class="p">},</span>
+        <span class="nt">&quot;first&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=1&quot;</span> <span class="p">},</span>
+        <span class="nt">&quot;prev&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=6&quot;</span> <span class="p">},</span>
+        <span class="nt">&quot;next&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=8&quot;</span> <span class="p">},</span>
+        <span class="nt">&quot;last&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=17&quot;</span> <span class="p">}</span>
+        <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?query={searchTerms}&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;_embedded&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;book&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/1234&quot;</span> <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+                <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Hitchhiker&#39;s Guide to the Galaxy&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Adams, Douglas&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/6789&quot;</span> <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">6789</span><span class="p">,</span>
+                <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Ancillary Justice&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Leckie, Ann&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;_page&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="nt">&quot;_per_page&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&quot;_total&quot;</span><span class="p">:</span> <span class="mi">33</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>The above represents a <em>collection</em> of <em>book</em> resources.</p>
 <p>To address XML, the specification uses the <code>&lt;resource&gt;</code> element to embed
 additional resources. Resources of the same type use the same <code>rel</code> attribute.
 The XML equivalent of the above JSON documentation thus becomes:</p>
-<pre class="highlight"><code class="language-xml">&lt;resource rel="self" href="/api/books?page=7"&gt;
-    &lt;link rel="first" href="/api/books?page=1"/&gt;
-    &lt;link rel="prev" href="/api/books?page=6"/&gt;
-    &lt;link rel="next" href="/api/books?page=8"/&gt;
-    &lt;link rel="last" href="/api/books?page=17" templated="true"/&gt;
-    &lt;resource rel="book" href="/api/books/1234"&gt;
-        &lt;id&gt;1234&lt;/id&gt;
-        &lt;title&gt;Hitchhiker's Guide to the Galaxy&lt;/title&gt;
-        &lt;author&gt;Adams, Douglas&lt;/author&gt;
-    &lt;/resource&gt;
-    &lt;resource rel="book" href="/api/books/6789"&gt;
-        &lt;id&gt;6789&lt;/id&gt;
-        &lt;title&gt;Ancillary Justice&lt;/title&gt;
-        &lt;author&gt;Leckie, Ann&lt;/author&gt;
-    &lt;/resource&gt;
-    &lt;_page&gt;7&lt;/_page&gt;
-    &lt;_per_page&gt;2&lt;/_per_page&gt;
-    &lt;_total&gt;33&lt;/_total&gt;
-&lt;/resource&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;resource</span> <span class="na">rel=</span><span class="s">&quot;self&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books?page=7&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;first&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books?page=1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;prev&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books?page=6&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;next&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books?page=8&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;last&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books?page=17&quot;</span> <span class="na">templated=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;resource</span> <span class="na">rel=</span><span class="s">&quot;book&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books/1234&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;id&gt;</span>1234<span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Hitchhiker&#39;s Guide to the Galaxy<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;author&gt;</span>Adams, Douglas<span class="nt">&lt;/author&gt;</span>
+    <span class="nt">&lt;/resource&gt;</span>
+    <span class="nt">&lt;resource</span> <span class="na">rel=</span><span class="s">&quot;book&quot;</span> <span class="na">href=</span><span class="s">&quot;/api/books/6789&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;id&gt;</span>6789<span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Ancillary Justice<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;author&gt;</span>Leckie, Ann<span class="nt">&lt;/author&gt;</span>
+    <span class="nt">&lt;/resource&gt;</span>
+    <span class="nt">&lt;_page&gt;</span>7<span class="nt">&lt;/_page&gt;</span>
+    <span class="nt">&lt;_per_page&gt;</span>2<span class="nt">&lt;/_per_page&gt;</span>
+    <span class="nt">&lt;_total&gt;</span>33<span class="nt">&lt;/_total&gt;</span>
+<span class="nt">&lt;/resource&gt;</span>
+</code></pre></div>
 <h2 id="summary">Summary</h2>
 <p>With these three semantics &mdash; resources, links, and child resources &mdash;
 HAL allows you to describe any payload, and provide the hypertext controls
@@ -558,16 +564,6 @@ necessary to allow API consumers to know what resources they can access next.</p
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/mezzio/mezzio-hal/edit/master/docs/book/v1/hal.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>
