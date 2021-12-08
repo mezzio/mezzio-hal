@@ -1,4 +1,4 @@
-# mezzio-hal
+# Introduction
 
 This component provides tools for generating Hypertext Application Language
 (HAL) payloads for your APIs, in both JSON and XML formats.

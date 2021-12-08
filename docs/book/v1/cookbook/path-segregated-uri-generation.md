@@ -1,4 +1,4 @@
-# Using the ResourceGenerator in path-segregated middleware
+# Using the ResourceGenerator in Path-Segregated Middleware
 
 - Since 1.1.0.
 
