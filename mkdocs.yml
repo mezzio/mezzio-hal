@@ -10,30 +10,30 @@ nav:
     - Home: index.md
     - v2:
       - Introduction: v2/index.md
-      - Reference:
-        - "Hypertext Application Language": v2/hal.md
-        - "Links and Resources": v2/links-and-resources.md
+      - "Hypertext Application Language": v2/hal.md
+      - "Links and Resources": v2/links-and-resources.md
+      - "Generating Resources":
         - "Generating Resources from PHP Objects": v2/resource-generator.md
-        - "Generating Custom Resources": v2/cookbook/generating-custom-resources.md
-        - "Generating Representations": v2/representations.md
         - "Generating HAL for Doctrine Entities": v2/doctrine.md
-        - "Provided Factories": v2/factories.md
-      - Migration:
-          - "Migration From Version 1": v2/migration.md
+      - "Generating Representations": v2/representations.md
+      - "Provided Factories": v2/factories.md
       - Cookbook:
+          - "Generating Custom Resources": v2/cookbook/generating-custom-resources.md
           - "Generating Custom Links In Middleware and Request Handlers": v2/cookbook/generating-custom-links-in-middleware.md
           - "Using the ResourceGenerator in Path-Segregated Middleware": v2/cookbook/path-segregated-uri-generation.md
+      - Migration:
+          - "Migration From Version 1": v2/migration.md
     - v1:
       - Introduction: v1/index.md
-      - Reference:
-        - "Hypertext Application Language": v1/hal.md
-        - "Links and Resources": v1/links-and-resources.md
+      - "Hypertext Application Language": v1/hal.md
+      - "Links and Resources": v1/links-and-resources.md
+      - "Generating Resources":
         - "Generating Resources from PHP Objects": v1/resource-generator.md
-        - "Generating Custom Resources": v1/cookbook/generating-custom-resources.md
-        - "Generating Representations": v1/representations.md
         - "Generating HAL for Doctrine Entities": v1/doctrine.md
-        - "Provided Factories": v1/factories.md
+      - "Generating Representations": v1/representations.md
+      - "Provided Factories": v1/factories.md
       - Cookbook:
+          - "Generating Custom Resources": v1/cookbook/generating-custom-resources.md
           - "Generating Custom Links In Middleware and Request Handlers": v1/cookbook/generating-custom-links-in-middleware.md
           - "Using the ResourceGenerator in Path-Segregated Middleware": v1/cookbook/path-segregated-uri-generation.md
     - "_hidden-legacy-page-links":
