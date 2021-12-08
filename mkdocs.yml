@@ -2,6 +2,8 @@ docs_dir: docs/book
 site_dir: docs/html
 extra:
     project: Mezzio
+    installation:
+      config_provider_class: 'Mezzio\Hal\ConfigProvider'
     current_version: v2
     versions:
       - v2
@@ -10,6 +12,7 @@ nav:
     - Home: index.md
     - v2:
       - Introduction: v2/index.md
+      - Installation: v2/installation.md
       - "Hypertext Application Language": v2/hal.md
       - "Links and Resources": v2/links-and-resources.md
       - "Generating Resources":
