@@ -1,4 +1,4 @@
-# Generating custom resources
+# Generating Custom Resources
 
 The `ResourceGenerator` allows composing `Mezzio\Hal\ResourceGenerator\StrategyInterface`
 instances. The `StrategyInterface` defines the following:

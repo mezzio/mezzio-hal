@@ -1,4 +1,4 @@
-# Generating HAL from Doctrine
+# Generating HAL for Doctrine Entities
 
 > - Since 1.3.0
 
