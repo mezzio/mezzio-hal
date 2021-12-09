@@ -1,4 +1,4 @@
-# Provided factories
+# Provided Factories
 
 This component provides a number of factories for use with
 [PSR-11](https://www.php-fig.org/psr/psr-11/), in order to generate fully

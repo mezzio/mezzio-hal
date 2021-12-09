@@ -3,7 +3,7 @@
 This component provides two renderers, one each for creating JSON and XML
 payloads.
 
-Additionally, as noted in the [introduction](intro.md) examples, this component
+Additionally, as noted in the [introduction](index.md) examples, this component
 provides `Mezzio\Hal\HalResponseFactory` for generating a
 [PSR-7](https://www.php-fig.org/psr/psr-7/) response containing the HAL
 representation. This chapter dives into that with more detail.

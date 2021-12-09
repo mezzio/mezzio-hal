@@ -1,4 +1,4 @@
-# Using the ResourceGenerator in path-segregated middleware
+# Using the ResourceGenerator in Path-Segregated Middleware
 
 You may want to develop your API as a separate module that you can then drop in
 to an existing application; you may even want to [path-segregate](https://docs.mezzio.dev/mezzio/v3/features/router/piping/#path-segregation) it.

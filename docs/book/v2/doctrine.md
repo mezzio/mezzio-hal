@@ -1,4 +1,4 @@
-# Generating HAL from Doctrine
+# Generating HAL for Doctrine Entities
 
 [Doctrine](https://www.doctrine-project.org/) is a well-known and popular Object
 Relational Mapper; you will find it in use across pretty much every PHP
