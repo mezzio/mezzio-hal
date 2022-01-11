@@ -15,10 +15,7 @@ final class InMemoryContainer implements ContainerInterface
     /** @var array<string,mixed> */
     private $services = [];
 
-    /**
-     * @param string $id
-     * @return mixed
-     */
+    /** {@inheritDoc} */
     public function get(string $id)
     {
         if (! $this->has($id)) {
