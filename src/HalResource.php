@@ -396,15 +396,9 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return false;
         }
 
-        if (
-            ! array_reduce($value, function ($isResource, $item) {
-                return $isResource && $item instanceof self;
-            }, true)
-        ) {
-            return false;
-        }
-
-        return true;
+        return array_reduce($value, static function ($isResource, $item) {
+            return $isResource && $item instanceof self;
+        }, true);
     }
 
     private function serializeLinks(): array
