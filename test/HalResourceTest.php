@@ -329,40 +329,96 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $collection1 + $collection2], $new->getElements());
     }
 
-    public function testEmbedRaisesExceptionIfNewResourceDoesNotMatchStructureOfExisting(): void
+    public function testCanEmbedResourceEvenIfNewResourceDoesNotMatchStructureOfExistingOne(): void
     {
-        $resource1 = new HalResource(['foo' => 'bar']);
-        $resource2 = new HalResource(['bar' => 'baz']);
-
-        $resource = new HalResource(['foo' => $resource1]);
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('structurally inequivalent');
-        $resource->embed('foo', $resource2);
+        self::assertSame(
+            [
+                '_embedded' => [
+                    'foo' => [
+                        ['foo' => 'bar'],
+                        ['bar' => 'baz'],
+                    ],
+                ],
+            ],
+            (new HalResource(['foo' => new HalResource(['foo' => 'bar'])]))
+                ->embed('foo', new HalResource(['bar' => 'baz']))
+                ->toArray()
+        );
     }
 
-    public function testEmbedRaisesExceptionIfNewResourceDoesNotMatchCollectionResourceStructure(): void
+    public function testCanEmbedResourceEvenIfNewResourceDoesNotMatchCollectionResourceStructure(): void
     {
-        $resource1  = new HalResource(['foo' => 'bar']);
-        $resource2  = new HalResource(['foo' => 'baz']);
-        $resource3  = new HalResource(['bar' => 'bat']);
-        $collection = [$resource1, $resource2];
-
-        $resource = new HalResource(['foo' => $collection]);
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('structurally inequivalent');
-        $resource->embed('foo', $resource3);
+        self::assertSame(
+            [
+                '_embedded' => [
+                    'foo' => [
+                        ['foo' => 'bar'],
+                        ['foo' => 'baz'],
+                        ['bar' => 'bat'],
+                    ],
+                ],
+            ],
+            (new HalResource([
+                'foo' => [
+                    new HalResource(['foo' => 'bar']),
+                    new HalResource(['foo' => 'baz']),
+                ],
+            ]))
+                ->embed('foo', new HalResource(['bar' => 'bat']))
+                ->toArray()
+        );
     }
 
-    public function testEmbedRaisesExceptionIfResourcesInCollectionAreNotOfSameStructure(): void
+    /**
+     * HAL resources of different types can be embedded within the same parent: this is normal, since
+     * it is very much normal for JSONSchema to contain union types representing different types.
+     *
+     * In this example, we designed a traditional ECommerce scenario, where different products may
+     * have different field structure.
+     *
+     * @see https://github.com/mezzio/mezzio-hal/issues/50
+     */
+    public function testAllowsEmbeddedResourcesWithDifferentObjectProperties(): void
     {
-        $resource1  = new HalResource(['foo' => 'bar']);
-        $resource2  = new HalResource(['bar' => 'bat']);
-        $collection = [$resource1, $resource2];
+        $resource = new HalResource(
+            ['id' => 123],
+            [],
+            [
+                'some.resource' => [
+                    new HalResource([
+                        'id'     => 456,
+                        'name'   => 'a very cool hat',
+                        'colour' => 'yellow',
+                    ]),
+                    new HalResource([
+                        'id'      => 678,
+                        'name'    => 'industrial cleaner',
+                        'flavour' => 'lemongrass', // Intentional: array key is different between cleaners and clothing!
+                    ]),
+                ],
+            ]
+        );
 
-        $resource = new HalResource();
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('structurally inequivalent');
-        $resource->embed('foo', $collection);
+        self::assertSame(
+            [
+                'id'        => 123,
+                '_embedded' => [
+                    'some.resource' => [
+                        [
+                            'id'     => 456,
+                            'name'   => 'a very cool hat',
+                            'colour' => 'yellow',
+                        ],
+                        [
+                            'id'      => 678,
+                            'name'    => 'industrial cleaner',
+                            'flavour' => 'lemongrass',
+                        ],
+                    ],
+                ],
+            ],
+            $resource->toArray()
+        );
     }
 
     public function testWithElementsAddsNewDataToNewResourceInstance(): void

@@ -15,11 +15,8 @@ final class InMemoryContainer implements ContainerInterface
     /** @var array<string,mixed> */
     private $services = [];
 
-    /**
-     * @param string $id
-     * @return mixed
-     */
-    public function get($id)
+    /** {@inheritDoc} */
+    public function get(string $id)
     {
         if (! $this->has($id)) {
             throw new class ($id . ' was not found') extends RuntimeException implements NotFoundExceptionInterface {
@@ -29,11 +26,7 @@ final class InMemoryContainer implements ContainerInterface
         return $this->services[$id];
     }
 
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function has($id)
+    public function has(string $id): bool
     {
         return array_key_exists($id, $this->services);
     }

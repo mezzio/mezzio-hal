@@ -13,10 +13,8 @@ use RuntimeException;
 use Webmozart\Assert\Assert;
 
 use function array_key_exists;
-use function array_keys;
 use function array_map;
 use function array_merge;
-use function array_push;
 use function array_reduce;
 use function array_shift;
 use function array_walk;
@@ -26,7 +24,6 @@ use function gettype;
 use function in_array;
 use function is_array;
 use function is_object;
-use function sort;
 use function sprintf;
 
 /**
@@ -58,7 +55,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             $this->validateElementName($name, $context);
             if (
                 ! empty($value)
-                && ($value instanceof self || $this->isResourceCollection($value, $name, $context))
+                && ($value instanceof self || $this->isResourceCollection($value))
             ) {
                 $this->embedded[$name] = $value;
                 return;
@@ -69,7 +66,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         array_walk($embedded, function ($resource, $name) use ($context) {
             $this->validateElementName($name, $context);
             $this->detectCollisionWithData($name, $context);
-            if (! ($resource instanceof self || $this->isResourceCollection($resource, $name, $context))) {
+            if (! ($resource instanceof self || $this->isResourceCollection($resource))) {
                 throw new InvalidArgumentException(sprintf(
                     'Invalid embedded resource provided to %s constructor with name "%s"',
                     $context,
@@ -147,7 +144,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 
         if (
             ! empty($value)
-            && ($value instanceof self || $this->isResourceCollection($value, $name, __METHOD__))
+            && ($value instanceof self || $this->isResourceCollection($value))
         ) {
             return $this->embed($name, $value);
         }
@@ -211,7 +208,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     {
         $this->validateElementName($name, __METHOD__);
         $this->detectCollisionWithData($name, __METHOD__);
-        if (! $resource instanceof self && ! $this->isResourceCollection($resource, $name, __METHOD__)) {
+        if (! $resource instanceof self && ! $this->isResourceCollection($resource)) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects a %s instance or array of %s instances; received %s',
                 __METHOD__,
@@ -328,12 +325,6 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 
         // $resource is a HalResource; existing resource is also a HalResource
         if ($this->embedded[$name] instanceof self) {
-            $this->compareResources(
-                $this->embedded[$name],
-                $resource,
-                $name,
-                $context
-            );
             return [$this->embedded[$name], $resource];
         }
 
@@ -350,14 +341,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         }
 
         // $resource is a HalResource; existing collection present
-        $this->compareResources(
-            $collectionFirstResource,
-            $resource,
-            $name,
-            $context
-        );
-
-        array_push($collection, $resource);
+        $collection[] = $resource;
 
         return $collection;
     }
@@ -384,12 +368,6 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             ));
         }
 
-        $this->compareResources(
-            $originalFirstResource,
-            $collectionFirstResource,
-            $name,
-            $context
-        );
         return $original + $collection;
     }
 
@@ -412,23 +390,14 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     /**
      * @param null|object|HalResource[] $value
      */
-    private function isResourceCollection($value, string $name, string $context): bool
+    private function isResourceCollection($value): bool
     {
         if (! is_array($value)) {
             return false;
         }
 
-        if (
-            ! array_reduce($value, function ($isResource, $item) {
-                return $isResource && $item instanceof self;
-            }, true)
-        ) {
-            return false;
-        }
-
-        $resource = $this->firstResource($value);
-        return array_reduce($value, function ($matchesCollection, $item) use ($name, $resource, $context) {
-            return $matchesCollection && $this->compareResources($resource, $item, $name, $context);
+        return array_reduce($value, static function ($isResource, $item) {
+            return $isResource && $item instanceof self;
         }, true);
     }
 
@@ -507,24 +476,5 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         );
 
         return $embedded;
-    }
-
-    /**
-     * @throws InvalidArgumentException If $a and $b are not structurally equivalent.
-     */
-    private function compareResources(self $a, self $b, string $name, string $context): bool
-    {
-        $structureA = array_keys($a->getElements());
-        $structureB = array_keys($b->getElements());
-        sort($structureA);
-        sort($structureB);
-        if ($structureA !== $structureB) {
-            throw new InvalidArgumentException(sprintf(
-                '%s detected structurally inequivalent resources for element %s',
-                $context,
-                $name
-            ));
-        }
-        return true;
     }
 }

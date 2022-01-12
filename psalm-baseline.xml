@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="v4.14.0@14dcbc908ab2625cd7a74258ee6c740cbecc6140">
+<files psalm-version="4.18.1@dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb">
   <file src="src/HalResource.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_object($resource)</code>
     </DocblockTypeContradiction>
-    <MissingClosureParamType occurrences="14">
-      <code>$containsNonLinkItem</code>
-      <code>$isResource</code>
-      <code>$item</code>
-      <code>$item</code>
+    <MissingClosureParamType occurrences="7">
       <code>$key</code>
-      <code>$link</code>
       <code>$links</code>
-      <code>$matchesCollection</code>
       <code>$name</code>
       <code>$name</code>
       <code>$rel</code>
@@ -24,8 +18,7 @@
       <code>function ($item) {</code>
       <code>function (array $byRelation, LinkInterface $link) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="11">
-      <code>$item</code>
+    <MixedArgument occurrences="10">
       <code>$links</code>
       <code>$links</code>
       <code>$name</code>
@@ -82,9 +75,6 @@
       <code>$this-&gt;aggregateEmbeddedCollection($name, $resource, $context)</code>
       <code>HalResource|HalResource[]</code>
     </MixedReturnTypeCoercion>
-    <PossiblyNullArgument occurrences="1">
-      <code>$resource</code>
-    </PossiblyNullArgument>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>gettype($resource)</code>
     </RedundantConditionGivenDocblockType>
@@ -118,12 +108,6 @@
       <code>! is_string($rel)</code>
       <code>is_object($rel)</code>
     </DocblockTypeContradiction>
-    <MissingClosureParamType occurrences="4">
-      <code>$isInvalid</code>
-      <code>$isString</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MissingClosureParamType>
     <MixedArgument occurrences="1">
       <code>$rel</code>
     </MixedArgument>
