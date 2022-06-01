@@ -265,7 +265,7 @@ class DoctrinePaginatorTest extends TestCase
             ->willReturn('test');
 
         $this->request
-            ->expects(self::once())
+            ->expects(self::exactly(6))
             ->method('getQueryParams')
             ->willReturn(['page_num' => 3]);
 
@@ -386,8 +386,9 @@ class DoctrinePaginatorTest extends TestCase
             ->willReturn('test');
 
         $this->request
-            ->expects(self::never())
-            ->method('getQueryParams');
+            ->expects(self::exactly(5))
+            ->method('getQueryParams')
+            ->willReturn([]);
 
         $this->request
             ->expects(self::once())
