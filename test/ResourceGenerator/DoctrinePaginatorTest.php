@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function array_map;
-use function assert;
 use function count;
 use function range;
 
@@ -59,13 +58,10 @@ class DoctrinePaginatorTest extends TestCase
      */
     public function mockQuery(): AbstractQuery
     {
-        $mock = $this->getMockBuilder(AbstractQuery::class)
+        return $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
             ->setMethods(['getMaxResults', 'setFirstResult'])
             ->getMockForAbstractClass();
-
-        assert($mock instanceof AbstractQuery && $mock instanceof MockObject);
-        return $mock;
     }
 
     public function invalidPageCombinations(): iterable
