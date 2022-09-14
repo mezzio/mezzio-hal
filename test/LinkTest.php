@@ -167,7 +167,7 @@ class LinkTest extends TestCase
     }
 
     /**
-     * @psalm-return iterable<string, array{0: string|object}>
+     * @psalm-return iterable<string, array{0: string|TestAsset\Uri}>
      */
     public function validUriTypes(): iterable
     {
