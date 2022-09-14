@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c02ef2f1758a15228e778748f03b897e",
+    "content-hash": "6e0e024f7115c8ef88512ab730d19b3b",
     "packages": [
         {
             "name": "psr/container",
@@ -1087,6 +1087,7 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0 || ^10.0",
+                "doctrine/collections": "^1",
                 "doctrine/collections": "^1",
                 "phpstan/phpstan": "^1.4.1",
                 "phpstan/phpstan-phpunit": "^1",
