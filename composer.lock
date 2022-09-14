@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc87e1a4fa3dfe10c44fded2dd1a086a",
+    "content-hash": "c02ef2f1758a15228e778748f03b897e",
     "packages": [
         {
             "name": "psr/container",
@@ -729,16 +729,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.2.9",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "a951f614bd64dcd26137bc9b7b2637ddcfc57649"
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/a951f614bd64dcd26137bc9b7b2637ddcfc57649",
-                "reference": "a951f614bd64dcd26137bc9b7b2637ddcfc57649",
+                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
                 "shasum": ""
             },
             "require": {
@@ -790,7 +790,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.2.9"
+                "source": "https://github.com/composer/semver/tree/3.3.2"
             },
             "funding": [
                 {
@@ -806,7 +806,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-04T13:58:43+00:00"
+            "time": "2022-04-01T19:23:25+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -3576,16 +3576,16 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.15.2",
+            "version": "0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "31d15bbc0169a3c454e495e03fd8a6ccb663661b"
+                "reference": "45951541beef07e93e3ad197daf01da88e85c31d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/31d15bbc0169a3c454e495e03fd8a6ccb663661b",
-                "reference": "31d15bbc0169a3c454e495e03fd8a6ccb663661b",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/45951541beef07e93e3ad197daf01da88e85c31d",
+                "reference": "45951541beef07e93e3ad197daf01da88e85c31d",
                 "shasum": ""
             },
             "require": {
@@ -3593,7 +3593,7 @@
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "ext-simplexml": "*",
                 "php": "^7.1 || ^8.0",
-                "vimeo/psalm": "dev-master || dev-4.x || ^4.0"
+                "vimeo/psalm": "dev-master || dev-4.x || ^4.5"
             },
             "conflict": {
                 "phpunit/phpunit": "<7.5"
@@ -3630,9 +3630,9 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.15.2"
+                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.17.0"
             },
-            "time": "2021-05-29T19:11:38+00:00"
+            "time": "2022-06-14T17:05:57+00:00"
         },
         {
             "name": "psr/cache",
