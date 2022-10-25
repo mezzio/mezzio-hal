@@ -7,7 +7,6 @@ namespace Mezzio\Hal\Exception;
 use Mezzio\Hal\Metadata\AbstractMetadata;
 use RuntimeException;
 
-use function get_class;
 use function sprintf;
 
 class UnknownMetadataTypeException extends RuntimeException implements ExceptionInterface
@@ -16,7 +15,7 @@ class UnknownMetadataTypeException extends RuntimeException implements Exception
     {
         return new self(sprintf(
             'Encountered unknown metadata type %s; no strategy available for creating resource from this metadata',
-            get_class($metadata)
+            $metadata::class
         ));
     }
 

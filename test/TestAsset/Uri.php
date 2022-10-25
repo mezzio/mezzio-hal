@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\TestAsset;
 
-class Uri
+use Stringable;
+
+class Uri implements Stringable
 {
     /** @var string */
     private $uri;

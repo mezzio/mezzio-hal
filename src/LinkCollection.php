@@ -44,7 +44,7 @@ trait LinkCollection
     /**
      * {@inheritDoc}
      */
-    public function withLink(LinkInterface $link): self
+    public function withLink(LinkInterface $link): static
     {
         if (in_array($link, $this->links, true)) {
             return $this;
@@ -58,7 +58,7 @@ trait LinkCollection
     /**
      * {@inheritDoc}
      */
-    public function withoutLink(LinkInterface $link): self
+    public function withoutLink(LinkInterface $link): static
     {
         if (! in_array($link, $this->links, true)) {
             return $this;
