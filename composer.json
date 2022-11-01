@@ -49,15 +49,15 @@
         "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
-        "doctrine/orm": "^2.9.4",
+        "doctrine/orm": "^2.13.3",
         "laminas/laminas-coding-standard": "~2.4.0",
         "laminas/laminas-hydrator": "^4.3",
         "laminas/laminas-paginator": "^2.11",
         "mezzio/mezzio-helpers": "^5.7",
-        "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.5.8",
+        "phpspec/prophecy-phpunit": "^2.0.1",
+        "phpunit/phpunit": "^9.5.26",
         "psalm/plugin-phpunit": "^0.17.0",
-        "vimeo/psalm": "^4.3"
+        "vimeo/psalm": "^4.29.0"
     },
     "provide": {
         "psr/link-implementation": "1.0"
