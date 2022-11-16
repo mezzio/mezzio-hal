@@ -19,7 +19,6 @@ use function array_reduce;
 use function array_shift;
 use function array_walk;
 use function count;
-use function get_class;
 use function gettype;
 use function in_array;
 use function is_array;
@@ -214,7 +213,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
                 __METHOD__,
                 self::class,
                 self::class,
-                is_object($resource) ? get_class($resource) : gettype($resource)
+                is_object($resource) ? $resource::class : gettype($resource)
             ));
         }
         $new                  = clone $this;

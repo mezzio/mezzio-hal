@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.18.1@dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb">
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="src/HalResource.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_object($resource)</code>
@@ -11,20 +11,18 @@
       <code>$name</code>
       <code>$rel</code>
       <code>$resource</code>
-      <code>$resource</code>
       <code>$value</code>
     </MissingClosureParamType>
     <MissingClosureReturnType occurrences="2">
       <code>function ($item) {</code>
       <code>function (array $byRelation, LinkInterface $link) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="10">
+    <MixedArgument occurrences="9">
       <code>$links</code>
       <code>$links</code>
       <code>$name</code>
       <code>$name</code>
       <code>$relations</code>
-      <code>$resource</code>
       <code>$resource</code>
       <code>$value</code>
       <code>$value</code>
@@ -101,15 +99,8 @@
     </UndefinedDocblockClass>
   </file>
   <file src="src/Link.php">
-    <DocblockTypeContradiction occurrences="5">
-      <code>! is_string($attribute)</code>
-      <code>! is_string($href)</code>
-      <code>! is_string($rel)</code>
-      <code>! is_string($rel)</code>
-      <code>is_object($rel)</code>
-    </DocblockTypeContradiction>
     <MixedArgument occurrences="1">
-      <code>$rel</code>
+      <code>is_object($rel) ? $rel::class : gettype($rel)</code>
     </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$value</code>
@@ -121,17 +112,19 @@
     <PossiblyInvalidPropertyAssignmentValue occurrences="1">
       <code>$this-&gt;validateRelation($relation)</code>
     </PossiblyInvalidPropertyAssignmentValue>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(string) $href</code>
-    </RedundantCastGivenDocblockType>
-    <RedundantCondition occurrences="1">
+    <RedundantCondition occurrences="3">
+      <code>gettype($rel)</code>
+      <code>is_object($href)</code>
       <code>is_string($uri)</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>gettype($rel)</code>
-    </RedundantConditionGivenDocblockType>
-    <TypeDoesNotContainType occurrences="1">
+    <TypeDoesNotContainType occurrences="7">
+      <code>! is_string($attribute)</code>
+      <code>! is_string($rel)</code>
+      <code>! is_string($rel)</code>
       <code>(string) $uri</code>
+      <code>gettype($href)</code>
+      <code>is_object($href)</code>
+      <code>is_object($rel)</code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/LinkCollection.php">
@@ -270,6 +263,7 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
+    <MethodSignatureMismatch occurrences="1"/>
     <MixedArgument occurrences="2">
       <code>$item</code>
       <code>$item</code>
@@ -290,7 +284,6 @@
       <code>$perPage</code>
       <code>$perPage</code>
     </PossiblyNullOperand>
-    <TraitMethodSignatureMismatch occurrences="1"/>
     <UndefinedInterfaceMethod occurrences="1">
       <code>count</code>
     </UndefinedInterfaceMethod>
@@ -311,6 +304,9 @@
     <DocblockTypeContradiction occurrences="1">
       <code>[]</code>
     </DocblockTypeContradiction>
+    <MethodSignatureMismatch occurrences="1">
+      <code>protected function generateSelfLink(</code>
+    </MethodSignatureMismatch>
     <MixedArgument occurrences="8">
       <code>$metadata-&gt;getQueryStringArguments() ?? []</code>
       <code>$metadata-&gt;getRoute()</code>
@@ -332,9 +328,6 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>$request-&gt;getQueryParams()</code>
     </RedundantConditionGivenDocblockType>
-    <TraitMethodSignatureMismatch occurrences="1">
-      <code>protected function generateSelfLink(</code>
-    </TraitMethodSignatureMismatch>
     <UndefinedMethod occurrences="6">
       <code>getQueryStringArguments</code>
       <code>getQueryStringArguments</code>
@@ -353,6 +346,9 @@
     <InvalidScalarArgument occurrences="1">
       <code>$page</code>
     </InvalidScalarArgument>
+    <MethodSignatureMismatch occurrences="1">
+      <code>protected function generateSelfLink(</code>
+    </MethodSignatureMismatch>
     <MixedArgument occurrences="1">
       <code>$url</code>
     </MixedArgument>
@@ -365,9 +361,6 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>$queryStringArgs !== null</code>
     </RedundantConditionGivenDocblockType>
-    <TraitMethodSignatureMismatch occurrences="1">
-      <code>protected function generateSelfLink(</code>
-    </TraitMethodSignatureMismatch>
     <UndefinedMethod occurrences="2">
       <code>getUrl</code>
       <code>getUrl</code>
@@ -468,8 +461,6 @@
       <code>CustomUrlHelper</code>
       <code>CustomUrlHelper</code>
       <code>CustomUrlHelper</code>
-      <code>CustomUrlHelper</code>
-      <code>CustomUrlHelper</code>
     </UndefinedClass>
   </file>
   <file src="test/LinkGeneratorFactoryTest.php">
@@ -489,6 +480,9 @@
     </UndefinedClass>
   </file>
   <file src="test/LinkTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$uri</code>
+    </ArgumentTypeCoercion>
     <MixedArgument occurrences="7">
       <code>$name</code>
       <code>$name</code>
@@ -498,12 +492,6 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$uri</code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast occurrences="1">
-      <code>$uri</code>
-    </PossiblyInvalidCast>
     <TooFewArguments occurrences="1">
       <code>new Link()</code>
     </TooFewArguments>

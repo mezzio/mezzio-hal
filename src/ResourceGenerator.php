@@ -11,7 +11,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use function class_exists;
 use function class_implements;
 use function class_parents;
-use function get_class;
 use function in_array;
 use function is_object;
 use function is_string;
@@ -120,7 +119,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
         }
 
         $metadata     = $this->getClassMetadata($instance);
-        $metadataType = get_class($metadata);
+        $metadataType = $metadata::class;
 
         if (! isset($this->strategies[$metadataType])) {
             throw Exception\UnknownMetadataTypeException::forMetadata($metadata);
@@ -138,7 +137,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
 
     private function getClassMetadata(object $instance): AbstractMetadata
     {
-        $class = get_class($instance);
+        $class = $instance::class;
         if (! $this->metadataMap->has($class)) {
             foreach (class_parents($instance) as $parent) {
                 if ($this->metadataMap->has($parent)) {
