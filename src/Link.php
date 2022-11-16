@@ -9,7 +9,6 @@ use Psr\Link\EvolvableLinkInterface;
 
 use function array_filter;
 use function array_reduce;
-use function get_class;
 use function gettype;
 use function in_array;
 use function is_array;
@@ -97,7 +96,7 @@ class Link implements EvolvableLinkInterface
             throw new InvalidArgumentException(sprintf(
                 '%s expects a string URI or an object implementing __toString; received %s',
                 __METHOD__,
-                is_object($href) ? get_class($href) : gettype($href)
+                is_object($href) ? $href::class : gettype($href)
             ));
         }
         $new      = clone $this;
@@ -116,7 +115,7 @@ class Link implements EvolvableLinkInterface
             throw new InvalidArgumentException(sprintf(
                 '%s expects a non-empty string relation type; received %s',
                 __METHOD__,
-                is_object($rel) ? get_class($rel) : gettype($rel)
+                is_object($rel) ? $rel::class : gettype($rel)
             ));
         }
 
@@ -195,7 +194,7 @@ class Link implements EvolvableLinkInterface
             throw new InvalidArgumentException(sprintf(
                 '%s expects the $name argument to be a non-empty string; received %s',
                 $context,
-                is_object($name) ? get_class($name) : gettype($name)
+                is_object($name) ? $name::class : gettype($name)
             ));
         }
     }
@@ -212,7 +211,7 @@ class Link implements EvolvableLinkInterface
             throw new InvalidArgumentException(sprintf(
                 '%s expects the $value to be a PHP primitive or array of strings; received %s',
                 $context,
-                is_object($value) ? get_class($value) : gettype($value)
+                is_object($value) ? $value::class : gettype($value)
             ));
         }
 
@@ -248,7 +247,7 @@ class Link implements EvolvableLinkInterface
         if (! is_array($relation) && (! is_string($relation) || empty($relation))) {
             throw new InvalidArgumentException(sprintf(
                 '$relation argument must be a string or array of strings; received %s',
-                is_object($relation) ? get_class($relation) : gettype($relation)
+                is_object($relation) ? $relation::class : gettype($relation)
             ));
         }
 
