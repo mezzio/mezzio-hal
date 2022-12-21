@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="mezzio-hal">
 
-    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v1/representations/">
+    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v2/installation/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Generating Representations - mezzio-hal - Laminas Docs</title>
+    <title>Installation - mezzio-hal - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,18 +134,16 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
         <a href="../" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -183,8 +181,8 @@
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Generating Representations</a>
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Generating Representations</a>
     </li>
 
                     
@@ -220,6 +218,29 @@
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration From Version 1</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -268,13 +289,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v1
+                v2
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v2/" class="dropdown-item">
+                    <a href="../" class="dropdown-item active">
                         
                             v2 (latest)
                         
@@ -282,7 +303,7 @@
                 
             
                 
-                    <a href="../" class="dropdown-item active">
+                    <a href="../../v1/" class="dropdown-item">
                         
                             v1
                         
@@ -317,29 +338,6 @@
 
     
     
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#renderers" class="toc__link nav-link">Renderers</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#halresponsefactory" class="toc__link nav-link">HalResponseFactory</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#using-the-factory" class="toc__link nav-link">Using the factory</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#forcing-collections-for-relations" class="toc__link nav-link">Forcing collections for relations</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
 
                 
 
@@ -360,7 +358,7 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Generating Representations</li>
+                <li class="breadcrumb-item active" aria-current="page">Installation</li>
             
         
     </ol>
@@ -368,165 +366,128 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
 
 
+    <h1>Installation</h1>
+<div class="toc">
+    <h6 class="toc__headline">On this page</h6>
+    <ul class="toc__list">
+        <li class="toc__entry">
+            <a href="#standard-installation" class="toc__link nav-link">Standard Installation</a>
+        </li>
+
+        
+        <li class="toc__entry">
+            <a href="#installation-for-mezzio-and-laminas-mvc-application" class="toc__link nav-link">
+                Installation for a
+                Mezzio
+                
+                
+                Application
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+<h2 id="standard-installation">Standard Installation</h2>
+<p>To install the library use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
+
+
+
+<h2 id="installation-for-mezzio-and-laminas-mvc-application">
+    Installation for a
+    Mezzio
+    
+    
+    Application
+</h2>
+
+<h3>Installation and Automated Configuration</h3>
+<p>
+    The <a href="https://docs.laminas.dev/laminas-component-installer/">laminas-component-installer</a>
+    is the recommended installation method when using in
+    a Mezzio-based
+    
+     application.
+    It will automatically inject
+    the config-provider
+    
+    
+    in the configuration during the installation process.
+</p>
+
+<blockquote>
+    <h3>Installation Requirements</h3>
+    <p>
+        The following descriptions depends on the laminas-component-installer component,
+         so be sure to have it installed before getting started.
+    </p>
+
+    <h4>Global Installation</h4>
+    <p>
+        With a <a href="https://docs.laminas.dev/laminas-component-installer/#global-installation">global installation</a>
+        of laminas-component-installer it can be used for all projects without a
+        reinstallation.
+    </p>
+    <pre><code class="language-bash">$ composer global require laminas/laminas-component-installer</code></pre>
+    <h4>As Development Dependency</h4>
+    <pre><code class="language-bash">$ composer require --dev laminas/laminas-component-installer</code></pre>
+</blockquote>
+
+<h4>Install mezzio-hal and Inject Configuration</h4>
+<p>To install the library use Composer:</p>
+<pre><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
+<p>
+    This will install an initial set of dependencies and it will also prompt to
+    inject the component configuration.
+</p>
+<ul>
+    
+    <li>For a Mezzio application, choose <code>config/config.php</code>.</li>
+    
+    
+</ul>
+<p>
+    If additional dependencies are to be installed, the option for other packages
+    can be remembered.
+</p>
+
+<details><summary>Installation and Manual Configuration</summary>
+<p>
+    If the installer is not used, the manual configuration is needed to add the
+    component to the application.
+</p>
+
+<h4>Install mezzio-hal</h4>
+<p>To install the library use Composer:</p>
+<pre><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
+
+
+    <h4>Manual Configuration for a Mezzio-based Application</h4>
+    <p>
+        Add the configuration provider of mezzio-hal to the configuration file,
+        e.g. <code>config/config.php</code>:
+    </p>
+
+<pre data-line="5"><code class="language-php">
+$aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
+    // …
+    Mezzio\ConfigProvider::class,
+    Mezzio\Router\ConfigProvider::class,
+    Mezzio\Hal\ConfigProvider, // Add this line
+    // …
+]);
+</code></pre>
+
+
+
+</details>
 
 
     
-    
-
-    <h1 id="generating-representations">Generating Representations</h1>
-<p>This component provides two renderers, one each for creating JSON and XML
-payloads.</p>
-<p>Additionally, as noted in the <a href="../">introduction</a> examples, this component
-provides <code>Mezzio\Hal\HalResponseFactory</code> for generating a
-<a href="https://www.php-fig.org/psr/psr-7/">PSR-7</a> response containing the HAL
-representation. This chapter dives into that with more detail.</p>
-<h2 id="renderers">Renderers</h2>
-<p>All renderers implement <code>Mezzio\Hal\Renderer\RendererInterface</code>:</p>
-<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\Renderer;
-
-use Mezzio\Hal\HalResource;
-
-interface RendererInterface
-{
-    public function render(HalResource $resource) : string;
-}</code></pre>
-<p>Two implementations are provided, <code>Mezzio\Hal\Renderer\JsonRenderer</code> and
-<code>Mezzio\Hal\Renderer\XmlRenderer</code></p>
-<h3 id="jsonrenderer">JsonRenderer</h3>
-<p>The <code>JsonRenderer</code> constructor allows you to specify a bitmask of flags for use
-with <code>json_encode()</code>. By default, if none are provided, it uses the value of
-<code>JsonRenderer::DEFAULT_JSON_FLAGS</code>, which evaluates to:</p>
-<pre class="highlight"><code class="language-php">JSON_UNESCAPED_SLASHES
-| JSON_UNESCAPED_UNICODE
-| JSON_PRESERVE_ZERO_FRACTION</code></pre>
-<p>When your application is in "debug" mode, it also adds the <code>JSON_PRETTY_PRINT</code>
-flag to the default list, in order to provide human-readable JSON output.</p>
-<h3 id="xmlrenderer">XmlRenderer</h3>
-<p>The <code>XmlRenderer</code> produces XML representations of HAL resources. It has no
-constructor arguments at this time.</p>
-<h2 id="halresponsefactory">HalResponseFactory</h2>
-<p><code>HalResponseFactory</code> generates a PSR-7 response containing a representation of
-the provided <code>HalResource</code> instance. In order to keep the component agnostic of
-PSR-7 implementation, <code>HalResponseFactory</code> itself composes a callable factory
-capable of producing an empty PSR-7 response.</p>
-<p>As an example:</p>
-<pre class="highlight"><code class="language-php">use Slim\Http\Response;
-use Slim\Http\Stream;
-use Mezzio\Hal\HalResponseFactory;
-
-$factory = new HalResponseFactory(
-    function () {
-        return new Response();
-    }
-);</code></pre>
-<p>Additionally, the <code>HalResponseFactory</code> constructor can accept the following
-arguments, with the described defaults if none is provided:</p>
-<ul>
-<li>A <code>JsonRenderer</code> instance is created if none is provided.</li>
-<li>An <code>XmlRenderer</code> instance is created if none is provided.</li>
-</ul>
-<p>We provide a <a href="https://www.php-fig.org/psr/psr-11">PSR-11</a> compatible factory for
-generating the <code>HalResponseFactory</code>, described in <a href="../factories/#laminasmezziohalhalresponsefactoryfactory">the factories
-chapter</a>.</p>
-<h2 id="using-the-factory">Using the factory</h2>
-<p>The factory exposes one method:</p>
-<pre class="highlight"><code class="language-php">use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Mezzio\Hal\HalResource;
-
-public function createResponse(
-    ServerRequestInterface $request,
-    HalResource $resource,
-    string $mediaType = self::DEFAULT_CONTENT_TYPE
-) : ResponseInterface {</code></pre>
-<p>Generally speaking, you'll pass the current request instance, and the resource
-for which you want to generate a response, and the factory will return a
-response based on its response prototype, with the following:</p>
-<ul>
-<li>A <code>Content-Type</code> header with the base media type of <code>application/hal</code>.</li>
-<li>A message body containing the representation.</li>
-</ul>
-<p>The request instance is used to determine what representation to create, based
-on the <code>Accept</code> header. If it matches a JSON media type, a JSON representation
-is created, and the <code>Content-Type</code> will be appended with <code>+json</code>; for XML, an
-XML representation is created, and the <code>Content-Type</code> will be appended with
-<code>+xml</code>. If no media type is matched, XML is generated.</p>
-<p>One practice often used is to provide a <em>custom media type</em> for your
-representations. While they will still be HAL, this allows you to document the
-specific structure of your resources, and potentially even validate them against
-JSON schema.</p>
-<p>To do this, pass the media type when creating the response:</p>
-<pre class="highlight"><code class="language-php">$response = $factory-&gt;createResponse(
-    $request,
-    $resource,
-    'application/vnd.book'
-);</code></pre>
-<p><em>Do not</em> pass the format (e.g., <code>+json</code>, <code>+xml</code>) when doing so; the factory will
-append the appropriate one based on content negotiation.</p>
-<h2 id="forcing-collections-for-relations">Forcing collections for relations</h2>
-<p>HAL allows links and embedded resources to be represented as:</p>
-<ul>
-<li>a single object</li>
-<li>an array of objects of the same type</li>
-</ul>
-<p>Internally, this package checks to see if only one of the item exists, and, if
-so, it will render it by itself. However, there are times you may want to force
-an array representation. As an example, if your resource models a car, and you
-have a <code>wheels</code> relation, it would not make sense to return a single wheel, even
-if that's all the car currently has associated with it.</p>
-<p>To accommodate this, we provide two features.</p>
-<p>For links, you may pass a special attribute, <code>Mezzio\Hal\Link::AS_COLLECTION</code>,
-with a boolean value of <code>true</code>; when encountered, this will then be rendered as
-an array of links, even if only one link for that relation is present.</p>
-<pre class="highlight"><code class="language-php">$link = new Link(
-    'wheels',
-    '/api/car/XXXX-YYYY-ZZZZ/wheels/111',
-    false,
-    [Link::AS_COLLECTION =&gt; true]
-);
-
-$resource = $resource-&gt;withLink($link);</code></pre>
-<p>In the above, you will then get the following within your representation:</p>
-<pre class="highlight"><code class="language-json">"_links": {
-  "wheels": [
-    {"href": "/api/car/XXXX-YYYY-ZZZZ/wheels/111"}
-  ]
-}</code></pre>
-<p>To force an embedded resource to be rendered within an array, you have two
-options.</p>
-<p>First, and simplest, pass the resource within an array when calling
-<code>withElement()</code>, <code>embed()</code>, or passing data to the constructor:</p>
-<pre class="highlight"><code class="language-php">// Constructor:
-$resource = new HalResource(['wheels' =&gt; [$wheel]]);
-
-// withElement():
-$resource = $resource-&gt;withElement('wheels', [$wheel]);
-
-// embed():
-$resource = $resource-&gt;embed('wheels', [$wheel]);</code></pre>
-<p>Alternately, you can call the <code>HalResource::embed</code> method with only the
-resource, passing the method a third argument, a flag indicating whether or not
-to force an array:</p>
-<pre class="highlight"><code class="language-php">$resource = $resource-&gt;embed('wheels', $wheel, true);</code></pre>
-<p>In each of these cases, assuming no other wheels were provided to the final
-resource, you might get a representation such as the following:</p>
-<pre class="highlight"><code class="language-json">"_embedded": {
-  "wheels": [
-    {
-      "_links" =&gt; {"self": {"href": "..."}}
-      "id": "..."
-    },
-  ]
-}</code></pre>
 
 
 
@@ -537,10 +498,10 @@ resource, you might get a representation such as the following:</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../doctrine/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Generating HAL for Doctrine Entities
+                    Introduction
                 </a>
             
         </li>
@@ -548,9 +509,9 @@ resource, you might get a representation such as the following:</p>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../factories/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../hal/">
                     <small class="page-nav__label">Next</small>
-                    Provided Factories
+                    Hypertext Application Language
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -593,18 +554,16 @@ resource, you might get a representation such as the following:</p>
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
         <a href="../" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Installation</a>
     </li>
 
                     
@@ -642,8 +601,8 @@ resource, you might get a representation such as the following:</p>
 
                     
                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Generating Representations</a>
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Generating Representations</a>
     </li>
 
                     
@@ -679,6 +638,29 @@ resource, you might get a representation such as the following:</p>
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../migration/" class="subnavigation__link">Migration From Version 1</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             

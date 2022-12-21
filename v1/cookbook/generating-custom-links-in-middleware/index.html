@@ -5,7 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications"> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="2.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="mezzio-hal">
+
     <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v1/cookbook/generating-custom-links-in-middleware/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -141,37 +150,25 @@
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="../../hal/" class="subnavigation__link">HAL</a>
+        <a href="../../hal/" class="subnavigation__link">Hypertext Application Language</a>
     </li>
 
-            
-                
+                    
+                        
     <li class="subnavigation__list-item ">
         <a href="../../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../../representations/" class="subnavigation__link">Representations</a>
+        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -181,13 +178,19 @@
     </li>
 
             
-                
-    <li class="subnavigation__list-item ">
-        <a href="../../factories/" class="subnavigation__link">Factories</a>
+        </ul>
     </li>
 
-            
-        </ul>
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../factories/" class="subnavigation__link">Provided Factories</a>
     </li>
 
                     
@@ -197,6 +200,12 @@
         <ul class="subnavigation__list">
             
                 
+    <li class="subnavigation__list-item ">
+        <a href="../generating-custom-resources/" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
+                
     <li class="subnavigation__list-item subnavigation__list-item--active">
         <a href="./" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
@@ -204,7 +213,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -288,7 +297,7 @@
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                    <a href="https://github.com/mezzio/mezzio-hal" class="header__link header__link--github" title="Go to repository of mezzio-hal">
                         <i class="fa fa-github"></i> GitHub
                     </a>
                 
@@ -374,7 +383,7 @@
         <h2 class="chapter__headline">Cookbook</h2>
     
 
-    <h1 id="generating-custom-links-in-middleware-and-request-handlers">Generating custom links in middleware and request handlers</h1>
+    <h1 id="generating-custom-links-in-middleware-and-request-handlers">Generating Custom Links In Middleware and Request Handlers</h1>
 <p>In most cases, you can rely on the <code>ResourceGenerator</code> to generate self
 relational links, and, in the case of paginated collections, pagination links.</p>
 <p>What if you want to generate other links to include in your resources, though?</p>
@@ -392,19 +401,17 @@ generator via getter methods:</p>
 middleware, and assigned it to the <code>$resourceGenerator</code> property.</p>
 <p>The link we want to generate will look something like
 <code>/api/books?query={searchParms}</code>, and map to a route named <code>books</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="x">$searchLink = $this-&gt;resourceGenerator</span>
-<span class="x">    -&gt;getLinkGenerator()</span>
-<span class="x">    -&gt;templatedFromRoute(</span>
-<span class="x">        &#39;search&#39;,</span>
-<span class="x">        $request,</span>
-<span class="x">        &#39;books&#39;,</span>
-<span class="x">        [],</span>
-<span class="x">        [&#39;query&#39; =&gt; &#39;{searchTerms}&#39;]</span>
-<span class="x">    );</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">$searchLink = $this-&gt;resourceGenerator
+    -&gt;getLinkGenerator()
+    -&gt;templatedFromRoute(
+        'search',
+        $request,
+        'books',
+        [],
+        ['query' =&gt; '{searchTerms}']
+    );</code></pre>
 <p>You could then compose it in your resource:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$resource = $resource-&gt;withLink($searchLink);</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">$resource = $resource-&gt;withLink($searchLink);</code></pre>
 <h2 id="adding-metadata-for-generated-links">Adding metadata for generated links</h2>
 <p>In our second scenario, we'll consider a collection endpoint. It might include a
 <code>per_page</code> query string argument, to allow defining how many results to return
@@ -413,36 +420,35 @@ string. We know these at <em>runtime</em>, but not at the time we create our
 configuration, so we need to inject them <em>after</em> we have our metadata created,
 but <em>before</em> we generate our resource, so that the pagination links are
 correctly generated.</p>
-<div class="highlight"><pre><span></span><code><span class="x">$queryParams = $request-&gt;getQueryParams();</span>
-<span class="x">$query       = $queryParams[&#39;query&#39;] ?? &#39;&#39;;</span>
-<span class="x">$perPage     = $queryParams[&#39;per_page&#39;] ?? 25;</span>
-<span class="x">$sort        = $queryParams[&#39;sort&#39;] ?? &#39;&#39;;</span>
-<span class="x">$metadataMap = $this-&gt;resourceGenerator-&gt;getMetadataMap();</span>
-<span class="x">$metadata    = $metadataMap-&gt;get(BookCollection::class);</span>
+<pre class="highlight"><code class="language-php">$queryParams = $request-&gt;getQueryParams();
+$query       = $queryParams['query'] ?? '';
+$perPage     = $queryParams['per_page'] ?? 25;
+$sort        = $queryParams['sort'] ?? '';
+$metadataMap = $this-&gt;resourceGenerator-&gt;getMetadataMap();
+$metadata    = $metadataMap-&gt;get(BookCollection::class);
 
-<span class="x">$metadataQuery = $origMetadataQuery = $metadata-&gt;getQueryStringArguments();</span>
+$metadataQuery = $origMetadataQuery = $metadata-&gt;getQueryStringArguments();
 
-<span class="x">if (&#39;&#39; !== $query) {</span>
-<span class="x">    $metadataQuery = array_merge($metadataQuery, [&#39;query&#39; =&gt; $query]);</span>
-<span class="x">}</span>
+if ('' !== $query) {
+    $metadataQuery = array_merge($metadataQuery, ['query' =&gt; $query]);
+}
 
-<span class="x">if (&#39;&#39; !== $perPage) {</span>
-<span class="x">    $metadataQuery = array_merge($metadataQuery, [&#39;per_page&#39; =&gt; $perPage]);</span>
-<span class="x">}</span>
+if ('' !== $perPage) {
+    $metadataQuery = array_merge($metadataQuery, ['per_page' =&gt; $perPage]);
+}
 
-<span class="x">if (&#39;&#39; !== $sort) {</span>
-<span class="x">    $metadataQuery = array_merge($metadataQuery, [&#39;sort&#39; =&gt; $sort]);</span>
-<span class="x">}</span>
+if ('' !== $sort) {
+    $metadataQuery = array_merge($metadataQuery, ['sort' =&gt; $sort]);
+}
 
-<span class="x">$metadata-&gt;setQueryStringArguments($metadataQuery);</span>
+$metadata-&gt;setQueryStringArguments($metadataQuery);
 
-<span class="x">// ...</span>
+// ...
 
-<span class="x">$resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);</span>
+$resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);
 
-<span class="x">// Reset query string arguments</span>
-<span class="x">$metadata-&gt;setQueryStringArguments($origMetadataQuery);</span>
-</code></pre></div>
+// Reset query string arguments
+$metadata-&gt;setQueryStringArguments($origMetadataQuery);</code></pre>
 <p>This will lead to links with URIs such as
 <code>/api/books?query=Adams&amp;per_page=5&amp;sort=DESC&amp;page=4</code>.</p>
 
@@ -455,8 +461,10 @@ correctly generated.</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../factories/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../generating-custom-resources/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Generating Custom Resources
                 </a>
             
         </li>
@@ -465,7 +473,9 @@ correctly generated.</p>
         <li class="page-nav__item">
             
                 <a rel="next" class="page-nav__link page-nav__link--next" href="../path-segregated-uri-generation/">
-                    Next <i class="fa fa-chevron-right"></i>
+                    <small class="page-nav__label">Next</small>
+                    Using the ResourceGenerator in Path-Segregated Middleware
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -523,37 +533,25 @@ correctly generated.</p>
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="../../hal/" class="subnavigation__link">HAL</a>
+        <a href="../../hal/" class="subnavigation__link">Hypertext Application Language</a>
     </li>
 
-            
-                
+                    
+                        
     <li class="subnavigation__list-item ">
         <a href="../../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../../representations/" class="subnavigation__link">Representations</a>
+        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -563,13 +561,19 @@ correctly generated.</p>
     </li>
 
             
-                
-    <li class="subnavigation__list-item ">
-        <a href="../../factories/" class="subnavigation__link">Factories</a>
+        </ul>
     </li>
 
-            
-        </ul>
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../factories/" class="subnavigation__link">Provided Factories</a>
     </li>
 
                     
@@ -579,6 +583,12 @@ correctly generated.</p>
         <ul class="subnavigation__list">
             
                 
+    <li class="subnavigation__list-item ">
+        <a href="../generating-custom-resources/" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
+                
     <li class="subnavigation__list-item subnavigation__list-item--active">
         <a href="./" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
@@ -586,7 +596,7 @@ correctly generated.</p>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -662,7 +672,7 @@ correctly generated.</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/mezzio/mezzio-hal/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -672,7 +682,7 @@ correctly generated.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

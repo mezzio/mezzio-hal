@@ -5,7 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications"> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="2.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="mezzio-hal">
+
     <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v1/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -141,37 +150,25 @@
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="hal/" class="subnavigation__link">HAL</a>
+        <a href="hal/" class="subnavigation__link">Hypertext Application Language</a>
     </li>
 
-            
-                
+                    
+                        
     <li class="subnavigation__list-item ">
         <a href="links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="representations/" class="subnavigation__link">Representations</a>
+        <a href="resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -181,13 +178,19 @@
     </li>
 
             
-                
-    <li class="subnavigation__list-item ">
-        <a href="factories/" class="subnavigation__link">Factories</a>
+        </ul>
     </li>
 
-            
-        </ul>
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="factories/" class="subnavigation__link">Provided Factories</a>
     </li>
 
                     
@@ -198,13 +201,19 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="cookbook/generating-custom-resources/" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -288,7 +297,7 @@
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                    <a href="https://github.com/mezzio/mezzio-hal" class="header__link header__link--github" title="Go to repository of mezzio-hal">
                         <i class="fa fa-github"></i> GitHub
                     </a>
                 
@@ -369,7 +378,7 @@
     
     
 
-    <h1 id="mezzio-hal">mezzio-hal</h1>
+    <h1 id="introduction">Introduction</h1>
 <p>This component provides tools for generating Hypertext Application Language
 (HAL) payloads for your APIs, in both JSON and XML formats.</p>
 <p>At its core, it features:</p>
@@ -408,8 +417,7 @@ this, we provide two components:</p>
 relational links, from PHP objects.</strong></p>
 <h2 id="installation">Installation</h2>
 <p>Use Composer:</p>
-<div class="highlight"><pre><span></span><code>$ composer require mezzio/mezzio-hal
-</code></pre></div>
+<pre class="highlight"><code class="language-bash">$ composer require mezzio/mezzio-hal</code></pre>
 <p>If you are adding this to an Mezzio application, and have the
 <a href="https://docs.laminas.dev/laminas-component-installer/">laminas-component-installer</a>
 package installed, this will prompt you to ask if you wish to add it to your
@@ -418,35 +426,31 @@ factories.</p>
 <p>We also recommend installing <a href="https://docs.laminas.dev/laminas-hydrator/">laminas-hydrator</a>,
 which provides facilities for extracting associative array representations of
 PHP objects:</p>
-<div class="highlight"><pre><span></span><code>$ composer require laminas/laminas-hydrator
-</code></pre></div>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-hydrator</code></pre>
 <p>Finally, if you want to provide paginated collections, we recommend installing
 <a href="https://docs.laminas.dev/laminas-paginator/">laminas-paginator</a>:</p>
-<div class="highlight"><pre><span></span><code>$ composer require laminas/laminas-paginator
-</code></pre></div>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-paginator</code></pre>
 <h2 id="quick-start">Quick Start</h2>
 <p>The following examples assume that you have added this package to an Mezzio
 application.</p>
 <h3 id="entity-and-collection-classes">Entity and collection classes</h3>
 <p>For each of our examples, we'll assume the following class exists:</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Api\Books;</span>
+<pre class="highlight"><code class="language-php">namespace Api\Books;
 
-<span class="x">class Book</span>
-<span class="x">{</span>
-<span class="x">    public $id;</span>
-<span class="x">    public $title;</span>
-<span class="x">    public $author;</span>
-<span class="x">}</span>
-</code></pre></div>
+class Book
+{
+    public $id;
+    public $title;
+    public $author;
+}</code></pre>
 <p>Additionally, we'll have a class representing a paginated group of books:</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Api\Books;</span>
+<pre class="highlight"><code class="language-php">namespace Api\Books;
 
-<span class="x">use Laminas\Paginator\Paginator;</span>
+use Laminas\Paginator\Paginator;
 
-<span class="x">class BookCollection extends Paginator</span>
-<span class="x">{</span>
-<span class="x">}</span>
-</code></pre></div>
+class BookCollection extends Paginator
+{
+}</code></pre>
 <h3 id="routes">Routes</h3>
 <p>The examples below assume that we have the following routes defined in our
 application somehow:</p>
@@ -464,92 +468,89 @@ configuration, which you could put in one of the following places:</p>
   you will need to add an entry for this class to your <code>config/config.php</code> file.</li>
 </ul>
 <p>The configuration will look like this:</p>
-<div class="highlight"><pre><span></span><code><span class="x">// Provide the following imports:</span>
-<span class="x">use Api\Books\Book;</span>
-<span class="x">use Api\Books\BookCollection;</span>
-<span class="x">use Mezzio\Hal\Metadata\MetadataMap;</span>
-<span class="x">use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;</span>
-<span class="x">use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;</span>
-<span class="x">use Laminas\Hydrator\ObjectProperty as ObjectPropertyHydrator;</span>
+<pre class="highlight"><code class="language-php">// Provide the following imports:
+use Api\Books\Book;
+use Api\Books\BookCollection;
+use Mezzio\Hal\Metadata\MetadataMap;
+use Mezzio\Hal\Metadata\RouteBasedCollectionMetadata;
+use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
+use Laminas\Hydrator\ObjectProperty as ObjectPropertyHydrator;
 
-<span class="x">// And include the following in your configuration:</span>
-<span class="x">MetadataMap::class =&gt; [</span>
-<span class="x">    [</span>
-<span class="x">        &#39;__class__&#39; =&gt; RouteBasedResourceMetadata::class,</span>
-<span class="x">        &#39;resource_class&#39; =&gt; Book::class,</span>
-<span class="x">        &#39;route&#39; =&gt; &#39;book&#39;,</span>
-<span class="x">        &#39;extractor&#39; =&gt; ObjectPropertyHydrator::class,</span>
-<span class="x">    ],</span>
-<span class="x">    [</span>
-<span class="x">        &#39;__class__&#39; =&gt; RouteBasedCollectionMetadata::class,</span>
-<span class="x">        &#39;collection_class&#39; =&gt; BookCollection::class,</span>
-<span class="x">        &#39;collection_relation&#39; =&gt; &#39;book&#39;,</span>
-<span class="x">        &#39;route&#39; =&gt; &#39;books&#39;,</span>
-<span class="x">    ],</span>
-<span class="x">],</span>
-</code></pre></div>
+// And include the following in your configuration:
+MetadataMap::class =&gt; [
+    [
+        '__class__' =&gt; RouteBasedResourceMetadata::class,
+        'resource_class' =&gt; Book::class,
+        'route' =&gt; 'book',
+        'extractor' =&gt; ObjectPropertyHydrator::class,
+    ],
+    [
+        '__class__' =&gt; RouteBasedCollectionMetadata::class,
+        'collection_class' =&gt; BookCollection::class,
+        'collection_relation' =&gt; 'book',
+        'route' =&gt; 'books',
+    ],
+],</code></pre>
 <h3 id="manually-creating-and-rendering-a-resource">Manually creating and rendering a resource</h3>
 <p>The following request handler creates a <code>HalResource</code> with its associated links,
 and then manually renders it using <code>Mezzio\Hal\Renderer\JsonRenderer</code>.
 (An <code>XmlRenderer</code> is also provided, but not demonstrated here.)</p>
 <p>We'll assume that <code>Api\Books\Repository</code> handles retrieving data from persistent
 storage.</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Api\Books\Action;</span>
+<pre class="highlight"><code class="language-php">namespace Api\Books\Action;
 
-<span class="x">use Api\Books\Repository;</span>
-<span class="x">use Psr\Http\Message\ResponseInterface;</span>
-<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
-<span class="x">use Psr\Http\Server\RequestHandlerInterface;</span>
-<span class="x">use RuntimeException;</span>
-<span class="x">use Laminas\Diactoros\Response\TextResponse;</span>
-<span class="x">use Mezzio\Hal\HalResource;</span>
-<span class="x">use Mezzio\Hal\Link;</span>
-<span class="x">use Mezzio\Hal\Renderer\JsonRenderer;</span>
+use Api\Books\Repository;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
+use Laminas\Diactoros\Response\TextResponse;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Link;
+use Mezzio\Hal\Renderer\JsonRenderer;
 
-<span class="x">class BookAction implements RequestHandlerInterface</span>
-<span class="x">{</span>
-<span class="x">    /** @var JsonRenderer */</span>
-<span class="x">    private $renderer;</span>
+class BookAction implements RequestHandlerInterface
+{
+    /** @var JsonRenderer */
+    private $renderer;
 
-<span class="x">    /** @var Repository */</span>
-<span class="x">    private $repository;</span>
+    /** @var Repository */
+    private $repository;
 
-<span class="x">    public function __construct(</span>
-<span class="x">        Repository $repository,</span>
-<span class="x">        JsonRenderer $renderer</span>
-<span class="x">    ) {</span>
-<span class="x">        $this-&gt;repository = $repository;</span>
-<span class="x">        $this-&gt;renderer = $renderer;</span>
-<span class="x">    }</span>
+    public function __construct(
+        Repository $repository,
+        JsonRenderer $renderer
+    ) {
+        $this-&gt;repository = $repository;
+        $this-&gt;renderer = $renderer;
+    }
 
-<span class="x">    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
-<span class="x">    {</span>
-<span class="x">        $id = $request-&gt;getAttribute(&#39;id&#39;, false);</span>
-<span class="x">        if (! $id) {</span>
-<span class="x">            throw new RuntimeException(&#39;No book identifier provided&#39;, 400);</span>
-<span class="x">        }</span>
-<span class="x">        $book = $this-&gt;repository-&gt;get($id);</span>
-<span class="x">        $resource = new HalResource((array) $book);</span>
-<span class="x">        $resource = $resource-&gt;withLink(new Link(&#39;self&#39;));</span>
-<span class="x">        return new TextResponse(</span>
-<span class="x">            $this-&gt;renderer-&gt;render($resource),</span>
-<span class="x">            200,</span>
-<span class="x">            [&#39;Content-Type&#39; =&gt; &#39;application/hal+json&#39;]</span>
-<span class="x">        );</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</code></pre></div>
+    public function handle(ServerRequestInterface $request) : ResponseInterface
+    {
+        $id = $request-&gt;getAttribute('id', false);
+        if (! $id) {
+            throw new RuntimeException('No book identifier provided', 400);
+        }
+        $book = $this-&gt;repository-&gt;get($id);
+        $resource = new HalResource((array) $book);
+        $resource = $resource-&gt;withLink(new Link('self'));
+        return new TextResponse(
+            $this-&gt;renderer-&gt;render($resource),
+            200,
+            ['Content-Type' =&gt; 'application/hal+json']
+        );
+    }
+}</code></pre>
 <p>The <code>JsonRenderer</code> returns the JSON string representing the data and links in
 the resource. The payload generated might look like the following:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/1234&quot;</span> <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
-    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Hitchhiker&#39;s Guide to the Galaxy&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Adams, Douglas&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-json">{
+    "_links": {
+        "self": { "href": "/api/books/1234" }
+    },
+    "id": 1234,
+    "title": "Hitchhiker's Guide to the Galaxy",
+    "author": "Adams, Douglas"
+}</code></pre>
 <p>The above example uses no metadata, and manually creates the <code>HalResource</code>
 instance. As the complexity of your objects increase, and the number of objects
 you want to represent via HAL increases, you may not want to manually generate
@@ -562,52 +563,51 @@ them.</p>
 returned resource.</p>
 <p>First, we'll look at a handler that displays a single book. We'll assume that
 <code>Api\Books\Repository</code> handles retrieving data from persistent storage.</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Api\Books\Action;</span>
+<pre class="highlight"><code class="language-php">namespace Api\Books\Action;
 
-<span class="x">use Api\Books\Repository;</span>
-<span class="x">use Psr\Http\Message\ResponseInterface;</span>
-<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
-<span class="x">use Psr\Http\Server\RequestHandlerInterface;</span>
-<span class="x">use RuntimeException;</span>
-<span class="x">use Mezzio\Hal\HalResponseFactory;</span>
-<span class="x">use Mezzio\Hal\ResourceGenerator;</span>
+use Api\Books\Repository;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 
-<span class="x">class BookAction implements RequestHandlerInterface</span>
-<span class="x">{</span>
-<span class="x">    /** @var Repository */</span>
-<span class="x">    private $repository;</span>
+class BookAction implements RequestHandlerInterface
+{
+    /** @var Repository */
+    private $repository;
 
-<span class="x">    /** @var ResourceGenerator */</span>
-<span class="x">    private $resourceGenerator;</span>
+    /** @var ResourceGenerator */
+    private $resourceGenerator;
 
-<span class="x">    /** @var HalResponseFactory */</span>
-<span class="x">    private $responseFactory;</span>
+    /** @var HalResponseFactory */
+    private $responseFactory;
 
-<span class="x">    public function __construct(</span>
-<span class="x">        Repository $repository,</span>
-<span class="x">        ResourceGenerator $resourceGenerator,</span>
-<span class="x">        HalResponseFactory $responseFactory</span>
-<span class="x">    ) {</span>
-<span class="x">        $this-&gt;repository = $repository;</span>
-<span class="x">        $this-&gt;resourceGenerator = $resourceGenerator;</span>
-<span class="x">        $this-&gt;responseFactory = $responseFactory;</span>
-<span class="x">    }</span>
+    public function __construct(
+        Repository $repository,
+        ResourceGenerator $resourceGenerator,
+        HalResponseFactory $responseFactory
+    ) {
+        $this-&gt;repository = $repository;
+        $this-&gt;resourceGenerator = $resourceGenerator;
+        $this-&gt;responseFactory = $responseFactory;
+    }
 
-<span class="x">    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
-<span class="x">    {</span>
-<span class="x">        $id = $request-&gt;getAttribute(&#39;id&#39;, false);</span>
-<span class="x">        if (! $id) {</span>
-<span class="x">            throw new RuntimeException(&#39;No book identifier provided&#39;, 400);</span>
-<span class="x">        }</span>
+    public function handle(ServerRequestInterface $request) : ResponseInterface
+    {
+        $id = $request-&gt;getAttribute('id', false);
+        if (! $id) {
+            throw new RuntimeException('No book identifier provided', 400);
+        }
 
-<span class="x">        /** @var \Api\Books\Book $book */</span>
-<span class="x">        $book = $this-&gt;repository-&gt;get($id);</span>
+        /** @var \Api\Books\Book $book */
+        $book = $this-&gt;repository-&gt;get($id);
 
-<span class="x">        $resource = $this-&gt;resourceGenerator-&gt;fromObject($book, $request);</span>
-<span class="x">        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</code></pre></div>
+        $resource = $this-&gt;resourceGenerator-&gt;fromObject($book, $request);
+        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
+    }
+}</code></pre>
 <p>Note that the <code>$request</code> instance is passed to both the resource generator and
 response factory:</p>
 <ul>
@@ -616,109 +616,106 @@ response factory:</p>
   payload should be generated.</li>
 </ul>
 <p>The generated payload might look like the following:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/1234&quot;</span> <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
-    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Hitchhiker&#39;s Guide to the Galaxy&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Adams, Douglas&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-json">{
+    "_links": {
+        "self": { "href": "/api/books/1234" }
+    },
+    "id": 1234,
+    "title": "Hitchhiker's Guide to the Galaxy",
+    "author": "Adams, Douglas"
+}</code></pre>
 <h3 id="request-handler-returning-a-collection">Request handler returning a collection</h3>
 <p>Next, we'll create a request handler that returns a <em>collection</em> of books. The
 collection will be <em>paginated</em> (assume our repository class creates a
 <code>BookCollection</code> backed by an appropriate adapter), and use a query string
 parameter to determine which page of results to return.</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Api\Books\Action;</span>
+<pre class="highlight"><code class="language-php">namespace Api\Books\Action;
 
-<span class="x">use Api\Books\Repository;</span>
-<span class="x">use Psr\Http\Message\ResponseInterface;</span>
-<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
-<span class="x">use Psr\Http\Server\RequestHandlerInterface;</span>
-<span class="x">use RuntimeException;</span>
-<span class="x">use Mezzio\Hal\HalResponseFactory;</span>
-<span class="x">use Mezzio\Hal\ResourceGenerator;</span>
+use Api\Books\Repository;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
+use Mezzio\Hal\HalResponseFactory;
+use Mezzio\Hal\ResourceGenerator;
 
-<span class="x">class BooksAction implements RequestHandlerInterface</span>
-<span class="x">{</span>
-<span class="x">    /** @var Repository */</span>
-<span class="x">    private $repository;</span>
+class BooksAction implements RequestHandlerInterface
+{
+    /** @var Repository */
+    private $repository;
 
-<span class="x">    /** @var ResourceGenerator */</span>
-<span class="x">    private $resourceGenerator;</span>
+    /** @var ResourceGenerator */
+    private $resourceGenerator;
 
-<span class="x">    /** @var HalResponseFactory */</span>
-<span class="x">    private $responseFactory;</span>
+    /** @var HalResponseFactory */
+    private $responseFactory;
 
-<span class="x">    public function __construct(</span>
-<span class="x">        Repository $repository,</span>
-<span class="x">        ResourceGenerator $resourceGenerator,</span>
-<span class="x">        HalResponseFactory $responseFactory</span>
-<span class="x">    ) {</span>
-<span class="x">        $this-&gt;repository = $repository;</span>
-<span class="x">        $this-&gt;resourceGenerator = $resourceGenerator;</span>
-<span class="x">        $this-&gt;responseFactory = $responseFactory;</span>
-<span class="x">    }</span>
+    public function __construct(
+        Repository $repository,
+        ResourceGenerator $resourceGenerator,
+        HalResponseFactory $responseFactory
+    ) {
+        $this-&gt;repository = $repository;
+        $this-&gt;resourceGenerator = $resourceGenerator;
+        $this-&gt;responseFactory = $responseFactory;
+    }
 
-<span class="x">    public function handle(ServerRequestInterface $request) : ResponseInterface</span>
-<span class="x">    {</span>
-<span class="x">        $page = $request-&gt;getQueryParams()[&#39;page&#39;] ?? 1;</span>
+    public function handle(ServerRequestInterface $request) : ResponseInterface
+    {
+        $page = $request-&gt;getQueryParams()['page'] ?? 1;
 
-<span class="x">        /** @var \Api\Books\BookCollection $books */</span>
-<span class="x">        $books = $this-&gt;repository-&gt;fetchAll();</span>
+        /** @var \Api\Books\BookCollection $books */
+        $books = $this-&gt;repository-&gt;fetchAll();
 
-<span class="x">        $books-&gt;setItemCountPerPage(25);</span>
-<span class="x">        $books-&gt;setCurrentPageNumber($page);</span>
+        $books-&gt;setItemCountPerPage(25);
+        $books-&gt;setCurrentPageNumber($page);
 
-<span class="x">        $resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);</span>
-<span class="x">        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</code></pre></div>
+        $resource = $this-&gt;resourceGenerator-&gt;fromObject($books, $request);
+        return $this-&gt;responseFactory-&gt;createResponse($request, $resource);
+    }
+}</code></pre>
 <p>Note that resource and response generation <em>is exactly the same</em> as our previous
 example! This is because the metadata map takes care of the details of
 extracting the data from our value objects and generating links for us.</p>
 <p>In this particular example, since we are using a paginator for our collection
 class, we might get back something like the following:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=7&quot;</span> <span class="p">},</span>
-        <span class="nt">&quot;first&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=1&quot;</span> <span class="p">},</span>
-        <span class="nt">&quot;prev&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=6&quot;</span> <span class="p">},</span>
-        <span class="nt">&quot;next&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=8&quot;</span> <span class="p">},</span>
-        <span class="nt">&quot;last&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?page=17&quot;</span> <span class="p">}</span>
-        <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books?query={searchTerms}&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;templated&quot;</span><span class="p">:</span> <span class="kc">true</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;_embedded&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;book&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/1234&quot;</span> <span class="p">}</span>
-                <span class="p">}</span>
-                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
-                <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Hitchhiker&#39;s Guide to the Galaxy&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Adams, Douglas&quot;</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="nt">&quot;_links&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="nt">&quot;self&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/books/6789&quot;</span> <span class="p">}</span>
-                <span class="p">}</span>
-                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">6789</span><span class="p">,</span>
-                <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Ancillary Justice&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Leckie, Ann&quot;</span>
-            <span class="p">},</span>
-            <span class="err">/*</span> <span class="err">...</span> <span class="err">*/</span>
-        <span class="p">]</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;_page&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-    <span class="nt">&quot;_per_page&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
-    <span class="nt">&quot;_total&quot;</span><span class="p">:</span> <span class="mi">407</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-json">{
+    "_links": {
+        "self": { "href": "/api/books?page=7" },
+        "first": { "href": "/api/books?page=1" },
+        "prev": { "href": "/api/books?page=6" },
+        "next": { "href": "/api/books?page=8" },
+        "last": { "href": "/api/books?page=17" }
+        "search": {
+            "href": "/api/books?query={searchTerms}",
+            "templated": true
+        }
+    },
+    "_embedded": {
+        "book": [
+            {
+                "_links": {
+                    "self": { "href": "/api/books/1234" }
+                }
+                "id": 1234,
+                "title": "Hitchhiker's Guide to the Galaxy",
+                "author": "Adams, Douglas"
+            },
+            {
+                "_links": {
+                    "self": { "href": "/api/books/6789" }
+                }
+                "id": 6789,
+                "title": "Ancillary Justice",
+                "author": "Leckie, Ann"
+            },
+            /* ... */
+        ]
+    },
+    "_page": 7,
+    "_per_page": 25,
+    "_total": 407
+}</code></pre>
 <h2 id="next-steps">Next steps</h2>
 <p>The above examples demonstrate setting up your application to generate and
 return HAL resources. In the following chapters, we'll cover:</p>
@@ -741,8 +738,10 @@ return HAL resources. In the following chapters, we'll cover:</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../v2/cookbook/path-segregated-uri-generation/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../v2/migration/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Migration From Version 1
                 </a>
             
         </li>
@@ -751,7 +750,9 @@ return HAL resources. In the following chapters, we'll cover:</p>
         <li class="page-nav__item">
             
                 <a rel="next" class="page-nav__link page-nav__link--next" href="hal/">
-                    Next <i class="fa fa-chevron-right"></i>
+                    <small class="page-nav__label">Next</small>
+                    Hypertext Application Language
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -809,37 +810,25 @@ return HAL resources. In the following chapters, we'll cover:</p>
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="hal/" class="subnavigation__link">HAL</a>
+        <a href="hal/" class="subnavigation__link">Hypertext Application Language</a>
     </li>
 
-            
-                
+                    
+                        
     <li class="subnavigation__list-item ">
         <a href="links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="representations/" class="subnavigation__link">Representations</a>
+        <a href="resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -849,13 +838,19 @@ return HAL resources. In the following chapters, we'll cover:</p>
     </li>
 
             
-                
-    <li class="subnavigation__list-item ">
-        <a href="factories/" class="subnavigation__link">Factories</a>
+        </ul>
     </li>
 
-            
-        </ul>
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="factories/" class="subnavigation__link">Provided Factories</a>
     </li>
 
                     
@@ -866,13 +861,19 @@ return HAL resources. In the following chapters, we'll cover:</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="cookbook/generating-custom-resources/" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -948,7 +949,7 @@ return HAL resources. In the following chapters, we'll cover:</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/mezzio/mezzio-hal/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -958,7 +959,7 @@ return HAL resources. In the following chapters, we'll cover:</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

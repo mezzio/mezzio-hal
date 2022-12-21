@@ -5,7 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications"> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="2.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="mezzio-hal">
+
     <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v2/links-and-resources/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -133,37 +142,31 @@
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="../hal/" class="subnavigation__link">HAL</a>
+        <a href="../installation/" class="subnavigation__link">Installation</a>
     </li>
 
-            
-                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../hal/" class="subnavigation__link">Hypertext Application Language</a>
+    </li>
+
+                    
+                        
     <li class="subnavigation__list-item subnavigation__list-item--active">
         <a href="./" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../representations/" class="subnavigation__link">Representations</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -173,9 +176,42 @@
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Provided Factories</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Cookbook</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../factories/" class="subnavigation__link">Factories</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -190,28 +226,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/" class="subnavigation__link">Migration from V1</a>
-    </li>
-
-            
-        </ul>
-    </li>
-
-                    
-                        
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Cookbook</span>
-        <ul class="subnavigation__list">
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../migration/" class="subnavigation__link">Migration From Version 1</a>
     </li>
 
             
@@ -303,7 +318,7 @@
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                    <a href="https://github.com/mezzio/mezzio-hal" class="header__link header__link--github" title="Go to repository of mezzio-hal">
                         <i class="fa fa-github"></i> GitHub
                     </a>
                 
@@ -357,13 +372,6 @@
                         
                     
                 
-                    
-                        
-                        
-                            <li class="breadcrumb-item">Reference</li>
-                        
-                    
-                
 
                 <li class="breadcrumb-item active" aria-current="page">Links and Resources</li>
             
@@ -377,8 +385,6 @@
 
 
     
-    
-        <h2 class="chapter__headline">Reference</h2>
     
 
     <h1 id="links-and-resources">Links and Resources</h1>
@@ -414,30 +420,27 @@ Additionally, links:</p>
 </ul>
 <p>To model these, we provide the <code>Mezzio\Hal\Link</code> class. It has the
 following constructor:</p>
-<div class="highlight"><pre><span></span><code><span class="x">public function __construct(</span>
-<span class="x">    $relation,</span>
-<span class="x">    string $uri = &#39;&#39;,</span>
-<span class="x">    bool $isTemplated = false,</span>
-<span class="x">    array $attributes = []</span>
-<span class="x">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">public function __construct(
+    $relation,
+    string $uri = '',
+    bool $isTemplated = false,
+    array $attributes = []
+)</code></pre>
 <p><code>$relation</code> can be a string value, or an array of string values, representing
 the relation.</p>
 <p>To access these various properties, you can use the following methods:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$link-&gt;getRels()       // get the list of relations for the link</span>
-<span class="x">$link-&gt;getHref()       // retrieve the URI</span>
-<span class="x">$link-&gt;isTemplated()   // is the link templated?</span>
-<span class="x">$link-&gt;getAttributes() // get any additional link attributes</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">$link-&gt;getRels()       // get the list of relations for the link
+$link-&gt;getHref()       // retrieve the URI
+$link-&gt;isTemplated()   // is the link templated?
+$link-&gt;getAttributes() // get any additional link attributes</code></pre>
 <p>A <code>Link</code> is <em>immutable</em>; you cannot change it after the fact. If you need a
 modified version of the link, we provide several methods that will return <em>new
 instances</em> containing the changes:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$link = $link-&gt;withRel($rel);    // or provide an array of relations</span>
-<span class="x">$link = $link-&gt;withoutRel($rel); // or provide an array of relations</span>
-<span class="x">$link = $link-&gt;withHref($href);</span>
-<span class="x">$link = $link-&gt;withAttribute($attribute, $value);</span>
-<span class="x">$link = $link-&gt;withoutAttribute($attribute);</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">$link = $link-&gt;withRel($rel);    // or provide an array of relations
+$link = $link-&gt;withoutRel($rel); // or provide an array of relations
+$link = $link-&gt;withHref($href);
+$link = $link-&gt;withAttribute($attribute, $value);
+$link = $link-&gt;withoutAttribute($attribute);</code></pre>
 <p>With these tools, you can describe any relational link.</p>
 <h3 id="route-based-link-uris">Route-based link URIs</h3>
 <p>Most frameworks provide routing capabilities, and delegate URI generation to
@@ -447,55 +450,53 @@ hard-coding that URI?</p>
 <p>This component provides a tool for that: <code>Mezzio\Hal\LinkGenerator</code>.
 This class composes a <code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code>
 instance, which defines the following:</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Mezzio\Hal\LinkGenerator;</span>
+<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\LinkGenerator;
 
-<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
+use Psr\Http\Message\ServerRequestInterface;
 
-<span class="x">interface UrlGeneratorInterface</span>
-<span class="x">{</span>
-<span class="x">    /**</span>
-<span class="x">     * Generate a URL for use as the HREF of a link.</span>
-<span class="x">     *</span>
-<span class="x">     * - The request is provided, to allow the implementation to pull any</span>
-<span class="x">     *   request-specific items it may need (e.g., results of routing, original</span>
-<span class="x">     *   URI for purposes of generating a fully-qualified URI, etc.).</span>
-<span class="x">     *</span>
-<span class="x">     * - `$routeParams` are any replacements to make in the route string.</span>
-<span class="x">     *</span>
-<span class="x">     * - `$queryParams` are any query string parameters to include in the</span>
-<span class="x">     *   generated URL.</span>
-<span class="x">     */</span>
-<span class="x">    public function generate(</span>
-<span class="x">        ServerRequestInterface $request,</span>
-<span class="x">        string $routeName,</span>
-<span class="x">        array $routeParams = [],</span>
-<span class="x">        array $queryParams = []</span>
-<span class="x">    ) : string;</span>
-<span class="x">}</span>
-</code></pre></div>
+interface UrlGeneratorInterface
+{
+    /**
+     * Generate a URL for use as the HREF of a link.
+     *
+     * - The request is provided, to allow the implementation to pull any
+     *   request-specific items it may need (e.g., results of routing, original
+     *   URI for purposes of generating a fully-qualified URI, etc.).
+     *
+     * - `$routeParams` are any replacements to make in the route string.
+     *
+     * - `$queryParams` are any query string parameters to include in the
+     *   generated URL.
+     */
+    public function generate(
+        ServerRequestInterface $request,
+        string $routeName,
+        array $routeParams = [],
+        array $queryParams = []
+    ) : string;
+}</code></pre>
 <p>We provide a default implementation for Mezzio users,
 <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code>,  that uses the
 <code>UrlHelper</code> and <code>ServerUrlHelper</code> from mezzio-helpers in order to
 generate URIs.</p>
 <p>The <code>LinkGenerator</code> itself defines two methods:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$link = $linkGenerator-&gt;fromRoute(</span>
-<span class="x">    $relation,</span>
-<span class="x">    $request,</span>
-<span class="x">    $routeName,</span>
-<span class="x">    $routeParams, // Array of additional route parameters to inject</span>
-<span class="x">    $queryParams, // Array of query string arguments to inject</span>
-<span class="x">    $attributes   // Array of Link attributes to use</span>
-<span class="x">);</span>
+<pre class="highlight"><code class="language-php">$link = $linkGenerator-&gt;fromRoute(
+    $relation,
+    $request,
+    $routeName,
+    $routeParams, // Array of additional route parameters to inject
+    $queryParams, // Array of query string arguments to inject
+    $attributes   // Array of Link attributes to use
+);
 
-<span class="x">$link = $linkGenerator-&gt;templatedFromRoute(</span>
-<span class="x">    $relation,</span>
-<span class="x">    $request,</span>
-<span class="x">    $routeName,</span>
-<span class="x">    $routeParams, // Array of additional route parameters to inject</span>
-<span class="x">    $queryParams, // Array of query string arguments to inject</span>
-<span class="x">    $attributes   // Array of Link attributes to use</span>
-<span class="x">);</span>
-</code></pre></div>
+$link = $linkGenerator-&gt;templatedFromRoute(
+    $relation,
+    $request,
+    $routeName,
+    $routeParams, // Array of additional route parameters to inject
+    $queryParams, // Array of query string arguments to inject
+    $attributes   // Array of Link attributes to use
+);</code></pre>
 <p><code>fromRoute()</code> will generate a non-templated <code>Link</code> instance, while
 <code>templatedFromRoute()</code> generates a templated instance.</p>
 <p>If you need to generate custom links based on routing, we recommend composing
@@ -515,12 +516,11 @@ parameter. See the issue for a comprehensive example.</p>
 <code>Mezzio\Hal\HalResource</code> allows you to model these representations,
 along with any relational links and child resources.</p>
 <p>It defines the following constructor:</p>
-<div class="highlight"><pre><span></span><code><span class="x">public function __construct(</span>
-<span class="x">    array $data = [],</span>
-<span class="x">    array $links = [],</span>
-<span class="x">    array $embedded = []</span>
-<span class="x">)</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">public function __construct(
+    array $data = [],
+    array $links = [],
+    array $embedded = []
+)</code></pre>
 <p><code>$data</code> should be an associative array of data you wish to include in your
 representation; the only limitation is you may not use the keys <code>_links</code> or
 <code>_embedded</code>, as these are reserved keywords.</p>
@@ -529,21 +529,19 @@ representation; the only limitation is you may not use the keys <code>_links</co
 Most often, however, you will include these with <code>$data</code>, as the class contains
 logic for identifying them.</p>
 <p>Once you have created an instance, you can access its properties:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$resource-&gt;getElement($name) // retrieve an element or embedded resource by name</span>
-<span class="x">$resource-&gt;getElements()     // retrieve all elements and embedded resources</span>
-<span class="x">$resource-&gt;getLinks()        // retrieve all relational links</span>
-<span class="x">$resource-&gt;getLinksByRel()   // retrieve links for a specific relation</span>
-<span class="x">$resource-&gt;toArray()         // retrieve associative array representation</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">$resource-&gt;getElement($name) // retrieve an element or embedded resource by name
+$resource-&gt;getElements()     // retrieve all elements and embedded resources
+$resource-&gt;getLinks()        // retrieve all relational links
+$resource-&gt;getLinksByRel()   // retrieve links for a specific relation
+$resource-&gt;toArray()         // retrieve associative array representation</code></pre>
 <p><code>HalResource</code> instances are <em>immutable</em>. We provide a number of methods that
 allow you to create <em>new instances</em> with changes:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$resource = $resource-&gt;withElement($name, $value);</span>
-<span class="x">$resource = $resource-&gt;withoutElement($name);</span>
-<span class="x">$resource = $resource-&gt;withElements($elements);</span>
-<span class="x">$resource = $resource-&gt;embed($name, $resource);</span>
-<span class="x">$resource = $resource-&gt;withLink($link);</span>
-<span class="x">$resource = $resource-&gt;withoutLink($link);</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">$resource = $resource-&gt;withElement($name, $value);
+$resource = $resource-&gt;withoutElement($name);
+$resource = $resource-&gt;withElements($elements);
+$resource = $resource-&gt;embed($name, $resource);
+$resource = $resource-&gt;withLink($link);
+$resource = $resource-&gt;withoutLink($link);</code></pre>
 <p>With these tools, you can describe any resource you want to represent.</p>
 
 
@@ -556,7 +554,9 @@ allow you to create <em>new instances</em> with changes:</p>
         <li class="page-nav__item">
             
                 <a rel="prev" class="page-nav__link page-nav__link--prev" href="../hal/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Hypertext Application Language
                 </a>
             
         </li>
@@ -565,7 +565,9 @@ allow you to create <em>new instances</em> with changes:</p>
         <li class="page-nav__item">
             
                 <a rel="next" class="page-nav__link page-nav__link--next" href="../resource-generator/">
-                    Next <i class="fa fa-chevron-right"></i>
+                    <small class="page-nav__label">Next</small>
+                    Generating Resources from PHP Objects
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -615,37 +617,31 @@ allow you to create <em>new instances</em> with changes:</p>
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="../hal/" class="subnavigation__link">HAL</a>
+        <a href="../installation/" class="subnavigation__link">Installation</a>
     </li>
 
-            
-                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../hal/" class="subnavigation__link">Hypertext Application Language</a>
+    </li>
+
+                    
+                        
     <li class="subnavigation__list-item subnavigation__list-item--active">
         <a href="./" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../representations/" class="subnavigation__link">Representations</a>
+        <a href="../resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -655,9 +651,42 @@ allow you to create <em>new instances</em> with changes:</p>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../factories/" class="subnavigation__link">Provided Factories</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Cookbook</span>
+        <ul class="subnavigation__list">
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../factories/" class="subnavigation__link">Factories</a>
+        <a href="../cookbook/generating-custom-resources/" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -672,28 +701,7 @@ allow you to create <em>new instances</em> with changes:</p>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../migration/" class="subnavigation__link">Migration from V1</a>
-    </li>
-
-            
-        </ul>
-    </li>
-
-                    
-                        
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Cookbook</span>
-        <ul class="subnavigation__list">
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../cookbook/path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../migration/" class="subnavigation__link">Migration From Version 1</a>
     </li>
 
             
@@ -777,7 +785,7 @@ allow you to create <em>new instances</em> with changes:</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/mezzio/mezzio-hal/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -787,7 +795,7 @@ allow you to create <em>new instances</em> with changes:</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

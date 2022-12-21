@@ -5,11 +5,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hypertext Application Language for PSR-7 Applications">  
+    <meta name="description" content="Hypertext Application Language for PSR-7 Applications"> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="2.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="mezzio-hal">
+
     <link rel="canonical" href="https://docs.mezzio.dev/mezzio-hal/v2/cookbook/generating-custom-resources/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Custom Resources - mezzio-hal - Laminas Docs</title>
+    <title>Generating Custom Resources - mezzio-hal - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -133,37 +142,31 @@
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="../../hal/" class="subnavigation__link">HAL</a>
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
     </li>
 
-            
-                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../hal/" class="subnavigation__link">Hypertext Application Language</a>
+    </li>
+
+                    
+                        
     <li class="subnavigation__list-item ">
         <a href="../../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../../representations/" class="subnavigation__link">Representations</a>
+        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -173,9 +176,42 @@
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../factories/" class="subnavigation__link">Provided Factories</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Cookbook</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../../factories/" class="subnavigation__link">Factories</a>
+        <a href="../generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -190,28 +226,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../migration/" class="subnavigation__link">Migration from V1</a>
-    </li>
-
-            
-        </ul>
-    </li>
-
-                    
-                        
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Cookbook</span>
-        <ul class="subnavigation__list">
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../../migration/" class="subnavigation__link">Migration From Version 1</a>
     </li>
 
             
@@ -303,7 +318,7 @@
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/mezzio/mezzio-hal/" class="header__link header__link--github" title="Go to repository of mezzio-hal">
+                    <a href="https://github.com/mezzio/mezzio-hal" class="header__link header__link--github" title="Go to repository of mezzio-hal">
                         <i class="fa fa-github"></i> GitHub
                     </a>
                 
@@ -345,12 +360,12 @@
                     
                         
                         
-                            <li class="breadcrumb-item">Reference</li>
+                            <li class="breadcrumb-item">Cookbook</li>
                         
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Custom Resources</li>
+                <li class="breadcrumb-item active" aria-current="page">Generating Custom Resources</li>
             
         
     </ol>
@@ -363,54 +378,51 @@
 
     
     
-        <h2 class="chapter__headline">Reference</h2>
+        <h2 class="chapter__headline">Cookbook</h2>
     
 
-    <h1 id="generating-custom-resources">Generating custom resources</h1>
+    <h1 id="generating-custom-resources">Generating Custom Resources</h1>
 <p>The <code>ResourceGenerator</code> allows composing <code>Mezzio\Hal\ResourceGenerator\StrategyInterface</code>
 instances. The <code>StrategyInterface</code> defines the following:</p>
-<div class="highlight"><pre><span></span><code><span class="x">namespace Mezzio\Hal\ResourceGenerator;</span>
+<pre class="highlight"><code class="language-php">namespace Mezzio\Hal\ResourceGenerator;
 
-<span class="x">use Psr\Http\Message\ServerRequestInterface;</span>
-<span class="x">use Mezzio\Hal\HalResource;</span>
-<span class="x">use Mezzio\Hal\Metadata;</span>
-<span class="x">use Mezzio\Hal\ResourceGenerator;</span>
+use Psr\Http\Message\ServerRequestInterface;
+use Mezzio\Hal\HalResource;
+use Mezzio\Hal\Metadata;
+use Mezzio\Hal\ResourceGenerator;
 
-<span class="x">interface StrategyInterface</span>
-<span class="x">{</span>
-<span class="x">    /**</span>
-<span class="x">     * @param object $instance Instance from which to create Resource.</span>
-<span class="x">     * @throws Exception\UnexpectedMetadataTypeException for metadata types the</span>
-<span class="x">     *     strategy cannot handle.</span>
-<span class="x">     */</span>
-<span class="x">    public function createResource(</span>
-<span class="x">        $instance,</span>
-<span class="x">        Metadata\AbstractMetadata $metadata,</span>
-<span class="x">        ResourceGenerator $resourceGenerator,</span>
-<span class="x">        ServerRequestInterface $request,</span>
-<span class="x">        int $depth = 0</span>
-<span class="x">    ) : HalResource;</span>
-<span class="x">}</span>
-</code></pre></div>
+interface StrategyInterface
+{
+    /**
+     * @param object $instance Instance from which to create Resource.
+     * @throws Exception\UnexpectedMetadataTypeException for metadata types the
+     *     strategy cannot handle.
+     */
+    public function createResource(
+        $instance,
+        Metadata\AbstractMetadata $metadata,
+        ResourceGenerator $resourceGenerator,
+        ServerRequestInterface $request,
+        int $depth = 0
+    ) : HalResource;
+}</code></pre>
 <p>When you register a strategy, you will map a metadata type to the strategy; the
 <code>ResourceGenerator</code> will then call your strategy whenever it encounteres
 metadata of that type.</p>
-<div class="highlight"><pre><span></span><code><span class="x">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);</span>
+<pre class="highlight"><code class="language-php">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, CustomStrategy::class);
 
-<span class="x">// or:</span>
-<span class="x">$resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</span>
-</code></pre></div>
+// or:
+$resourceGenerator-&gt;addStrategy(CustomMetadata::class, $strategyInstance);</code></pre>
 <p>You can also add your strategies via the configuration:</p>
-<div class="highlight"><pre><span></span><code><span class="x">return [</span>
-<span class="x">    &#39;mezzio-hal&#39; =&gt; [</span>
-<span class="x">        &#39;resource-generator&#39; =&gt; [</span>
-<span class="x">            &#39;strategies&#39; =&gt; [</span>
-<span class="x">                CustomMetadata::class =&gt; CustomStrategy::class,</span>
-<span class="x">            ],</span>
-<span class="x">        ],</span>
-<span class="x">    ],</span>
-<span class="x">];</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">return [
+    'mezzio-hal' =&gt; [
+        'resource-generator' =&gt; [
+            'strategies' =&gt; [
+                CustomMetadata::class =&gt; CustomStrategy::class,
+            ],
+        ],
+    ],
+];</code></pre>
 <p>If a strategy already is mapped for the given metadata type, this method will
 override it.</p>
 <p>To facilitate common operations, this library provides two traits,
@@ -420,14 +432,13 @@ decide to write your own strategies.</p>
 <p>In order for the <code>MetadataMap</code> to be able to use your <code>CustomMetadata</code> you need to register 
 a factory (implementing <code>Mezzio\Hal\Metadata\MetadataFactoryInterface</code>) for it.
 You can register them via the configuration:</p>
-<div class="highlight"><pre><span></span><code><span class="x">return [</span>
-<span class="x">    &#39;mezzio-hal&#39; =&gt; [</span>
-<span class="x">        &#39;metadata-factories&#39; =&gt; [</span>
-<span class="x">            CustomMetadata::class =&gt; CustomMetadataFactory::class,</span>
-<span class="x">        ],</span>
-<span class="x">    ],</span>
-<span class="x">];</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php">return [
+    'mezzio-hal' =&gt; [
+        'metadata-factories' =&gt; [
+            CustomMetadata::class =&gt; CustomMetadataFactory::class,
+        ],
+    ],
+];</code></pre>
 
 
 
@@ -438,8 +449,10 @@ You can register them via the configuration:</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../resource-generator/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../factories/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Provided Factories
                 </a>
             
         </li>
@@ -447,8 +460,10 @@ You can register them via the configuration:</p>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../../representations/">
-                    Next <i class="fa fa-chevron-right"></i>
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../generating-custom-links-in-middleware/">
+                    <small class="page-nav__label">Next</small>
+                    Generating Custom Links In Middleware and Request Handlers
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -498,37 +513,31 @@ You can register them via the configuration:</p>
 
                     
                         
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Reference</span>
-        <ul class="subnavigation__list">
-            
-                
     <li class="subnavigation__list-item ">
-        <a href="../../hal/" class="subnavigation__link">HAL</a>
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
     </li>
 
-            
-                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../hal/" class="subnavigation__link">Hypertext Application Language</a>
+    </li>
+
+                    
+                        
     <li class="subnavigation__list-item ">
         <a href="../../links-and-resources/" class="subnavigation__link">Links and Resources</a>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Generating Resources</span>
+        <ul class="subnavigation__list">
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Custom Resources</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../../representations/" class="subnavigation__link">Representations</a>
+        <a href="../../resource-generator/" class="subnavigation__link">Generating Resources from PHP Objects</a>
     </li>
 
             
@@ -538,9 +547,42 @@ You can register them via the configuration:</p>
     </li>
 
             
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../representations/" class="subnavigation__link">Generating Representations</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../factories/" class="subnavigation__link">Provided Factories</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Cookbook</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Generating Custom Resources</a>
+    </li>
+
+            
                 
     <li class="subnavigation__list-item ">
-        <a href="../../factories/" class="subnavigation__link">Factories</a>
+        <a href="../generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in Path-Segregated Middleware</a>
     </li>
 
             
@@ -555,28 +597,7 @@ You can register them via the configuration:</p>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../migration/" class="subnavigation__link">Migration from V1</a>
-    </li>
-
-            
-        </ul>
-    </li>
-
-                    
-                        
-    <li class="subnavigation__list-item">
-        <span class="subnavigation__headline">Cookbook</span>
-        <ul class="subnavigation__list">
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../generating-custom-links-in-middleware/" class="subnavigation__link">Generating Custom Links In Middleware and Request Handlers</a>
-    </li>
-
-            
-                
-    <li class="subnavigation__list-item ">
-        <a href="../path-segregated-uri-generation/" class="subnavigation__link">Using the ResourceGenerator in path-segregated middleware</a>
+        <a href="../../migration/" class="subnavigation__link">Migration From Version 1</a>
     </li>
 
             
@@ -660,7 +681,7 @@ You can register them via the configuration:</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/mezzio/mezzio-hal/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/mezzio/mezzio-hal/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -670,7 +691,7 @@ You can register them via the configuration:</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/mezzio/mezzio-hal/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

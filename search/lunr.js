@@ -1,5 +1,5 @@
 /**
- * lunr - http://lunrjs.com - A bit like Solr, but much smaller and not as bright - 2.3.8
+ * lunr - http://lunrjs.com - A bit like Solr, but much smaller and not as bright - 2.3.9
  * Copyright (C) 2020 Oliver Nightingale
  * @license MIT
  */
@@ -54,7 +54,7 @@ var lunr = function (config) {
   return builder.build()
 }
 
-lunr.version = "2.3.8"
+lunr.version = "2.3.9"
 /*!
  * lunr.utils
  * Copyright (C) 2020 Oliver Nightingale
@@ -211,8 +211,8 @@ lunr.Set.complete = {
     return other
   },
 
-  union: function (other) {
-    return other
+  union: function () {
+    return this
   },
 
   contains: function () {
@@ -1994,7 +1994,7 @@ lunr.Index.prototype.query = function (fn) {
      */
     var clause = query.clauses[i],
         terms = null,
-        clauseMatches = lunr.Set.complete
+        clauseMatches = lunr.Set.empty
 
     if (clause.usePipeline) {
       terms = this.pipeline.runString(clause.term, {
@@ -3456,7 +3456,7 @@ lunr.QueryParser.parseBoost = function (parser) {
     } else if (typeof exports === 'object') {
       /**
        * Node. Does not work with strict CommonJS, but
-       * only CommonJS-like enviroments that support module.exports,
+       * only CommonJS-like environments that support module.exports,
        * like Node.
        */
       module.exports = factory()
