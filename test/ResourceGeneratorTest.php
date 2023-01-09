@@ -150,9 +150,9 @@ class ResourceGeneratorTest extends TestCase
         $this->assertLink('self', '/api/foo/XXXX-YYYY-ZZZZ', $self);
 
         $this->assertEquals([
-            'id'  => 'XXXX-YYYY-ZZZZ',
-            'foo' => 'BAR',
-            'bar' => 'BAZ',
+            'id'       => 'XXXX-YYYY-ZZZZ',
+            'foo'      => 'BAR',
+            'bar'      => 'BAZ',
             'children' => null,
         ], $resource->getElements());
     }
@@ -201,9 +201,9 @@ class ResourceGeneratorTest extends TestCase
         $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ', $self);
 
         $this->assertEquals([
-            'id'  => 'XXXX-YYYY-ZZZZ',
-            'foo' => 'BAR',
-            'bar' => 'BAZ',
+            'id'       => 'XXXX-YYYY-ZZZZ',
+            'foo'      => 'BAR',
+            'bar'      => 'BAZ',
             'children' => null,
         ], $resource->getElements());
     }
