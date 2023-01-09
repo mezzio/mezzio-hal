@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
   <file src="src/HalResource.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_object($resource)</code>
@@ -17,11 +17,13 @@
       <code>function ($item) {</code>
       <code>function (array $byRelation, LinkInterface $link) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="9">
+    <MixedArgument occurrences="11">
       <code>$links</code>
       <code>$links</code>
       <code>$name</code>
       <code>$name</code>
+      <code>$relation</code>
+      <code>$relation</code>
       <code>$relations</code>
       <code>$resource</code>
       <code>$value</code>
@@ -32,13 +34,16 @@
       <code>$name</code>
       <code>$resource</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="2">
+    <MixedArrayAccess occurrences="3">
       <code>$byRelation[$rel]</code>
       <code>$relations[$key]</code>
+      <code>$relations[$key][Link::AS_COLLECTION]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="3">
+    <MixedArrayAssignment occurrences="5">
       <code>$byRelation[$rel]</code>
       <code>$embedded[$name]</code>
+      <code>$relation[Link::AS_COLLECTION]</code>
+      <code>$relation[]</code>
       <code>$relations[$key]</code>
     </MixedArrayAssignment>
     <MixedArrayOffset occurrences="6">
@@ -99,16 +104,22 @@
     </UndefinedDocblockClass>
   </file>
   <file src="src/Link.php">
+    <InvalidCast occurrences="1">
+      <code>$uri</code>
+    </InvalidCast>
     <MixedArgument occurrences="1">
       <code>is_object($rel) ? $rel::class : gettype($rel)</code>
     </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>is_string($relation) ? [$relation] : $relation</code>
+    <MixedInferredReturnType occurrences="1">
       <code>string|string[]</code>
-    </MixedReturnTypeCoercion>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="2">
+      <code>is_string($relation) ? [$relation] : $relation</code>
+      <code>is_string($relation) ? [$relation] : $relation</code>
+    </MixedReturnStatement>
     <PossiblyInvalidPropertyAssignmentValue occurrences="1">
       <code>$this-&gt;validateRelation($relation)</code>
     </PossiblyInvalidPropertyAssignmentValue>
@@ -167,8 +178,9 @@
       <code>$metadataFactories[$metadataClass]</code>
       <code>$metadata['__class__']</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="2">
+    <MixedArrayAccess occurrences="3">
       <code>$config['mezzio-hal']</code>
+      <code>$config['mezzio-hal']['metadata-factories']</code>
       <code>$config[MetadataMap::class]</code>
     </MixedArrayAccess>
     <MixedAssignment occurrences="2">
@@ -247,6 +259,9 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
+    <PossibleRawObjectIteration occurrences="1">
+      <code>$resource['_links']</code>
+    </PossibleRawObjectIteration>
     <PossiblyFalseArgument occurrences="1">
       <code>$element</code>
     </PossiblyFalseArgument>
@@ -263,7 +278,7 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
-    <MethodSignatureMismatch occurrences="1"/>
+    <MethodSignatureMismatch occurrences="2"/>
     <MixedArgument occurrences="2">
       <code>$item</code>
       <code>$item</code>
@@ -343,9 +358,9 @@
     </MixedArrayOffset>
   </file>
   <file src="src/ResourceGenerator/UrlBasedCollectionStrategy.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$page</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MethodSignatureMismatch occurrences="1">
       <code>protected function generateSelfLink(</code>
     </MethodSignatureMismatch>
@@ -379,8 +394,9 @@
       <code>$strategy</code>
       <code>HydratorPluginManager::class</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="1">
+    <MixedArrayAccess occurrences="2">
       <code>$config['mezzio-hal']['resource-generator']</code>
+      <code>$config['mezzio-hal']['resource-generator']['strategies']</code>
     </MixedArrayAccess>
     <MixedAssignment occurrences="1">
       <code>$strategy</code>
@@ -510,7 +526,15 @@
     </MixedInferredReturnType>
   </file>
   <file src="test/PHPUnitDeprecatedAssertions.php">
-    <ArgumentTypeCoercion occurrences="1">
+    <ArgumentTypeCoercion occurrences="9">
+      <code>$attributeName</code>
+      <code>$attributeName</code>
+      <code>$attributeName</code>
+      <code>$attributeName</code>
+      <code>$expected</code>
+      <code>$expected</code>
+      <code>$expected</code>
+      <code>$expected</code>
       <code>$expected</code>
     </ArgumentTypeCoercion>
     <DeprecatedMethod occurrences="5">
@@ -521,13 +545,16 @@
     <DocblockTypeContradiction occurrences="1">
       <code>is_object($object)</code>
     </DocblockTypeContradiction>
-    <InternalClass occurrences="3"/>
+    <InternalClass occurrences="15"/>
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
     <MixedOperand occurrences="1">
       <code>$value</code>
     </MixedOperand>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$stack[1]</code>
+    </PossiblyUndefinedArrayOffset>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_object($classOrObject)</code>
     </RedundantConditionGivenDocblockType>
@@ -559,9 +586,6 @@
     <MixedAssignment occurrences="1">
       <code>$childCollection</code>
     </MixedAssignment>
-    <UndefinedPropertyAssignment occurrences="1">
-      <code>$foo-&gt;children</code>
-    </UndefinedPropertyAssignment>
   </file>
   <file src="test/ResourceGenerator/ResourceWithNestedInstancesTest.php">
     <InvalidArgument occurrences="1">
@@ -601,6 +625,11 @@
       <code>$request-&gt;reveal()</code>
       <code>$request-&gt;reveal()</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1"/>
+    <MixedMethodCall occurrences="2">
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
   </file>
   <file src="test/ResourceGenerator/UrlBasedCollectionWithRouteParamsTest.php">
     <InvalidArgument occurrences="3">
@@ -610,6 +639,12 @@
     <MixedArgument occurrences="1">
       <code>$request-&gt;reveal()</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$this-&gt;createCollectionItems($linkGenerator, $request)</code>
+    </MixedArgumentTypeCoercion>
+    <MixedMethodCall occurrences="1">
+      <code>willReturn</code>
+    </MixedMethodCall>
   </file>
   <file src="test/ResourceGeneratorFactoryTest.php">
     <DeprecatedMethod occurrences="2">
@@ -707,7 +742,16 @@
       <code>willReturn</code>
       <code>willReturn</code>
     </PossiblyUndefinedMethod>
-    <TooFewArguments occurrences="3">
+    <TooFewArguments occurrences="12">
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
+      <code>fromRoute</code>
       <code>fromRoute</code>
       <code>fromRoute</code>
       <code>fromRoute</code>
@@ -717,13 +761,6 @@
     <MissingPropertyType occurrences="2">
       <code>$id</code>
       <code>$message</code>
-    </MissingPropertyType>
-  </file>
-  <file src="test/TestAsset/FooBar.php">
-    <MissingPropertyType occurrences="3">
-      <code>$bar</code>
-      <code>$foo</code>
-      <code>$id</code>
     </MissingPropertyType>
   </file>
 </files>
