@@ -153,6 +153,7 @@ class ResourceGeneratorTest extends TestCase
             'id'  => 'XXXX-YYYY-ZZZZ',
             'foo' => 'BAR',
             'bar' => 'BAZ',
+            'children' => null,
         ], $resource->getElements());
     }
 
@@ -203,6 +204,7 @@ class ResourceGeneratorTest extends TestCase
             'id'  => 'XXXX-YYYY-ZZZZ',
             'foo' => 'BAR',
             'bar' => 'BAZ',
+            'children' => null,
         ], $resource->getElements());
     }
 

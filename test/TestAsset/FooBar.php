@@ -7,4 +7,5 @@ class FooBar
     public $id;
     public $foo;
     public $bar;
+    public $children;
 }
