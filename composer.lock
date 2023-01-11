@@ -2410,16 +2410,16 @@
         },
         {
             "name": "mezzio/mezzio-router",
-            "version": "3.10.0",
+            "version": "3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-router.git",
-                "reference": "f98d3e97b0e949d394703e526bf218402be601bf"
+                "reference": "a80fb92d25deae21e76452f541129c09aa52a886"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/f98d3e97b0e949d394703e526bf218402be601bf",
-                "reference": "f98d3e97b0e949d394703e526bf218402be601bf",
+                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/a80fb92d25deae21e76452f541129c09aa52a886",
+                "reference": "a80fb92d25deae21e76452f541129c09aa52a886",
                 "shasum": ""
             },
             "require": {
@@ -2436,7 +2436,7 @@
                 "zendframework/zend-expressive-router": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.4.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-diactoros": "^2.20.0",
                 "laminas/laminas-stratigility": "^3.9.0",
                 "phpunit/phpunit": "^9.5.26",
@@ -2487,7 +2487,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-13T20:50:07+00:00"
+            "time": "2023-01-11T00:54:57+00:00"
         },
         {
             "name": "myclabs/deep-copy",
