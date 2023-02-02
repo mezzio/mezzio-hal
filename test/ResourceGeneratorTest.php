@@ -762,6 +762,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $this->expectException(UnknownMetadataTypeException::class);
         $this->expectExceptionMessage('does not exist, or does not extend');
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->generator->addStrategy(stdClass::class, 'invalid-strategy');
     }
 
@@ -769,6 +770,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $this->expectException(InvalidStrategyException::class);
         $this->expectExceptionMessage('does not exist, or does not implement');
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->generator->addStrategy(TestMetadata::class, 'invalid-strategy');
     }
 
