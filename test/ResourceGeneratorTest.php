@@ -150,9 +150,10 @@ class ResourceGeneratorTest extends TestCase
         $this->assertLink('self', '/api/foo/XXXX-YYYY-ZZZZ', $self);
 
         $this->assertEquals([
-            'id'  => 'XXXX-YYYY-ZZZZ',
-            'foo' => 'BAR',
-            'bar' => 'BAZ',
+            'id'       => 'XXXX-YYYY-ZZZZ',
+            'foo'      => 'BAR',
+            'bar'      => 'BAZ',
+            'children' => null,
         ], $resource->getElements());
     }
 
@@ -200,9 +201,10 @@ class ResourceGeneratorTest extends TestCase
         $this->assertLink('self', '/api/foo-bar/XXXX-YYYY-ZZZZ', $self);
 
         $this->assertEquals([
-            'id'  => 'XXXX-YYYY-ZZZZ',
-            'foo' => 'BAR',
-            'bar' => 'BAZ',
+            'id'       => 'XXXX-YYYY-ZZZZ',
+            'foo'      => 'BAR',
+            'bar'      => 'BAZ',
+            'children' => null,
         ], $resource->getElements());
     }
 
@@ -686,6 +688,7 @@ class ResourceGeneratorTest extends TestCase
         $this->generator->fromObject($this, $this->request->reveal());
     }
 
+    /** @return Generator<string, array{0: ResourceGenerator\StrategyInterface, 1: class-string<Metadata\AbstractCollectionMetadata>}> */
     public function strategyCollection(): Generator
     {
         yield 'route-based-collection' => [
@@ -735,6 +738,7 @@ class ResourceGeneratorTest extends TestCase
 
     /**
      * @dataProvider strategyCollection
+     * @param class-string<Metadata\AbstractCollectionMetadata> $metadata
      */
     public function testNotTraversableInstanceForCollectionStrategy(
         ResourceGenerator\StrategyInterface $strategy,
@@ -760,6 +764,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $this->expectException(UnknownMetadataTypeException::class);
         $this->expectExceptionMessage('does not exist, or does not extend');
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->generator->addStrategy(stdClass::class, 'invalid-strategy');
     }
 
@@ -767,6 +772,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $this->expectException(InvalidStrategyException::class);
         $this->expectExceptionMessage('does not exist, or does not implement');
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->generator->addStrategy(TestMetadata::class, 'invalid-strategy');
     }
 

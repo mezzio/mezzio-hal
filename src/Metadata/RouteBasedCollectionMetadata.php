@@ -6,31 +6,23 @@ namespace Mezzio\Hal\Metadata;
 
 class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
 {
-    /** @var string */
-    private $route;
-
-    /** @var array */
-    private $routeParams;
-
-    /** @var array */
-    private $queryStringArguments;
-
+    /**
+     * @param array<string, mixed> $routeParams
+     * @param array<string, mixed> $queryStringArguments
+     */
     public function __construct(
         string $class,
         string $collectionRelation,
-        string $route,
+        private string $route,
         string $paginationParam = 'page',
         string $paginationParamType = self::TYPE_QUERY,
-        array $routeParams = [],
-        array $queryStringArguments = []
+        private array $routeParams = [],
+        private array $queryStringArguments = []
     ) {
-        $this->class                = $class;
-        $this->collectionRelation   = $collectionRelation;
-        $this->route                = $route;
-        $this->paginationParam      = $paginationParam;
-        $this->paginationParamType  = $paginationParamType;
-        $this->routeParams          = $routeParams;
-        $this->queryStringArguments = $queryStringArguments;
+        $this->class               = $class;
+        $this->collectionRelation  = $collectionRelation;
+        $this->paginationParam     = $paginationParam;
+        $this->paginationParamType = $paginationParamType;
     }
 
     public function getRoute(): string
@@ -38,11 +30,13 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
         return $this->route;
     }
 
+    /** @return array<string, mixed> */
     public function getRouteParams(): array
     {
         return $this->routeParams;
     }
 
+    /** @return array<string, mixed> */
     public function getQueryStringArguments(): array
     {
         return $this->queryStringArguments;
@@ -53,6 +47,8 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
      *
      * In particular, this is useful for setting a parent identifier
      * in the route when dealing with child resources.
+     *
+     * @param array<string, mixed> $routeParams
      */
     public function setRouteParams(array $routeParams): void
     {
@@ -64,6 +60,8 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
      *
      * In particular, this is useful for setting query string arguments for
      * searches, sorts, limits, etc.
+     *
+     * @param array<string, mixed> $query
      */
     public function setQueryStringArguments(array $query): void
     {

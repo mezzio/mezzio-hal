@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mezzio\Hal;
 
 use Mezzio\Hal\Metadata\AbstractMetadata;
+use Mezzio\Hal\ResourceGenerator\StrategyInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -12,31 +13,23 @@ use function class_exists;
 use function class_implements;
 use function class_parents;
 use function in_array;
-use function is_object;
 use function is_string;
 
 class ResourceGenerator implements ResourceGeneratorInterface
 {
-    /** @var ContainerInterface Service locator for hydrators. */
-    private $hydrators;
+    /** @var array<string, StrategyInterface> */
+    private array $strategies = [];
 
-    /** @var LinkGenerator Route-based link generation. */
-    private $linkGenerator;
-
-    /** @var Metadata\MetadataMap Metadata on known objects. */
-    private $metadataMap;
-
-    /** @var ResourceGenerator\StrategyInterface[] */
-    private $strategies = [];
-
+    /**
+     * @param Metadata\MetadataMap $metadataMap Metadata on known objects.
+     * @param ContainerInterface $hydrators Service locator for hydrators.
+     * @param LinkGenerator $linkGenerator Route-based link generation.
+     */
     public function __construct(
-        Metadata\MetadataMap $metadataMap,
-        ContainerInterface $hydrators,
-        LinkGenerator $linkGenerator
+        private Metadata\MetadataMap $metadataMap,
+        private ContainerInterface $hydrators,
+        private LinkGenerator $linkGenerator
     ) {
-        $this->metadataMap   = $metadataMap;
-        $this->hydrators     = $hydrators;
-        $this->linkGenerator = $linkGenerator;
     }
 
     public function getHydrators(): ContainerInterface
@@ -57,7 +50,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
     /**
      * Link a metadata type to a strategy that can create a resource for it.
      *
-     * @param string|ResourceGenerator\StrategyInterface $strategy
+     * @param class-string<StrategyInterface>|StrategyInterface $strategy
      */
     public function addStrategy(string $metadataType, $strategy): void
     {
@@ -72,7 +65,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
             is_string($strategy)
             && (
                 ! class_exists($strategy)
-                || ! in_array(ResourceGenerator\StrategyInterface::class, class_implements($strategy), true)
+                || ! in_array(StrategyInterface::class, class_implements($strategy), true)
             )
         ) {
             throw Exception\InvalidStrategyException::forType($strategy);
@@ -82,7 +75,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
             $strategy = new $strategy();
         }
 
-        if (! $strategy instanceof ResourceGenerator\StrategyInterface) {
+        if (! $strategy instanceof StrategyInterface) {
             throw Exception\InvalidStrategyException::forInstance($strategy);
         }
 
@@ -91,6 +84,8 @@ class ResourceGenerator implements ResourceGeneratorInterface
 
     /**
      * Returns the registered strategies.
+     *
+     * @return array<string, StrategyInterface>
      */
     public function getStrategies(): array
     {
@@ -114,10 +109,6 @@ class ResourceGenerator implements ResourceGeneratorInterface
      */
     public function fromObject(object $instance, ServerRequestInterface $request, int $depth = 0): HalResource
     {
-        if (! is_object($instance)) {
-            throw Exception\InvalidObjectException::forNonObject($instance);
-        }
-
         $metadata     = $this->getClassMetadata($instance);
         $metadataType = $metadata::class;
 
