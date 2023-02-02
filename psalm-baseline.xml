@@ -332,6 +332,9 @@
       <code>$routeParams</code>
       <code>$routeParams</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$queryStringArgs</code>
+    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="6">
       <code>$queryParams</code>
       <code>$queryStringArgs</code>
@@ -353,6 +356,9 @@
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGenerator/RouteBasedResourceStrategy.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$routeParams</code>
+    </MixedArgumentTypeCoercion>
     <MixedArrayOffset occurrences="1">
       <code>$routeParams[$placeholderMap[$key]]</code>
     </MixedArrayOffset>
