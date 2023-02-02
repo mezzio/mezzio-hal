@@ -688,6 +688,7 @@ class ResourceGeneratorTest extends TestCase
         $this->generator->fromObject($this, $this->request->reveal());
     }
 
+    /** @return Generator<string, array{0: ResourceGenerator\StrategyInterface, 1: class-string<Metadata\AbstractCollectionMetadata>}> */
     public function strategyCollection(): Generator
     {
         yield 'route-based-collection' => [
@@ -737,6 +738,7 @@ class ResourceGeneratorTest extends TestCase
 
     /**
      * @dataProvider strategyCollection
+     * @param class-string<Metadata\AbstractCollectionMetadata> $metadata
      */
     public function testNotTraversableInstanceForCollectionStrategy(
         ResourceGenerator\StrategyInterface $strategy,

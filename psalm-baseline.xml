@@ -150,6 +150,11 @@
   <file src="src/LinkGenerator/MezzioUrlGeneratorFactory.php">
     <MixedArgument>
       <code>$container-&gt;get($this-&gt;urlHelperServiceName)</code>
+      <code>$container-&gt;has(ServerUrlHelper::class)
+                ? $container-&gt;get(ServerUrlHelper::class)
+                : ($container-&gt;has(\Zend\Expressive\Helper\ServerUrlHelper::class)
+                    ? $container-&gt;get(\Zend\Expressive\Helper\ServerUrlHelper::class)
+                    : null)</code>
       <code>$data['urlHelperServiceName'] ?? UrlHelper::class</code>
     </MixedArgument>
   </file>
@@ -195,29 +200,99 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Metadata/RouteBasedCollectionMetadataFactory.php">
-    <InvalidStringClass/>
-    <LessSpecificReturnStatement/>
+    <InvalidStringClass>
+      <code>new $requestedName(
+            $metadata['collection_class'],
+            $metadata['collection_relation'],
+            $metadata['route'],
+            $metadata['pagination_param'] ?? 'page',
+            $metadata['pagination_param_type'] ?? RouteBasedCollectionMetadata::TYPE_QUERY,
+            $metadata['route_params'] ?? [],
+            $metadata['query_string_arguments'] ?? []
+        )</code>
+    </InvalidStringClass>
+    <LessSpecificReturnStatement>
+      <code>new $requestedName(
+            $metadata['collection_class'],
+            $metadata['collection_relation'],
+            $metadata['route'],
+            $metadata['pagination_param'] ?? 'page',
+            $metadata['pagination_param_type'] ?? RouteBasedCollectionMetadata::TYPE_QUERY,
+            $metadata['route_params'] ?? [],
+            $metadata['query_string_arguments'] ?? []
+        )</code>
+    </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
       <code>AbstractMetadata</code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Metadata/RouteBasedResourceMetadataFactory.php">
-    <InvalidStringClass/>
-    <LessSpecificReturnStatement/>
+    <InvalidStringClass>
+      <code>new $requestedName(
+            $metadata['resource_class'],
+            $metadata['route'],
+            $metadata['extractor'],
+            $metadata['resource_identifier'] ?? 'id',
+            $metadata['route_params'] ?? [],
+            $metadata['identifiers_to_placeholders_mapping'] ?? ['id' =&gt; 'id'],
+            $metadata['max_depth'] ?? 10
+        )</code>
+    </InvalidStringClass>
+    <LessSpecificReturnStatement>
+      <code>new $requestedName(
+            $metadata['resource_class'],
+            $metadata['route'],
+            $metadata['extractor'],
+            $metadata['resource_identifier'] ?? 'id',
+            $metadata['route_params'] ?? [],
+            $metadata['identifiers_to_placeholders_mapping'] ?? ['id' =&gt; 'id'],
+            $metadata['max_depth'] ?? 10
+        )</code>
+    </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
       <code>AbstractMetadata</code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Metadata/UrlBasedCollectionMetadataFactory.php">
-    <InvalidStringClass/>
-    <LessSpecificReturnStatement/>
+    <InvalidStringClass>
+      <code>new $requestedName(
+            $metadata['collection_class'],
+            $metadata['collection_relation'],
+            $metadata['url'],
+            $metadata['pagination_param'] ?? 'page',
+            $metadata['pagination_param_type'] ?? UrlBasedCollectionMetadata::TYPE_QUERY
+        )</code>
+    </InvalidStringClass>
+    <LessSpecificReturnStatement>
+      <code>new $requestedName(
+            $metadata['collection_class'],
+            $metadata['collection_relation'],
+            $metadata['url'],
+            $metadata['pagination_param'] ?? 'page',
+            $metadata['pagination_param_type'] ?? UrlBasedCollectionMetadata::TYPE_QUERY
+        )</code>
+    </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
       <code>AbstractMetadata</code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Metadata/UrlBasedResourceMetadataFactory.php">
-    <InvalidStringClass/>
-    <LessSpecificReturnStatement/>
+    <InvalidStringClass>
+      <code>new $requestedName(
+            $metadata['resource_class'],
+            $metadata['url'],
+            $metadata['extractor'],
+            $metadata['max_depth'] ?? 10
+        )</code>
+    </InvalidStringClass>
+    <LessSpecificReturnStatement>
+      <code>new $requestedName(
+            $metadata['resource_class'],
+            $metadata['url'],
+            $metadata['extractor'],
+            $metadata['max_depth'] ?? 10
+        )</code>
+    </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
       <code>AbstractMetadata</code>
     </MoreSpecificReturnType>
@@ -270,7 +345,18 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
-    <MethodSignatureMismatch/>
+    <MethodSignatureMismatch>
+      <code>abstract protected function generateSelfLink(
+        AbstractCollectionMetadata $metadata,
+        ResourceGeneratorInterface $resourceGenerator,
+        ServerRequestInterface $request
+    ): Link;</code>
+      <code>abstract protected function generateSelfLink(
+        AbstractCollectionMetadata $metadata,
+        ResourceGeneratorInterface $resourceGenerator,
+        ServerRequestInterface $request
+    ): Link;</code>
+    </MethodSignatureMismatch>
     <MixedArgument>
       <code>$item</code>
       <code>$item</code>
@@ -532,6 +618,14 @@
       <code>$expected</code>
     </ArgumentTypeCoercion>
     <DeprecatedMethod>
+      <code>static::getObjectAttribute(
+                $classOrObject,
+                $attributeName
+            )</code>
+      <code>static::getStaticAttribute(
+                $classOrObject,
+                $attributeName
+            )</code>
       <code>static::readAttribute($actualClassOrObject, $actualAttributeName)</code>
       <code>static::readAttribute($classOrObject, $attributeName)</code>
       <code>static::readAttribute($haystackClassOrObject, $haystackAttributeName)</code>
@@ -539,7 +633,118 @@
     <DocblockTypeContradiction>
       <code>is_object($object)</code>
     </DocblockTypeContradiction>
-    <InternalClass/>
+    <InternalClass>
+      <code>new Exception(
+            sprintf(
+                'Argument #%d%sof %s::%s() must be a %s',
+                $argument,
+                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
+                $stack[1]['class'] ?? '',
+                $stack[1]['function'],
+                $type
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Argument #%d%sof %s::%s() must be a %s',
+                $argument,
+                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
+                $stack[1]['class'] ?? '',
+                $stack[1]['function'],
+                $type
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Argument #%d%sof %s::%s() must be a %s',
+                $argument,
+                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
+                $stack[1]['class'] ?? '',
+                $stack[1]['function'],
+                $type
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Argument #%d%sof %s::%s() must be a %s',
+                $argument,
+                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
+                $stack[1]['class'] ?? '',
+                $stack[1]['function'],
+                $type
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Argument #%d%sof %s::%s() must be a %s',
+                $argument,
+                $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
+                $stack[1]['class'] ?? '',
+                $stack[1]['function'],
+                $type
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in class.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in class.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in class.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in class.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in class.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in object.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in object.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in object.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in object.',
+                $attributeName
+            )
+        )</code>
+      <code>new Exception(
+            sprintf(
+                'Attribute "%s" not found in object.',
+                $attributeName
+            )
+        )</code>
+    </InternalClass>
     <MixedAssignment>
       <code>$value</code>
     </MixedAssignment>
@@ -614,12 +819,29 @@
       <code>$request</code>
       <code>$request</code>
       <code>$request</code>
+      <code>Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_id', $params)
+                            &amp;&amp; array_key_exists('bar_id', $params)
+                            &amp;&amp; $params['foo_id'] === 1234
+                            &amp;&amp; $params['bar_id'] === $i;
+                    })</code>
+      <code>Argument::that(function (array $params) use ($page) {
+                return array_key_exists('foo_id', $params)
+                    &amp;&amp; array_key_exists('p', $params)
+                    &amp;&amp; $params['foo_id'] === 1234
+                    &amp;&amp; $params['p'] === $page;
+            })</code>
     </InvalidArgument>
     <MixedArgument>
       <code>$request-&gt;reveal()</code>
       <code>$request-&gt;reveal()</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion/>
+    <MixedArgumentTypeCoercion>
+      <code>$this-&gt;createCollectionItems(
+            $linkGenerator,
+            $request
+        )</code>
+    </MixedArgumentTypeCoercion>
     <MixedMethodCall>
       <code>willReturn</code>
       <code>willReturn</code>
@@ -629,6 +851,12 @@
     <InvalidArgument>
       <code>$linkGenerator</code>
       <code>$request</code>
+      <code>Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_id', $params)
+                            &amp;&amp; array_key_exists('bar_id', $params)
+                            &amp;&amp; $params['foo_id'] === 1234
+                            &amp;&amp; $params['bar_id'] === $i;
+                    })</code>
     </InvalidArgument>
     <MixedArgument>
       <code>$request-&gt;reveal()</code>
@@ -687,6 +915,24 @@
       <code>assertInternalType</code>
     </DeprecatedMethod>
     <InvalidArgument>
+      <code>Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_bar_id', $params)
+                            &amp;&amp; array_key_exists('test', $params)
+                            &amp;&amp; $params['foo_bar_id'] === $i
+                            &amp;&amp; $params['test'] === 'param';
+                    })</code>
+      <code>Argument::that(function (array $params) use ($i) {
+                        return array_key_exists('foo_bar_id', $params)
+                            &amp;&amp; array_key_exists('test', $params)
+                            &amp;&amp; $params['foo_bar_id'] === $i
+                            &amp;&amp; $params['test'] === 'param';
+                    })</code>
+      <code>Argument::that(function (array $params) {
+                    return array_key_exists('foo_bar_id', $params)
+                        &amp;&amp; array_key_exists('test', $params)
+                        &amp;&amp; $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
+                        &amp;&amp; $params['test'] === 'param';
+                })</code>
       <code>Argument::type('array')</code>
       <code>Argument::type('array')</code>
       <code>Argument::type('array')</code>
@@ -698,7 +944,6 @@
       <code>Argument::type('array')</code>
       <code>Argument::type('array')</code>
     </InvalidArgument>
-    <InvalidStringClass/>
     <MixedArgument>
       <code>$embedded</code>
       <code>$item</code>
@@ -709,7 +954,6 @@
       <code>$item</code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>Generator</code>
       <code>Generator</code>
     </MixedInferredReturnType>
     <PossiblyUndefinedMethod>
@@ -750,6 +994,13 @@
       <code>fromRoute</code>
       <code>fromRoute</code>
     </TooFewArguments>
+    <UnsafeInstantiation>
+      <code>new $metadata(
+            TestAsset\FooBar::class,
+            'foo-bar',
+            '/api/foo'
+        )</code>
+    </UnsafeInstantiation>
   </file>
   <file src="test/TestAsset/Child.php">
     <MissingPropertyType>
