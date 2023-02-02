@@ -22,6 +22,9 @@ interface UrlGeneratorInterface
      *
      * - `$queryParams` are any query string parameters to include in the
      *   generated URL.
+     *
+     * @param array<string, mixed> $routeParams
+     * @param array<string, mixed> $queryParams
      */
     public function generate(
         ServerRequestInterface $request,
