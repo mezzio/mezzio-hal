@@ -19,10 +19,10 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
         private array $routeParams = [],
         private array $queryStringArguments = []
     ) {
-        $this->class                = $class;
-        $this->collectionRelation   = $collectionRelation;
-        $this->paginationParam      = $paginationParam;
-        $this->paginationParamType  = $paginationParamType;
+        $this->class               = $class;
+        $this->collectionRelation  = $collectionRelation;
+        $this->paginationParam     = $paginationParam;
+        $this->paginationParamType = $paginationParamType;
     }
 
     public function getRoute(): string

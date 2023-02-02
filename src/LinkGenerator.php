@@ -36,6 +36,7 @@ class LinkGenerator
 
     /**
      * Creates a templated link
+     *
      * @param array<string, mixed> $routeParams
      * @param array<string, mixed> $queryParams
      * @param array<string, mixed> $attributes
