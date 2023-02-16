@@ -213,7 +213,7 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             }),
             [
                 'query_1' => 'value_1',
-                'sort' => 'ASC',
+                'sort'    => 'ASC',
             ]
         )->willReturn(new Link($rel, sprintf('/api/foo/1234/p/%d?query_1=value_1&sort=ASC', $page)));
     }
