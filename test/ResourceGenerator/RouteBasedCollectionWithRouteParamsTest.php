@@ -36,7 +36,9 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
     {
         $request = $this->prophesize(ServerRequestInterface::class);
         $request->getAttribute('p', 1)->willReturn(3);
-        $request->getQueryParams()->shouldNotBeCalled();
+        $request->getQueryParams()->willReturn([
+            'query_1' => 'value_1',
+        ]);
 
         $linkGenerator = $this->prophesize(LinkGenerator::class);
         $this->createLinkGeneratorProphecy($linkGenerator, $request, 'self', 3);
@@ -103,15 +105,15 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
 
         $this->assertInstanceOf(HalResource::class, $resource);
         $self = $this->getLinkByRel('self', $resource);
-        $this->assertLink('self', '/api/foo/1234/p/3?sort=ASC', $self);
+        $this->assertLink('self', '/api/foo/1234/p/3?query_1=value_1&sort=ASC', $self);
         $first = $this->getLinkByRel('first', $resource);
-        $this->assertLink('first', '/api/foo/1234/p/1?sort=ASC', $first);
+        $this->assertLink('first', '/api/foo/1234/p/1?query_1=value_1&sort=ASC', $first);
         $prev = $this->getLinkByRel('prev', $resource);
-        $this->assertLink('prev', '/api/foo/1234/p/2?sort=ASC', $prev);
+        $this->assertLink('prev', '/api/foo/1234/p/2?query_1=value_1&sort=ASC', $prev);
         $next = $this->getLinkByRel('next', $resource);
-        $this->assertLink('next', '/api/foo/1234/p/4?sort=ASC', $next);
+        $this->assertLink('next', '/api/foo/1234/p/4?query_1=value_1&sort=ASC', $next);
         $last = $this->getLinkByRel('last', $resource);
-        $this->assertLink('last', '/api/foo/1234/p/5?sort=ASC', $last);
+        $this->assertLink('last', '/api/foo/1234/p/5?query_1=value_1&sort=ASC', $last);
     }
 
     public function testUsesRouteParamsAndQueriesSpecifiedInMetadataWhenGeneratingLinkHref(): void
@@ -209,8 +211,11 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
                     && $params['foo_id'] === 1234
                     && $params['p'] === $page;
             }),
-            ['sort' => 'ASC']
-        )->willReturn(new Link($rel, sprintf('/api/foo/1234/p/%d?sort=ASC', $page)));
+            [
+                'query_1' => 'value_1',
+                'sort'    => 'ASC',
+            ]
+        )->willReturn(new Link($rel, sprintf('/api/foo/1234/p/%d?query_1=value_1&sort=ASC', $page)));
     }
 
     /**
