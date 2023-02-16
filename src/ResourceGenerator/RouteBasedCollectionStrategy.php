@@ -63,7 +63,7 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         $paginationType  = $metadata->getPaginationParamType();
         $paginationParam = $metadata->getPaginationParam();
         $routeParams     = $metadata->getRouteParams();
-        $queryStringArgs = $metadata->getQueryStringArguments();
+        $queryStringArgs = array_merge($request->getQueryParams(), $metadata->getQueryStringArguments());
 
         $paramsWithPage = [$paginationParam => $page];
         $routeParams    = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER

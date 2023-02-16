@@ -401,21 +401,19 @@
       <code>protected function generateSelfLink(</code>
     </MethodSignatureMismatch>
     <MixedArgument>
+      <code>$metadata-&gt;getQueryStringArguments()</code>
       <code>$metadata-&gt;getQueryStringArguments() ?? []</code>
       <code>$metadata-&gt;getRoute()</code>
-      <code>$queryParams</code>
-      <code>$queryStringArgs</code>
       <code>$route</code>
       <code>$routeParams</code>
       <code>$routeParams</code>
       <code>$routeParams</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
+      <code>$queryParams</code>
       <code>$queryStringArgs</code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$queryParams</code>
-      <code>$queryStringArgs</code>
       <code>$route</code>
       <code>$routeParams</code>
       <code>$routeParams</code>

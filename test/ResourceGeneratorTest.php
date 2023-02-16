@@ -646,6 +646,8 @@ class ResourceGeneratorTest extends TestCase
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
         $this->metadataMap->get(TestAsset\FooBar::class)->willReturn($resourceMetadata);
 
+        $this->request->getQueryParams()->willReturn([]);
+
         $this->linkGenerator
             ->fromRoute(
                 'self',
