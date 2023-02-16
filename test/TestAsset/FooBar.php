@@ -4,7 +4,8 @@ namespace MezzioTest\Hal\TestAsset;
 
 class FooBar
 {
-    public $id;
-    public $foo;
-    public $bar;
+    public mixed $id = null;
+    public mixed $foo = null;
+    public mixed $bar = null;
+    public Collection|null $children = null;
 }
