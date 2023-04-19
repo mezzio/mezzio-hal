@@ -201,15 +201,14 @@ class Link implements EvolvableLinkInterface
 
     /**
      * @param mixed $value
-     * @throws InvalidArgumentException If $value is neither a scalar nor an array.
-     * @throws InvalidArgumentException If $value is an array, but one or more values
-     *     is not a string.
+     * @throws InvalidArgumentException If $value is neither a scalar, an array nor null.
+     * @throws InvalidArgumentException If $value is an array, but one or more values is not a string.
      */
     private function validateAttributeValue($value, string $context): void
     {
-        if (! is_scalar($value) && ! is_array($value)) {
+        if (! is_scalar($value) && ! is_array($value) && $value !== null) {
             throw new InvalidArgumentException(sprintf(
-                '%s expects the $value to be a PHP primitive or array of strings; received %s',
+                '%s expects the $value to be a PHP primitive, an array of strings or null; received %s',
                 $context,
                 is_object($value) ? $value::class : gettype($value)
             ));
