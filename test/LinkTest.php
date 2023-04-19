@@ -45,7 +45,7 @@ class LinkTest extends TestCase
 
     public function testCanConstructLinkWithRelationAndAttributes(): void
     {
-        $attributes = ['foo' => 'bar', 'baz' => null];
+        $attributes = ['foo' => 'bar', 'bar' => null];
         $link       = new Link('self', '', false, $attributes);
         $this->assertEquals(['self'], $link->getRels());
         $this->assertEquals($attributes, $link->getAttributes());
