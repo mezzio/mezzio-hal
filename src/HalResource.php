@@ -141,6 +141,10 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     {
         $this->validateElementName($name, __METHOD__);
 
+        if ($value === null || $value === []) {
+            return $this->embed($name, []);
+        }
+
         if (
             ! empty($value)
             && ($value instanceof self || $this->isResourceCollection($value))
