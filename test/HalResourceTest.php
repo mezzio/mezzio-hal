@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 use function array_values;
+use function file_get_contents;
+use function json_decode;
 
 class HalResourceTest extends TestCase
 {
@@ -635,5 +637,74 @@ class HalResourceTest extends TestCase
         ];
 
         $this->assertEquals($expected, $resource->toArray());
+    }
+
+    private function fixture(string $file): array
+    {
+        $contents = file_get_contents(__DIR__ . '/Fixture/' . $file);
+
+        if ($contents === false) {
+            throw new RuntimeException('Failed to read fixture file: ' . $file);
+        }
+
+        return json_decode($contents, true);
+    }
+
+    public static function nonEmptyCollectionDataProvider(): iterable
+    {
+        yield from [
+            'collection' => [
+                [
+                    (new HalResource())->withElements([
+                        'id'    => 1,
+                        'name'  => 'John',
+                        'email' => 'john@example.com',
+                    ]),
+                    (new HalResource())->withElements([
+                        'id'    => 2,
+                        'name'  => 'Jane',
+                        'email' => 'jane@example.com',
+                    ]),
+                ],
+            ],
+        ];
+    }
+
+    public static function emptyCollectionDataProvider(): iterable
+    {
+        yield from [
+            'null'  => [null],
+            'array' => [[]],
+        ];
+    }
+
+    /**
+     * @dataProvider emptyCollectionDataProvider
+     */
+    public function testEmptyCollection(mixed $collection): void
+    {
+        $resource = (new HalResource())
+            ->withLink(new Link('self', '/api/contacts'))
+            ->withElements(['contacts' => $collection]);
+
+        self::assertSame(
+            $this->fixture('empty-contacts-collection.json'),
+            $resource->toArray()
+        );
+    }
+
+    /**
+     * @dataProvider nonEmptyCollectionDataProvider
+     */
+    public function testNonEmptyCollection(mixed $collection): void
+    {
+        $resource = (new HalResource())
+            ->withLink(new Link('self', '/api/contacts'))
+            ->withElements(['contacts' => $collection]);
+
+        self::assertSame(
+            $this->fixture('non-empty-contacts-collection.json'),
+            $resource->toArray()
+        );
     }
 }
