@@ -101,7 +101,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
     ) {
         $queryStringArgs = $request->getQueryParams();
         $url             = $metadata->getUrl();
-        if ($queryStringArgs !== null) {
+        if ($queryStringArgs !== []) {
             $url .= '?' . http_build_query($queryStringArgs);
         }
 

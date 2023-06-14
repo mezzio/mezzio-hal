@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 
+use function strlen;
 use function strstr;
 
 class HalResponseFactoryTest extends TestCase
@@ -72,7 +73,7 @@ class HalResponseFactoryTest extends TestCase
             ->expects(self::once())
             ->method('write')
             ->with('{}')
-            ->willReturnSelf();
+            ->willReturn(2);
 
         $this->response
             ->method('getBody')
@@ -128,7 +129,7 @@ class HalResponseFactoryTest extends TestCase
             ->expects(self::once())
             ->method('write')
             ->with('{}')
-            ->willReturnSelf();
+            ->willReturn(2);
 
         $this->response
             ->method('getBody')
@@ -185,7 +186,7 @@ class HalResponseFactoryTest extends TestCase
             ->expects(self::once())
             ->method('write')
             ->with('<resource/>')
-            ->willReturnSelf();
+            ->willReturn(11);
 
         $this->response
             ->method('getBody')
@@ -261,7 +262,7 @@ class HalResponseFactoryTest extends TestCase
             ->expects(self::once())
             ->method('write')
             ->with($responseBody)
-            ->willReturnSelf();
+            ->willReturn(strlen($responseBody));
 
         $this->response
             ->method('getBody')
