@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal;
 
+use Generator;
 use InvalidArgumentException;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
@@ -659,7 +660,10 @@ class HalResourceTest extends TestCase
         return json_decode($contents, true);
     }
 
-    public static function nonEmptyCollectionDataProvider(): iterable
+    /**
+     * @return Generator<string,array<array-key,array<array-key,HalResource>>>
+     */
+    public static function nonEmptyCollectionDataProvider(): Generator
     {
         yield from [
             'collection' => [
@@ -679,7 +683,10 @@ class HalResourceTest extends TestCase
         ];
     }
 
-    public static function emptyCollectionDataProvider(): iterable
+    /**
+     * @return Generator<'array'|'null',list{array<never,never>|null},mixed,void>
+     */
+    public static function emptyCollectionDataProvider(): Generator
     {
         yield from [
             'null'  => [null],
