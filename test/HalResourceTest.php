@@ -13,6 +13,7 @@ use RuntimeException;
 
 use function array_values;
 use function file_get_contents;
+use function is_array;
 use function json_decode;
 
 class HalResourceTest extends TestCase
@@ -658,7 +659,7 @@ class HalResourceTest extends TestCase
         }
 
         $json = json_decode($contents, true);
-        if (!is_array($json)) {
+        if (! is_array($json)) {
             throw new RuntimeException('Failed to json_decode fixture file: ' . $file);
         }
 
