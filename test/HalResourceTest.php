@@ -657,7 +657,12 @@ class HalResourceTest extends TestCase
             throw new RuntimeException('Failed to read fixture file: ' . $file);
         }
 
-        return json_decode($contents, true);
+        $json = json_decode($contents, true);
+        if (!is_array($json)) {
+            throw new RuntimeException('Failed to json_decode fixture file: ' . $file);
+        }
+
+        return $json;
     }
 
     /**
