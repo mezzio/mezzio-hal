@@ -69,14 +69,13 @@ class ConfigProvider
     public function getHalConfig(): array
     {
         return [
-            /** 
+            /**
              * Whether or not to include empty collections within the _embedded section of the response,
              *
              * See: https://github.com/mezzio/mezzio-hal/pull/80
              */
             'embed-empty-collections' => false,
-            
-            'resource-generator' => [
+            'resource-generator'      => [
                 'strategies' => [ // The registered strategies and their metadata types
                     RouteBasedCollectionMetadata::class => RouteBasedCollectionStrategy::class,
                     RouteBasedResourceMetadata::class   => RouteBasedResourceStrategy::class,
@@ -84,7 +83,7 @@ class ConfigProvider
                     UrlBasedResourceMetadata::class     => UrlBasedResourceStrategy::class,
                 ],
             ],
-            'metadata-factories' => [ // The factories for the metadata types
+            'metadata-factories'      => [ // The factories for the metadata types
                 RouteBasedCollectionMetadata::class => RouteBasedCollectionMetadataFactory::class,
                 RouteBasedResourceMetadata::class   => RouteBasedResourceMetadataFactory::class,
                 UrlBasedCollectionMetadata::class   => UrlBasedCollectionMetadataFactory::class,
