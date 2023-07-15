@@ -109,6 +109,9 @@ class ResourceGeneratorTest extends TestCase
             'foo' => 'bar',
             'bar' => 'baz',
         ];
+
+        $this->hydrators->has('config')->willReturn(false);
+
         $this->linkGenerator->fromRoute()->shouldNotBeCalled();
         $this->metadataMap->has()->shouldNotBeCalled();
 
