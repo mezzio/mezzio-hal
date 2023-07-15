@@ -241,20 +241,20 @@ class HalResourceTest extends TestCase
 
     public function testWithElementWillEmbedAnEmptyArrayIfAnEmptyArrayValueIsProvided(): void
     {
-        $resource = new HalResource(['foo' => 'bar']);
+        $resource = new HalResource(['foo' => 'bar'], [], [], true);
         $new      = $resource->withElement('bar', []);
 
         $representation = $new->toArray();
         self::assertSame(['foo' => 'bar', '_embedded' => ['bar' => []]], $representation);
     }
 
-    public function testWithElementWillEmbedAnEmptyArrayIfNullValueIsProvided(): void
+    public function testWithElementDoesNotProxyToEmbedIfNullValueIsProvided(): void
     {
-        $resource = new HalResource(['foo' => 'bar']);
+        $resource = new HalResource(['foo' => 'bar'], [], [], true);
         $new      = $resource->withElement('bar', null);
 
         $representation = $new->toArray();
-        self::assertSame(['foo' => 'bar', '_embedded' => ['bar' => []]], $representation);
+        self::assertSame(['foo' => 'bar', 'bar' => null], $representation);
     }
 
     /**
@@ -690,12 +690,11 @@ class HalResourceTest extends TestCase
     }
 
     /**
-     * @return Generator<'array'|'null',list{array<never,never>|null},mixed,void>
+     * @return Generator<'array',list{array<never,never>},mixed,void>
      */
     public static function emptyCollectionDataProvider(): Generator
     {
         yield from [
-            'null'  => [null],
             'array' => [[]],
         ];
     }
@@ -705,7 +704,7 @@ class HalResourceTest extends TestCase
      */
     public function testEmptyCollection(mixed $collection): void
     {
-        $resource = (new HalResource())
+        $resource = (new HalResource([], [], [], true))
             ->withLink(new Link('self', '/api/contacts'))
             ->withElements(['contacts' => $collection]);
 
@@ -726,6 +725,31 @@ class HalResourceTest extends TestCase
 
         self::assertSame(
             $this->fixture('non-empty-contacts-collection.json'),
+            $resource->toArray()
+        );
+    }
+
+    /**
+     * @return Generator<'null',list{null},mixed,void>
+     */
+    public static function nullCollectionDataProvider(): Generator
+    {
+        yield from [
+            'null' => [null],
+        ];
+    }
+
+    /**
+     * @dataProvider nullCollectionDataProvider
+     */
+    public function testNullCollection(mixed $collection): void
+    {
+        $resource = (new HalResource([], [], [], true))
+            ->withLink(new Link('self', '/api/contacts'))
+            ->withElements(['contacts' => $collection]);
+
+        self::assertSame(
+            $this->fixture('null-contacts-collection.json'),
             $resource->toArray()
         );
     }
