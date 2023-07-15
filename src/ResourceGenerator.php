@@ -94,6 +94,7 @@ class ResourceGenerator implements ResourceGeneratorInterface
 
     public function fromArray(array $data, ?string $uri = null): HalResource
     {
+        /** @psalm-suppress MixedArrayAccess */
         $embedEmptyCollections =
             $this->hydrators->has('config') &&
             $this->hydrators->get('config')['mezzio-hal']['embed-empty-collections'] ??
