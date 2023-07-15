@@ -40,7 +40,8 @@ class NestedCollectionResourceGenerationTest extends TestCase
         $foo->foo      = 'foo';
         $foo->children = $collection;
 
-        $request       = $this->prophesize(ServerRequestInterface::class);
+        $request = $this->prophesize(ServerRequestInterface::class);
+        $request->getQueryParams()->willReturn([]);
         $metadataMap   = $this->createMetadataMap();
         $hydrators     = $this->createHydrators();
         $linkGenerator = $this->createLinkGenerator($request);

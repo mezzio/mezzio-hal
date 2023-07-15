@@ -67,7 +67,8 @@ class ResourceGeneratorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->request       = $this->prophesize(ServerRequestInterface::class);
+        $this->request = $this->prophesize(ServerRequestInterface::class);
+        $this->request->getQueryParams()->willReturn([]);
         $this->hydrators     = $this->prophesize(ContainerInterface::class);
         $this->linkGenerator = $this->prophesize(LinkGenerator::class);
         $this->metadataMap   = $this->prophesize(Metadata\MetadataMap::class);
