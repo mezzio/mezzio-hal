@@ -49,8 +49,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * @param LinkInterface[] $links
      * @param HalResource[][] $embedded
      */
-    public function __construct(array $data = [], array $links = [], array $embedded = [], bool $embedEmptyCollections = false)
-    {
+    public function __construct(
+        array $data = [],
+        array $links = [],
+        array $embedded = [],
+        bool $embedEmptyCollections = false
+    ) {
         $this->embedEmptyCollections = $embedEmptyCollections;
 
         $context = self::class;
