@@ -228,7 +228,7 @@ However, when `embed-empty-collections` is set to `true`, the representation wil
 
 **`empty-contacts-collection-embedded.json`**
 
-``` json
+```json
 {
   "_embedded": {
     "contacts": []
