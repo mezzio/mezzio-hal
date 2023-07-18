@@ -200,7 +200,7 @@ $resource = $resource->withoutLink($link);
 
 To maintain consistency in the structure of the response, you may choose to embed both non-empty and empty collections within the `_embedded` section. This can be achieved by enabling the `embed-empty-collections` configuration option.
 
-To enable this feature, modify the configuration file as follows:
+To enable this feature, modify the configuration file `config/autoload/hal.global.php` as follows:
 
 ```php
 return [
