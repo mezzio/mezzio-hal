@@ -198,4 +198,42 @@ $resource = $resource->withLink($link);
 $resource = $resource->withoutLink($link);
 ```
 
+To maintain consistency in the structure of the response, you may choose to embed both non-empty and empty collections within the `_embedded` section. This can be achieved by enabling the `embed-empty-collections` configuration option.
+
+To enable this feature, modify the configuration file as follows:
+
+```php
+return [
+    'mezzio-hal' => [
+        'embed-empty-collections' => false, // (default: false for compatibility reasons)
+        'metadata-factories' => [...],
+        'resource-generator' => [...],
+    ],
+];
+```
+
+The default setting of `false` ensures compatibility with existing API endpoints and prevents potential test failures.
+
+When `embed-empty-collections` is set to `false`, the representation will be as follows:
+
+**`empty-contacts-collection-not-embedded.json`**
+
+```json
+{
+  "contacts": []
+}
+```
+
+However, when `embed-empty-collections` is set to `true`, the representation will be as follows:
+
+**`empty-contacts-collection-embedded.json`**
+
+``` json
+{
+  "_embedded": {
+    "contacts": []
+  }
+}
+```
+
 With these tools, you can describe any resource you want to represent.
