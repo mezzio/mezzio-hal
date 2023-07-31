@@ -42,8 +42,6 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     /** @var array<array-key, self|array<array-key, self>> */
     private $embedded = [];
 
-    private bool $embedEmptyCollections;
-
     /**
      * @param array $data
      * @param LinkInterface[] $links
@@ -53,7 +51,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         array $data = [],
         array $links = [],
         array $embedded = [],
-        bool $embedEmptyCollections = false
+        private bool $embedEmptyCollections = false
     ) {
         $this->embedEmptyCollections = $embedEmptyCollections;
 
