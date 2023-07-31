@@ -248,6 +248,7 @@ class HalResourceTest extends TestCase
         self::assertSame(['foo' => 'bar', 'bar' => []], $representation);
     }
 
+    // phpcs:ignore
     public function testWithElementWillEmbedAnEmptyArrayIfAnEmptyArrayValueIsProvidedAndConfiguredToEmbedEmptyCollections(): void
     {
         $resource = new HalResource(['foo' => 'bar'], embedEmptyCollections: true);
