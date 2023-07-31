@@ -239,7 +239,7 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $collection], $new->getElements());
     }
 
-    public function testWithElementWillEmbedAnEmptyArrayIfAnEmptyArrayValueIsProvided(): void
+    public function testWithElementWillEmbedAnEmptyArrayIfAnEmptyArrayValueIsProvidedAndConfiguredToEmbedEmptyCollections(): void
     {
         $resource = new HalResource(['foo' => 'bar'], [], [], true);
         $new      = $resource->withElement('bar', []);
