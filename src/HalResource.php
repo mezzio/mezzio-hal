@@ -19,6 +19,7 @@ use function array_reduce;
 use function array_shift;
 use function array_walk;
 use function count;
+use function get_debug_type;
 use function gettype;
 use function in_array;
 use function is_array;
@@ -56,26 +57,37 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         $this->embedEmptyCollections = $embedEmptyCollections;
 
         $context = self::class;
+
         array_walk($data, function ($value, $name) use ($context) {
             $this->validateElementName($name, $context);
+
             if ($value instanceof self || $this->isResourceCollection($value)) {
                 $this->embedded[$name] = $value;
                 return;
             }
+
             $this->data[$name] = $value;
         });
 
         array_walk($embedded, function ($resource, $name) use ($context) {
             $this->validateElementName($name, $context);
             $this->detectCollisionWithData($name, $context);
-            if (! ($resource instanceof self || $this->isResourceCollection($resource))) {
-                throw new InvalidArgumentException(sprintf(
-                    'Invalid embedded resource provided to %s constructor with name "%s"',
-                    $context,
-                    $name
-                ));
+
+            if (
+                $resource instanceof self ||
+                $resource === [] ||
+                $this->isResourceCollection($resource)
+            ) {
+                $this->embedded[$name] = $resource;
+                return;
             }
-            $this->embedded[$name] = $resource;
+
+            throw new InvalidArgumentException(sprintf(
+                'Invalid embedded resource provided to %s constructor with name "%s":"%s"',
+                $context,
+                $name,
+                get_debug_type($resource)
+            ));
         });
 
         if (
@@ -397,8 +409,8 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return false;
         }
 
-        if ($this->embedEmptyCollections && $value === []) {
-            return true;
+        if ($value === []) {
+            return $this->embedEmptyCollections;
         }
 
         return array_reduce($value, static function ($isResource, $item) {

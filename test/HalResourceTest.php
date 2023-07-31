@@ -239,9 +239,18 @@ class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => $collection], $new->getElements());
     }
 
+    public function testWithElementDoesNotProxyToEmbedIfAnEmptyArrayValueIsProvided(): void
+    {
+        $resource = new HalResource(['foo' => 'bar'], embedEmptyCollections: false);
+        $new      = $resource->withElement('bar', []);
+
+        $representation = $new->toArray();
+        self::assertSame(['foo' => 'bar', 'bar' => []], $representation);
+    }
+
     public function testWithElementWillEmbedAnEmptyArrayIfAnEmptyArrayValueIsProvidedAndConfiguredToEmbedEmptyCollections(): void
     {
-        $resource = new HalResource(['foo' => 'bar'], [], [], true);
+        $resource = new HalResource(['foo' => 'bar'], embedEmptyCollections: true);
         $new      = $resource->withElement('bar', []);
 
         $representation = $new->toArray();
