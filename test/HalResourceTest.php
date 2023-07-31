@@ -702,7 +702,7 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider emptyCollectionDataProvider
      */
-    public function testEmptyCollection(mixed $collection): void
+    public function testEmptyCollectionWhenEmbedEmptyEnabled(mixed $collection): void
     {
         $resource = (new HalResource([], [], [], true))
             ->withLink(new Link('self', '/api/contacts'))
