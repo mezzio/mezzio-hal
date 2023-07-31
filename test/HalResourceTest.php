@@ -248,7 +248,7 @@ class HalResourceTest extends TestCase
         self::assertSame(['foo' => 'bar', '_embedded' => ['bar' => []]], $representation);
     }
 
-    public function testWithElementDoesNotProxyToEmbedIfNullValueIsProvided(): void
+    public function testWithElementDoesNotProxyToEmbedIfNullValueIsProvidedAndEmbedEmptyCollectionsEnabled(): void
     {
         $resource = new HalResource(['foo' => 'bar'], [], [], true);
         $new      = $resource->withElement('bar', null);
