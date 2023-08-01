@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal;
 
+use Generator;
 use InvalidArgumentException;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
@@ -11,6 +12,9 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 use function array_values;
+use function file_get_contents;
+use function is_array;
+use function json_decode;
 
 class HalResourceTest extends TestCase
 {
@@ -237,11 +241,30 @@ class HalResourceTest extends TestCase
 
     public function testWithElementDoesNotProxyToEmbedIfAnEmptyArrayValueIsProvided(): void
     {
-        $resource = new HalResource(['foo' => 'bar']);
+        $resource = new HalResource(['foo' => 'bar'], embedEmptyCollections: false);
         $new      = $resource->withElement('bar', []);
 
         $representation = $new->toArray();
-        $this->assertEquals(['foo' => 'bar', 'bar' => []], $representation);
+        self::assertSame(['foo' => 'bar', 'bar' => []], $representation);
+    }
+
+    // phpcs:ignore
+    public function testWithElementWillEmbedAnEmptyArrayIfAnEmptyArrayValueIsProvidedAndConfiguredToEmbedEmptyCollections(): void
+    {
+        $resource = new HalResource(['foo' => 'bar'], embedEmptyCollections: true);
+        $new      = $resource->withElement('bar', []);
+
+        $representation = $new->toArray();
+        self::assertSame(['foo' => 'bar', '_embedded' => ['bar' => []]], $representation);
+    }
+
+    public function testWithElementDoesNotProxyToEmbedIfNullValueIsProvidedAndEmbedEmptyCollectionsEnabled(): void
+    {
+        $resource = new HalResource(['foo' => 'bar'], [], [], true);
+        $new      = $resource->withElement('bar', null);
+
+        $representation = $new->toArray();
+        self::assertSame(['foo' => 'bar', 'bar' => null], $representation);
     }
 
     /**
@@ -635,5 +658,109 @@ class HalResourceTest extends TestCase
         ];
 
         $this->assertEquals($expected, $resource->toArray());
+    }
+
+    private function fixture(string $file): array
+    {
+        $contents = file_get_contents(__DIR__ . '/Fixture/' . $file);
+
+        if ($contents === false) {
+            throw new RuntimeException('Failed to read fixture file: ' . $file);
+        }
+
+        $json = json_decode($contents, true);
+        if (! is_array($json)) {
+            throw new RuntimeException('Failed to json_decode fixture file: ' . $file);
+        }
+
+        return $json;
+    }
+
+    /**
+     * @return Generator<string,array<array-key,array<array-key,HalResource>>>
+     */
+    public static function nonEmptyCollectionDataProvider(): Generator
+    {
+        yield from [
+            'collection' => [
+                [
+                    (new HalResource())->withElements([
+                        'id'    => 1,
+                        'name'  => 'John',
+                        'email' => 'john@example.com',
+                    ]),
+                    (new HalResource())->withElements([
+                        'id'    => 2,
+                        'name'  => 'Jane',
+                        'email' => 'jane@example.com',
+                    ]),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return Generator<'array',list{array<never,never>},mixed,void>
+     */
+    public static function emptyCollectionDataProvider(): Generator
+    {
+        yield from [
+            'array' => [[]],
+        ];
+    }
+
+    /**
+     * @dataProvider emptyCollectionDataProvider
+     */
+    public function testEmptyCollectionWhenEmbedEmptyEnabled(mixed $collection): void
+    {
+        $resource = (new HalResource([], [], [], true))
+            ->withLink(new Link('self', '/api/contacts'))
+            ->withElements(['contacts' => $collection]);
+
+        self::assertSame(
+            $this->fixture('empty-contacts-collection.json'),
+            $resource->toArray()
+        );
+    }
+
+    /**
+     * @dataProvider nonEmptyCollectionDataProvider
+     */
+    public function testNonEmptyCollection(mixed $collection): void
+    {
+        $resource = (new HalResource())
+            ->withLink(new Link('self', '/api/contacts'))
+            ->withElements(['contacts' => $collection]);
+
+        self::assertSame(
+            $this->fixture('non-empty-contacts-collection.json'),
+            $resource->toArray()
+        );
+    }
+
+    /**
+     * @return Generator<'null',list{null},mixed,void>
+     */
+    public static function nullCollectionDataProvider(): Generator
+    {
+        yield from [
+            'null' => [null],
+        ];
+    }
+
+    /**
+     * @dataProvider nullCollectionDataProvider
+     */
+    public function testNullCollectionWhenEmbedEmptyEnabled(mixed $collection): void
+    {
+        $resource = (new HalResource([], [], [], true))
+            ->withLink(new Link('self', '/api/contacts'))
+            ->withElements(['contacts' => $collection]);
+
+        self::assertSame(
+            $this->fixture('null-contacts-collection.json'),
+            $resource->toArray()
+        );
     }
 }

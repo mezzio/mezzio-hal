@@ -1,0 +1,8 @@
+{
+  "contacts": null,
+  "_links": {
+    "self": {
+      "href": "/api/contacts"
+    }
+  }
+}

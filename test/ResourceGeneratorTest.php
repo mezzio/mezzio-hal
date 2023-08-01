@@ -67,7 +67,8 @@ class ResourceGeneratorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->request       = $this->prophesize(ServerRequestInterface::class);
+        $this->request = $this->prophesize(ServerRequestInterface::class);
+        $this->request->getQueryParams()->willReturn([]);
         $this->hydrators     = $this->prophesize(ContainerInterface::class);
         $this->linkGenerator = $this->prophesize(LinkGenerator::class);
         $this->metadataMap   = $this->prophesize(Metadata\MetadataMap::class);
@@ -109,6 +110,9 @@ class ResourceGeneratorTest extends TestCase
             'foo' => 'bar',
             'bar' => 'baz',
         ];
+
+        $this->hydrators->has('config')->willReturn(false);
+
         $this->linkGenerator->fromRoute()->shouldNotBeCalled();
         $this->metadataMap->has()->shouldNotBeCalled();
 
@@ -645,6 +649,8 @@ class ResourceGeneratorTest extends TestCase
 
         $this->metadataMap->has(TestAsset\FooBar::class)->willReturn(true);
         $this->metadataMap->get(TestAsset\FooBar::class)->willReturn($resourceMetadata);
+
+        $this->request->getQueryParams()->willReturn([]);
 
         $this->linkGenerator
             ->fromRoute(
