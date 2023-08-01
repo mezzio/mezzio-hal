@@ -448,9 +448,6 @@
     </MixedArrayOffset>
   </file>
   <file src="src/ResourceGenerator/UrlBasedCollectionStrategy.php">
-    <InvalidArgument>
-      <code>$page</code>
-    </InvalidArgument>
     <MethodSignatureMismatch>
       <code>protected function generateSelfLink(</code>
     </MethodSignatureMismatch>

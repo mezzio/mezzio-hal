@@ -1,0 +1,10 @@
+{
+  "_links": {
+    "self": {
+      "href": "/api/contacts"
+    }
+  },
+  "_embedded": {
+    "contacts": []
+  }
+}
