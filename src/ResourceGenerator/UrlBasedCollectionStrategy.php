@@ -73,7 +73,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
 
         switch ($paginationType) {
             case Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER:
-                $url = str_replace($url, $paginationParam, (string) $page);
+                $url = str_replace($url, $paginationParam, $page);
                 break;
             case Metadata\AbstractCollectionMetadata::TYPE_QUERY:
                 // fall-through

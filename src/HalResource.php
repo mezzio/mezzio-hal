@@ -19,7 +19,6 @@ use function array_reduce;
 use function array_shift;
 use function array_walk;
 use function count;
-use function get_debug_type;
 use function gettype;
 use function in_array;
 use function is_array;
@@ -48,46 +47,32 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      * @param LinkInterface[] $links
      * @param HalResource[][] $embedded
      */
-    public function __construct(
-        array $data = [],
-        array $links = [],
-        array $embedded = [],
-        private bool $embedEmptyCollections = false
-    ) {
-        $this->embedEmptyCollections = $embedEmptyCollections;
-
+    public function __construct(array $data = [], array $links = [], array $embedded = [])
+    {
         $context = self::class;
-
         array_walk($data, function ($value, $name) use ($context) {
             $this->validateElementName($name, $context);
-
-            if ($value instanceof self || $this->isResourceCollection($value)) {
+            if (
+                ! empty($value)
+                && ($value instanceof self || $this->isResourceCollection($value))
+            ) {
                 $this->embedded[$name] = $value;
                 return;
             }
-
             $this->data[$name] = $value;
         });
 
         array_walk($embedded, function ($resource, $name) use ($context) {
             $this->validateElementName($name, $context);
             $this->detectCollisionWithData($name, $context);
-
-            if (
-                $resource instanceof self ||
-                $resource === [] ||
-                $this->isResourceCollection($resource)
-            ) {
-                $this->embedded[$name] = $resource;
-                return;
+            if (! ($resource instanceof self || $this->isResourceCollection($resource))) {
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid embedded resource provided to %s constructor with name "%s"',
+                    $context,
+                    $name
+                ));
             }
-
-            throw new InvalidArgumentException(sprintf(
-                'Invalid embedded resource provided to %s constructor with name "%s":"%s"',
-                $context,
-                $name,
-                get_debug_type($resource)
-            ));
+            $this->embedded[$name] = $resource;
         });
 
         if (
@@ -157,7 +142,8 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         $this->validateElementName($name, __METHOD__);
 
         if (
-            $value instanceof self || $this->isResourceCollection($value)
+            ! empty($value)
+            && ($value instanceof self || $this->isResourceCollection($value))
         ) {
             return $this->embed($name, $value);
         }
@@ -407,10 +393,6 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     {
         if (! is_array($value)) {
             return false;
-        }
-
-        if ($value === []) {
-            return $this->embedEmptyCollections;
         }
 
         return array_reduce($value, static function ($isResource, $item) {
