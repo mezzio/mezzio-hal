@@ -230,7 +230,6 @@ When `embed-empty-collections` is set to `false`, the representation will be as 
 
 However, when `embed-empty-collections` is set to `true`, the representation will be as follows:
 
-**`empty-contacts-collection-embedded.json`**
 
 ```json
 {
