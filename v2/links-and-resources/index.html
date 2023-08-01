@@ -542,6 +542,32 @@ $resource = $resource-&gt;withElements($elements);
 $resource = $resource-&gt;embed($name, $resource);
 $resource = $resource-&gt;withLink($link);
 $resource = $resource-&gt;withoutLink($link);</code></pre>
+<h3 id="embed-empty-collection">Embed Empty Collection</h3>
+<div class="admonition info">
+<p class="admonition-title">New Feature</p>
+<p>
+Available since version 2.7.0.</p>
+</div>
+<p>To maintain consistency in the structure of the response, you may choose to embed both non-empty and empty collections within the <code>_embedded</code> section. This can be achieved by enabling the <code>embed-empty-collections</code> configuration option.</p>
+<p>To enable this feature, modify the configuration file <code>config/autoload/hal.global.php</code> as follows:</p>
+<pre class="highlight"><code class="language-php">return [
+    'mezzio-hal' =&gt; [
+        'embed-empty-collections' =&gt; false, // (default: false for compatibility reasons)
+        'metadata-factories' =&gt; [...],
+        'resource-generator' =&gt; [...],
+    ],
+];</code></pre>
+<p>The default setting of <code>false</code> ensures compatibility with existing API endpoints and prevents potential test failures.</p>
+<p>When <code>embed-empty-collections</code> is set to <code>false</code>, the representation will be as follows:</p>
+<pre class="highlight"><code class="language-json">{
+  "contacts": []
+}</code></pre>
+<p>However, when <code>embed-empty-collections</code> is set to <code>true</code>, the representation will be as follows:</p>
+<pre class="highlight"><code class="language-json">{
+  "_embedded": {
+    "contacts": []
+  }
+}</code></pre>
 <p>With these tools, you can describe any resource you want to represent.</p>
 
 
