@@ -752,7 +752,7 @@ class HalResourceTest extends TestCase
     /**
      * @dataProvider nullCollectionDataProvider
      */
-    public function testNullCollectionWhenEmbedEmtpyEnabled(mixed $collection): void
+    public function testNullCollectionWhenEmbedEmptyEnabled(mixed $collection): void
     {
         $resource = (new HalResource([], [], [], true))
             ->withLink(new Link('self', '/api/contacts'))
