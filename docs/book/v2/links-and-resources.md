@@ -221,7 +221,6 @@ The default setting of `false` ensures compatibility with existing API endpoints
 
 When `embed-empty-collections` is set to `false`, the representation will be as follows:
 
-
 ```json
 {
   "contacts": []
@@ -229,7 +228,6 @@ When `embed-empty-collections` is set to `false`, the representation will be as 
 ```
 
 However, when `embed-empty-collections` is set to `true`, the representation will be as follows:
-
 
 ```json
 {
