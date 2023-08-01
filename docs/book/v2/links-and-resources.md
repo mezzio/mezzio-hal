@@ -220,7 +220,6 @@ The default setting of `false` ensures compatibility with existing API endpoints
 
 When `embed-empty-collections` is set to `false`, the representation will be as follows:
 
-**`empty-contacts-collection-not-embedded.json`**
 
 ```json
 {
