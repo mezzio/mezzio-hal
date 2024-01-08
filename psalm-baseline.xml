@@ -759,9 +759,6 @@
             )
         )]]></code>
     </InternalClass>
-    <MixedAssignment>
-      <code>$value</code>
-    </MixedAssignment>
     <MixedOperand>
       <code>$value</code>
     </MixedOperand>
