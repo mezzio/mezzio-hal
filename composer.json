@@ -55,7 +55,7 @@
         "laminas/laminas-paginator": "^2.17",
         "mezzio/mezzio-helpers": "^5.12",
         "phpspec/prophecy-phpunit": "^2.0.1",
-        "phpunit/phpunit": "^9.5.28",
+        "phpunit/phpunit": "^10.0.0",
         "psalm/plugin-phpunit": "^0.18.4",
         "vimeo/psalm": "^5.18"
     },
