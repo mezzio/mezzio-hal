@@ -1,6 +1,8 @@
 # Hypertext Application Language (HAL) for PSR-7 Applications
 
 [![Build Status](https://github.com/mezzio/mezzio-hal/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/mezzio/mezzio-hal/actions/workflows/continuous-integration.yml)
+[![type-coverage](https://shepherd.dev/github/mezzio/mezzio-hal/coverage.svg)](https://shepherd.dev/github/mezzio/mezzio-hal)
+[![Psalm level](https://shepherd.dev/github/mezzio/mezzio-hal/level.svg)](https://shepherd.dev/github/mezzio/mezzio-hal)
 
 > ## 🇷🇺 Русским гражданам
 >

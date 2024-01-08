@@ -57,7 +57,7 @@
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.28",
         "psalm/plugin-phpunit": "^0.18.4",
-        "vimeo/psalm": "^5.6"
+        "vimeo/psalm": "^5.18"
     },
     "provide": {
         "psr/link-implementation": "1.0"
