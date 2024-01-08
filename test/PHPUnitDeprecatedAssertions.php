@@ -227,11 +227,7 @@ trait PHPUnitDeprecatedAssertions
                         return $object->$attributeName;
                     }
 
-                    $attribute->setAccessible(true);
-                    $value = $attribute->getValue($object);
-                    $attribute->setAccessible(false);
-
-                    return $value;
+                    return $attribute->getValue($object);
                 } catch (ReflectionException $e) {
                 }
             } while ($reflector = $reflector->getParentClass());

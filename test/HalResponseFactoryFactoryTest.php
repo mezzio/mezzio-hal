@@ -26,7 +26,7 @@ class HalResponseFactoryFactoryTest extends TestCase
     public static function assertResponseFactoryReturns(ResponseInterface $expected, HalResponseFactory $factory): void
     {
         $r = new ReflectionProperty($factory, 'responseFactory');
-        $r->setAccessible(true);
+
         $responseFactory = $r->getValue($factory);
 
         self::assertInstanceOf(CallableResponseFactoryDecorator::class, $responseFactory);

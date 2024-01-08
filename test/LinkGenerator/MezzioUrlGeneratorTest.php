@@ -92,7 +92,6 @@ class MezzioUrlGeneratorTest extends TestCase
         // The helper should be cloned on each invocation, ensuring that the URI
         // is not persisted.
         $reflectionProperty = new ReflectionProperty($serverUrlHelper, 'uri');
-        $reflectionProperty->setAccessible(true);
         self::assertNull($reflectionProperty->getValue($serverUrlHelper));
     }
 }
