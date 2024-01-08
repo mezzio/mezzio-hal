@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.12.0@f90118cdeacd0088e7215e64c0c99ceca819e176">
+<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
+  <file src="src/Exception/InvalidObjectException.php">
+    <PossiblyUnusedMethod>
+      <code>forNonObject</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="src/HalResource.php">
-    <DocblockTypeContradiction>
-      <code>is_object($resource)</code>
-    </DocblockTypeContradiction>
     <MissingClosureParamType>
       <code>$key</code>
       <code>$links</code>
@@ -15,7 +17,6 @@
     </MissingClosureParamType>
     <MissingClosureReturnType>
       <code>function ($item) {</code>
-      <code>function (array $byRelation, LinkInterface $link) {</code>
     </MissingClosureReturnType>
     <MixedArgument>
       <code>$links</code>
@@ -24,7 +25,8 @@
       <code>$name</code>
       <code>$relation</code>
       <code>$relation</code>
-      <code>$relations</code>
+      <code>$relation</code>
+      <code>$relation</code>
       <code>$resource</code>
       <code>$value</code>
       <code>$value</code>
@@ -34,34 +36,20 @@
       <code>$name</code>
       <code>$resource</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess>
-      <code>$byRelation[$rel]</code>
-      <code>$relations[$key]</code>
-      <code>$relations[$key][Link::AS_COLLECTION]</code>
-    </MixedArrayAccess>
     <MixedArrayAssignment>
-      <code>$byRelation[$rel]</code>
-      <code>$embedded[$name]</code>
       <code>$relation[Link::AS_COLLECTION]</code>
       <code>$relation[]</code>
-      <code>$relations[$key]</code>
     </MixedArrayAssignment>
     <MixedArrayOffset>
       <code>$byRelation[$rel]</code>
       <code>$byRelation[$rel]</code>
-      <code>$byRelation[$rel]</code>
-      <code>$relations[$key]</code>
       <code>$relations[$key]</code>
       <code>$relations[$key]</code>
     </MixedArrayOffset>
     <MixedAssignment>
-      <code>$relations</code>
       <code>$relations[$key]</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>array</code>
-    </MixedInferredReturnType>
     <MixedMethodCall>
       <code>toArray</code>
     </MixedMethodCall>
@@ -70,17 +58,11 @@
       <code><![CDATA[$this->embedded]]></code>
       <code><![CDATA[$this->embedded]]></code>
     </MixedPropertyTypeCoercion>
-    <MixedReturnStatement>
-      <code>$embedded</code>
-    </MixedReturnStatement>
     <MixedReturnTypeCoercion>
       <code>$forceCollection ? [$resource] : $resource</code>
       <code><![CDATA[$this->aggregateEmbeddedCollection($name, $resource, $context)]]></code>
       <code>HalResource|HalResource[]</code>
     </MixedReturnTypeCoercion>
-    <RedundantConditionGivenDocblockType>
-      <code>gettype($resource)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/HalResponseFactory.php">
     <MixedArgument>
@@ -181,6 +163,9 @@
     <MixedAssignment>
       <code>$className</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>dueToConflictingRouteIdentifierPlaceholder</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Metadata/MetadataMapFactory.php">
     <InvalidStringClass>
@@ -206,6 +191,12 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->$method($metadata)]]></code>
     </MixedReturnStatement>
+  </file>
+  <file src="src/Metadata/RouteBasedCollectionMetadata.php">
+    <PossiblyUnusedMethod>
+      <code>setQueryStringArguments</code>
+      <code>setRouteParams</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Metadata/RouteBasedCollectionMetadataFactory.php">
     <InvalidStringClass>
@@ -233,6 +224,11 @@
     <MoreSpecificReturnType>
       <code>AbstractMetadata</code>
     </MoreSpecificReturnType>
+  </file>
+  <file src="src/Metadata/RouteBasedResourceMetadata.php">
+    <PossiblyUnusedMethod>
+      <code>setRouteParams</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Metadata/RouteBasedResourceMetadataFactory.php">
     <InvalidStringClass>
@@ -553,6 +549,11 @@
       <code>StreamInterface</code>
     </UndefinedClass>
   </file>
+  <file src="test/InMemoryContainer.php">
+    <PossiblyUnusedMethod>
+      <code>reset</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/LinkGenerator/MezzioUrlGeneratorFactoryTest.php">
     <DeprecatedMethod>
       <code>withConsecutive</code>
@@ -758,15 +759,19 @@
             )
         )]]></code>
     </InternalClass>
-    <MixedAssignment>
-      <code>$value</code>
-    </MixedAssignment>
     <MixedOperand>
       <code>$value</code>
     </MixedOperand>
     <PossiblyUndefinedArrayOffset>
       <code>$stack[1]</code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>assertAttributeEmpty</code>
+      <code>assertAttributeEmpty</code>
+      <code>assertAttributeEmpty</code>
+      <code>assertAttributeEmpty</code>
+      <code>assertAttributeEmpty</code>
+    </PossiblyUnusedMethod>
     <RedundantConditionGivenDocblockType>
       <code>is_object($classOrObject)</code>
     </RedundantConditionGivenDocblockType>
@@ -850,11 +855,9 @@
                     && $params['p'] === $page;
             })]]></code>
     </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$request->reveal()]]></code>
-      <code><![CDATA[$request->reveal()]]></code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion>
+      <code><![CDATA[$request->reveal()]]></code>
+      <code><![CDATA[$request->reveal()]]></code>
       <code><![CDATA[$this->createCollectionItems(
             $linkGenerator,
             $request
@@ -876,10 +879,8 @@
                             && $params['bar_id'] === $i;
                     })]]></code>
     </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$request->reveal()]]></code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion>
+      <code><![CDATA[$request->reveal()]]></code>
       <code><![CDATA[$this->createCollectionItems($linkGenerator, $request)]]></code>
     </MixedArgumentTypeCoercion>
     <MixedMethodCall>
@@ -998,6 +999,9 @@
       <code>willReturn</code>
       <code>willReturn</code>
     </PossiblyUndefinedMethod>
+    <PossiblyUnusedParam>
+      <code>$strategy</code>
+    </PossiblyUnusedParam>
     <TooFewArguments>
       <code>fromRoute</code>
       <code>fromRoute</code>
@@ -1025,5 +1029,21 @@
       <code>$id</code>
       <code>$message</code>
     </MissingPropertyType>
+  </file>
+  <file src="test/TestAsset/FooBar.php">
+    <PossiblyUnusedProperty>
+      <code>$bar</code>
+      <code>$children</code>
+      <code>$foo</code>
+      <code>$id</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="test/TestAsset/TestMetadataMapFactory.php">
+    <PossiblyUnusedMethod>
+      <code>createTestMetadata</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$metadata</code>
+    </PossiblyUnusedParam>
   </file>
 </files>

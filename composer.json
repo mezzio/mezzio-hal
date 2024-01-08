@@ -26,7 +26,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "8.0.99"
+            "php": "8.1.99"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
@@ -38,7 +38,7 @@
         }
     },
     "require": {
-        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
         "ext-dom": "*",
         "ext-json": "*",
         "psr/container": "^1.1.2 || ^2.0.2",
@@ -57,7 +57,7 @@
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit": "^9.5.28",
         "psalm/plugin-phpunit": "^0.18.4",
-        "vimeo/psalm": "^5.6"
+        "vimeo/psalm": "^5.18"
     },
     "provide": {
         "psr/link-implementation": "1.0"

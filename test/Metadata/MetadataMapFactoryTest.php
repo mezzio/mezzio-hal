@@ -43,7 +43,6 @@ class MetadataMapFactoryTest extends TestCase
         $metadataMap = ($this->factory)($this->container);
 
         $r = new ReflectionProperty($metadataMap, 'map');
-        $r->setAccessible(true);
         self::assertSame([], $r->getValue($metadataMap));
     }
 
@@ -54,7 +53,6 @@ class MetadataMapFactoryTest extends TestCase
         $metadataMap = ($this->factory)($this->container);
 
         $r = new ReflectionProperty($metadataMap, 'map');
-        $r->setAccessible(true);
         self::assertSame([], $r->getValue($metadataMap));
     }
 

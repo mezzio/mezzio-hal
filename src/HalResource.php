@@ -20,10 +20,8 @@ use function array_shift;
 use function array_walk;
 use function count;
 use function get_debug_type;
-use function gettype;
 use function in_array;
 use function is_array;
-use function is_object;
 use function sprintf;
 
 /**
@@ -213,7 +211,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 
     /**
      * @param HalResource|HalResource[] $resource
-     * @param bool $forceCollection Whether or not a single resource or an
+     * @param bool $forceCollection Whether a single resource or an
      *     array containing a single resource should be represented as an array of
      *     resources during representation.
      */
@@ -227,7 +225,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
                 __METHOD__,
                 self::class,
                 self::class,
-                is_object($resource) ? $resource::class : gettype($resource)
+                get_debug_type($resource)
             ));
         }
         $new                  = clone $this;
