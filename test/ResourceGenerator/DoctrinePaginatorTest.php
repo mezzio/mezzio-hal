@@ -64,6 +64,7 @@ class DoctrinePaginatorTest extends TestCase
             ->getMockForAbstractClass();
     }
 
+    /** @return iterable<string, array{0: int, 1: int}> */
     public function invalidPageCombinations(): iterable
     {
         yield 'negative'   => [-1, 100];

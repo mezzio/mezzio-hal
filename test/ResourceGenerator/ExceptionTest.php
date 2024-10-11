@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\ResourceGenerator;
 
-use Generator;
 use Mezzio\Hal\Exception\ExceptionInterface as HalExceptionInterface;
 use Mezzio\Hal\ResourceGenerator\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +21,8 @@ class ExceptionTest extends TestCase
         self::assertTrue(is_a(ExceptionInterface::class, HalExceptionInterface::class, true));
     }
 
-    public function exception(): Generator
+    /** @return iterable<string, array{0: string}> */
+    public function exception(): iterable
     {
         $namespace = substr(ExceptionInterface::class, 0, strrpos(ExceptionInterface::class, '\\') + 1);
 

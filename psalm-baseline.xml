@@ -501,14 +501,6 @@
       <code><![CDATA[assertIsArray]]></code>
     </RedundantCondition>
   </file>
-  <file src="test/ExceptionTest.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[Generator]]></code>
-    </MixedInferredReturnType>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos(ExceptionInterface::class, '\\')]]></code>
-    </PossiblyFalseOperand>
-  </file>
   <file src="test/HalResourceTest.php">
     <InvalidArgument>
       <code><![CDATA[$links]]></code>
@@ -602,19 +594,6 @@
     <TooFewArguments>
       <code><![CDATA[new Link()]]></code>
     </TooFewArguments>
-  </file>
-  <file src="test/Metadata/ExceptionTest.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[Generator]]></code>
-    </MixedInferredReturnType>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos(ExceptionInterface::class, '\\')]]></code>
-    </PossiblyFalseOperand>
-  </file>
-  <file src="test/Metadata/MetadataMapFactoryTest.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[Generator]]></code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/PHPUnitDeprecatedAssertions.php">
     <ArgumentTypeCoercion>
@@ -779,14 +758,8 @@
       <code><![CDATA[withConsecutive]]></code>
       <code><![CDATA[withConsecutive]]></code>
     </DeprecatedMethod>
-    <MixedInferredReturnType>
-      <code><![CDATA[iterable]]></code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/ResourceGenerator/ExceptionTest.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[Generator]]></code>
-    </MixedInferredReturnType>
     <PossiblyFalseOperand>
       <code><![CDATA[strrpos(ExceptionInterface::class, '\\')]]></code>
     </PossiblyFalseOperand>
@@ -966,9 +939,6 @@
       <code><![CDATA[$ids[]]]></code>
       <code><![CDATA[$item]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[Generator]]></code>
-    </MixedInferredReturnType>
     <PossiblyUndefinedMethod>
       <code><![CDATA[shouldNotBeCalled]]></code>
       <code><![CDATA[shouldNotBeCalled]]></code>
