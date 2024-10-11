@@ -121,7 +121,7 @@ trait PHPUnitDeprecatedAssertions
      */
     public static function readAttribute($classOrObject, string $attributeName)
     {
-        if (! self::isValidClassAttributeName($attributeName)) {
+        if (self::isValidClassAttributeName($attributeName) === false) {
             throw self::invalidArgument(2, 'valid attribute name');
         }
 
@@ -242,12 +242,9 @@ trait PHPUnitDeprecatedAssertions
         );
     }
 
-    /**
-     * @return false|int
-     */
-    private static function isValidClassAttributeName(string $attributeName)
+    private static function isValidClassAttributeName(string $attributeName): bool
     {
-        return preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $attributeName);
+        return (bool) preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $attributeName);
     }
 
     /**
@@ -262,8 +259,8 @@ trait PHPUnitDeprecatedAssertions
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'] ?? '',
-                $stack[1]['function'],
+                (string) ($stack[1]['class'] ?? ''),
+                (string) ($stack[1]['function'] ?? ''),
                 $type
             )
         );

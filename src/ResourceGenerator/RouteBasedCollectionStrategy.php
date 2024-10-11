@@ -12,6 +12,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
 use function array_merge;
+use function assert;
+use function method_exists;
 
 class RouteBasedCollectionStrategy implements StrategyInterface
 {
@@ -98,17 +100,14 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ) {
-        $routeParams     = $metadata->getRouteParams() ?? [];
-        $queryStringArgs = array_merge($request->getQueryParams() ?? [], $metadata->getQueryStringArguments() ?? []);
-
         return $resourceGenerator
             ->getLinkGenerator()
             ->fromRoute(
                 'self',
                 $request,
                 $metadata->getRoute(),
-                $routeParams,
-                $queryStringArgs
+                $metadata->getRouteParams(),
+                array_merge($request->getQueryParams(), $metadata->getQueryStringArguments())
             );
     }
 }
