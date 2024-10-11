@@ -29,39 +29,39 @@ The component also provides four concrete metadata types, requiring the
 following information:
 
 - `Mezzio\Hal\Metadata\RouteBasedCollectionMetadata`:
-  - string `$class`
-  - string `$collectionRelation`
-  - string `$route`
-  - string `$paginationParam = 'page'` (name of the parameter indicating the
-    current page of results)
-  - string `$paginationParamType = self::TYPE_QUERY` (one of "query" or "placeholder")
-  - array `$routeParams = []` (associative array of substitutions to use with
-    the designated route)
-  - array `$queryStringArguments = []` (associative array of query string
-    arguments to include in the generated URI)
+    - string `$class`
+    - string `$collectionRelation`
+    - string `$route`
+    - string `$paginationParam = 'page'` (name of the parameter indicating the
+      current page of results)
+    - string `$paginationParamType = self::TYPE_QUERY` (one of "query" or "placeholder")
+    - array `$routeParams = []` (associative array of substitutions to use with
+      the designated route)
+    - array `$queryStringArguments = []` (associative array of query string
+      arguments to include in the generated URI)
 - `Mezzio\Hal\Metadata\RouteBasedResourceMetadata`:
-  - string `$class`
-  - string `$route`
-  - string `$extractor` (string service name of the laminas-hydrator hydrator to
+    - string `$class`
+    - string `$route`
+    - string `$extractor` (string service name of the laminas-hydrator hydrator to
     use for extracting data from the instance)
-  - string `$resourceIdentifier = 'id'` (name of the property uniquely
+    - string `$resourceIdentifier = 'id'` (name of the property uniquely
     identifying the resource)
-  - array `$routeParams = []` (associative array of additional routing
+    - array `$routeParams = []` (associative array of additional routing
     parameters to substitute when generating the URI)
-  - array `$identifiersToPlacholdersMapping = []` (associative array mapping resource properties to route parameters, for use when generating the URI)
-  - int `$maxDepth = 10` max allowed nesting levels.
+    - array `$identifiersToPlacholdersMapping = []` (associative array mapping resource properties to route parameters, for use when generating the URI)
+    - int `$maxDepth = 10` max allowed nesting levels.
 - `Mezzio\Hal\Metadata\UrlBasedCollectionMetadata`:
-  - string `$class`
-  - string `$collectionRelation`
-  - string `$url`
-  - string `$paginationParam = 'page'` (name of the parameter indicating the
-    current page of results)
-  - string `$paginationParamType = self::TYPE_QUERY` (one of "query" or "placeholder")
+    - string `$class`
+    - string `$collectionRelation`
+    - string `$url`
+    - string `$paginationParam = 'page'` (name of the parameter indicating the
+      current page of results)
+    - string `$paginationParamType = self::TYPE_QUERY` (one of "query" or "placeholder")
 - `Mezzio\Hal\Metadata\UrlBasedResourceMetadata`
-  - string `$class`
-  - string `$url`
-  - string `$extractor` (string service name of the laminas-hydrator hydrator to
-    use for extracting data from the instance)
+    - string `$class`
+    - string `$url`
+    - string `$extractor` (string service name of the laminas-hydrator hydrator to
+      use for extracting data from the instance)
 
 We aggregate metadata in a `Mezzio\Hal\Metadata\MetadataMap` instance:
 
@@ -124,25 +124,25 @@ return [
 The rest of the parameters follow underscore delimiter naming convention:
 
 - `RouteBasedResourceMetadata::class`
-  - `resource_identifier` (name of the property uniquely identifying the resource)
-  - `route_params` (associative array of substitutions to use with the designated route)
-  - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI)
-  - `max_depth` (maximum depth to allow when rendering nested resources; defaults to 10)
+    - `resource_identifier` (name of the property uniquely identifying the resource)
+    - `route_params` (associative array of substitutions to use with the designated route)
+    - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI)
+    - `max_depth` (maximum depth to allow when rendering nested resources; defaults to 10)
 - `RouteBasedCollectionMetadata::class`
-  - `pagination_param`  (name of the parameter indicating the current page of results)
-  - `pagination_param_type` (one of "query" or "placeholder")
-  - `route_params` (associative array of substitutions to use with the designated route)
-  - `query_string_arguments` (associative array of additional routing parameters to substitute when generating the URI)
+    - `pagination_param`  (name of the parameter indicating the current page of results)
+    - `pagination_param_type` (one of "query" or "placeholder")
+    - `route_params` (associative array of substitutions to use with the designated route)
+    - `query_string_arguments` (associative array of additional routing parameters to substitute when generating the URI)
 - `UrlBasedResourceMetadata::class`
-  - `resource_class`
-  - `url`
-  - `extractor`
+    - `resource_class`
+    - `url`
+    - `extractor`
 - `UrlBasedCollectionMetadata::class`
-  - `collection_class`
-  - `collection_relation`
-  - `url`
-  - `pagination_param` (name of the parameter indicating the current page of results)
-  - `pagination_param_type` (one of "query" or "placeholder")
+    - `collection_class`
+    - `collection_relation`
+    - `url`
+    - `pagination_param` (name of the parameter indicating the current page of results)
+    - `pagination_param_type` (one of "query" or "placeholder")
 
 ## ResourceGenerator
 

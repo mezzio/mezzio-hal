@@ -60,7 +60,7 @@ To facilitate common operations, this library provides two traits,
 `Mezzio\Hal\ResourceGenerator\ExtractInstanceTrait`; inspect these if you
 decide to write your own strategies.
 
-In order for the `MetadataMap` to be able to use your `CustomMetadata` you need to register 
+In order for the `MetadataMap` to be able to use your `CustomMetadata` you need to register
 a factory (implementing `Mezzio\Hal\Metadata\MetadataFactoryInterface`) for it.
 You can register them via the configuration:
 
