@@ -12,8 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
 use function array_merge;
-use function assert;
-use function method_exists;
 
 class RouteBasedCollectionStrategy implements StrategyInterface
 {
