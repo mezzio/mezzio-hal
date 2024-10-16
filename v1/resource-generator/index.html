@@ -84,17 +84,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
-                                    </div>
-                                </div>
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
                                 <div class="row align-items-center">
@@ -408,42 +397,50 @@ class to represent; all metadata are expected to inherit from this class.</p>
 <p>The component also provides four concrete metadata types, requiring the
 following information:</p>
 <ul>
-<li><code>Mezzio\Hal\Metadata\RouteBasedCollectionMetadata</code>:</li>
+<li><code>Mezzio\Hal\Metadata\RouteBasedCollectionMetadata</code>:<ul>
 <li>string <code>$class</code></li>
 <li>string <code>$collectionRelation</code></li>
 <li>string <code>$route</code></li>
 <li>string <code>$paginationParam = 'page'</code> (name of the parameter indicating the
-    current page of results)</li>
+  current page of results)</li>
 <li>string <code>$paginationParamType = self::TYPE_QUERY</code> (one of "query" or "placeholder")</li>
 <li>array <code>$routeParams = []</code> (associative array of substitutions to use with
-    the designated route)</li>
+  the designated route)</li>
 <li>array <code>$queryStringArguments = []</code> (associative array of query string
-    arguments to include in the generated URI)</li>
-<li><code>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</code>:</li>
+  arguments to include in the generated URI)</li>
+</ul>
+</li>
+<li><code>Mezzio\Hal\Metadata\RouteBasedResourceMetadata</code>:<ul>
 <li>string <code>$class</code></li>
 <li>string <code>$route</code></li>
 <li>string <code>$extractor</code> (string service name of the laminas-hydrator hydrator to
-    use for extracting data from the instance)</li>
+  use for extracting data from the instance)</li>
 <li>string <code>$resourceIdentifier = 'id'</code> (name of the property uniquely
-    identifying the resource)</li>
+  identifying the resource)</li>
 <li>string <code>$routeIdentifierPlaceholder = 'id'</code> (name of the routing parameter
-    that maps to the resource identifier; deprecated since 1.4.0 in favor of
-    using the <code>$identifiersToPlacholdersMapping</code>)</li>
+  that maps to the resource identifier; deprecated since 1.4.0 in favor of
+  using the <code>$identifiersToPlacholdersMapping</code>)</li>
 <li>array <code>$routeParams = []</code> (associative array of additional routing
-    parameters to substitute when generating the URI)</li>
+  parameters to substitute when generating the URI)</li>
 <li>array <code>$identifiersToPlacholdersMapping = []</code> (associative array mapping resource properties to route parameters, for use when generating the URI; available since 1.4.0)</li>
-<li><code>Mezzio\Hal\Metadata\UrlBasedCollectionMetadata</code>:</li>
+</ul>
+</li>
+<li><code>Mezzio\Hal\Metadata\UrlBasedCollectionMetadata</code>:<ul>
 <li>string <code>$class</code></li>
 <li>string <code>$collectionRelation</code></li>
 <li>string <code>$url</code></li>
 <li>string <code>$paginationParam = 'page'</code> (name of the parameter indicating the
-    current page of results)</li>
+  current page of results)</li>
 <li>string <code>$paginationParamType = self::TYPE_QUERY</code> (one of "query" or "placeholder")</li>
-<li><code>Mezzio\Hal\Metadata\UrlBasedResourceMetadata</code></li>
+</ul>
+</li>
+<li><code>Mezzio\Hal\Metadata\UrlBasedResourceMetadata</code><ul>
 <li>string <code>$class</code></li>
 <li>string <code>$url</code></li>
 <li>string <code>$extractor</code> (string service name of the laminas-hydrator hydrator to
-    use for extracting data from the instance)</li>
+  use for extracting data from the instance)</li>
+</ul>
+</li>
 </ul>
 <p>We aggregate metadata in a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance:</p>
 <pre class="highlight"><code class="language-php">$bookMetadata = new RouteBasedResourceMetadata(
@@ -495,26 +492,34 @@ return [
 ];</code></pre>
 <p>The rest of the parameters follow underscore delimiter naming convention:</p>
 <ul>
-<li><code>RouteBasedResourceMetadata::class</code></li>
+<li><code>RouteBasedResourceMetadata::class</code><ul>
 <li><code>resource_identifier</code> (name of the property uniquely identifying the resource)</li>
 <li><code>route_identifier_placeholder</code> (name of the routing parameter that maps to the resource identifier. Deprecated since 1.4.0; use the <code>identifiers_to_placeholders_mapping</code> setting instead)</li>
 <li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
 <li><code>identifiers_to_placeholders_mapping</code> (associative array mapping resource properties to routing parameters, for use when generating the URI; since 1.4.0)</li>
-<li><code>RouteBasedCollectionMetadata::class</code></li>
+</ul>
+</li>
+<li><code>RouteBasedCollectionMetadata::class</code><ul>
 <li><code>pagination_param</code>  (name of the parameter indicating the current page of results)</li>
 <li><code>pagination_param_type</code> (one of "query" or "placeholder")</li>
 <li><code>route_params</code> (associative array of substitutions to use with the designated route)</li>
 <li><code>query_string_arguments</code> (associative array of additional routing parameters to substitute when generating the URI)</li>
-<li><code>UrlBasedResourceMetadata::class</code></li>
+</ul>
+</li>
+<li><code>UrlBasedResourceMetadata::class</code><ul>
 <li><code>resource_class</code></li>
 <li><code>url</code></li>
 <li><code>extractor</code></li>
-<li><code>UrlBasedCollectionMetadata::class</code></li>
+</ul>
+</li>
+<li><code>UrlBasedCollectionMetadata::class</code><ul>
 <li><code>collection_class</code></li>
 <li><code>collection_relation</code></li>
 <li><code>url</code></li>
 <li><code>pagination_param</code> (name of the parameter indicating the current page of results)</li>
 <li><code>pagination_param_type</code> (one of "query" or "placeholder")</li>
+</ul>
+</li>
 </ul>
 <h2 id="resourcegenerator">ResourceGenerator</h2>
 <p>Once you have defined the metadata for the various objects you will represent in
@@ -719,7 +724,7 @@ URIs for <code>Link</code> instances.)</p>
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>

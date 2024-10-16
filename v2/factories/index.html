@@ -84,17 +84,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
-                                    </div>
-                                </div>
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
                                 <div class="row align-items-center">
@@ -411,16 +400,18 @@ configured instances for your use.</p>
 <ul>
 <li>Registered as service: <code>Mezzio\Hal\HalResponseFactory</code></li>
 <li>Generates instance of: <code>Mezzio\Hal\HalResponseFactory</code></li>
-<li>Depends on:</li>
+<li>Depends on:<ul>
 <li><strong>Either</strong> a <code>Psr\Http\Message\ResponseFactoryInterface</code> service <strong>OR</strong> a <code>Psr\Http\Message\ResponseInterface</code> service, with preference going to the <code>Psr\Http\Message\ResponseFactoryInterface</code> service.
-    A <code>Psr\Http\Message\ResponseFactoryInterface</code> service MUST resolve to a <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> <code>ResponseFactoryInterface</code> instance.
-    a <code>Psr\Http\Message\ResponseInterface</code> service MUST resolve to a PHP callable capable of generating a <a href="https://www.php-fig.org/psr/psr-7/">PSR-7</a> <code>ResponseInterface</code> instance; it must not resolve to a <code>ResponseInterface</code> instance directly.
-    This service is <strong>required</strong>, and must be supplied by the application.
-    If you are using with mezzio v3 and above, the service will already be registered.</li>
+  A <code>Psr\Http\Message\ResponseFactoryInterface</code> service MUST resolve to a <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> <code>ResponseFactoryInterface</code> instance.
+  a <code>Psr\Http\Message\ResponseInterface</code> service MUST resolve to a PHP callable capable of generating a <a href="https://www.php-fig.org/psr/psr-7/">PSR-7</a> <code>ResponseInterface</code> instance; it must not resolve to a <code>ResponseInterface</code> instance directly.
+  This service is <strong>required</strong>, and must be supplied by the application.
+  If you are using with mezzio v3 and above, the service will already be registered.</li>
 <li><code>Mezzio\Hal\Renderer\JsonRenderer</code> service.
-    If the service is not present, it instantiates an instance itself.</li>
+  If the service is not present, it instantiates an instance itself.</li>
 <li><code>Mezzio\Hal\Renderer\XmlRenderer</code> service.
-    If the service is not present, it instantiates an instance itself.</li>
+  If the service is not present, it instantiates an instance itself.</li>
+</ul>
+</li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">ResponseInterface vs ResponseFactoryInterface</p>
@@ -432,8 +423,10 @@ Prior versions depend on the <code>Psr\Http\Message\ResponseInterface</code> ser
 <ul>
 <li>Registered as service: <code>Mezzio\Hal\LinkGenerator</code></li>
 <li>Generates instance of: <code>Mezzio\Hal\LinkGenerator</code></li>
-<li>Depends on:</li>
+<li>Depends on:<ul>
 <li><code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code> service</li>
+</ul>
+</li>
 </ul>
 <p>This factory allows an optional constructor argument, <code>$urlGeneratorServiceName</code>.
 It defaults to <code>Mezzio\Hal\LinkGenerator\UrlGeneratorInterface</code>,
@@ -445,11 +438,13 @@ alternate URL generator that consumes it.</p>
 <ul>
 <li>Registered as service: <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code></li>
 <li>Generates instance of: <code>Mezzio\Hal\LinkGenerator\MezzioUrlGenerator</code></li>
-<li>Depends on:</li>
+<li>Depends on:<ul>
 <li><a href="https://github.com/mezzio/mezzio-helpers">mezzio/mezzio-helpers</a> package</li>
 <li><code>Mezzio\Helper\UrlHelper</code> service</li>
 <li><code>Mezzio\Helper\ServerUrlHelper</code> service (optional; if not provided,
-    URIs will be generated without authority information)</li>
+  URIs will be generated without authority information)</li>
+</ul>
+</li>
 </ul>
 <p>This factory allows an optional constructor argument, <code>$urlHelperServiceName</code>.
 It defaults to <code>Mezzio\Helper\UrlHelper</code>, but you may specify an
@@ -467,8 +462,10 @@ directly to a factory that will return a valid instance.</p>
 <ul>
 <li>Registered as service: <code>Mezzio\Hal\Metadata\MetadataMap</code></li>
 <li>Generates instance of: <code>Mezzio\Hal\Metadata\MetadataMap</code></li>
-<li>Depends on:</li>
+<li>Depends on:<ul>
 <li><code>config</code> service; if not present, will use an empty array</li>
+</ul>
+</li>
 </ul>
 <p>This service uses the <code>Mezzio\Hal\Metadata\MetadataMap</code> key of the <code>config</code> service in
 order to configure and return a <code>Mezzio\Hal\Metadata\MetadataMap</code> instance. It expects
@@ -479,54 +476,62 @@ that value to be an array of elements, each with the following structure:</p>
 ]</code></pre>
 <p>The additional pairs are as follows:</p>
 <ul>
-<li>For <code>UrlBasedResourceMetadata</code>:</li>
+<li>For <code>UrlBasedResourceMetadata</code>:<ul>
 <li><code>resource_class</code>: the resource class the metadata describes.</li>
 <li><code>url</code>: the URL to use when generating a self-relational link for the
-    resource.</li>
+  resource.</li>
 <li><code>extractor</code>: the extractor/hydrator service to use to extract resource
-    data.</li>
-<li>For <code>UrlBasedCollectionMetadata</code>:</li>
+  data.</li>
+</ul>
+</li>
+<li>For <code>UrlBasedCollectionMetadata</code>:<ul>
 <li><code>collection_class</code>: the collection class the metadata describes.</li>
 <li><code>collection_relation</code>: the embedded relation for the collection in the
-    generated resource.</li>
+  generated resource.</li>
 <li><code>url</code>: the URL to use when generating a self-relational link for the
-    collection resource.</li>
+  collection resource.</li>
 <li><code>pagination_param</code>: the name of the parameter indicating what page of data
-    is present. Defaults to "page".</li>
+  is present. Defaults to "page".</li>
 <li><code>pagination_param_type</code>: whether the pagination parameter is a query string
-    or path placeholder; use either <code>AbstractCollectionMetadata::TYPE_QUERY</code>
-    ("query") or <code>AbstractCollectionMetadata::TYPE_PLACEHOLDER</code> ("placeholder");
-    default is "query".</li>
-<li>For <code>RouteBasedResourceMetadata</code>:</li>
+  or path placeholder; use either <code>AbstractCollectionMetadata::TYPE_QUERY</code>
+  ("query") or <code>AbstractCollectionMetadata::TYPE_PLACEHOLDER</code> ("placeholder");
+  default is "query".</li>
+</ul>
+</li>
+<li>For <code>RouteBasedResourceMetadata</code>:<ul>
 <li><code>resource_class</code>: the resource class the metadata describes.</li>
 <li><code>route</code>: the route to use when generating a self relational link for the
-    resource.</li>
+  resource.</li>
 <li><code>extractor</code>: the extractor/hydrator service to use to extract resource
-    data.</li>
+  data.</li>
 <li><code>resource_identifier</code>: what property in the resource represents its
-    identifier; defaults to "id".</li>
+  identifier; defaults to "id".</li>
 <li><code>route_params</code>: an array of additional routing parameters to use when
-    generating the self relational link for the resource.</li>
+  generating the self relational link for the resource.</li>
 <li><code>identifiers_to_placeholders_mapping</code> (associative array mapping resource properties to routing parameters, for use when generating the URI)</li>
 <li><code>max_depth</code>: the number of nesting levels processed. Defaults to 10.</li>
-<li>For <code>RouteBasedCollectionMetadata</code>:</li>
+</ul>
+</li>
+<li>For <code>RouteBasedCollectionMetadata</code>:<ul>
 <li><code>collection_class</code>: the collection class the metadata describes.</li>
 <li><code>collection_relation</code>: the embedded relation for the collection in the
-    generated resource.</li>
+  generated resource.</li>
 <li><code>route</code>: the route to use when generating a self relational link for the
-    collection resource.</li>
+  collection resource.</li>
 <li><code>pagination_param</code>: the name of the parameter indicating what page of data
-    is present. Defaults to "page".</li>
+  is present. Defaults to "page".</li>
 <li><code>pagination_param_type</code>: whether the pagination parameter is a query string
-    or path placeholder; use either <code>AbstractCollectionMetadata::TYPE_QUERY</code>
-    ("query") or <code>AbstractCollectionMetadata::TYPE_PLACEHOLDER</code> ("placeholder");
-    default is "query".</li>
+  or path placeholder; use either <code>AbstractCollectionMetadata::TYPE_QUERY</code>
+  ("query") or <code>AbstractCollectionMetadata::TYPE_PLACEHOLDER</code> ("placeholder");
+  default is "query".</li>
 <li><code>route_params</code>: an array of additional routing parameters to use when
-    generating the self relational link for the collection resource. Defaults
-    to an empty array.</li>
+  generating the self relational link for the collection resource. Defaults
+  to an empty array.</li>
 <li><code>query_string_arguments</code>: an array of query string parameters to include
-    when generating the self relational link for the collection resource.
-    Defaults to an empty array.</li>
+  when generating the self relational link for the collection resource.
+  Defaults to an empty array.</li>
+</ul>
+</li>
 </ul>
 <p>If you have created custom metadata types, you can extend this class to
 support them. Create <code>create&lt;type&gt;(array $metadata)</code> methods for each
@@ -546,10 +551,12 @@ parameter. See the issue for a comprehensive example.</p>
 <ul>
 <li>Registered as service: <code>Mezzio\Hal\ResourceGenerator</code></li>
 <li>Generates instance of: <code>Mezzio\Hal\ResourceGenerator</code></li>
-<li>Depends on:</li>
+<li>Depends on:<ul>
 <li><code>Mezzio\Hal\Metadata\MetadataMap</code> service</li>
 <li><code>Laminas\Hydrator\HydratorPluginManager</code> service</li>
 <li><code>Mezzio\Hal\LinkGenerator</code> service</li>
+</ul>
+</li>
 </ul>
 <p>If you wish to use a container implementation other than the
 <code>Laminas\Hydrator\HydratorPluginManager</code>, either register it under that service
@@ -763,7 +770,7 @@ consumes it, and an alternate <code>LinkGenerator</code> consuming the URL gener
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>
