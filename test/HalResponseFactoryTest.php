@@ -239,7 +239,7 @@ class HalResponseFactoryTest extends TestCase
                     ->expects(self::never())
                     ->method('render');
                 break;
-            case strstr($header, 'xml'):
+            case strstr($header, 'xml') !== false:
                 $this->xmlRenderer
                     ->expects(self::once())
                     ->method('render')
@@ -248,7 +248,7 @@ class HalResponseFactoryTest extends TestCase
                 $this->jsonRenderer
                     ->expects(self::never())
                     ->method('render');
-                // fall-through
+                break;
             default:
                 break;
         }

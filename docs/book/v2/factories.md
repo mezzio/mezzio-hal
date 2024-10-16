@@ -9,15 +9,15 @@ configured instances for your use.
 - Registered as service: `Mezzio\Hal\HalResponseFactory`
 - Generates instance of: `Mezzio\Hal\HalResponseFactory`
 - Depends on:
-  - **Either** a `Psr\Http\Message\ResponseFactoryInterface` service **OR** a `Psr\Http\Message\ResponseInterface` service, with preference going to the `Psr\Http\Message\ResponseFactoryInterface` service.
-    A `Psr\Http\Message\ResponseFactoryInterface` service MUST resolve to a [PSR-17](https://www.php-fig.org/psr/psr-17/) `ResponseFactoryInterface` instance.
-    a `Psr\Http\Message\ResponseInterface` service MUST resolve to a PHP callable capable of generating a [PSR-7](https://www.php-fig.org/psr/psr-7/) `ResponseInterface` instance; it must not resolve to a `ResponseInterface` instance directly.
-    This service is **required**, and must be supplied by the application.
-    If you are using with mezzio v3 and above, the service will already be registered.
-  - `Mezzio\Hal\Renderer\JsonRenderer` service.
-    If the service is not present, it instantiates an instance itself.
-  - `Mezzio\Hal\Renderer\XmlRenderer` service.
-    If the service is not present, it instantiates an instance itself.
+    - **Either** a `Psr\Http\Message\ResponseFactoryInterface` service **OR** a `Psr\Http\Message\ResponseInterface` service, with preference going to the `Psr\Http\Message\ResponseFactoryInterface` service.
+      A `Psr\Http\Message\ResponseFactoryInterface` service MUST resolve to a [PSR-17](https://www.php-fig.org/psr/psr-17/) `ResponseFactoryInterface` instance.
+      a `Psr\Http\Message\ResponseInterface` service MUST resolve to a PHP callable capable of generating a [PSR-7](https://www.php-fig.org/psr/psr-7/) `ResponseInterface` instance; it must not resolve to a `ResponseInterface` instance directly.
+      This service is **required**, and must be supplied by the application.
+      If you are using with mezzio v3 and above, the service will already be registered.
+    - `Mezzio\Hal\Renderer\JsonRenderer` service.
+      If the service is not present, it instantiates an instance itself.
+    - `Mezzio\Hal\Renderer\XmlRenderer` service.
+      If the service is not present, it instantiates an instance itself.
 
 TIP: **ResponseInterface vs ResponseFactoryInterface**
 `HalResponseFactoryFactory` consumes the PSR-17 `Psr\Http\Message\ResponseFactoryInterface` service starting in version 2.3.0.
@@ -28,7 +28,7 @@ Prior versions depend on the `Psr\Http\Message\ResponseInterface` service.
 - Registered as service: `Mezzio\Hal\LinkGenerator`
 - Generates instance of: `Mezzio\Hal\LinkGenerator`
 - Depends on:
-  - `Mezzio\Hal\LinkGenerator\UrlGeneratorInterface` service
+    - `Mezzio\Hal\LinkGenerator\UrlGeneratorInterface` service
 
 This factory allows an optional constructor argument, `$urlGeneratorServiceName`.
 It defaults to `Mezzio\Hal\LinkGenerator\UrlGeneratorInterface`,
@@ -42,10 +42,10 @@ alternate URL generator that consumes it.
 - Registered as service: `Mezzio\Hal\LinkGenerator\MezzioUrlGenerator`
 - Generates instance of: `Mezzio\Hal\LinkGenerator\MezzioUrlGenerator`
 - Depends on:
-  - [mezzio/mezzio-helpers](https://github.com/mezzio/mezzio-helpers) package
-  - `Mezzio\Helper\UrlHelper` service
-  - `Mezzio\Helper\ServerUrlHelper` service (optional; if not provided,
-    URIs will be generated without authority information)
+    - [mezzio/mezzio-helpers](https://github.com/mezzio/mezzio-helpers) package
+    - `Mezzio\Helper\UrlHelper` service
+    - `Mezzio\Helper\ServerUrlHelper` service (optional; if not provided,
+      URIs will be generated without authority information)
 
 This factory allows an optional constructor argument, `$urlHelperServiceName`.
 It defaults to `Mezzio\Helper\UrlHelper`, but you may specify an
@@ -66,7 +66,7 @@ directly to a factory that will return a valid instance.
 - Registered as service: `Mezzio\Hal\Metadata\MetadataMap`
 - Generates instance of: `Mezzio\Hal\Metadata\MetadataMap`
 - Depends on:
-  - `config` service; if not present, will use an empty array
+    - `config` service; if not present, will use an empty array
 
 This service uses the `Mezzio\Hal\Metadata\MetadataMap` key of the `config` service in
 order to configure and return a `Mezzio\Hal\Metadata\MetadataMap` instance. It expects
@@ -82,53 +82,53 @@ that value to be an array of elements, each with the following structure:
 The additional pairs are as follows:
 
 - For `UrlBasedResourceMetadata`:
-  - `resource_class`: the resource class the metadata describes.
-  - `url`: the URL to use when generating a self-relational link for the
-    resource.
-  - `extractor`: the extractor/hydrator service to use to extract resource
-    data.
+    - `resource_class`: the resource class the metadata describes.
+    - `url`: the URL to use when generating a self-relational link for the
+      resource.
+    - `extractor`: the extractor/hydrator service to use to extract resource
+      data.
 - For `UrlBasedCollectionMetadata`:
-  - `collection_class`: the collection class the metadata describes.
-  - `collection_relation`: the embedded relation for the collection in the
-    generated resource.
-  - `url`: the URL to use when generating a self-relational link for the
-    collection resource.
-  - `pagination_param`: the name of the parameter indicating what page of data
-    is present. Defaults to "page".
-  - `pagination_param_type`: whether the pagination parameter is a query string
-    or path placeholder; use either `AbstractCollectionMetadata::TYPE_QUERY`
-    ("query") or `AbstractCollectionMetadata::TYPE_PLACEHOLDER` ("placeholder");
-    default is "query".
+    - `collection_class`: the collection class the metadata describes.
+    - `collection_relation`: the embedded relation for the collection in the
+      generated resource.
+    - `url`: the URL to use when generating a self-relational link for the
+      collection resource.
+    - `pagination_param`: the name of the parameter indicating what page of data
+      is present. Defaults to "page".
+    - `pagination_param_type`: whether the pagination parameter is a query string
+      or path placeholder; use either `AbstractCollectionMetadata::TYPE_QUERY`
+      ("query") or `AbstractCollectionMetadata::TYPE_PLACEHOLDER` ("placeholder");
+      default is "query".
 - For `RouteBasedResourceMetadata`:
-  - `resource_class`: the resource class the metadata describes.
-  - `route`: the route to use when generating a self relational link for the
-    resource.
-  - `extractor`: the extractor/hydrator service to use to extract resource
-    data.
-  - `resource_identifier`: what property in the resource represents its
-    identifier; defaults to "id".
-  - `route_params`: an array of additional routing parameters to use when
-    generating the self relational link for the resource.
-  - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI)
-  - `max_depth`: the number of nesting levels processed. Defaults to 10.
+    - `resource_class`: the resource class the metadata describes.
+    - `route`: the route to use when generating a self relational link for the
+      resource.
+    - `extractor`: the extractor/hydrator service to use to extract resource
+      data.
+    - `resource_identifier`: what property in the resource represents its
+      identifier; defaults to "id".
+    - `route_params`: an array of additional routing parameters to use when
+      generating the self relational link for the resource.
+    - `identifiers_to_placeholders_mapping` (associative array mapping resource properties to routing parameters, for use when generating the URI)
+    - `max_depth`: the number of nesting levels processed. Defaults to 10.
 - For `RouteBasedCollectionMetadata`:
-  - `collection_class`: the collection class the metadata describes.
-  - `collection_relation`: the embedded relation for the collection in the
-    generated resource.
-  - `route`: the route to use when generating a self relational link for the
-    collection resource.
-  - `pagination_param`: the name of the parameter indicating what page of data
-    is present. Defaults to "page".
-  - `pagination_param_type`: whether the pagination parameter is a query string
-    or path placeholder; use either `AbstractCollectionMetadata::TYPE_QUERY`
-    ("query") or `AbstractCollectionMetadata::TYPE_PLACEHOLDER` ("placeholder");
-    default is "query".
-  - `route_params`: an array of additional routing parameters to use when
-    generating the self relational link for the collection resource. Defaults
-    to an empty array.
-  - `query_string_arguments`: an array of query string parameters to include
-    when generating the self relational link for the collection resource.
-    Defaults to an empty array.
+    - `collection_class`: the collection class the metadata describes.
+    - `collection_relation`: the embedded relation for the collection in the
+      generated resource.
+    - `route`: the route to use when generating a self relational link for the
+      collection resource.
+    - `pagination_param`: the name of the parameter indicating what page of data
+      is present. Defaults to "page".
+    - `pagination_param_type`: whether the pagination parameter is a query string
+      or path placeholder; use either `AbstractCollectionMetadata::TYPE_QUERY`
+      ("query") or `AbstractCollectionMetadata::TYPE_PLACEHOLDER` ("placeholder");
+      default is "query".
+    - `route_params`: an array of additional routing parameters to use when
+      generating the self relational link for the collection resource. Defaults
+      to an empty array.
+    - `query_string_arguments`: an array of query string parameters to include
+      when generating the self relational link for the collection resource.
+      Defaults to an empty array.
 
 If you have created custom metadata types, you can extend this class to
 support them. Create `create<type>(array $metadata)` methods for each
@@ -151,9 +151,9 @@ the namespace.
 - Registered as service: `Mezzio\Hal\ResourceGenerator`
 - Generates instance of: `Mezzio\Hal\ResourceGenerator`
 - Depends on:
-  - `Mezzio\Hal\Metadata\MetadataMap` service
-  - `Laminas\Hydrator\HydratorPluginManager` service
-  - `Mezzio\Hal\LinkGenerator` service
+    - `Mezzio\Hal\Metadata\MetadataMap` service
+    - `Laminas\Hydrator\HydratorPluginManager` service
+    - `Mezzio\Hal\LinkGenerator` service
 
 If you wish to use a container implementation other than the
 `Laminas\Hydrator\HydratorPluginManager`, either register it under that service

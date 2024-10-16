@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
-      <code>forNonObject</code>
+      <code><![CDATA[forNonObject]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/HalResource.php">
     <MissingClosureParamType>
-      <code>$key</code>
-      <code>$links</code>
-      <code>$name</code>
-      <code>$name</code>
-      <code>$rel</code>
-      <code>$resource</code>
-      <code>$value</code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$links]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$rel]]></code>
+      <code><![CDATA[$resource]]></code>
+      <code><![CDATA[$value]]></code>
     </MissingClosureParamType>
     <MissingClosureReturnType>
-      <code>function ($item) {</code>
+      <code><![CDATA[function ($item) {]]></code>
     </MissingClosureReturnType>
     <MixedArgument>
-      <code>$links</code>
-      <code>$links</code>
-      <code>$name</code>
-      <code>$name</code>
-      <code>$relation</code>
-      <code>$relation</code>
-      <code>$relation</code>
-      <code>$relation</code>
-      <code>$resource</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$links]]></code>
+      <code><![CDATA[$links]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$relation]]></code>
+      <code><![CDATA[$relation]]></code>
+      <code><![CDATA[$relation]]></code>
+      <code><![CDATA[$relation]]></code>
+      <code><![CDATA[$resource]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$name</code>
-      <code>$resource</code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$resource]]></code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAssignment>
-      <code>$relation[Link::AS_COLLECTION]</code>
-      <code>$relation[]</code>
+      <code><![CDATA[$relation[Link::AS_COLLECTION]]]></code>
+      <code><![CDATA[$relation[]]]></code>
     </MixedArrayAssignment>
     <MixedArrayOffset>
-      <code>$byRelation[$rel]</code>
-      <code>$byRelation[$rel]</code>
-      <code>$relations[$key]</code>
-      <code>$relations[$key]</code>
+      <code><![CDATA[$byRelation[$rel]]]></code>
+      <code><![CDATA[$byRelation[$rel]]]></code>
+      <code><![CDATA[$relations[$key]]]></code>
+      <code><![CDATA[$relations[$key]]]></code>
     </MixedArrayOffset>
     <MixedAssignment>
-      <code>$relations[$key]</code>
-      <code>$value</code>
+      <code><![CDATA[$relations[$key]]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedMethodCall>
-      <code>toArray</code>
+      <code><![CDATA[toArray]]></code>
     </MixedMethodCall>
     <MixedPropertyTypeCoercion>
       <code><![CDATA[$this->embedded]]></code>
@@ -59,9 +59,9 @@
       <code><![CDATA[$this->embedded]]></code>
     </MixedPropertyTypeCoercion>
     <MixedReturnTypeCoercion>
-      <code>$forceCollection ? [$resource] : $resource</code>
+      <code><![CDATA[$forceCollection ? [$resource] : $resource]]></code>
       <code><![CDATA[$this->aggregateEmbeddedCollection($name, $resource, $context)]]></code>
-      <code>HalResource|HalResource[]</code>
+      <code><![CDATA[HalResource|HalResource[]]]></code>
     </MixedReturnTypeCoercion>
   </file>
   <file src="src/HalResponseFactory.php">
@@ -69,72 +69,72 @@
       <code><![CDATA[$matchedType->getValue()]]></code>
     </MixedArgument>
     <UndefinedInterfaceMethod>
-      <code>getValue</code>
+      <code><![CDATA[getValue]]></code>
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/HalResponseFactoryFactory.php">
     <MixedArgument>
-      <code>$jsonRenderer</code>
-      <code>$xmlRenderer</code>
+      <code><![CDATA[$jsonRenderer]]></code>
+      <code><![CDATA[$xmlRenderer]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$jsonRenderer</code>
-      <code>$xmlRenderer</code>
+      <code><![CDATA[$jsonRenderer]]></code>
+      <code><![CDATA[$xmlRenderer]]></code>
     </MixedAssignment>
     <UndefinedDocblockClass>
-      <code>RuntimeException</code>
+      <code><![CDATA[RuntimeException]]></code>
     </UndefinedDocblockClass>
   </file>
   <file src="src/Link.php">
     <InvalidCast>
-      <code>$uri</code>
+      <code><![CDATA[$uri]]></code>
     </InvalidCast>
     <MixedArgument>
-      <code>is_object($rel) ? $rel::class : gettype($rel)</code>
+      <code><![CDATA[is_object($rel) ? $rel::class : gettype($rel)]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>string|string[]</code>
+      <code><![CDATA[string|string[]]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
-      <code>is_string($relation) ? [$relation] : $relation</code>
-      <code>is_string($relation) ? [$relation] : $relation</code>
+      <code><![CDATA[is_string($relation) ? [$relation] : $relation]]></code>
+      <code><![CDATA[is_string($relation) ? [$relation] : $relation]]></code>
     </MixedReturnStatement>
     <PossiblyInvalidPropertyAssignmentValue>
       <code><![CDATA[$this->validateRelation($relation)]]></code>
     </PossiblyInvalidPropertyAssignmentValue>
     <RedundantCondition>
-      <code>gettype($rel)</code>
-      <code>is_object($href)</code>
-      <code>is_string($uri)</code>
+      <code><![CDATA[gettype($rel)]]></code>
+      <code><![CDATA[is_object($href)]]></code>
+      <code><![CDATA[is_string($uri)]]></code>
     </RedundantCondition>
     <TypeDoesNotContainType>
-      <code>! is_string($attribute)</code>
-      <code>! is_string($attribute) || empty($attribute)</code>
-      <code>! is_string($rel)</code>
-      <code>! is_string($rel)</code>
-      <code>! is_string($rel) || empty($rel)</code>
-      <code>! is_string($rel) || empty($rel)</code>
-      <code>(string) $uri</code>
-      <code>gettype($href)</code>
-      <code>is_object($href)</code>
-      <code>is_object($rel)</code>
+      <code><![CDATA[! is_string($attribute)]]></code>
+      <code><![CDATA[! is_string($attribute) || empty($attribute)]]></code>
+      <code><![CDATA[! is_string($rel)]]></code>
+      <code><![CDATA[! is_string($rel)]]></code>
+      <code><![CDATA[! is_string($rel) || empty($rel)]]></code>
+      <code><![CDATA[! is_string($rel) || empty($rel)]]></code>
+      <code><![CDATA[(string) $uri]]></code>
+      <code><![CDATA[gettype($href)]]></code>
+      <code><![CDATA[is_object($href)]]></code>
+      <code><![CDATA[is_object($rel)]]></code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/LinkCollection.php">
     <LessSpecificImplementedReturnType>
-      <code>self</code>
-      <code>self</code>
+      <code><![CDATA[self]]></code>
+      <code><![CDATA[self]]></code>
     </LessSpecificImplementedReturnType>
     <MissingParamType>
-      <code>$rel</code>
+      <code><![CDATA[$rel]]></code>
     </MissingParamType>
   </file>
   <file src="src/LinkGenerator/MezzioUrlGenerator.php">
     <ArgumentTypeCoercion>
-      <code>$routeName</code>
+      <code><![CDATA[$routeName]]></code>
     </ArgumentTypeCoercion>
   </file>
   <file src="src/LinkGenerator/MezzioUrlGeneratorFactory.php">
@@ -156,37 +156,37 @@
   </file>
   <file src="src/Metadata/AbstractMetadata.php">
     <MissingConstructor>
-      <code>$class</code>
+      <code><![CDATA[$class]]></code>
     </MissingConstructor>
   </file>
   <file src="src/Metadata/Exception/InvalidConfigException.php">
     <MixedAssignment>
-      <code>$className</code>
+      <code><![CDATA[$className]]></code>
     </MixedAssignment>
     <PossiblyUnusedMethod>
-      <code>dueToConflictingRouteIdentifierPlaceholder</code>
+      <code><![CDATA[dueToConflictingRouteIdentifierPlaceholder]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Metadata/MetadataMapFactory.php">
     <InvalidStringClass>
-      <code>new $factoryClass()</code>
+      <code><![CDATA[new $factoryClass()]]></code>
     </InvalidStringClass>
     <MixedArgument>
-      <code>$metadataFactories</code>
-      <code>$metadataFactories[$metadataClass]</code>
+      <code><![CDATA[$metadataFactories]]></code>
+      <code><![CDATA[$metadataFactories[$metadataClass]]]></code>
       <code><![CDATA[$metadata['__class__']]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$config['mezzio-hal']]]></code>
       <code><![CDATA[$config['mezzio-hal']['metadata-factories']]]></code>
-      <code>$config[MetadataMap::class]</code>
+      <code><![CDATA[$config[MetadataMap::class]]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$config</code>
-      <code>$metadataFactories</code>
+      <code><![CDATA[$config]]></code>
+      <code><![CDATA[$metadataFactories]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code>AbstractMetadata</code>
+      <code><![CDATA[AbstractMetadata]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->$method($metadata)]]></code>
@@ -194,8 +194,8 @@
   </file>
   <file src="src/Metadata/RouteBasedCollectionMetadata.php">
     <PossiblyUnusedMethod>
-      <code>setQueryStringArguments</code>
-      <code>setRouteParams</code>
+      <code><![CDATA[setQueryStringArguments]]></code>
+      <code><![CDATA[setRouteParams]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Metadata/RouteBasedCollectionMetadataFactory.php">
@@ -222,12 +222,12 @@
         )]]></code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
-      <code>AbstractMetadata</code>
+      <code><![CDATA[AbstractMetadata]]></code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Metadata/RouteBasedResourceMetadata.php">
     <PossiblyUnusedMethod>
-      <code>setRouteParams</code>
+      <code><![CDATA[setRouteParams]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Metadata/RouteBasedResourceMetadataFactory.php">
@@ -254,7 +254,7 @@
         )]]></code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
-      <code>AbstractMetadata</code>
+      <code><![CDATA[AbstractMetadata]]></code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Metadata/UrlBasedCollectionMetadataFactory.php">
@@ -277,7 +277,7 @@
         )]]></code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
-      <code>AbstractMetadata</code>
+      <code><![CDATA[AbstractMetadata]]></code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Metadata/UrlBasedResourceMetadataFactory.php">
@@ -298,91 +298,91 @@
         )]]></code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType>
-      <code>AbstractMetadata</code>
+      <code><![CDATA[AbstractMetadata]]></code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/Renderer/XmlRenderer.php">
     <InvalidReturnStatement>
-      <code>$elements</code>
+      <code><![CDATA[$elements]]></code>
     </InvalidReturnStatement>
     <InvalidReturnType>
       <code><![CDATA[DOMNode|false|list<DOMNode|false|list<DOMNode|array<array-key, DOMNode>>>]]></code>
     </InvalidReturnType>
     <MixedArgument>
-      <code>$attribute</code>
-      <code>$childDatum</code>
-      <code>$linkDatum</code>
+      <code><![CDATA[$attribute]]></code>
+      <code><![CDATA[$childDatum]]></code>
+      <code><![CDATA[$linkDatum]]></code>
       <code><![CDATA[$resource['_links']['self']['href']]]></code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$key</code>
-      <code>$key</code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$key]]></code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAccess>
       <code><![CDATA[$resource['_links']['self']['href']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$attribute</code>
-      <code>$child</code>
-      <code>$childDatum</code>
-      <code>$data</code>
-      <code>$linkDatum</code>
+      <code><![CDATA[$attribute]]></code>
+      <code><![CDATA[$child]]></code>
+      <code><![CDATA[$childDatum]]></code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$linkDatum]]></code>
       <code><![CDATA[$resource['_embedded']]]></code>
       <code><![CDATA[$resource['_links']]]></code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
     <PossibleRawObjectIteration>
       <code><![CDATA[$resource['_links']]]></code>
     </PossibleRawObjectIteration>
     <PossiblyFalseArgument>
-      <code>$element</code>
+      <code><![CDATA[$element]]></code>
     </PossiblyFalseArgument>
     <PossiblyInvalidArgument>
-      <code>$child</code>
+      <code><![CDATA[$child]]></code>
     </PossiblyInvalidArgument>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
     <MethodSignatureMismatch>
-      <code>abstract protected function generateSelfLink(
+      <code><![CDATA[abstract protected function generateSelfLink(
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ): Link;</code>
-      <code>abstract protected function generateSelfLink(
+    ): Link;]]></code>
+      <code><![CDATA[abstract protected function generateSelfLink(
         AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ): Link;</code>
+    ): Link;]]></code>
     </MethodSignatureMismatch>
     <MixedArgument>
-      <code>$item</code>
-      <code>$item</code>
+      <code><![CDATA[$item]]></code>
+      <code><![CDATA[$item]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$links</code>
+      <code><![CDATA[$links]]></code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$count</code>
-      <code>$count</code>
-      <code>$item</code>
-      <code>$item</code>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$item]]></code>
+      <code><![CDATA[$item]]></code>
     </MixedAssignment>
     <MixedOperand>
-      <code>$count</code>
+      <code><![CDATA[$count]]></code>
     </MixedOperand>
     <PossiblyNullOperand>
-      <code>$perPage</code>
-      <code>$perPage</code>
+      <code><![CDATA[$perPage]]></code>
+      <code><![CDATA[$perPage]]></code>
     </PossiblyNullOperand>
     <UndefinedInterfaceMethod>
-      <code>count</code>
+      <code><![CDATA[count]]></code>
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/ResourceGenerator/ExtractInstanceTrait.php">
@@ -390,80 +390,73 @@
       <code><![CDATA[$metadata->getExtractor()]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$array[$key]</code>
-      <code>$childData</code>
+      <code><![CDATA[$array[$key]]]></code>
+      <code><![CDATA[$childData]]></code>
     </MixedAssignment>
     <UndefinedMethod>
-      <code>getExtractor</code>
+      <code><![CDATA[getExtractor]]></code>
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGenerator/RouteBasedCollectionStrategy.php">
-    <DocblockTypeContradiction>
-      <code>[]</code>
-    </DocblockTypeContradiction>
     <MethodSignatureMismatch>
-      <code>protected function generateSelfLink(</code>
+      <code><![CDATA[protected function generateSelfLink(]]></code>
     </MethodSignatureMismatch>
     <MixedArgument>
       <code><![CDATA[$metadata->getQueryStringArguments()]]></code>
-      <code><![CDATA[$metadata->getQueryStringArguments() ?? []]]></code>
+      <code><![CDATA[$metadata->getQueryStringArguments()]]></code>
       <code><![CDATA[$metadata->getRoute()]]></code>
-      <code>$route</code>
-      <code>$routeParams</code>
-      <code>$routeParams</code>
-      <code>$routeParams</code>
+      <code><![CDATA[$metadata->getRouteParams()]]></code>
+      <code><![CDATA[$route]]></code>
+      <code><![CDATA[$routeParams]]></code>
+      <code><![CDATA[$routeParams]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
-      <code>$queryParams</code>
-      <code>$queryStringArgs</code>
+      <code><![CDATA[$queryParams]]></code>
+      <code><![CDATA[array_merge($request->getQueryParams(), $metadata->getQueryStringArguments())]]></code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$route</code>
-      <code>$routeParams</code>
-      <code>$routeParams</code>
-      <code>$routeParams</code>
+      <code><![CDATA[$route]]></code>
+      <code><![CDATA[$routeParams]]></code>
+      <code><![CDATA[$routeParams]]></code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$request->getQueryParams()]]></code>
-    </RedundantConditionGivenDocblockType>
     <UndefinedMethod>
-      <code>getQueryStringArguments</code>
-      <code>getQueryStringArguments</code>
-      <code>getRoute</code>
-      <code>getRoute</code>
-      <code>getRouteParams</code>
-      <code>getRouteParams</code>
+      <code><![CDATA[getQueryStringArguments]]></code>
+      <code><![CDATA[getQueryStringArguments]]></code>
+      <code><![CDATA[getRoute]]></code>
+      <code><![CDATA[getRoute]]></code>
+      <code><![CDATA[getRouteParams]]></code>
+      <code><![CDATA[getRouteParams]]></code>
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGenerator/RouteBasedResourceStrategy.php">
     <MixedArgumentTypeCoercion>
-      <code>$routeParams</code>
+      <code><![CDATA[$routeParams]]></code>
     </MixedArgumentTypeCoercion>
     <MixedArrayOffset>
-      <code>$routeParams[$placeholderMap[$key]]</code>
+      <code><![CDATA[$routeParams[$placeholderMap[$key]]]]></code>
     </MixedArrayOffset>
   </file>
   <file src="src/ResourceGenerator/UrlBasedCollectionStrategy.php">
     <MethodSignatureMismatch>
-      <code>protected function generateSelfLink(</code>
+      <code><![CDATA[protected function generateSelfLink(]]></code>
     </MethodSignatureMismatch>
     <MixedArgument>
-      <code>$url</code>
+      <code><![CDATA[$url]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$url</code>
+      <code><![CDATA[$url]]></code>
     </MixedAssignment>
     <MixedOperand>
-      <code>$url</code>
+      <code><![CDATA[$url]]></code>
     </MixedOperand>
     <UndefinedMethod>
-      <code>getUrl</code>
-      <code>getUrl</code>
+      <code><![CDATA[getUrl]]></code>
+      <code><![CDATA[getUrl]]></code>
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGeneratorFactory.php">
     <MissingDependency>
-      <code>HydratorPluginManager</code>
+      <code><![CDATA[HydratorPluginManager]]></code>
     </MissingDependency>
     <MixedArgument>
       <code><![CDATA[$container->get($strategy)]]></code>
@@ -471,54 +464,46 @@
       <code><![CDATA[$container->get(HydratorPluginManager::class)]]></code>
       <code><![CDATA[$container->get(Metadata\MetadataMap::class)]]></code>
       <code><![CDATA[$data['linkGeneratorServiceName'] ?? LinkGenerator::class]]></code>
-      <code>$strategy</code>
-      <code>HydratorPluginManager::class</code>
+      <code><![CDATA[$strategy]]></code>
+      <code><![CDATA[HydratorPluginManager::class]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$config['mezzio-hal']['resource-generator']]]></code>
       <code><![CDATA[$config['mezzio-hal']['resource-generator']['strategies']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
-      <code>$strategy</code>
+      <code><![CDATA[$strategy]]></code>
     </MixedAssignment>
   </file>
   <file src="test/Assertions.php">
     <DeprecatedClass>
-      <code>ObjectProperty::class</code>
+      <code><![CDATA[ObjectProperty::class]]></code>
     </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$actual->getHref()]]></code>
       <code><![CDATA[$actual->getRels()]]></code>
     </MixedArgument>
     <MixedMethodCall>
-      <code>getHref</code>
-      <code>getHref</code>
-      <code>getRels</code>
-      <code>getRels</code>
+      <code><![CDATA[getHref]]></code>
+      <code><![CDATA[getHref]]></code>
+      <code><![CDATA[getRels]]></code>
+      <code><![CDATA[getRels]]></code>
     </MixedMethodCall>
     <MoreSpecificReturnType>
-      <code>Link</code>
+      <code><![CDATA[Link]]></code>
     </MoreSpecificReturnType>
     <RedundantCondition>
-      <code>assertIsArray</code>
+      <code><![CDATA[assertIsArray]]></code>
     </RedundantCondition>
   </file>
   <file src="test/ConfigProviderTest.php">
     <RedundantCondition>
-      <code>assertIsArray</code>
+      <code><![CDATA[assertIsArray]]></code>
     </RedundantCondition>
-  </file>
-  <file src="test/ExceptionTest.php">
-    <MixedInferredReturnType>
-      <code>Generator</code>
-    </MixedInferredReturnType>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos(ExceptionInterface::class, '\\')]]></code>
-    </PossiblyFalseOperand>
   </file>
   <file src="test/HalResourceTest.php">
     <InvalidArgument>
-      <code>$links</code>
+      <code><![CDATA[$links]]></code>
       <code><![CDATA[['foo' => $embedded]]]></code>
       <code><![CDATA[['foo' => 'bar']]]></code>
     </InvalidArgument>
@@ -545,107 +530,94 @@
       <code><![CDATA[self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance)]]></code>
     </DeprecatedMethod>
     <UndefinedClass>
-      <code>StreamInterface</code>
-      <code>StreamInterface</code>
+      <code><![CDATA[StreamInterface]]></code>
+      <code><![CDATA[StreamInterface]]></code>
     </UndefinedClass>
   </file>
   <file src="test/InMemoryContainer.php">
     <PossiblyUnusedMethod>
-      <code>reset</code>
+      <code><![CDATA[reset]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/LinkGenerator/MezzioUrlGeneratorFactoryTest.php">
     <DeprecatedMethod>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
     </DeprecatedMethod>
     <MixedArgument>
-      <code>CustomUrlHelper::class</code>
+      <code><![CDATA[CustomUrlHelper::class]]></code>
     </MixedArgument>
     <UndefinedClass>
-      <code>CustomUrlHelper</code>
-      <code>CustomUrlHelper</code>
-      <code>CustomUrlHelper</code>
+      <code><![CDATA[CustomUrlHelper]]></code>
+      <code><![CDATA[CustomUrlHelper]]></code>
+      <code><![CDATA[CustomUrlHelper]]></code>
     </UndefinedClass>
   </file>
   <file src="test/LinkGenerator/MezzioUrlGeneratorTest.php">
     <DeprecatedMethod>
-      <code>withConsecutive</code>
+      <code><![CDATA[withConsecutive]]></code>
     </DeprecatedMethod>
   </file>
   <file src="test/LinkGeneratorFactoryTest.php">
     <DeprecatedMethod>
-      <code>assertAttributeSame</code>
+      <code><![CDATA[assertAttributeSame]]></code>
       <code><![CDATA[self::assertAttributeSame($urlGenerator, 'urlGenerator', $instance)]]></code>
       <code><![CDATA[self::assertAttributeSame($urlGenerator, 'urlGenerator', $instance)]]></code>
     </DeprecatedMethod>
     <MixedArgument>
-      <code>UrlGenerator::class</code>
+      <code><![CDATA[UrlGenerator::class]]></code>
     </MixedArgument>
     <UndefinedClass>
-      <code>UrlGenerator</code>
-      <code>UrlGenerator</code>
-      <code>UrlGenerator</code>
-      <code>UrlGenerator</code>
+      <code><![CDATA[UrlGenerator]]></code>
+      <code><![CDATA[UrlGenerator]]></code>
+      <code><![CDATA[UrlGenerator]]></code>
+      <code><![CDATA[UrlGenerator]]></code>
     </UndefinedClass>
   </file>
   <file src="test/LinkTest.php">
     <ArgumentTypeCoercion>
-      <code>$uri</code>
+      <code><![CDATA[$uri]]></code>
     </ArgumentTypeCoercion>
     <MixedArgument>
-      <code>$name</code>
-      <code>$name</code>
-      <code>$rel</code>
-      <code>$rel</code>
-      <code>$uri</code>
-      <code>$value</code>
-      <code>$value</code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$rel]]></code>
+      <code><![CDATA[$rel]]></code>
+      <code><![CDATA[$uri]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
     <TooFewArguments>
-      <code>new Link()</code>
+      <code><![CDATA[new Link()]]></code>
     </TooFewArguments>
-  </file>
-  <file src="test/Metadata/ExceptionTest.php">
-    <MixedInferredReturnType>
-      <code>Generator</code>
-    </MixedInferredReturnType>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos(ExceptionInterface::class, '\\')]]></code>
-    </PossiblyFalseOperand>
-  </file>
-  <file src="test/Metadata/MetadataMapFactoryTest.php">
-    <MixedInferredReturnType>
-      <code>Generator</code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/PHPUnitDeprecatedAssertions.php">
     <ArgumentTypeCoercion>
-      <code>$expected</code>
-      <code>$expected</code>
-      <code>$expected</code>
-      <code>$expected</code>
-      <code>$expected</code>
+      <code><![CDATA[$expected]]></code>
+      <code><![CDATA[$expected]]></code>
+      <code><![CDATA[$expected]]></code>
+      <code><![CDATA[$expected]]></code>
+      <code><![CDATA[$expected]]></code>
     </ArgumentTypeCoercion>
     <DeprecatedMethod>
-      <code>static::getObjectAttribute(
+      <code><![CDATA[static::getObjectAttribute(
                 $classOrObject,
                 $attributeName
-            )</code>
-      <code>static::getStaticAttribute(
+            )]]></code>
+      <code><![CDATA[static::getStaticAttribute(
                 $classOrObject,
                 $attributeName
-            )</code>
-      <code>static::readAttribute($actualClassOrObject, $actualAttributeName)</code>
-      <code>static::readAttribute($classOrObject, $attributeName)</code>
-      <code>static::readAttribute($haystackClassOrObject, $haystackAttributeName)</code>
+            )]]></code>
+      <code><![CDATA[static::readAttribute($actualClassOrObject, $actualAttributeName)]]></code>
+      <code><![CDATA[static::readAttribute($classOrObject, $attributeName)]]></code>
+      <code><![CDATA[static::readAttribute($haystackClassOrObject, $haystackAttributeName)]]></code>
     </DeprecatedMethod>
     <DocblockTypeContradiction>
-      <code>is_object($object)</code>
+      <code><![CDATA[is_object($object)]]></code>
     </DocblockTypeContradiction>
     <InternalClass>
       <code><![CDATA[new Exception(
@@ -653,8 +625,8 @@
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'] ?? '',
-                $stack[1]['function'],
+                (string) ($stack[1]['class'] ?? ''),
+                (string) ($stack[1]['function'] ?? ''),
                 $type
             )
         )]]></code>
@@ -663,8 +635,8 @@
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'] ?? '',
-                $stack[1]['function'],
+                (string) ($stack[1]['class'] ?? ''),
+                (string) ($stack[1]['function'] ?? ''),
                 $type
             )
         )]]></code>
@@ -673,8 +645,8 @@
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'] ?? '',
-                $stack[1]['function'],
+                (string) ($stack[1]['class'] ?? ''),
+                (string) ($stack[1]['function'] ?? ''),
                 $type
             )
         )]]></code>
@@ -683,8 +655,8 @@
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'] ?? '',
-                $stack[1]['function'],
+                (string) ($stack[1]['class'] ?? ''),
+                (string) ($stack[1]['function'] ?? ''),
                 $type
             )
         )]]></code>
@@ -693,8 +665,8 @@
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,
                 $value !== null ? ' (' . gettype($value) . '#' . $value . ')' : ' (No Value) ',
-                $stack[1]['class'] ?? '',
-                $stack[1]['function'],
+                (string) ($stack[1]['class'] ?? ''),
+                (string) ($stack[1]['function'] ?? ''),
                 $type
             )
         )]]></code>
@@ -760,58 +732,53 @@
         )]]></code>
     </InternalClass>
     <MixedOperand>
-      <code>$value</code>
+      <code><![CDATA[$value]]></code>
     </MixedOperand>
-    <PossiblyUndefinedArrayOffset>
-      <code>$stack[1]</code>
-    </PossiblyUndefinedArrayOffset>
     <PossiblyUnusedMethod>
-      <code>assertAttributeEmpty</code>
-      <code>assertAttributeEmpty</code>
-      <code>assertAttributeEmpty</code>
-      <code>assertAttributeEmpty</code>
-      <code>assertAttributeEmpty</code>
+      <code><![CDATA[assertAttributeEmpty]]></code>
+      <code><![CDATA[assertAttributeEmpty]]></code>
+      <code><![CDATA[assertAttributeEmpty]]></code>
+      <code><![CDATA[assertAttributeEmpty]]></code>
+      <code><![CDATA[assertAttributeEmpty]]></code>
     </PossiblyUnusedMethod>
+    <RedundantCast>
+      <code><![CDATA[(string) ($stack[1]['class'] ?? '')]]></code>
+      <code><![CDATA[(string) ($stack[1]['function'] ?? '')]]></code>
+    </RedundantCast>
     <RedundantConditionGivenDocblockType>
-      <code>is_object($classOrObject)</code>
+      <code><![CDATA[is_object($classOrObject)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/ResourceGenerator/DoctrinePaginatorTest.php">
     <DeprecatedMethod>
-      <code>setMethods</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
-      <code>withConsecutive</code>
+      <code><![CDATA[setMethods]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
+      <code><![CDATA[withConsecutive]]></code>
     </DeprecatedMethod>
-    <MixedInferredReturnType>
-      <code>iterable</code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/ResourceGenerator/ExceptionTest.php">
-    <MixedInferredReturnType>
-      <code>Generator</code>
-    </MixedInferredReturnType>
     <PossiblyFalseOperand>
       <code><![CDATA[strrpos(ExceptionInterface::class, '\\')]]></code>
     </PossiblyFalseOperand>
   </file>
   <file src="test/ResourceGenerator/NestedCollectionResourceGenerationTest.php">
     <DeprecatedMethod>
-      <code>assertInternalType</code>
-      <code>assertInternalType</code>
+      <code><![CDATA[assertInternalType]]></code>
+      <code><![CDATA[assertInternalType]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
-      <code>$request</code>
+      <code><![CDATA[$request]]></code>
     </InvalidArgument>
     <MixedAssignment>
-      <code>$childCollection</code>
+      <code><![CDATA[$childCollection]]></code>
     </MixedAssignment>
   </file>
   <file src="test/ResourceGenerator/ResourceWithNestedInstancesTest.php">
     <InvalidArgument>
-      <code>$request</code>
+      <code><![CDATA[$request]]></code>
     </InvalidArgument>
   </file>
   <file src="test/ResourceGenerator/ResourceWithSelfReferringInstanceTest.php">
@@ -821,27 +788,27 @@
       <code><![CDATA[$metadataMap->reveal()]]></code>
     </MixedArgument>
     <PossiblyUndefinedMethod>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
+      <code><![CDATA[reveal]]></code>
+      <code><![CDATA[reveal]]></code>
+      <code><![CDATA[reveal]]></code>
     </PossiblyUndefinedMethod>
   </file>
   <file src="test/ResourceGenerator/RouteBasedCollectionWithRouteParamsTest.php">
     <InvalidArgument>
-      <code>$linkGenerator</code>
-      <code>$linkGenerator</code>
-      <code>$linkGenerator</code>
-      <code>$linkGenerator</code>
-      <code>$linkGenerator</code>
-      <code>$linkGenerator</code>
-      <code>$linkGenerator</code>
-      <code>$request</code>
-      <code>$request</code>
-      <code>$request</code>
-      <code>$request</code>
-      <code>$request</code>
-      <code>$request</code>
-      <code>$request</code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$request]]></code>
       <code><![CDATA[Argument::that(function (array $params) use ($i) {
                         return array_key_exists('foo_id', $params)
                             && array_key_exists('bar_id', $params)
@@ -864,14 +831,14 @@
         )]]></code>
     </MixedArgumentTypeCoercion>
     <MixedMethodCall>
-      <code>willReturn</code>
-      <code>willReturn</code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </MixedMethodCall>
   </file>
   <file src="test/ResourceGenerator/UrlBasedCollectionWithRouteParamsTest.php">
     <InvalidArgument>
-      <code>$linkGenerator</code>
-      <code>$request</code>
+      <code><![CDATA[$linkGenerator]]></code>
+      <code><![CDATA[$request]]></code>
       <code><![CDATA[Argument::that(function (array $params) use ($i) {
                         return array_key_exists('foo_id', $params)
                             && array_key_exists('bar_id', $params)
@@ -884,54 +851,54 @@
       <code><![CDATA[$this->createCollectionItems($linkGenerator, $request)]]></code>
     </MixedArgumentTypeCoercion>
     <MixedMethodCall>
-      <code>willReturn</code>
+      <code><![CDATA[willReturn]]></code>
     </MixedMethodCall>
   </file>
   <file src="test/ResourceGeneratorFactoryTest.php">
     <DeprecatedMethod>
-      <code>assertAttributeSame</code>
-      <code>assertAttributeSame</code>
+      <code><![CDATA[assertAttributeSame]]></code>
+      <code><![CDATA[assertAttributeSame]]></code>
     </DeprecatedMethod>
     <MissingDependency>
-      <code>HydratorPluginManager</code>
-      <code>HydratorPluginManager</code>
+      <code><![CDATA[HydratorPluginManager]]></code>
+      <code><![CDATA[HydratorPluginManager]]></code>
     </MissingDependency>
     <MixedArgument>
       <code><![CDATA[$this->container->reveal()]]></code>
       <code><![CDATA[$this->container->reveal()]]></code>
       <code><![CDATA[$this->container->reveal()]]></code>
       <code><![CDATA[$this->container->reveal()]]></code>
-      <code>CustomLinkGenerator::class</code>
+      <code><![CDATA[CustomLinkGenerator::class]]></code>
     </MixedArgument>
     <MixedMethodCall>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </MixedMethodCall>
     <PossiblyInvalidMethodCall>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </PossiblyInvalidMethodCall>
     <PossiblyUndefinedMethod>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
-      <code>reveal</code>
+      <code><![CDATA[reveal]]></code>
+      <code><![CDATA[reveal]]></code>
+      <code><![CDATA[reveal]]></code>
+      <code><![CDATA[reveal]]></code>
     </PossiblyUndefinedMethod>
     <UndefinedClass>
-      <code>CustomLinkGenerator</code>
-      <code>CustomLinkGenerator</code>
-      <code>CustomLinkGenerator</code>
-      <code>CustomLinkGenerator</code>
+      <code><![CDATA[CustomLinkGenerator]]></code>
+      <code><![CDATA[CustomLinkGenerator]]></code>
+      <code><![CDATA[CustomLinkGenerator]]></code>
+      <code><![CDATA[CustomLinkGenerator]]></code>
     </UndefinedClass>
   </file>
   <file src="test/ResourceGeneratorTest.php">
     <DeprecatedMethod>
-      <code>assertInternalType</code>
+      <code><![CDATA[assertInternalType]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[Argument::that(function (array $params) use ($i) {
@@ -964,57 +931,54 @@
       <code><![CDATA[Argument::type('array')]]></code>
     </InvalidArgument>
     <MixedArgument>
-      <code>$embedded</code>
-      <code>$item</code>
+      <code><![CDATA[$embedded]]></code>
+      <code><![CDATA[$item]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$embedded</code>
-      <code>$ids[]</code>
-      <code>$item</code>
+      <code><![CDATA[$embedded]]></code>
+      <code><![CDATA[$ids[]]]></code>
+      <code><![CDATA[$item]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>Generator</code>
-    </MixedInferredReturnType>
     <PossiblyUndefinedMethod>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>shouldNotBeCalled</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
+      <code><![CDATA[shouldNotBeCalled]]></code>
+      <code><![CDATA[shouldNotBeCalled]]></code>
+      <code><![CDATA[shouldNotBeCalled]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </PossiblyUndefinedMethod>
     <PossiblyUnusedParam>
-      <code>$strategy</code>
+      <code><![CDATA[$strategy]]></code>
     </PossiblyUnusedParam>
     <TooFewArguments>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
-      <code>fromRoute</code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
     </TooFewArguments>
     <UnsafeInstantiation>
       <code><![CDATA[new $metadata(
@@ -1026,24 +990,24 @@
   </file>
   <file src="test/TestAsset/Child.php">
     <MissingPropertyType>
-      <code>$id</code>
-      <code>$message</code>
+      <code><![CDATA[$id]]></code>
+      <code><![CDATA[$message]]></code>
     </MissingPropertyType>
   </file>
   <file src="test/TestAsset/FooBar.php">
     <PossiblyUnusedProperty>
-      <code>$bar</code>
-      <code>$children</code>
-      <code>$foo</code>
-      <code>$id</code>
+      <code><![CDATA[$bar]]></code>
+      <code><![CDATA[$children]]></code>
+      <code><![CDATA[$foo]]></code>
+      <code><![CDATA[$id]]></code>
     </PossiblyUnusedProperty>
   </file>
   <file src="test/TestAsset/TestMetadataMapFactory.php">
     <PossiblyUnusedMethod>
-      <code>createTestMetadata</code>
+      <code><![CDATA[createTestMetadata]]></code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
-      <code>$metadata</code>
+      <code><![CDATA[$metadata]]></code>
     </PossiblyUnusedParam>
   </file>
 </files>

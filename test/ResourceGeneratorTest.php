@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MezzioTest\Hal;
 
 use ArrayIterator;
-use Generator;
 use Laminas\Paginator\Adapter\ArrayAdapter;
 use Laminas\Paginator\Paginator;
 use Mezzio\Hal\Exception\InvalidObjectException;
@@ -694,8 +693,8 @@ class ResourceGeneratorTest extends TestCase
         $this->generator->fromObject($this, $this->request->reveal());
     }
 
-    /** @return Generator<string, array{0: ResourceGenerator\StrategyInterface, 1: class-string<Metadata\AbstractCollectionMetadata>}> */
-    public function strategyCollection(): Generator
+    /** @return iterable<string, array{0: ResourceGenerator\StrategyInterface, 1: class-string<Metadata\AbstractCollectionMetadata>}> */
+    public function strategyCollection(): iterable
     {
         yield 'route-based-collection' => [
             new ResourceGenerator\RouteBasedCollectionStrategy(),
@@ -708,7 +707,8 @@ class ResourceGeneratorTest extends TestCase
         ];
     }
 
-    public function strategyResource(): Generator
+    /** @return iterable<string, array{0: ResourceGenerator\StrategyInterface}> */
+    public function strategyResource(): iterable
     {
         yield 'route-based-resource' => [
             new ResourceGenerator\RouteBasedResourceStrategy(),
