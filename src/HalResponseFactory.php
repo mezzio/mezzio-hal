@@ -74,7 +74,7 @@ class HalResponseFactory
         $matchedType = (new Negotiator())->getBest($accept, self::NEGOTIATION_PRIORITIES);
 
         switch (true) {
-            case $matchedType && strstr($matchedType->getValue(), 'json'):
+            case $matchedType && strstr($matchedType->getValue(), 'json') !== false:
                 $renderer   = $this->jsonRenderer;
                 $mediaType .= '+json';
                 break;

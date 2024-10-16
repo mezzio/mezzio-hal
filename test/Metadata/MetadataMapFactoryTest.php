@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\Metadata;
 
-use Generator;
 use Mezzio\Hal\Metadata;
 use Mezzio\Hal\Metadata\Exception\InvalidConfigException;
 use Mezzio\Hal\Metadata\MetadataMap;
@@ -133,7 +132,8 @@ class MetadataMapFactoryTest extends TestCase
         ($this->factory)($this->container);
     }
 
-    public function invalidMetadata(): Generator
+    /** @return iterable<string, array{0: array, 1: string}> */
+    public function invalidMetadata(): iterable
     {
         $types = [
             UrlBasedResourceMetadata::class,

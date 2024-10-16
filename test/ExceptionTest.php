@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal;
 
-use Generator;
 use Mezzio\Hal\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
 use function basename;
 use function glob;
 use function is_a;
@@ -16,9 +16,12 @@ use function substr;
 
 class ExceptionTest extends TestCase
 {
-    public function exception(): Generator
+    /** @return iterable<string, array{0: string}> */
+    public function exception(): iterable
     {
-        $namespace = substr(ExceptionInterface::class, 0, strrpos(ExceptionInterface::class, '\\') + 1);
+        $pos = strrpos(ExceptionInterface::class, '\\');
+        assert($pos !== false);
+        $namespace = substr(ExceptionInterface::class, 0, $pos + 1);
 
         $exceptions = glob(__DIR__ . '/../src/Exception/*.php');
         foreach ($exceptions as $exception) {
