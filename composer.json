@@ -50,7 +50,7 @@
     },
     "require-dev": {
         "doctrine/orm": "^2.19.8",
-        "laminas/laminas-coding-standard": "~2.5.0",
+        "laminas/laminas-coding-standard": "~3.0.0",
         "laminas/laminas-hydrator": "^4.15",
         "laminas/laminas-paginator": "^2.18.1",
         "mezzio/mezzio-helpers": "^5.16",
