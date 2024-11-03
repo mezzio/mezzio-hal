@@ -7,8 +7,7 @@ namespace Mezzio\Hal\Exception;
 use InvalidArgumentException;
 use Mezzio\Hal\ResourceGenerator\StrategyInterface;
 
-use function gettype;
-use function is_object;
+use function get_debug_type;
 use function sprintf;
 
 class InvalidStrategyException extends InvalidArgumentException implements ExceptionInterface
@@ -29,7 +28,7 @@ class InvalidStrategyException extends InvalidArgumentException implements Excep
     {
         return new self(sprintf(
             'Invalid strategy of type "%s"; does not implement %s',
-            is_object($strategy) ? $strategy::class : gettype($strategy),
+            get_debug_type($strategy),
             StrategyInterface::class
         ));
     }

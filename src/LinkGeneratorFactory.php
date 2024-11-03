@@ -8,9 +8,6 @@ use Psr\Container\ContainerInterface;
 
 class LinkGeneratorFactory
 {
-    /** @var string */
-    private $urlGeneratorServiceName;
-
     /**
      * Allow serialization
      */
@@ -24,9 +21,9 @@ class LinkGeneratorFactory
     /**
      * Allow varying behavior based on URL generator service name.
      */
-    public function __construct(string $urlGeneratorServiceName = LinkGenerator\UrlGeneratorInterface::class)
-    {
-        $this->urlGeneratorServiceName = $urlGeneratorServiceName;
+    public function __construct(
+        private readonly string $urlGeneratorServiceName = LinkGenerator\UrlGeneratorInterface::class
+    ) {
     }
 
     public function __invoke(ContainerInterface $container): LinkGenerator

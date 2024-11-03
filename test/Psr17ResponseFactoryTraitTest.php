@@ -32,9 +32,8 @@ final class Psr17ResponseFactoryTraitTest extends TestCase
             [
                 'dependencies' => [
                     'factories' => [
-                        ResponseInterface::class => function (): ResponseInterface {
-                            return $this->createMock(ResponseInterface::class);
-                        },
+                        ResponseInterface::class
+                            => fn(): ResponseInterface => $this->createMock(ResponseInterface::class),
                     ],
                 ],
             ],
@@ -55,9 +54,7 @@ final class Psr17ResponseFactoryTraitTest extends TestCase
                 'dependencies' => [
                     'delegators' => [
                         ResponseInterface::class => [
-                            function (): ResponseInterface {
-                                return $this->createMock(ResponseInterface::class);
-                            },
+                            fn(): ResponseInterface => $this->createMock(ResponseInterface::class),
                         ],
                     ],
                 ],
@@ -93,9 +90,7 @@ final class Psr17ResponseFactoryTraitTest extends TestCase
         $container->set('config', $config);
         $container->set(ResponseFactoryInterface::class, $responseFactory);
         $response = $this->createMock(ResponseInterface::class);
-        $container->set(ResponseInterface::class, function () use ($response): ResponseInterface {
-            return $response;
-        });
+        $container->set(ResponseInterface::class, fn(): ResponseInterface => $response);
 
         $detectedResponseFactory = ($this->factory)($container);
         self::assertNotSame($responseFactory, $detectedResponseFactory);

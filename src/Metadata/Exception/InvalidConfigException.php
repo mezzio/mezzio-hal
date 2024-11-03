@@ -10,9 +10,8 @@ use Mezzio\Hal\Metadata\MetadataMap;
 use Mezzio\Hal\Metadata\MetadataMapFactory;
 use RuntimeException;
 
-use function gettype;
+use function get_debug_type;
 use function implode;
-use function is_object;
 use function is_string;
 use function sprintf;
 
@@ -26,7 +25,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         return new self(sprintf(
             'Invalid %s configuration; expected an array, but received %s',
             MetadataMap::class,
-            is_object($config) ? $config::class : gettype($config)
+            get_debug_type($config)
         ));
     }
 
@@ -38,7 +37,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         return new self(sprintf(
             'Invalid %s metadata item configuration; expected an array, but received %s',
             MetadataMap::class,
-            is_object($metadata) ? $metadata::class : gettype($metadata)
+            get_debug_type($metadata)
         ));
     }
 
@@ -54,7 +53,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
     {
         $className = $class;
         if (! is_string($className)) {
-            $className = is_object($class) ? $class::class : gettype($class);
+            $className = get_debug_type($class);
         }
         return new self(sprintf(
             'Invalid metadata class provided: %s is not a class name',

@@ -30,8 +30,8 @@ class XmlRenderer implements RendererInterface
     private function createResourceNode(DOMDocument $doc, array $resource, string $resourceRel = 'self'): DOMNode
     {
         // Normalize resource
-        $resource['_links']    = $resource['_links'] ?? [];
-        $resource['_embedded'] = $resource['_embedded'] ?? [];
+        $resource['_links']    ??= [];
+        $resource['_embedded'] ??= [];
 
         $node = $doc->createElement('resource');
 

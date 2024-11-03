@@ -65,9 +65,7 @@ trait LinkCollection
         }
 
         $new        = clone $this;
-        $new->links = array_filter($this->links, function (LinkInterface $compare) use ($link) {
-            return $link !== $compare;
-        });
+        $new->links = array_filter($this->links, fn(LinkInterface $compare) => $link !== $compare);
         return $new;
     }
 }

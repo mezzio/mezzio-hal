@@ -205,12 +205,10 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
             $rel,
             $request->reveal(),
             'foo-bar',
-            Argument::that(function (array $params) use ($page) {
-                return array_key_exists('foo_id', $params)
-                    && array_key_exists('p', $params)
-                    && $params['foo_id'] === 1234
-                    && $params['p'] === $page;
-            }),
+            Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                && array_key_exists('p', $params)
+                && $params['foo_id'] === 1234
+                && $params['p'] === $page),
             [
                 'query_1' => 'value_1',
                 'sort'    => 'ASC',
@@ -241,12 +239,10 @@ class RouteBasedCollectionWithRouteParamsTest extends TestCase
                     'self',
                     $request->reveal(),
                     'foo-bar',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_id', $params)
-                            && array_key_exists('bar_id', $params)
-                            && $params['foo_id'] === 1234
-                            && $params['bar_id'] === $i;
-                    })
+                    Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                        && array_key_exists('bar_id', $params)
+                        && $params['foo_id'] === 1234
+                        && $params['bar_id'] === $i)
                 )
                 ->willReturn(new Link('self', '/api/foo/1234/bar/' . $i));
         }

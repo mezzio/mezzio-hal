@@ -89,9 +89,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         });
 
         if (
-            array_reduce($links, function ($containsNonLinkItem, $link) {
-                return $containsNonLinkItem || ! $link instanceof LinkInterface;
-            }, false)
+            array_reduce(
+                $links,
+                fn($containsNonLinkItem, $link)
+                => $containsNonLinkItem || ! $link instanceof LinkInterface,
+                false
+            )
         ) {
             throw new InvalidArgumentException('Non-Link item provided in $links array');
         }
@@ -118,11 +121,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return null;
         }
 
-        if (isset($this->embedded[$name])) {
-            return $this->embedded[$name];
-        }
-
-        return $this->data[$name];
+        return $this->embedded[$name] ?? $this->data[$name];
     }
 
     /**
@@ -323,9 +322,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         // $resource is an collection; existing individual or collection resource exists
         if (
             is_array($resource)
-            && array_reduce($resource, function (bool $allAreResources, $resource): bool {
-                return $allAreResources && $resource instanceof HalResource;
-            }, true)
+            && array_reduce(
+                $resource,
+                fn(bool $allAreResources, $resource): bool
+                => $allAreResources && $resource instanceof HalResource,
+                true
+            )
         ) {
             return $this->aggregateEmbeddedCollection($name, $resource, $context);
         }
@@ -411,9 +413,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return $this->embedEmptyCollections;
         }
 
-        return array_reduce($value, static function ($isResource, $item) {
-            return $isResource && $item instanceof self;
-        }, true);
+        return array_reduce($value, static fn($isResource, $item) => $isResource && $item instanceof self, true);
     }
 
     private function serializeLinks(): array
@@ -484,9 +484,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             function ($resource, string $name) use (&$embedded): void {
                 $embedded[$name] = $resource instanceof self
                     ? $resource->toArray()
-                    : array_map(function ($item) {
-                        return $item->toArray();
-                    }, $resource);
+                    : array_map(fn($item) => $item->toArray(), $resource);
             }
         );
 

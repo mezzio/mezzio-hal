@@ -187,12 +187,10 @@ class ResourceGeneratorTest extends TestCase
                 'self',
                 $this->request->reveal(),
                 'foo-bar',
-                Argument::that(function (array $params) {
-                    return array_key_exists('foo_bar_id', $params)
-                        && array_key_exists('test', $params)
-                        && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
-                        && $params['test'] === 'param';
-                })
+                Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                    && array_key_exists('test', $params)
+                    && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
+                    && $params['test'] === 'param')
             )
             ->willReturn(new Link('self', '/api/foo-bar/XXXX-YYYY-ZZZZ'));
 
@@ -306,12 +304,10 @@ class ResourceGeneratorTest extends TestCase
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_bar_id', $params)
-                            && array_key_exists('test', $params)
-                            && $params['foo_bar_id'] === $i
-                            && $params['test'] === 'param';
-                    })
+                    Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                        && array_key_exists('test', $params)
+                        && $params['foo_bar_id'] === $i
+                        && $params['test'] === 'param')
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
         }
@@ -438,12 +434,10 @@ class ResourceGeneratorTest extends TestCase
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_bar_id', $params)
-                            && array_key_exists('test', $params)
-                            && $params['foo_bar_id'] === $i
-                            && $params['test'] === 'param';
-                    })
+                    Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                        && array_key_exists('test', $params)
+                        && $params['foo_bar_id'] === $i
+                        && $params['test'] === 'param')
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
         }

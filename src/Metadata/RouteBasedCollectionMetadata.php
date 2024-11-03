@@ -13,7 +13,7 @@ class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
     public function __construct(
         string $class,
         string $collectionRelation,
-        private string $route,
+        private readonly string $route,
         string $paginationParam = 'page',
         string $paginationParamType = self::TYPE_QUERY,
         private array $routeParams = [],

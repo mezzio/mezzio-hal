@@ -12,9 +12,8 @@ use Mezzio\Hal\Link;
 use function array_shift;
 use function class_exists;
 use function count;
-use function gettype;
+use function get_debug_type;
 use function in_array;
-use function is_object;
 use function sprintf;
 use function var_export;
 
@@ -50,7 +49,7 @@ trait Assertions
     {
         self::assertThat($actual instanceof Link, self::isTrue(), sprintf(
             'Invalid link encountered of type %s',
-            is_object($actual) ? $actual::class : gettype($actual)
+            get_debug_type($actual)
         ));
 
         self::assertThat(in_array($expectedRel, $actual->getRels(), true), self::isTrue(), sprintf(
