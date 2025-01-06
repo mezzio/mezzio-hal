@@ -7,8 +7,7 @@ namespace Mezzio\Hal\ResourceGenerator\Exception;
 use Mezzio\Hal\ResourceGenerator;
 use RuntimeException;
 
-use function gettype;
-use function is_object;
+use function get_debug_type;
 use function sprintf;
 
 class InvalidConfigException extends RuntimeException implements ExceptionInterface
@@ -21,7 +20,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         return new self(sprintf(
             'Invalid %s configuration; expected an array or ArrayAccess instance, but received %s',
             ResourceGenerator::class,
-            is_object($config) ? $config::class : gettype($config)
+            get_debug_type($config)
         ));
     }
 
@@ -33,7 +32,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         return new self(sprintf(
             'Invalid mezzio-hal.resource-generator.strategies configuration; '
             . 'expected an array or Traversable instance, but received %s',
-            is_object($strategies) ? $strategies::class : gettype($strategies)
+            get_debug_type($strategies)
         ));
     }
 }

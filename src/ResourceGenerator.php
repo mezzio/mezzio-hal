@@ -26,9 +26,9 @@ class ResourceGenerator implements ResourceGeneratorInterface
      * @param LinkGenerator $linkGenerator Route-based link generation.
      */
     public function __construct(
-        private Metadata\MetadataMap $metadataMap,
-        private ContainerInterface $hydrators,
-        private LinkGenerator $linkGenerator
+        private readonly Metadata\MetadataMap $metadataMap,
+        private readonly ContainerInterface $hydrators,
+        private readonly LinkGenerator $linkGenerator
     ) {
     }
 

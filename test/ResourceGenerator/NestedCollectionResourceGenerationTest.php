@@ -153,10 +153,8 @@ class NestedCollectionResourceGenerationTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                Argument::that(function (array $params) {
-                    return array_key_exists('id', $params)
-                        && $params['id'] === 101010;
-                })
+                Argument::that(fn(array $params) => array_key_exists('id', $params)
+                    && $params['id'] === 101010)
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
@@ -166,10 +164,8 @@ class NestedCollectionResourceGenerationTest extends TestCase
                     'self',
                     $request->reveal(),
                     'child',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('id', $params)
-                            && $params['id'] === $i;
-                    })
+                    Argument::that(fn(array $params) => array_key_exists('id', $params)
+                        && $params['id'] === $i)
                 )
                 ->willReturn(new Link('self', '/api/child/' . $i));
         }

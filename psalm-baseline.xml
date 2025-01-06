@@ -16,7 +16,7 @@
       <code><![CDATA[$value]]></code>
     </MissingClosureParamType>
     <MissingClosureReturnType>
-      <code><![CDATA[function ($item) {]]></code>
+      <code><![CDATA[fn($item) => $item->toArray()]]></code>
     </MissingClosureReturnType>
     <MixedArgument>
       <code><![CDATA[$links]]></code>
@@ -65,6 +65,9 @@
     </MixedReturnTypeCoercion>
   </file>
   <file src="src/HalResponseFactory.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[str_contains($matchedType->getValue(), 'json')]]></code>
+    </DocblockTypeContradiction>
     <MixedArgument>
       <code><![CDATA[$matchedType->getValue()]]></code>
     </MixedArgument>
@@ -89,9 +92,6 @@
     <InvalidCast>
       <code><![CDATA[$uri]]></code>
     </InvalidCast>
-    <MixedArgument>
-      <code><![CDATA[is_object($rel) ? $rel::class : gettype($rel)]]></code>
-    </MixedArgument>
     <MixedAssignment>
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
@@ -106,8 +106,6 @@
       <code><![CDATA[$this->validateRelation($relation)]]></code>
     </PossiblyInvalidPropertyAssignmentValue>
     <RedundantCondition>
-      <code><![CDATA[gettype($rel)]]></code>
-      <code><![CDATA[is_object($href)]]></code>
       <code><![CDATA[is_string($uri)]]></code>
     </RedundantCondition>
     <TypeDoesNotContainType>
@@ -118,9 +116,7 @@
       <code><![CDATA[! is_string($rel) || empty($rel)]]></code>
       <code><![CDATA[! is_string($rel) || empty($rel)]]></code>
       <code><![CDATA[(string) $uri]]></code>
-      <code><![CDATA[gettype($href)]]></code>
       <code><![CDATA[is_object($href)]]></code>
-      <code><![CDATA[is_object($rel)]]></code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/LinkCollection.php">
@@ -809,18 +805,14 @@
       <code><![CDATA[$request]]></code>
       <code><![CDATA[$request]]></code>
       <code><![CDATA[$request]]></code>
-      <code><![CDATA[Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_id', $params)
-                            && array_key_exists('bar_id', $params)
-                            && $params['foo_id'] === 1234
-                            && $params['bar_id'] === $i;
-                    })]]></code>
-      <code><![CDATA[Argument::that(function (array $params) use ($page) {
-                return array_key_exists('foo_id', $params)
-                    && array_key_exists('p', $params)
-                    && $params['foo_id'] === 1234
-                    && $params['p'] === $page;
-            })]]></code>
+      <code><![CDATA[Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                        && array_key_exists('bar_id', $params)
+                        && $params['foo_id'] === 1234
+                        && $params['bar_id'] === $i)]]></code>
+      <code><![CDATA[Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                && array_key_exists('p', $params)
+                && $params['foo_id'] === 1234
+                && $params['p'] === $page)]]></code>
     </InvalidArgument>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$request->reveal()]]></code>
@@ -839,12 +831,10 @@
     <InvalidArgument>
       <code><![CDATA[$linkGenerator]]></code>
       <code><![CDATA[$request]]></code>
-      <code><![CDATA[Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_id', $params)
-                            && array_key_exists('bar_id', $params)
-                            && $params['foo_id'] === 1234
-                            && $params['bar_id'] === $i;
-                    })]]></code>
+      <code><![CDATA[Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                        && array_key_exists('bar_id', $params)
+                        && $params['foo_id'] === 1234
+                        && $params['bar_id'] === $i)]]></code>
     </InvalidArgument>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$request->reveal()]]></code>
@@ -901,24 +891,18 @@
       <code><![CDATA[assertInternalType]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
-      <code><![CDATA[Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_bar_id', $params)
-                            && array_key_exists('test', $params)
-                            && $params['foo_bar_id'] === $i
-                            && $params['test'] === 'param';
-                    })]]></code>
-      <code><![CDATA[Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_bar_id', $params)
-                            && array_key_exists('test', $params)
-                            && $params['foo_bar_id'] === $i
-                            && $params['test'] === 'param';
-                    })]]></code>
-      <code><![CDATA[Argument::that(function (array $params) {
-                    return array_key_exists('foo_bar_id', $params)
+      <code><![CDATA[Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
                         && array_key_exists('test', $params)
-                        && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
-                        && $params['test'] === 'param';
-                })]]></code>
+                        && $params['foo_bar_id'] === $i
+                        && $params['test'] === 'param')]]></code>
+      <code><![CDATA[Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                        && array_key_exists('test', $params)
+                        && $params['foo_bar_id'] === $i
+                        && $params['test'] === 'param')]]></code>
+      <code><![CDATA[Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                    && array_key_exists('test', $params)
+                    && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
+                    && $params['test'] === 'param')]]></code>
       <code><![CDATA[Argument::type('array')]]></code>
       <code><![CDATA[Argument::type('array')]]></code>
       <code><![CDATA[Argument::type('array')]]></code>

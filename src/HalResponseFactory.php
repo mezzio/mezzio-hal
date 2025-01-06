@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function is_callable;
-use function strstr;
+use function str_contains;
 
 class HalResponseFactory
 {
@@ -54,9 +54,7 @@ class HalResponseFactory
         if (is_callable($responseFactory)) {
             // Ensures type safety of the composed factory
             $responseFactory = new CallableResponseFactoryDecorator(
-                static function () use ($responseFactory): ResponseInterface {
-                    return $responseFactory();
-                }
+                static fn(): ResponseInterface => $responseFactory()
             );
         }
 
@@ -74,7 +72,7 @@ class HalResponseFactory
         $matchedType = (new Negotiator())->getBest($accept, self::NEGOTIATION_PRIORITIES);
 
         switch (true) {
-            case $matchedType && strstr($matchedType->getValue(), 'json') !== false:
+            case $matchedType && str_contains($matchedType->getValue(), 'json'):
                 $renderer   = $this->jsonRenderer;
                 $mediaType .= '+json';
                 break;

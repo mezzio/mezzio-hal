@@ -112,10 +112,8 @@ class ResourceWithNestedInstancesTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                Argument::that(function (array $params) {
-                    return array_key_exists('id', $params)
-                        && $params['id'] === 1234;
-                })
+                Argument::that(fn(array $params) => array_key_exists('id', $params)
+                    && $params['id'] === 1234)
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
@@ -124,10 +122,8 @@ class ResourceWithNestedInstancesTest extends TestCase
                 'self',
                 $request->reveal(),
                 'child',
-                Argument::that(function (array $params) {
-                    return array_key_exists('id', $params)
-                        && $params['id'] === 9876;
-                })
+                Argument::that(fn(array $params) => array_key_exists('id', $params)
+                    && $params['id'] === 9876)
             )
             ->willReturn(new Link('self', '/api/child/9876'));
 

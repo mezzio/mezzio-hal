@@ -6,8 +6,7 @@ namespace Mezzio\Hal\ResourceGenerator\Exception;
 
 use RuntimeException;
 
-use function gettype;
-use function is_object;
+use function get_debug_type;
 use function sprintf;
 
 class InvalidCollectionException extends RuntimeException implements ExceptionInterface
@@ -20,7 +19,7 @@ class InvalidCollectionException extends RuntimeException implements ExceptionIn
         return new self(sprintf(
             '%s is unable to create a resource for collection of type "%s"; not a Traversable',
             $class,
-            is_object($instance) ? $instance::class : gettype($instance)
+            get_debug_type($instance)
         ));
     }
 }
