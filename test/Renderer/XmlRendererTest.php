@@ -114,6 +114,9 @@ class XmlRendererTest extends TestCase
 
         $renderer = new XmlRenderer();
         $xml      = $renderer->render($resource);
-        $this->assertStringContainsString('<some-text-tag>https://some-domain.com/some-path?rb=0&amp;mode=widget&amp;appView=1</some-text-tag>', $xml);
+        $this->assertStringContainsString(
+            '<some-text-tag>https://some-domain.com/some-path?rb=0&amp;mode=widget&amp;appView=1</some-text-tag>',
+            $xml
+        );
     }
 }
