@@ -8,6 +8,7 @@
     findUnusedPsalmSuppress="true"
     findUnusedCode="true"
     findUnusedBaselineEntry="true"
+    findUnusedIssueHandlerSuppression="true"
     errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
@@ -19,6 +20,14 @@
     </projectFiles>
 
     <issueHandlers>
+        <!-- #[Override] attribute is suppressed globally because it brings little benefit -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="test" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+
         <InternalClass>
             <errorLevel type="suppress">
                 <referencedClass name="Mezzio\Hal\Response\CallableResponseFactoryDecorator"/>
