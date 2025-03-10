@@ -104,4 +104,16 @@ class XmlRendererTest extends TestCase
         $xml      = $renderer->render($resource);
         $this->assertStringContainsString('<key/>', $xml);
     }
+
+    public function testRendersStringsWithAmpersandsAsTagWithEscapedText(): void
+    {
+        $resource = new HalResource([
+            'some-text-tag' => 'https://some-domain.com/some-path?rb=0&mode=widget&appView=1',
+        ]);
+        $resource = $resource->withLink(new Link('self', '/example'));
+
+        $renderer = new XmlRenderer();
+        $xml      = $renderer->render($resource);
+        $this->assertStringContainsString('<some-text-tag>https://some-domain.com/some-path?rb=0&amp;mode=widget&amp;appView=1</some-text-tag>', $xml);
+    }
 }
