@@ -34,7 +34,6 @@ class Link implements EvolvableLinkInterface
     /**
      * @param string|string[] $relation One or more relations represented by this link.
      * @param bool $isTemplated Whether or not the link is templated
-     * @param array $attributes
      * @throws InvalidArgumentException If $relation is neither a string nor an array.
      * @throws InvalidArgumentException If an array $relation is provided, but one or
      *     more values is not a string.
