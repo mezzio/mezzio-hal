@@ -17,6 +17,7 @@ use function is_scalar;
 use function method_exists;
 use function trim;
 
+/** @final */
 class XmlRenderer implements RendererInterface
 {
     public function render(HalResource $resource): string

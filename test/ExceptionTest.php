@@ -14,7 +14,7 @@ use function is_a;
 use function strrpos;
 use function substr;
 
-class ExceptionTest extends TestCase
+final class ExceptionTest extends TestCase
 {
     /** @return iterable<string, array{0: string}> */
     public function exception(): iterable
@@ -24,6 +24,7 @@ class ExceptionTest extends TestCase
         $namespace = substr(ExceptionInterface::class, 0, $pos + 1);
 
         $exceptions = glob(__DIR__ . '/../src/Exception/*.php');
+        self::assertNotFalse($exceptions);
         foreach ($exceptions as $exception) {
             $class = substr(basename($exception), 0, -4);
 

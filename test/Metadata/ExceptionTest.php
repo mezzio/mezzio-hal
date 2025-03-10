@@ -15,7 +15,7 @@ use function is_a;
 use function strrpos;
 use function substr;
 
-class ExceptionTest extends TestCase
+final class ExceptionTest extends TestCase
 {
     public function testExceptionInterfaceExtendsHalExceptionInterface(): void
     {
@@ -30,6 +30,7 @@ class ExceptionTest extends TestCase
         $namespace = substr(ExceptionInterface::class, 0, $pos + 1);
 
         $exceptions = glob(__DIR__ . '/../../src/Metadata/Exception/*.php');
+        self::assertNotFalse($exceptions);
         foreach ($exceptions as $exception) {
             $class = substr(basename($exception), 0, -4);
 

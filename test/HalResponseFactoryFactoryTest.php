@@ -17,7 +17,7 @@ use ReflectionProperty;
 use Zend\Expressive\Hal\Renderer\JsonRenderer;
 use Zend\Expressive\Hal\Renderer\XmlRenderer;
 
-class HalResponseFactoryFactoryTest extends TestCase
+final class HalResponseFactoryFactoryTest extends TestCase
 {
     use PHPUnitDeprecatedAssertions;
 

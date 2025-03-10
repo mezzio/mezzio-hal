@@ -12,6 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use function array_key_exists;
 use function is_scalar;
 
+/** @final */
 class RouteBasedResourceStrategy implements StrategyInterface
 {
     use ExtractInstanceTrait;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal\Metadata;
 
+/** @final */
 class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
 {
     /**

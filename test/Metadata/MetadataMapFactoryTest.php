@@ -23,7 +23,7 @@ use Psr\Container\ContainerInterface;
 use ReflectionProperty;
 use stdClass;
 
-class MetadataMapFactoryTest extends TestCase
+final class MetadataMapFactoryTest extends TestCase
 {
     /** @var MetadataMapFactory */
     private $factory;

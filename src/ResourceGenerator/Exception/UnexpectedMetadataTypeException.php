@@ -10,6 +10,7 @@ use RuntimeException;
 
 use function sprintf;
 
+/** @final */
 class UnexpectedMetadataTypeException extends RuntimeException implements ExceptionInterface
 {
     public static function forMetadata(AbstractMetadata $metadata, string $strategy, string $expected): self

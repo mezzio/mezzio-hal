@@ -13,6 +13,7 @@ use Traversable;
 
 use function array_merge;
 
+/** @final */
 class RouteBasedCollectionStrategy implements StrategyInterface
 {
     use ExtractCollectionTrait, GenerateSelfLinkTrait {

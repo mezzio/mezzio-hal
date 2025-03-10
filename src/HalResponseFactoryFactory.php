@@ -17,6 +17,8 @@ use Zend\Expressive\Hal\Renderer\XmlRenderer;
  *   of producing an instance of that type.
  * - `Hal\Renderer\JsonRenderer`, if present; otherwise, creates an instance.
  * - `Hal\Renderer\XmlRenderer`, if present; otherwise, creates an instance.
+ *
+ * @final
  */
 class HalResponseFactoryFactory
 {

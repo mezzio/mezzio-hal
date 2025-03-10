@@ -30,6 +30,8 @@ use function sprintf;
  * The class name "HalResource" was chosen as "resource" has been given a
  * soft designation as a future keyword in PHP as of PHP 7; choosing this
  * name now makes the class future-proof.
+ *
+ * @final
  */
 class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 {

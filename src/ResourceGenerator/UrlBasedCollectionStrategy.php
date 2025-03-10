@@ -11,7 +11,9 @@ use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
 
+use function assert;
 use function http_build_query;
+use function is_string;
 use function parse_str;
 use function parse_url;
 use function preg_replace;
@@ -21,6 +23,7 @@ use function str_replace;
 use const PHP_URL_FRAGMENT;
 use const PHP_URL_QUERY;
 
+/** @final */
 class UrlBasedCollectionStrategy implements StrategyInterface
 {
     use ExtractCollectionTrait, GenerateSelfLinkTrait {
@@ -113,8 +116,13 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         $fragment = parse_url($url, PHP_URL_FRAGMENT);
         if (null === $fragment) {
             // parse_url returns null both for absence of fragment and empty fragment
-            return preg_replace('/#$/', '', $url);
+            $stripped = preg_replace('/#$/', '', $url);
+            assert(is_string($stripped));
+
+            return $stripped;
         }
+
+        assert(is_string($fragment));
 
         return str_replace('#' . $fragment, '', $url);
     }
@@ -125,9 +133,11 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         if (null === $query) {
             // parse_url returns null both for absence of query and empty query
             $url = preg_replace('/\?$/', '', $url);
+            assert($url !== null);
             return sprintf('%s?%s=%s', $url, $paginationParam, $page);
         }
 
+        assert(is_string($query));
         parse_str($query, $qsa);
         $qsa[$paginationParam] = $page;
 

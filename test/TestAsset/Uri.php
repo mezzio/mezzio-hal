@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\TestAsset;
 
-class Uri
+final class Uri
 {
     /** @var string */
     private $uri;

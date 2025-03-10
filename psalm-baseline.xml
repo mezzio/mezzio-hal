@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+<files psalm-version="6.8.8@1361cd33008feb3ae2b4a93f1860e14e538ec8c2">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[forNonObject]]></code>
@@ -95,9 +95,6 @@
     <MixedAssignment>
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string|string[]]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[is_string($relation) ? [$relation] : $relation]]></code>
       <code><![CDATA[is_string($relation) ? [$relation] : $relation]]></code>
@@ -181,12 +178,13 @@
       <code><![CDATA[$config]]></code>
       <code><![CDATA[$metadataFactories]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[AbstractMetadata]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->$method($metadata)]]></code>
     </MixedReturnStatement>
+    <PossiblyFalseArgument>
+      <code><![CDATA[class_implements($factoryClass)]]></code>
+      <code><![CDATA[class_parents($metadataClass)]]></code>
+    </PossiblyFalseArgument>
   </file>
   <file src="src/Metadata/RouteBasedCollectionMetadata.php">
     <PossiblyUnusedMethod>
@@ -297,6 +295,14 @@
       <code><![CDATA[AbstractMetadata]]></code>
     </MoreSpecificReturnType>
   </file>
+  <file src="src/Renderer/JsonRenderer.php">
+    <FalsableReturnStatement>
+      <code><![CDATA[json_encode($resource, $this->jsonFlags)]]></code>
+    </FalsableReturnStatement>
+    <InvalidFalsableReturnType>
+      <code><![CDATA[string]]></code>
+    </InvalidFalsableReturnType>
+  </file>
   <file src="src/Renderer/XmlRenderer.php">
     <InvalidReturnStatement>
       <code><![CDATA[$elements]]></code>
@@ -343,6 +349,12 @@
     <PossiblyInvalidArgument>
       <code><![CDATA[$child]]></code>
     </PossiblyInvalidArgument>
+  </file>
+  <file src="src/ResourceGenerator.php">
+    <PossiblyFalseArgument>
+      <code><![CDATA[class_implements($strategy)]]></code>
+      <code><![CDATA[class_parents($metadataType)]]></code>
+    </PossiblyFalseArgument>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
     <MethodSignatureMismatch>
@@ -947,9 +959,6 @@
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
     </PossiblyUndefinedMethod>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$strategy]]></code>
-    </PossiblyUnusedParam>
     <TooFewArguments>
       <code><![CDATA[fromRoute]]></code>
       <code><![CDATA[fromRoute]]></code>
@@ -990,8 +999,5 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[createTestMetadata]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$metadata]]></code>
-    </PossiblyUnusedParam>
   </file>
 </files>

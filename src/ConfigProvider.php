@@ -21,6 +21,7 @@ use Mezzio\Hal\ResourceGenerator\UrlBasedCollectionStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy;
 use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator;
 
+/** @final */
 class ConfigProvider
 {
     public function __invoke(): array

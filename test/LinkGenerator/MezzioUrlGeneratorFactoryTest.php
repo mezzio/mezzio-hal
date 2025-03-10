@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
 
-class MezzioUrlGeneratorFactoryTest extends TestCase
+final class MezzioUrlGeneratorFactoryTest extends TestCase
 {
     /** @var ContainerInterface&MockObject */
     private $container;

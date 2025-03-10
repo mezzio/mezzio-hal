@@ -32,7 +32,7 @@ use function class_parents;
 /**
  * @todo Create tests for cases where resources embed other resources.
  */
-class ResourceGeneratorTest extends TestCase
+final class ResourceGeneratorTest extends TestCase
 {
     use Assertions;
 
@@ -679,7 +679,9 @@ class ResourceGeneratorTest extends TestCase
     public function testGeneratorRaisesExceptionForUnknownObjectType(): void
     {
         $this->metadataMap->has(self::class)->willReturn(false);
-        foreach (class_parents(self::class) as $parent) {
+        $classParents = class_parents(self::class);
+        self::assertNotFalse($classParents);
+        foreach ($classParents as $parent) {
             $this->metadataMap->has($parent)->willReturn(false);
         }
         $this->expectException(InvalidObjectException::class);
@@ -739,6 +741,7 @@ class ResourceGeneratorTest extends TestCase
     /**
      * @dataProvider strategyCollection
      * @param class-string<Metadata\AbstractCollectionMetadata> $metadata
+     * @psalm-suppress UnusedParam
      */
     public function testNotTraversableInstanceForCollectionStrategy(
         ResourceGenerator\StrategyInterface $strategy,
