@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Mezzio\Hal;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Hal\Renderer\JsonRenderer;
-use Zend\Expressive\Hal\Renderer\XmlRenderer;
 
 /**
  * Create and return a HalResponseFactory instance.
@@ -32,14 +30,14 @@ class HalResponseFactoryFactory
     {
         $jsonRenderer = $container->has(Renderer\JsonRenderer::class)
             ? $container->get(Renderer\JsonRenderer::class)
-            : ($container->has(JsonRenderer::class)
-                ? $container->get(JsonRenderer::class)
+            : ($container->has('Zend\Expressive\Hal\Renderer\JsonRenderer')
+                ? $container->get('Zend\Expressive\Hal\Renderer\JsonRenderer')
                 : new Renderer\JsonRenderer());
 
         $xmlRenderer = $container->has(Renderer\XmlRenderer::class)
             ? $container->get(Renderer\XmlRenderer::class)
-            : ($container->has(XmlRenderer::class)
-                ? $container->get(XmlRenderer::class)
+            : ($container->has('Zend\Expressive\Hal\Renderer\XmlRenderer')
+                ? $container->get('Zend\Expressive\Hal\Renderer\XmlRenderer')
                 : new Renderer\XmlRenderer());
 
         return new HalResponseFactory(

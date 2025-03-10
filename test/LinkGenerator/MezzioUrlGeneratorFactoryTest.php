@@ -53,7 +53,7 @@ final class MezzioUrlGeneratorFactoryTest extends TestCase
             ->withConsecutive(
                 [UrlHelper::class],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                ['Zend\Expressive\Helper\ServerUrlHelper']
             )
             ->willReturnOnConsecutiveCalls(true, false, false);
         $this->container
@@ -136,7 +136,7 @@ final class MezzioUrlGeneratorFactoryTest extends TestCase
             ->withConsecutive(
                 [CustomUrlHelper::class],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                ['Zend\Expressive\Helper\ServerUrlHelper']
             )->willReturnOnConsecutiveCalls(true, false, false);
 
         $this->container
@@ -168,7 +168,7 @@ final class MezzioUrlGeneratorFactoryTest extends TestCase
             ->withConsecutive(
                 ['customUrlHelper'],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                ['Zend\Expressive\Helper\ServerUrlHelper']
             )->willReturnOnConsecutiveCalls(true, false, false);
 
         $this->container

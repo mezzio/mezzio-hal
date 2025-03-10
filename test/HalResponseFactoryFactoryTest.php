@@ -14,8 +14,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionProperty;
-use Zend\Expressive\Hal\Renderer\JsonRenderer;
-use Zend\Expressive\Hal\Renderer\XmlRenderer;
 
 final class HalResponseFactoryFactoryTest extends TestCase
 {
@@ -62,9 +60,9 @@ final class HalResponseFactoryFactoryTest extends TestCase
         $container->has(ResponseFactoryInterface::class)->willReturn(false);
         $container->get(ResponseInterface::class)->willReturn($responseFactory);
         $container->has(Renderer\JsonRenderer::class)->willReturn(false);
-        $container->has(JsonRenderer::class)->willReturn(false);
+        $container->has('Zend\Expressive\Hal\Renderer\JsonRenderer')->willReturn(false);
         $container->has(Renderer\XmlRenderer::class)->willReturn(false);
-        $container->has(XmlRenderer::class)->willReturn(false);
+        $container->has('Zend\Expressive\Hal\Renderer\XmlRenderer')->willReturn(false);
 
         $instance = (new HalResponseFactoryFactory())($container->reveal());
         self::assertAttributeInstanceOf(Renderer\JsonRenderer::class, 'jsonRenderer', $instance);

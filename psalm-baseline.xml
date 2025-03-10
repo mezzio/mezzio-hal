@@ -135,8 +135,8 @@
       <code><![CDATA[$container->get($this->urlHelperServiceName)]]></code>
       <code><![CDATA[$container->has(ServerUrlHelper::class)
                 ? $container->get(ServerUrlHelper::class)
-                : ($container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)
-                    ? $container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)
+                : ($container->has('Zend\Expressive\Helper\ServerUrlHelper')
+                    ? $container->get('Zend\Expressive\Helper\ServerUrlHelper')
                     : null)]]></code>
       <code><![CDATA[$data['urlHelperServiceName'] ?? UrlHelper::class]]></code>
     </MixedArgument>
@@ -294,6 +294,11 @@
     <MoreSpecificReturnType>
       <code><![CDATA[AbstractMetadata]]></code>
     </MoreSpecificReturnType>
+  </file>
+  <file src="src/Psr17ResponseFactoryTrait.php">
+    <UndefinedClass>
+      <code><![CDATA[ResponseFactoryFactory]]></code>
+    </UndefinedClass>
   </file>
   <file src="src/Renderer/JsonRenderer.php">
     <FalsableReturnStatement>
@@ -756,6 +761,11 @@
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[is_object($classOrObject)]]></code>
     </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/Psr17ResponseFactoryTraitTest.php">
+    <UndefinedClass>
+      <code><![CDATA[ResponseFactoryFactory]]></code>
+    </UndefinedClass>
   </file>
   <file src="test/ResourceGenerator/DoctrinePaginatorTest.php">
     <DeprecatedMethod>
