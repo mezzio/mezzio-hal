@@ -122,8 +122,6 @@ class MetadataMapFactory
 
     /**
      * Uses the registered factory class to create the metadata instance.
-     *
-     * @param array  $metadata
      */
     private function createMetadataViaFactoryClass(
         string $metadataClass,
@@ -143,8 +141,6 @@ class MetadataMapFactory
      * Call the factory method in this class namend "createMyMetadata(array $metadata)".
      *
      * This function is to ensure backwards compatibility with versions prior to 0.6.0.
-     *
-     * @param array  $metadata
      */
     private function createMetadataViaFactoryMethod(string $metadataClass, array $metadata): AbstractMetadata
     {
