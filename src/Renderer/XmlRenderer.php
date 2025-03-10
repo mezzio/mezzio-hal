@@ -126,8 +126,8 @@ class XmlRenderer implements RendererInterface
         }
 
         if (is_scalar($data)) {
-            $data     = $this->normalizeConstantValue($data);
-            $element  = $doc->createElement($name);
+            $data    = $this->normalizeConstantValue($data);
+            $element = $doc->createElement($name);
 
             $textNode = $doc->createTextNode((string) $data);
 
