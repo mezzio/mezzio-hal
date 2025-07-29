@@ -6,6 +6,7 @@ namespace MezzioTest\Hal\Metadata;
 
 use Generator;
 use Mezzio\Hal\Metadata;
+use Mezzio\Hal\Metadata\MetadataMap;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class MetadataMapTest extends TestCase
 {
     /** @psalm-var non-empty-list<class-string<Metadata\AbstractMetadata>> */
-    private $metadataClasses = [
+    private array $metadataClasses = [
         Metadata\AbstractMetadata::class,
         Metadata\AbstractCollectionMetadata::class,
         Metadata\AbstractResourceMetadata::class,
@@ -25,8 +26,7 @@ class MetadataMapTest extends TestCase
         Metadata\UrlBasedResourceMetadata::class,
     ];
 
-    /** @var Metadata\MetadataMap */
-    private $map;
+    private MetadataMap $map;
 
     public function setUp(): void
     {

@@ -13,7 +13,7 @@ use function array_key_exists;
 final class InMemoryContainer implements ContainerInterface
 {
     /** @var array<string,mixed> */
-    private $services = [];
+    private array $services = [];
 
     /** {@inheritDoc} */
     public function get(string $id)

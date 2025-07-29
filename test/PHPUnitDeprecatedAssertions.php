@@ -228,10 +228,10 @@ trait PHPUnitDeprecatedAssertions
                     }
 
                     return $attribute->getValue($object);
-                } catch (ReflectionException $e) {
+                } catch (ReflectionException) {
                 }
             } while ($reflector = $reflector->getParentClass());
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
         }
 
         throw new Exception(

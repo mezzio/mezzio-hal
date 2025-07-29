@@ -92,13 +92,12 @@ class UrlBasedCollectionStrategy implements StrategyInterface
      *     abstract.
      * @param ServerRequestInterface $request Ignored; required to fulfill
      *     abstract.
-     * @return Link
      */
     protected function generateSelfLink(
         Metadata\AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) {
+    ): Link {
         $queryStringArgs = $request->getQueryParams();
         $url             = $metadata->getUrl();
         if ($queryStringArgs !== []) {

@@ -6,10 +6,11 @@ namespace Mezzio\Hal;
 
 use InvalidArgumentException;
 use Psr\Link\EvolvableLinkInterface;
+use Stringable;
 
 use function array_filter;
 use function array_reduce;
-use function gettype;
+use function get_debug_type;
 use function in_array;
 use function is_array;
 use function is_object;
@@ -22,17 +23,12 @@ class Link implements EvolvableLinkInterface
 {
     public const AS_COLLECTION = '__FORCE_COLLECTION__';
 
-    /** @var array */
-    private $attributes;
+    private array $attributes;
 
     /** @var string[] Link relation types */
-    private $relations;
+    private array $relations;
 
-    /** @var string */
-    private $uri;
-
-    /** @var bool Whether or not the link is templated */
-    private $isTemplated;
+    private string $uri;
 
     /**
      * @param string|string[] $relation One or more relations represented by this link.
@@ -41,18 +37,21 @@ class Link implements EvolvableLinkInterface
      * @throws InvalidArgumentException If an array $relation is provided, but one or
      *     more values is not a string.
      */
-    public function __construct($relation, string $uri = '', bool $isTemplated = false, array $attributes = [])
-    {
-        $this->relations   = $this->validateRelation($relation);
-        $this->uri         = is_string($uri) ? $uri : (string) $uri;
-        $this->isTemplated = $isTemplated;
-        $this->attributes  = $this->validateAttributes($attributes);
+    public function __construct(
+        $relation,
+        string $uri = '', /** @var bool Whether or not the link is templated */
+        private bool $isTemplated = false,
+        array $attributes = []
+    ) {
+        $this->relations  = $this->validateRelation($relation);
+        $this->uri        = is_string($uri) ? $uri : (string) $uri;
+        $this->attributes = $this->validateAttributes($attributes);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->uri;
     }
@@ -60,7 +59,7 @@ class Link implements EvolvableLinkInterface
     /**
      * {@inheritDoc}
      */
-    public function isTemplated()
+    public function isTemplated(): bool
     {
         return $this->isTemplated;
     }
@@ -68,7 +67,7 @@ class Link implements EvolvableLinkInterface
     /**
      * {@inheritDoc}
      */
-    public function getRels()
+    public function getRels(): array
     {
         return $this->relations;
     }
@@ -76,7 +75,7 @@ class Link implements EvolvableLinkInterface
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
@@ -87,7 +86,7 @@ class Link implements EvolvableLinkInterface
      * @throws InvalidArgumentException If $href is not a string, and not an
      *     object implementing __toString.
      */
-    public function withHref($href)
+    public function withHref(string|Stringable $href): self
     {
         if (
             ! is_string($href)
@@ -96,7 +95,7 @@ class Link implements EvolvableLinkInterface
             throw new InvalidArgumentException(sprintf(
                 '%s expects a string URI or an object implementing __toString; received %s',
                 __METHOD__,
-                is_object($href) ? $href::class : gettype($href)
+                get_debug_type($href)
             ));
         }
         $new      = clone $this;
@@ -109,13 +108,13 @@ class Link implements EvolvableLinkInterface
      *
      * @throws InvalidArgumentException If $rel is not a string.
      */
-    public function withRel($rel)
+    public function withRel(string $rel): self
     {
         if (! is_string($rel) || empty($rel)) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects a non-empty string relation type; received %s',
                 __METHOD__,
-                is_object($rel) ? $rel::class : gettype($rel)
+                get_debug_type($rel)
             ));
         }
 
@@ -131,7 +130,7 @@ class Link implements EvolvableLinkInterface
     /**
      * {@inheritDoc}
      */
-    public function withoutRel($rel)
+    public function withoutRel(string $rel): self
     {
         if (! is_string($rel) || empty($rel)) {
             return $this;
@@ -142,9 +141,7 @@ class Link implements EvolvableLinkInterface
         }
 
         $new            = clone $this;
-        $new->relations = array_filter($this->relations, function ($value) use ($rel) {
-            return $rel !== $value;
-        });
+        $new->relations = array_filter($this->relations, fn($value): bool => $rel !== $value);
         return $new;
     }
 
@@ -156,7 +153,7 @@ class Link implements EvolvableLinkInterface
      * @throws InvalidArgumentException If $value is an array, but one or more values
      *     is not a string.
      */
-    public function withAttribute($attribute, $value)
+    public function withAttribute(string $attribute, mixed $value): self
     {
         $this->validateAttributeName($attribute, __METHOD__);
         $this->validateAttributeValue($value, __METHOD__);
@@ -169,7 +166,7 @@ class Link implements EvolvableLinkInterface
     /**
      * {@inheritDoc}
      */
-    public function withoutAttribute($attribute)
+    public function withoutAttribute(string $attribute): self
     {
         if (! is_string($attribute) || empty($attribute)) {
             return $this;
@@ -185,40 +182,37 @@ class Link implements EvolvableLinkInterface
     }
 
     /**
-     * @param mixed $name
      * @throws InvalidArgumentException If $attribute is not a string or is empty.
      */
-    private function validateAttributeName($name, string $context): void
+    private function validateAttributeName(mixed $name, string $context): void
     {
         if (! is_string($name) || empty($name)) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects the $name argument to be a non-empty string; received %s',
                 $context,
-                is_object($name) ? $name::class : gettype($name)
+                get_debug_type($name)
             ));
         }
     }
 
     /**
-     * @param mixed $value
      * @throws InvalidArgumentException If $value is neither a scalar nor an array.
      * @throws InvalidArgumentException If $value is an array, but one or more values
      *     is not a string.
      */
-    private function validateAttributeValue($value, string $context): void
+    private function validateAttributeValue(mixed $value, string $context): void
     {
         if (! is_scalar($value) && ! is_array($value)) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects the $value to be a PHP primitive or array of strings; received %s',
                 $context,
-                is_object($value) ? $value::class : gettype($value)
+                get_debug_type($value)
             ));
         }
 
         if (
-            is_array($value) && array_reduce($value, function ($isInvalid, $value) {
-                return $isInvalid || ! is_string($value);
-            }, false)
+            is_array($value)
+            && array_reduce($value, fn($isInvalid, $value): bool => $isInvalid || ! is_string($value), false)
         ) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects $value to contain an array of strings; one or more values was not a string',
@@ -237,24 +231,26 @@ class Link implements EvolvableLinkInterface
     }
 
     /**
-     * @param mixed $relation
-     * @return string|string[]
+     * @return string[]
      * @throws InvalidArgumentException If $relation is neither a string nor an array.
      * @throws InvalidArgumentException If $relation is an array, but any given value in it is not a string.
      */
-    private function validateRelation($relation)
+    private function validateRelation(mixed $relation): array
     {
         if (! is_array($relation) && (! is_string($relation) || empty($relation))) {
             throw new InvalidArgumentException(sprintf(
                 '$relation argument must be a string or array of strings; received %s',
-                is_object($relation) ? $relation::class : gettype($relation)
+                get_debug_type($relation)
             ));
         }
 
         if (
-            is_array($relation) && false === array_reduce($relation, function ($isString, $value) {
-                return $isString === false || is_string($value) || empty($value);
-            }, true)
+            is_array($relation)
+            && false === array_reduce(
+                $relation,
+                fn($isString, $value): bool => $isString === false || is_string($value) || empty($value),
+                true
+            )
         ) {
             throw new InvalidArgumentException(
                 'When passing an array for $relation, each value must be a non-empty string; '
@@ -262,6 +258,9 @@ class Link implements EvolvableLinkInterface
             );
         }
 
-        return is_string($relation) ? [$relation] : $relation;
+        /** @var array<array-key, string> $result */
+        $result = is_string($relation) ? [$relation] : $relation;
+
+        return $result;
     }
 }

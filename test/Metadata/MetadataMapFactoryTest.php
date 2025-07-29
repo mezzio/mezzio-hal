@@ -25,11 +25,9 @@ use stdClass;
 
 class MetadataMapFactoryTest extends TestCase
 {
-    /** @var MetadataMapFactory */
-    private $factory;
+    private MetadataMapFactory $factory;
 
-    /** @var ContainerInterface&MockObject */
-    private $container;
+    private ContainerInterface&MockObject $container;
 
     public function setUp(): void
     {

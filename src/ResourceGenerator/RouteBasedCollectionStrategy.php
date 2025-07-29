@@ -91,13 +91,12 @@ class RouteBasedCollectionStrategy implements StrategyInterface
      *     generator in order to generate link based on routing information.
      * @param ServerRequestInterface $request Passed to link generator when
      *     generating link based on routing information.
-     * @return Link
      */
     protected function generateSelfLink(
         Metadata\AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) {
+    ): Link {
         return $resourceGenerator
             ->getLinkGenerator()
             ->fromRoute(

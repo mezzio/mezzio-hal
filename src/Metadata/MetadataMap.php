@@ -8,11 +8,8 @@ use function class_exists;
 
 class MetadataMap
 {
-    /**
-     * @var array
-     * @psalm-var array<string, AbstractMetadata>
-     */
-    private $map = [];
+    /** @psalm-var array<string, AbstractMetadata> */
+    private array $map = [];
 
     /**
      * @throws Exception\DuplicateMetadataException If metadata matching the

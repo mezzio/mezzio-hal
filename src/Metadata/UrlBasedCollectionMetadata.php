@@ -11,17 +11,13 @@ use function sprintf;
 
 class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
 {
-    /**
-     * URL to use for the `self` relation of the collection.
-     *
-     * @var string
-     */
-    private $url;
-
     public function __construct(
         string $class,
         string $collectionRelation,
-        string $url,
+        /**
+         * URL to use for the `self` relation of the collection.
+         */
+        private readonly string $url,
         string $paginationParam = 'page',
         string $paginationParamType = self::TYPE_QUERY
     ) {
@@ -44,7 +40,6 @@ class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
 
         $this->class               = $class;
         $this->collectionRelation  = $collectionRelation;
-        $this->url                 = $url;
         $this->paginationParam     = $paginationParam;
         $this->paginationParamType = $paginationParamType;
     }

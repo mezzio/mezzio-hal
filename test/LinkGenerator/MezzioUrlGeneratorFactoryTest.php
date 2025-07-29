@@ -16,8 +16,7 @@ use RuntimeException;
 
 class MezzioUrlGeneratorFactoryTest extends TestCase
 {
-    /** @var ContainerInterface&MockObject */
-    private $container;
+    private ContainerInterface&MockObject $container;
 
     public function setUp(): void
     {

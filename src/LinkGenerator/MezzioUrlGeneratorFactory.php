@@ -13,9 +13,6 @@ use function sprintf;
 
 class MezzioUrlGeneratorFactory
 {
-    /** @var string */
-    private $urlHelperServiceName;
-
     /**
      * Allow serialization
      */
@@ -29,9 +26,8 @@ class MezzioUrlGeneratorFactory
     /**
      * Vary behavior based on the URL helper service name.
      */
-    public function __construct(string $urlHelperServiceName = UrlHelper::class)
+    public function __construct(private readonly string $urlHelperServiceName = UrlHelper::class)
     {
-        $this->urlHelperServiceName = $urlHelperServiceName;
     }
 
     public function __invoke(ContainerInterface $container): MezzioUrlGenerator

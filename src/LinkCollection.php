@@ -14,7 +14,7 @@ use function in_array;
 trait LinkCollection
 {
     /** @var LinkInterface[] */
-    private $links = [];
+    private array $links = [];
 
     /**
      * {@inheritDoc}
@@ -33,9 +33,9 @@ trait LinkCollection
      * @return LinkInterface[]
      * @psalm-return array<array-key, LinkInterface>
      */
-    public function getLinksByRel($rel): array
+    public function getLinksByRel(string $rel): array
     {
-        return array_filter($this->links, function (LinkInterface $link) use ($rel) {
+        return array_filter($this->links, function (LinkInterface $link) use ($rel): bool {
             $rels = $link->getRels();
             return in_array($rel, $rels, true);
         });
@@ -65,9 +65,7 @@ trait LinkCollection
         }
 
         $new        = clone $this;
-        $new->links = array_filter($this->links, function (LinkInterface $compare) use ($link) {
-            return $link !== $compare;
-        });
+        $new->links = array_filter($this->links, fn(LinkInterface $compare): bool => $link !== $compare);
         return $new;
     }
 }
