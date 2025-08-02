@@ -47,12 +47,11 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $request   = $this->createMock(ServerRequestInterface::class);
 
         $this->container
-            ->expects(self::exactly(3))
+            ->expects(self::exactly(2))
             ->method('has')
             ->withConsecutive(
                 [UrlHelper::class],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
             )
             ->willReturnOnConsecutiveCalls(true, false, false);
         $this->container
@@ -92,9 +91,9 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
             ->expects(self::exactly(2))
             ->method('get')
             ->withConsecutive(
+                [ServerUrlHelper::class],
                 [UrlHelper::class],
-                [ServerUrlHelper::class]
-            )->willReturnOnConsecutiveCalls($urlHelper, $serverUrlHelper);
+            )->willReturnOnConsecutiveCalls($serverUrlHelper, $urlHelper);
 
         $urlHelper
             ->expects(self::once())
@@ -130,12 +129,11 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $request   = $this->createMock(ServerRequestInterface::class);
 
         $this->container
-            ->expects(self::exactly(3))
+            ->expects(self::exactly(2))
             ->method('has')
             ->withConsecutive(
                 [CustomUrlHelper::class],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
             )->willReturnOnConsecutiveCalls(true, false, false);
 
         $this->container
@@ -162,12 +160,11 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
         $request   = $this->createMock(ServerRequestInterface::class);
 
         $this->container
-            ->expects(self::exactly(3))
+            ->expects(self::exactly(2))
             ->method('has')
             ->withConsecutive(
                 ['customUrlHelper'],
-                [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                [ServerUrlHelper::class]
             )->willReturnOnConsecutiveCalls(true, false, false);
 
         $this->container

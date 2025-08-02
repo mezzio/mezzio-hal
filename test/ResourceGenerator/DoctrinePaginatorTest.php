@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MezzioTest\Hal\ResourceGenerator;
 
 use ArrayIterator;
-use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
@@ -48,11 +48,11 @@ class DoctrinePaginatorTest extends TestCase
     }
 
     /**
-     * @psalm-return AbstractQuery&MockObject
+     * @psalm-return Query&MockObject
      */
-    public function mockQuery(): AbstractQuery
+    public function mockQuery(): Query
     {
-        return $this->getMockBuilder(AbstractQuery::class)
+        return $this->getMockBuilder(Query::class)
             ->disableOriginalConstructor()
             ->setMethods(['getMaxResults', 'setFirstResult'])
             ->getMockForAbstractClass();

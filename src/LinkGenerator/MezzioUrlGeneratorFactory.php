@@ -41,13 +41,15 @@ class MezzioUrlGeneratorFactory
             ));
         }
 
+        $serverUrlHelper = null;
+        if ($container->has(ServerUrlHelper::class)) {
+            /** @var ServerUrlHelper $serverUrlHelper */
+            $serverUrlHelper = $container->get(ServerUrlHelper::class);
+        }
+
         return new MezzioUrlGenerator(
             $container->get($this->urlHelperServiceName),
-            $container->has(ServerUrlHelper::class)
-                ? $container->get(ServerUrlHelper::class)
-                : ($container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)
-                    ? $container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)
-                    : null)
+            $serverUrlHelper
         );
     }
 }
