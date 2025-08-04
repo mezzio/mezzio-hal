@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\TestAsset;
 
-class Uri
-{
-    /** @var string */
-    private $uri;
+use Stringable;
 
-    public function __construct(string $uri)
+class Uri implements Stringable
+{
+    public function __construct(private readonly string $uri)
     {
-        $this->uri = $uri;
     }
 
     public function __toString(): string

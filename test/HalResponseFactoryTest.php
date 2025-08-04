@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 
+use function str_contains;
 use function strlen;
 use function strstr;
 
@@ -20,20 +21,15 @@ class HalResponseFactoryTest extends TestCase
 {
     use TestAsset;
 
-    /** @var ServerRequestInterface&MockObject */
-    private $request;
+    private ServerRequestInterface&MockObject $request;
 
-    /** @var ResponseInterface&MockObject */
-    private $response;
+    private ResponseInterface&MockObject $response;
 
-    /** @var Renderer\JsonRenderer&MockObject */
-    private $jsonRenderer;
+    private Renderer\JsonRenderer&MockObject $jsonRenderer;
 
-    /** @var Renderer\XmlRenderer&MockObject */
-    private $xmlRenderer;
+    private Renderer\XmlRenderer&MockObject $xmlRenderer;
 
-    /** @var HalResponseFactory */
-    private $factory;
+    private HalResponseFactory $factory;
 
     public function setUp(): void
     {
@@ -43,9 +39,7 @@ class HalResponseFactoryTest extends TestCase
         $this->jsonRenderer = $this->createMock(Renderer\JsonRenderer::class);
         $this->xmlRenderer  = $this->createMock(Renderer\XmlRenderer::class);
         $this->factory      = new HalResponseFactory(
-            function (): ResponseInterface {
-                return $this->response;
-            },
+            fn(): ResponseInterface => $this->response,
             $this->jsonRenderer,
             $this->xmlRenderer
         );
@@ -239,7 +233,7 @@ class HalResponseFactoryTest extends TestCase
                     ->expects(self::never())
                     ->method('render');
                 break;
-            case strstr($header, 'xml') !== false:
+            case str_contains($header, 'xml'):
                 $this->xmlRenderer
                     ->expects(self::once())
                     ->method('render')

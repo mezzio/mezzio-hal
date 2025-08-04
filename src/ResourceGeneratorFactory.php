@@ -15,9 +15,6 @@ use function is_string;
 
 class ResourceGeneratorFactory
 {
-    /** @var string */
-    private $linkGeneratorServiceName;
-
     /**
      * Allow serialization
      */
@@ -31,9 +28,8 @@ class ResourceGeneratorFactory
     /**
      * Allow varying behavior based on link generator service name.
      */
-    public function __construct(string $linkGeneratorServiceName = LinkGenerator::class)
+    public function __construct(private readonly string $linkGeneratorServiceName = LinkGenerator::class)
     {
-        $this->linkGeneratorServiceName = $linkGeneratorServiceName;
     }
 
     public function __invoke(ContainerInterface $container): ResourceGenerator

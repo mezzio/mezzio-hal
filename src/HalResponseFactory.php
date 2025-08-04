@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal;
 
+use Mezzio\Hal\Renderer\JsonRenderer;
+use Mezzio\Hal\Renderer\XmlRenderer;
 use Mezzio\Hal\Response\CallableResponseFactoryDecorator;
 use Negotiation\Negotiator;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -11,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function is_callable;
-use function strstr;
+use function str_contains;
 
 class HalResponseFactory
 {
@@ -30,18 +32,14 @@ class HalResponseFactory
         'application/*+xml',
     ];
 
-    /** @var Renderer\JsonRenderer */
-    private $jsonRenderer;
+    private readonly JsonRenderer $jsonRenderer;
 
     /**
      * A callable capable of producing an empty ResponseInterface instance.
-     *
-     * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private readonly ResponseFactoryInterface $responseFactory;
 
-    /** @var Renderer\XmlRenderer */
-    private $xmlRenderer;
+    private readonly XmlRenderer $xmlRenderer;
 
     /**
      * @param (callable():ResponseInterface)|ResponseFactoryInterface $responseFactory
@@ -54,15 +52,13 @@ class HalResponseFactory
         if (is_callable($responseFactory)) {
             // Ensures type safety of the composed factory
             $responseFactory = new CallableResponseFactoryDecorator(
-                static function () use ($responseFactory): ResponseInterface {
-                    return $responseFactory();
-                }
+                static fn(): ResponseInterface => $responseFactory()
             );
         }
 
         $this->responseFactory = $responseFactory;
-        $this->jsonRenderer    = $jsonRenderer ?: new Renderer\JsonRenderer();
-        $this->xmlRenderer     = $xmlRenderer ?: new Renderer\XmlRenderer();
+        $this->jsonRenderer    = $jsonRenderer ?: new JsonRenderer();
+        $this->xmlRenderer     = $xmlRenderer ?: new XmlRenderer();
     }
 
     public function createResponse(
@@ -74,7 +70,7 @@ class HalResponseFactory
         $matchedType = (new Negotiator())->getBest($accept, self::NEGOTIATION_PRIORITIES);
 
         switch (true) {
-            case $matchedType && strstr($matchedType->getValue(), 'json') !== false:
+            case $matchedType && str_contains((string) $matchedType->getValue(), 'json'):
                 $renderer   = $this->jsonRenderer;
                 $mediaType .= '+json';
                 break;

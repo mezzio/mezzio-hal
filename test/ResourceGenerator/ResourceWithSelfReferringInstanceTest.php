@@ -63,10 +63,7 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
         self::assertCount(0, $childResource->getElements());
     }
 
-    /**
-     * @return MetadataMap|ObjectProphecy
-     */
-    public function createMetadataMap()
+    public function createMetadataMap(): MetadataMap|ObjectProphecy
     {
         $metadataMap = $this->prophesize(MetadataMap::class);
 
@@ -86,10 +83,7 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
         return $metadataMap;
     }
 
-    /**
-     * @return LinkGenerator|ObjectProphecy
-     */
-    public function createLinkGenerator(ObjectProphecy $request)
+    public function createLinkGenerator(ObjectProphecy $request): LinkGenerator|ObjectProphecy
     {
         $linkGenerator = $this->prophesize(LinkGenerator::class);
 
@@ -98,20 +92,15 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                Argument::that(function (array $params): bool {
-                    return array_key_exists('id', $params)
-                        && $params['id'] === 1234;
-                })
+                Argument::that(fn(array $params): bool => array_key_exists('id', $params)
+                    && $params['id'] === 1234)
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
 
         return $linkGenerator;
     }
 
-    /**
-     * @return ObjectProphecy|ContainerInterface
-     */
-    public function createHydrators()
+    public function createHydrators(): ObjectProphecy|ContainerInterface
     {
         $hydratorClass = self::getObjectPropertyHydratorClass();
 

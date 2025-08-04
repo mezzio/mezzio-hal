@@ -171,13 +171,13 @@ class UrlBasedCollectionWithRouteParamsTest extends TestCase
     }
 
     /**
-     * @param LinkGenerator|ObjectProphecy $linkGenerator
-     * @param ServerRequestInterface|ObjectProphecy $request
      * @psalm-param LinkGenerator&ObjectProphecy $linkGenerator
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
      */
-    private function createCollectionItems($linkGenerator, $request): array
-    {
+    private function createCollectionItems(
+        LinkGenerator|ObjectProphecy $linkGenerator,
+        ServerRequestInterface|ObjectProphecy $request
+    ): array {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
@@ -188,17 +188,16 @@ class UrlBasedCollectionWithRouteParamsTest extends TestCase
             $next->id = $i;
             $items[]  = $next;
 
+            /** @psalm-suppress InvalidArgument */
             $linkGenerator
                 ->fromRoute(
                     'self',
                     $request->reveal(),
                     'foo-bar',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_id', $params)
-                            && array_key_exists('bar_id', $params)
-                            && $params['foo_id'] === 1234
-                            && $params['bar_id'] === $i;
-                    })
+                    Argument::that(fn(array $params): bool => array_key_exists('foo_id', $params)
+                        && array_key_exists('bar_id', $params)
+                        && $params['foo_id'] === 1234
+                        && $params['bar_id'] === $i)
                 )
                 ->willReturn(new Link('self', '/api/foo/1234/bar/' . $i));
         }

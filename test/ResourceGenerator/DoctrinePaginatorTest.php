@@ -24,23 +24,17 @@ use function range;
 
 class DoctrinePaginatorTest extends TestCase
 {
-    /** @var RouteBasedCollectionMetadata&MockObject */
-    private $metadata;
+    private RouteBasedCollectionMetadata&MockObject $metadata;
 
-    /** @var LinkGenerator&MockObject */
-    private $linkGenerator;
+    private LinkGenerator&MockObject $linkGenerator;
 
-    /** @var ResourceGenerator&MockObject */
-    private $generator;
+    private ResourceGenerator&MockObject $generator;
 
-    /** @var ServerRequestInterface&MockObject */
-    private $request;
+    private ServerRequestInterface&MockObject $request;
 
-    /** @var Paginator&MockObject */
-    private $paginator;
+    private Paginator&MockObject $paginator;
 
-    /** @var RouteBasedCollectionStrategy */
-    private $strategy;
+    private RouteBasedCollectionStrategy $strategy;
 
     public function setUp(): void
     {
@@ -161,9 +155,7 @@ class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(function ($value) {
-            return (object) ['value' => $value];
-        }, range(46, 60));
+        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
         $this->paginator
             ->method('getIterator')
             ->willReturn(new ArrayIterator($values));
@@ -270,9 +262,7 @@ class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(function ($value) {
-            return (object) ['value' => $value];
-        }, range(46, 60));
+        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -393,9 +383,7 @@ class DoctrinePaginatorTest extends TestCase
             ->with('page_num', 1)
             ->willReturn(3);
 
-        $values = array_map(function ($value) {
-            return (object) ['value' => $value];
-        }, range(46, 60));
+        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')

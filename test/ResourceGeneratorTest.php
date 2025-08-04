@@ -40,29 +40,18 @@ class ResourceGeneratorTest extends TestCase
 
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy|ServerRequestInterface
-     * @psalm-var ObjectProphecy<ServerRequestInterface>
-     */
-    private $request;
+    /** @psalm-var ObjectProphecy<ServerRequestInterface> */
+    private ObjectProphecy|ServerRequestInterface $request;
 
-    /**
-     * @var ObjectProphecy|ContainerInterface
-     * @psalm-var ObjectProphecy<ContainerInterface>
-     */
-    private $hydrators;
+    /** @psalm-var ObjectProphecy<ContainerInterface> */
+    private ObjectProphecy|ContainerInterface $hydrators;
 
-    /** @var ObjectProphecy|LinkGenerator */
-    private $linkGenerator;
+    private ObjectProphecy|LinkGenerator $linkGenerator;
 
-    /**
-     * @var ObjectProphecy|Metadata\MetadataMap
-     * @psalm-var ObjectProphecy<Metadata\MetadataMap>
-     */
-    private $metadataMap;
+    /** @psalm-var ObjectProphecy<Metadata\MetadataMap> */
+    private ObjectProphecy|Metadata\MetadataMap $metadataMap;
 
-    /** @var ResourceGenerator */
-    private $generator;
+    private ResourceGenerator $generator;
 
     public function setUp(): void
     {
@@ -182,17 +171,16 @@ class ResourceGeneratorTest extends TestCase
         $hydratorClass = self::getObjectPropertyHydratorClass();
 
         $this->hydrators->get($hydratorClass)->willReturn(new $hydratorClass());
+        /** @psalm-suppress InvalidArgument */
         $this->linkGenerator
             ->fromRoute(
                 'self',
                 $this->request->reveal(),
                 'foo-bar',
-                Argument::that(function (array $params) {
-                    return array_key_exists('foo_bar_id', $params)
-                        && array_key_exists('test', $params)
-                        && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
-                        && $params['test'] === 'param';
-                })
+                Argument::that(fn(array $params): bool => array_key_exists('foo_bar_id', $params)
+                    && array_key_exists('test', $params)
+                    && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
+                    && $params['test'] === 'param')
             )
             ->willReturn(new Link('self', '/api/foo-bar/XXXX-YYYY-ZZZZ'));
 
@@ -301,17 +289,16 @@ class ResourceGeneratorTest extends TestCase
             $next->id    = $i;
             $instances[] = $next;
 
+            /** @psalm-suppress InvalidArgument */
             $this->linkGenerator
                 ->fromRoute(
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_bar_id', $params)
-                            && array_key_exists('test', $params)
-                            && $params['foo_bar_id'] === $i
-                            && $params['test'] === 'param';
-                    })
+                    Argument::that(fn(array $params): bool => array_key_exists('foo_bar_id', $params)
+                        && array_key_exists('test', $params)
+                        && $params['foo_bar_id'] === $i
+                        && $params['test'] === 'param')
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
         }
@@ -433,17 +420,16 @@ class ResourceGeneratorTest extends TestCase
             $next->id    = $i;
             $instances[] = $next;
 
+            /** @psalm-suppress InvalidArgument */
             $this->linkGenerator
                 ->fromRoute(
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    Argument::that(function (array $params) use ($i) {
-                        return array_key_exists('foo_bar_id', $params)
-                            && array_key_exists('test', $params)
-                            && $params['foo_bar_id'] === $i
-                            && $params['test'] === 'param';
-                    })
+                    Argument::that(fn(array $params): bool => array_key_exists('foo_bar_id', $params)
+                        && array_key_exists('test', $params)
+                        && $params['foo_bar_id'] === $i
+                        && $params['test'] === 'param')
                 )
                 ->willReturn(new Link('self', '/api/foo-bar/' . $i));
         }

@@ -10,11 +10,9 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class MezzioUrlGenerator implements UrlGeneratorInterface
 {
-    /** @var null|ServerUrlHelper */
-    private $serverUrlHelper;
+    private readonly ?ServerUrlHelper $serverUrlHelper;
 
-    /** @var UrlHelper */
-    private $urlHelper;
+    private readonly UrlHelper $urlHelper;
 
     public function __construct(UrlHelper $urlHelper, ?ServerUrlHelper $serverUrlHelper = null)
     {
