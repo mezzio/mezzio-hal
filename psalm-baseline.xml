@@ -688,7 +688,6 @@
   </file>
   <file src="test/ResourceGenerator/DoctrinePaginatorTest.php">
     <DeprecatedMethod>
-      <code><![CDATA[setMethods]]></code>
       <code><![CDATA[withConsecutive]]></code>
       <code><![CDATA[withConsecutive]]></code>
       <code><![CDATA[withConsecutive]]></code>

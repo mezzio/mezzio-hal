@@ -47,17 +47,6 @@ class DoctrinePaginatorTest extends TestCase
         $this->strategy = new RouteBasedCollectionStrategy();
     }
 
-    /**
-     * @psalm-return Query&MockObject
-     */
-    public function mockQuery(): Query
-    {
-        return $this->getMockBuilder(Query::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getMaxResults', 'setFirstResult'])
-            ->getMockForAbstractClass();
-    }
-
     /** @return iterable<string, array{0: int, 1: int}> */
     public function invalidPageCombinations(): iterable
     {
@@ -71,7 +60,7 @@ class DoctrinePaginatorTest extends TestCase
      */
     public function testThrowsOutOfBoundsExceptionForInvalidPage(int $page, int $numPages): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -109,7 +98,7 @@ class DoctrinePaginatorTest extends TestCase
 
     public function testDoesNotCreateLinksForUnknownPaginationParamType(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query->expects($this->once())
             ->method('getMaxResults')
             ->with()
@@ -210,7 +199,7 @@ class DoctrinePaginatorTest extends TestCase
 
     public function testCreatesLinksForQueryBasedPagination(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -332,7 +321,7 @@ class DoctrinePaginatorTest extends TestCase
 
     public function testCreatesLinksForRouteBasedPagination(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
