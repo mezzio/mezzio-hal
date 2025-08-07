@@ -66,7 +66,6 @@
         "psr/link-implementation": "1.0"
     },
     "suggest": {
-        "laminas/laminas-hydrator": "^4.3 in order to use the ResourceGenerator to create Resource instances from objects",
         "laminas/laminas-paginator": "^2.11 in order to provide paginated collections",
         "psr/container-implementation": "^1.0 in order to use the provided PSR-11 factories"
     },
