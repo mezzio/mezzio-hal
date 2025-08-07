@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MezzioTest\Hal;
 
 use Generator;
-use Mezzio\Container\ResponseFactoryFactory;
 use Mezzio\Hal\Response\CallableResponseFactoryDecorator;
 use MezzioTest\Hal\TestAsset\Psr17ResponseFactoryTraitImplementation;
 use PHPUnit\Framework\TestCase;
@@ -65,13 +64,6 @@ final class Psr17ResponseFactoryTraitTest extends TestCase
     {
         $responseFactory = $this->createMock(ResponseFactoryInterface::class);
         $container       = new InMemoryContainer();
-        $container->set('config', [
-            'dependencies' => [
-                'factories' => [
-                    ResponseInterface::class => ResponseFactoryFactory::class,
-                ],
-            ],
-        ]);
         $container->set(ResponseFactoryInterface::class, $responseFactory);
         $detectedResponseFactory = ($this->factory)($container);
         self::assertSame($responseFactory, $detectedResponseFactory);

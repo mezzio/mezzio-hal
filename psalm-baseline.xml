@@ -114,11 +114,6 @@
   <file src="src/LinkGenerator/MezzioUrlGeneratorFactory.php">
     <MixedArgument>
       <code><![CDATA[$container->get($this->urlHelperServiceName)]]></code>
-      <code><![CDATA[$container->has(ServerUrlHelper::class)
-                ? $container->get(ServerUrlHelper::class)
-                : ($container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)
-                    ? $container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)
-                    : null)]]></code>
       <code><![CDATA[$data['urlHelperServiceName'] ?? UrlHelper::class]]></code>
     </MixedArgument>
   </file>
@@ -693,7 +688,6 @@
   </file>
   <file src="test/ResourceGenerator/DoctrinePaginatorTest.php">
     <DeprecatedMethod>
-      <code><![CDATA[setMethods]]></code>
       <code><![CDATA[withConsecutive]]></code>
       <code><![CDATA[withConsecutive]]></code>
       <code><![CDATA[withConsecutive]]></code>
