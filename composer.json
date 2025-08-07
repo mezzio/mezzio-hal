@@ -41,9 +41,7 @@
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-dom": "*",
         "ext-json": "*",
-        "doctrine/orm": "^3.5",
         "laminas/laminas-hydrator": "^4.15",
-        "laminas/laminas-paginator": "^2.19",
         "mezzio/mezzio-helpers": "^5.18",
         "psr/container": "^1.1.2 || ^2.0.2",
         "psr/http-factory": "^1.0",
@@ -53,7 +51,9 @@
         "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
+        "doctrine/orm": "^3.5",
         "laminas/laminas-coding-standard": "~2.5.0",
+        "laminas/laminas-paginator": "^2.19",
         "phpspec/prophecy": "^1.22",
         "phpspec/prophecy-phpunit": "^2.2.0",
         "phpunit/phpunit": "^9.6.21",
@@ -66,6 +66,8 @@
         "psr/link-implementation": "1.0"
     },
     "suggest": {
+        "laminas/laminas-hydrator": "^4.3 in order to use the ResourceGenerator to create Resource instances from objects",
+        "laminas/laminas-paginator": "^2.11 in order to provide paginated collections",
         "psr/container-implementation": "^1.0 in order to use the provided PSR-11 factories"
     },
     "autoload": {
