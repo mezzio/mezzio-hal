@@ -28,7 +28,7 @@ class MezzioUrlGenerator implements UrlGeneratorInterface
     ): string {
         $path = $this->urlHelper->generate($routeName, $routeParams, $queryParams);
 
-        if (! $this->serverUrlHelper) {
+        if (! $this->serverUrlHelper instanceof ServerUrlHelper) {
             return $path;
         }
 

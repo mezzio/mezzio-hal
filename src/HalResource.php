@@ -237,12 +237,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         $resource = $this->data;
 
         $links = $this->serializeLinks();
-        if (! empty($links)) {
+        if ($links !== []) {
             $resource['_links'] = $links;
         }
 
         $embedded = $this->serializeEmbeddedResources();
-        if (! empty($embedded)) {
+        if ($embedded !== []) {
             $resource['_embedded'] = $embedded;
         }
 
@@ -260,7 +260,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      */
     private function validateElementName(string $name, string $context): void
     {
-        if (empty($name)) {
+        if ($name === '' || $name === '0') {
             throw new InvalidArgumentException(sprintf(
                 '$name provided to %s cannot be empty',
                 $context
@@ -345,7 +345,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         Assert::allIsInstanceOf($collection, self::class);
 
         $collectionFirstResource = $this->firstResource($collection);
-        if (null === $collectionFirstResource) {
+        if (! $collectionFirstResource instanceof HalResource) {
             throw new InvalidArgumentException(sprintf(
                 '%s detected structurally inequivalent resources for element %s',
                 $context,
@@ -369,11 +369,11 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         $originalFirstResource   = $this->firstResource($original);
         $collectionFirstResource = $this->firstResource($collection);
 
-        if (null === $originalFirstResource && null === $collectionFirstResource) {
+        if (! $originalFirstResource instanceof HalResource && ! $collectionFirstResource instanceof HalResource) {
             return [];
         }
 
-        if (null === $originalFirstResource || null === $collectionFirstResource) {
+        if (! $originalFirstResource instanceof HalResource || ! $collectionFirstResource instanceof HalResource) {
             throw new InvalidArgumentException(sprintf(
                 '%s detected structurally inequivalent resources for element %s',
                 $context,
