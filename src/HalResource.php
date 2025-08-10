@@ -52,8 +52,6 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         array $embedded = [],
         private bool $embedEmptyCollections = false
     ) {
-        $this->embedEmptyCollections = $embedEmptyCollections;
-
         $context = self::class;
 
         array_walk($data, function ($value, $name) use ($context): void {
@@ -260,7 +258,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      */
     private function validateElementName(string $name, string $context): void
     {
-        if ($name === '' || $name === '0') {
+        if ($name === '') {
             throw new InvalidArgumentException(sprintf(
                 '$name provided to %s cannot be empty',
                 $context

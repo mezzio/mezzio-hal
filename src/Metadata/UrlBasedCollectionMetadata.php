@@ -21,11 +21,11 @@ class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
         string $paginationParam = 'page',
         string $paginationParamType = self::TYPE_QUERY
     ) {
-        if ($collectionRelation === '' || $collectionRelation === '0') {
+        if ($collectionRelation === '') {
             throw new InvalidArgumentException('$collectionRelation MUST NOT be empty');
         }
 
-        if ($paginationParam === '' || $paginationParam === '0') {
+        if ($paginationParam === '') {
             throw new InvalidArgumentException('$paginationParam MUST NOT be empty');
         }
 

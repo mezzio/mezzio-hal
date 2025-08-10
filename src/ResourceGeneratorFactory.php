@@ -74,7 +74,7 @@ class ResourceGeneratorFactory
         }
 
         foreach ($strategies as $metadataType => $strategy) {
-            if (! is_string($metadataType) || ($metadataType === '' || $metadataType === '0')) {
+            if (! is_string($metadataType) || ($metadataType === '')) {
                 continue;
             }
 

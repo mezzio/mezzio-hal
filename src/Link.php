@@ -110,7 +110,7 @@ class Link implements EvolvableLinkInterface
      */
     public function withRel(string $rel): self
     {
-        if (! is_string($rel) || ($rel === '' || $rel === '0')) {
+        if (! is_string($rel) || $rel === '') {
             throw new InvalidArgumentException(sprintf(
                 '%s expects a non-empty string relation type; received %s',
                 __METHOD__,
@@ -132,7 +132,7 @@ class Link implements EvolvableLinkInterface
      */
     public function withoutRel(string $rel): self
     {
-        if (! is_string($rel) || ($rel === '' || $rel === '0')) {
+        if (! is_string($rel) || $rel === '') {
             return $this;
         }
 
@@ -168,7 +168,7 @@ class Link implements EvolvableLinkInterface
      */
     public function withoutAttribute(string $attribute): self
     {
-        if (! is_string($attribute) || ($attribute === '' || $attribute === '0')) {
+        if (! is_string($attribute) || $attribute === '') {
             return $this;
         }
 
@@ -186,7 +186,7 @@ class Link implements EvolvableLinkInterface
      */
     private function validateAttributeName(mixed $name, string $context): void
     {
-        if (! is_string($name) || ($name === '' || $name === '0')) {
+        if (! is_string($name) || $name === '') {
             throw new InvalidArgumentException(sprintf(
                 '%s expects the $name argument to be a non-empty string; received %s',
                 $context,
@@ -237,9 +237,9 @@ class Link implements EvolvableLinkInterface
      */
     private function validateRelation(mixed $relation): array
     {
-        if (! is_array($relation) && (! is_string($relation) || ($relation === '' || $relation === '0'))) {
+        if (! is_array($relation) && (! is_string($relation) || $relation === '')) {
             throw new InvalidArgumentException(sprintf(
-                '$relation argument must be a string or array of strings; received %s',
+                '$relation argument must be a non empty string or array of strings; received %s',
                 get_debug_type($relation)
             ));
         }
