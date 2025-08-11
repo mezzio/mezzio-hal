@@ -23,6 +23,22 @@ class LinkTest extends TestCase
         $this->assertEquals([], $link->getAttributes());
     }
 
+    public function testCanConstructLinkWithZeroStringRelation(): void
+    {
+        $link = new Link('0');
+
+        $this->assertEquals(['0'], $link->getRels());
+    }
+
+    public function testCanNotConstructLinkWithEmptyString(): void
+    {
+        $this->expectExceptionObject(
+            new InvalidArgumentException('$relation argument must be a non empty string or array of strings; received ')
+        );
+
+        new Link('');
+    }
+
     public function testCanConstructLinkWithRelationAndUri(): void
     {
         $link = new Link('self', 'https://example.com/api/link');
@@ -149,6 +165,7 @@ class LinkTest extends TestCase
             'float'      => ['foo', 1.1],
             'string'     => ['foo', 'bar'],
             'string[]'   => ['foo', ['bar', 'baz']],
+            'zero-key'   => ['0', 0],
         ];
     }
 

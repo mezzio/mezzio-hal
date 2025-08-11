@@ -91,11 +91,8 @@
     </RedundantCondition>
     <TypeDoesNotContainType>
       <code><![CDATA[! is_string($attribute)]]></code>
-      <code><![CDATA[! is_string($attribute) || empty($attribute)]]></code>
       <code><![CDATA[! is_string($rel)]]></code>
       <code><![CDATA[! is_string($rel)]]></code>
-      <code><![CDATA[! is_string($rel) || empty($rel)]]></code>
-      <code><![CDATA[! is_string($rel) || empty($rel)]]></code>
       <code><![CDATA[(string) $uri]]></code>
       <code><![CDATA[is_object($href)]]></code>
     </TypeDoesNotContainType>
