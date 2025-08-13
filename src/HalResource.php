@@ -42,7 +42,6 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     private array $embedded = [];
 
     /**
-     * @param array $data
      * @param LinkInterface[] $links
      * @param HalResource[][] $embedded
      */
