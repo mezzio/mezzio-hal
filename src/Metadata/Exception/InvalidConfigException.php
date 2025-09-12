@@ -15,8 +15,7 @@ use function implode;
 use function is_string;
 use function sprintf;
 
-/** @final */
-class InvalidConfigException extends RuntimeException implements ExceptionInterface
+final class InvalidConfigException extends RuntimeException implements ExceptionInterface
 {
     public static function dueToNonArray(mixed $config): self
     {

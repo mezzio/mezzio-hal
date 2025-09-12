@@ -13,8 +13,7 @@ use Traversable;
 use function is_array;
 use function is_string;
 
-/** @final */
-class ResourceGeneratorFactory
+final class ResourceGeneratorFactory
 {
     /**
      * Allow serialization

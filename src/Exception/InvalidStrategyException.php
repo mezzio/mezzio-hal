@@ -10,8 +10,7 @@ use Mezzio\Hal\ResourceGenerator\StrategyInterface;
 use function get_debug_type;
 use function sprintf;
 
-/** @final */
-class InvalidStrategyException extends InvalidArgumentException implements ExceptionInterface
+final class InvalidStrategyException extends InvalidArgumentException implements ExceptionInterface
 {
     public static function forType(string $strategy): self
     {

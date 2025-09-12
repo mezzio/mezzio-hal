@@ -9,8 +9,7 @@ use RuntimeException;
 use function get_debug_type;
 use function sprintf;
 
-/** @final */
-class InvalidCollectionException extends RuntimeException implements ExceptionInterface
+final class InvalidCollectionException extends RuntimeException implements ExceptionInterface
 {
     /**
      * @param mixed $instance The invalid collection instance or value.

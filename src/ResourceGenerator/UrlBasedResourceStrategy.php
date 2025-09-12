@@ -10,8 +10,7 @@ use Mezzio\Hal\Metadata;
 use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-/** @final */
-class UrlBasedResourceStrategy implements StrategyInterface
+final class UrlBasedResourceStrategy implements StrategyInterface
 {
     use ExtractInstanceTrait;
 

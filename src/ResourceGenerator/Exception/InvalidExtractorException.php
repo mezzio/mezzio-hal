@@ -10,8 +10,7 @@ use RuntimeException;
 use function get_debug_type;
 use function sprintf;
 
-/** @final */
-class InvalidExtractorException extends RuntimeException implements ExceptionInterface
+final class InvalidExtractorException extends RuntimeException implements ExceptionInterface
 {
     public static function fromInstance(mixed $extractor): self
     {

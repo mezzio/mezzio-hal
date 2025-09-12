@@ -23,8 +23,7 @@ use function str_replace;
 use const PHP_URL_FRAGMENT;
 use const PHP_URL_QUERY;
 
-/** @final */
-class UrlBasedCollectionStrategy implements StrategyInterface
+final class UrlBasedCollectionStrategy implements StrategyInterface
 {
     use ExtractCollectionTrait, GenerateSelfLinkTrait {
         GenerateSelfLinkTrait::generateSelfLink insteadof ExtractCollectionTrait;
@@ -46,7 +45,7 @@ class UrlBasedCollectionStrategy implements StrategyInterface
         }
 
         if (! $instance instanceof Traversable) {
-            throw Exception\InvalidCollectionException::fromInstance($instance, static::class);
+            throw Exception\InvalidCollectionException::fromInstance($instance, self::class);
         }
 
         return $this->extractCollection($instance, $metadata, $resourceGenerator, $request, $depth);
