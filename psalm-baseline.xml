@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.8.8@1361cd33008feb3ae2b4a93f1860e14e538ec8c2">
+<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[forNonObject]]></code>
@@ -542,10 +542,56 @@
       <code><![CDATA[self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance)]]></code>
       <code><![CDATA[self::assertAttributeSame($xmlRenderer, 'xmlRenderer', $instance)]]></code>
     </DeprecatedMethod>
+    <MixedMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
     <UndefinedClass>
       <code><![CDATA[StreamInterface]]></code>
       <code><![CDATA[StreamInterface]]></code>
     </UndefinedClass>
+    <UndefinedMagicMethod>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/InMemoryContainer.php">
     <PossiblyUnusedMethod>
@@ -584,12 +630,30 @@
     <MixedArgument>
       <code><![CDATA[UrlGenerator::class]]></code>
     </MixedArgument>
+    <MixedMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
     <UndefinedClass>
       <code><![CDATA[UrlGenerator]]></code>
       <code><![CDATA[UrlGenerator]]></code>
       <code><![CDATA[UrlGenerator]]></code>
       <code><![CDATA[UrlGenerator]]></code>
     </UndefinedClass>
+    <UndefinedMagicMethod>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+    </UndefinedMagicMethod>
+  </file>
+  <file src="test/LinkGeneratorTest.php">
+    <MixedMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
+    <UndefinedMagicMethod>
+      <code><![CDATA[generate]]></code>
+      <code><![CDATA[generate]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/LinkTest.php">
     <ArgumentTypeCoercion>
@@ -793,11 +857,55 @@
     <MixedAssignment>
       <code><![CDATA[$childCollection]]></code>
     </MixedAssignment>
+    <MixedMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
+    <UndefinedMagicMethod>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/ResourceGenerator/ResourceWithNestedInstancesTest.php">
     <InvalidArgument>
       <code><![CDATA[$request]]></code>
     </InvalidArgument>
+    <MixedMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
+    <UndefinedMagicMethod>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/ResourceGenerator/ResourceWithSelfReferringInstanceTest.php">
     <MixedArgument>
@@ -805,13 +913,29 @@
       <code><![CDATA[$linkGenerator->reveal()]]></code>
       <code><![CDATA[$metadataMap->reveal()]]></code>
     </MixedArgument>
+    <MixedMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
     <PossiblyUndefinedMethod>
       <code><![CDATA[reveal]]></code>
       <code><![CDATA[reveal]]></code>
       <code><![CDATA[reveal]]></code>
     </PossiblyUndefinedMethod>
+    <UndefinedMagicMethod>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/ResourceGenerator/RouteBasedCollectionWithRouteParamsTest.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$request->reveal()]]></code>
+      <code><![CDATA[$request->reveal()]]></code>
+    </ArgumentTypeCoercion>
     <InvalidArgument>
       <code><![CDATA[$linkGenerator]]></code>
       <code><![CDATA[$linkGenerator]]></code>
@@ -837,8 +961,6 @@
                 && $params['p'] === $page)]]></code>
     </InvalidArgument>
     <MixedArgumentTypeCoercion>
-      <code><![CDATA[$request->reveal()]]></code>
-      <code><![CDATA[$request->reveal()]]></code>
       <code><![CDATA[$this->createCollectionItems(
             $linkGenerator,
             $request
@@ -847,9 +969,46 @@
     <MixedMethodCall>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </MixedMethodCall>
+    <UndefinedMagicMethod>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getAttribute]]></code>
+      <code><![CDATA[getAttribute]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
+    <UndefinedMethod>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </UndefinedMethod>
   </file>
   <file src="test/ResourceGenerator/UrlBasedCollectionWithRouteParamsTest.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$request->reveal()]]></code>
+    </ArgumentTypeCoercion>
     <InvalidArgument>
       <code><![CDATA[$linkGenerator]]></code>
       <code><![CDATA[$request]]></code>
@@ -859,18 +1018,51 @@
                         && $params['bar_id'] === $i)]]></code>
     </InvalidArgument>
     <MixedArgumentTypeCoercion>
-      <code><![CDATA[$request->reveal()]]></code>
       <code><![CDATA[$this->createCollectionItems($linkGenerator, $request)]]></code>
     </MixedArgumentTypeCoercion>
     <MixedMethodCall>
       <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </MixedMethodCall>
+    <UndefinedMagicMethod>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
+    <UndefinedMethod>
+      <code><![CDATA[willReturn]]></code>
+    </UndefinedMethod>
   </file>
   <file src="test/ResourceGeneratorFactoryTest.php">
     <DeprecatedMethod>
       <code><![CDATA[assertAttributeSame]]></code>
       <code><![CDATA[assertAttributeSame]]></code>
     </DeprecatedMethod>
+    <InvalidMethodCall>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </InvalidMethodCall>
     <MissingDependency>
       <code><![CDATA[HydratorPluginManager]]></code>
       <code><![CDATA[HydratorPluginManager]]></code>
@@ -888,13 +1080,14 @@
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
     </MixedMethodCall>
-    <PossiblyInvalidMethodCall>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-    </PossiblyInvalidMethodCall>
     <PossiblyUndefinedMethod>
       <code><![CDATA[reveal]]></code>
       <code><![CDATA[reveal]]></code>
@@ -907,6 +1100,24 @@
       <code><![CDATA[CustomLinkGenerator]]></code>
       <code><![CDATA[CustomLinkGenerator]]></code>
     </UndefinedClass>
+    <UndefinedMagicMethod>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
   </file>
   <file src="test/ResourceGeneratorTest.php">
     <DeprecatedMethod>
@@ -945,9 +1156,7 @@
       <code><![CDATA[$ids[]]]></code>
       <code><![CDATA[$item]]></code>
     </MixedAssignment>
-    <PossiblyUndefinedMethod>
-      <code><![CDATA[shouldNotBeCalled]]></code>
-      <code><![CDATA[shouldNotBeCalled]]></code>
+    <MixedMethodCall>
       <code><![CDATA[shouldNotBeCalled]]></code>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
@@ -968,7 +1177,45 @@
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
-    </PossiblyUndefinedMethod>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </MixedMethodCall>
     <TooFewArguments>
       <code><![CDATA[fromRoute]]></code>
       <code><![CDATA[fromRoute]]></code>
@@ -983,6 +1230,112 @@
       <code><![CDATA[fromRoute]]></code>
       <code><![CDATA[fromRoute]]></code>
     </TooFewArguments>
+    <UndefinedMagicMethod>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[fromRoute]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[getQueryParams]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
+    </UndefinedMagicMethod>
+    <UndefinedMethod>
+      <code><![CDATA[shouldNotBeCalled]]></code>
+      <code><![CDATA[shouldNotBeCalled]]></code>
+      <code><![CDATA[shouldNotBeCalled]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+      <code><![CDATA[willReturn]]></code>
+    </UndefinedMethod>
     <UnsafeInstantiation>
       <code><![CDATA[new $metadata(
             TestAsset\FooBar::class,
