@@ -22,7 +22,7 @@ use function array_map;
 use function count;
 use function range;
 
-class DoctrinePaginatorTest extends TestCase
+final class DoctrinePaginatorTest extends TestCase
 {
     private RouteBasedCollectionMetadata&MockObject $metadata;
 
@@ -144,7 +144,7 @@ class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
         $this->paginator
             ->method('getIterator')
             ->willReturn(new ArrayIterator($values));
@@ -251,7 +251,7 @@ class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -372,7 +372,7 @@ class DoctrinePaginatorTest extends TestCase
             ->with('page_num', 1)
             ->willReturn(3);
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')

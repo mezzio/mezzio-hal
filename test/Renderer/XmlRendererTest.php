@@ -11,7 +11,7 @@ use Mezzio\Hal\Renderer\XmlRenderer;
 use MezzioTest\Hal\TestAsset\StringSerializable;
 use PHPUnit\Framework\TestCase;
 
-class XmlRendererTest extends TestCase
+final class XmlRendererTest extends TestCase
 {
     use TestAsset;
 
@@ -103,5 +103,20 @@ class XmlRendererTest extends TestCase
         $renderer = new XmlRenderer();
         $xml      = $renderer->render($resource);
         $this->assertStringContainsString('<key/>', $xml);
+    }
+
+    public function testRendersStringsWithAmpersandsAsTagWithEscapedText(): void
+    {
+        $resource = new HalResource([
+            'some-text-tag' => 'https://some-domain.com/some-path?rb=0&mode=widget&appView=1',
+        ]);
+        $resource = $resource->withLink(new Link('self', '/example'));
+
+        $renderer = new XmlRenderer();
+        $xml      = $renderer->render($resource);
+        $this->assertStringContainsString(
+            '<some-text-tag>https://some-domain.com/some-path?rb=0&amp;mode=widget&amp;appView=1</some-text-tag>',
+            $xml
+        );
     }
 }

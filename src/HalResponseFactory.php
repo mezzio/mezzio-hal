@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use function is_callable;
 use function str_contains;
 
+/** @final */
 class HalResponseFactory
 {
     /**

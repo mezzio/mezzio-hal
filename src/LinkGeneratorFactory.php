@@ -6,6 +6,7 @@ namespace Mezzio\Hal;
 
 use Psr\Container\ContainerInterface;
 
+/** @final */
 class LinkGeneratorFactory
 {
     /**

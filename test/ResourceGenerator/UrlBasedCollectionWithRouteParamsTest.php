@@ -25,7 +25,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 use function array_key_exists;
 
-class UrlBasedCollectionWithRouteParamsTest extends TestCase
+final class UrlBasedCollectionWithRouteParamsTest extends TestCase
 {
     use Assertions;
 

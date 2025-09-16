@@ -16,7 +16,7 @@ use function file_get_contents;
 use function is_array;
 use function json_decode;
 
-class HalResourceTest extends TestCase
+final class HalResourceTest extends TestCase
 {
     public function testCanConstructWithData(): void
     {

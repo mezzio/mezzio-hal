@@ -8,16 +8,13 @@ use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
 use Psr\Http\Message\ServerRequestInterface;
 
+/** @final */
 class MezzioUrlGenerator implements UrlGeneratorInterface
 {
-    private readonly ?ServerUrlHelper $serverUrlHelper;
-
-    private readonly UrlHelper $urlHelper;
-
-    public function __construct(UrlHelper $urlHelper, ?ServerUrlHelper $serverUrlHelper = null)
-    {
-        $this->urlHelper       = $urlHelper;
-        $this->serverUrlHelper = $serverUrlHelper;
+    public function __construct(
+        private readonly UrlHelper $urlHelper,
+        private readonly ?ServerUrlHelper $serverUrlHelper = null
+    ) {
     }
 
     public function generate(

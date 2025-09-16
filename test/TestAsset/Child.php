@@ -2,7 +2,7 @@
 
 namespace MezzioTest\Hal\TestAsset;
 
-class Child
+final class Child
 {
     public $id;
     public $message;

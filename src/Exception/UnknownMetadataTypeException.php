@@ -9,6 +9,7 @@ use RuntimeException;
 
 use function sprintf;
 
+/** @final */
 class UnknownMetadataTypeException extends RuntimeException implements ExceptionInterface
 {
     public static function forMetadata(AbstractMetadata $metadata): self

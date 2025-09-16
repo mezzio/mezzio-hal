@@ -30,6 +30,8 @@ use function sprintf;
  * The class name "HalResource" was chosen as "resource" has been given a
  * soft designation as a future keyword in PHP as of PHP 7; choosing this
  * name now makes the class future-proof.
+ *
+ * @final
  */
 class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 {
@@ -424,7 +426,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             }
 
             $linkRels = $link->getRels();
-            array_walk($linkRels, function ($rel) use (&$byRelation, $representation): void {
+            array_walk($linkRels, function (string $rel) use (&$byRelation, $representation): void {
                 $forceCollection = array_key_exists(Link::AS_COLLECTION, $representation)
                     && $representation[Link::AS_COLLECTION];
                 unset($representation[Link::AS_COLLECTION]);
@@ -481,7 +483,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             function ($resource, string $name) use (&$embedded): void {
                 $embedded[$name] = $resource instanceof self
                     ? $resource->toArray()
-                    : array_map(fn($item): mixed => $item->toArray(), $resource);
+                    : array_map(fn(HalResource $item): mixed => $item->toArray(), $resource);
             }
         );
 

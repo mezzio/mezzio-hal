@@ -9,6 +9,7 @@ use RuntimeException;
 use function get_debug_type;
 use function sprintf;
 
+/** @final */
 class InvalidCollectionException extends RuntimeException implements ExceptionInterface
 {
     /**

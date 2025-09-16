@@ -6,9 +6,10 @@ namespace MezzioTest\Hal\TestAsset;
 
 use Mezzio\Hal\Metadata\MetadataMapFactory;
 
+/** @final */
 class TestMetadataMapFactory extends MetadataMapFactory
 {
-    protected function createTestMetadata(array $metadata): TestMetadata
+    protected function createTestMetadata(): TestMetadata
     {
         return new TestMetadata();
     }

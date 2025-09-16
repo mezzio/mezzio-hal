@@ -8,6 +8,7 @@ use Mezzio\Hal\HalResource;
 
 use function json_encode;
 
+/** @final */
 class JsonRenderer implements RendererInterface
 {
     // @codingStandardsIgnoreStart

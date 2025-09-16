@@ -8,6 +8,7 @@ use UnexpectedValueException;
 
 use function sprintf;
 
+/** @final */
 class UndefinedClassException extends UnexpectedValueException implements ExceptionInterface
 {
     public static function create(string $class): self

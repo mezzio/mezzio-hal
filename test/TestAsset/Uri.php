@@ -6,7 +6,7 @@ namespace MezzioTest\Hal\TestAsset;
 
 use Stringable;
 
-class Uri implements Stringable
+final class Uri implements Stringable
 {
     public function __construct(private readonly string $uri)
     {

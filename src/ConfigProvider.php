@@ -20,6 +20,7 @@ use Mezzio\Hal\ResourceGenerator\RouteBasedResourceStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedCollectionStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy;
 
+/** @final */
 class ConfigProvider
 {
     public function __invoke(): array

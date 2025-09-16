@@ -10,7 +10,7 @@ use MezzioTest\Hal\TestAsset\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Link\EvolvableLinkInterface;
 
-class LinkTest extends TestCase
+final class LinkTest extends TestCase
 {
     public function testCanConstructLinkWithRelation(): void
     {

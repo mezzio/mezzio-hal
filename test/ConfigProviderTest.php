@@ -7,7 +7,7 @@ namespace MezzioTest\Hal;
 use Mezzio\Hal\ConfigProvider;
 use PHPUnit\Framework\TestCase;
 
-class ConfigProviderTest extends TestCase
+final class ConfigProviderTest extends TestCase
 {
     private ConfigProvider $provider;
 

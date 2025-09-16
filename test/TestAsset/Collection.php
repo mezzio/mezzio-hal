@@ -11,6 +11,6 @@ use ArrayIterator;
  * @template Tv
  * @extends ArrayIterator<Tk, Tv>
  */
-class Collection extends ArrayIterator
+final class Collection extends ArrayIterator
 {
 }

@@ -6,7 +6,7 @@ namespace MezzioTest\Hal\TestAsset;
 
 use Stringable;
 
-class StringSerializable implements Stringable
+final class StringSerializable implements Stringable
 {
     public function __toString(): string
     {

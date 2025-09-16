@@ -24,7 +24,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use function array_key_exists;
 use function array_shift;
 
-class NestedCollectionResourceGenerationTest extends TestCase
+final class NestedCollectionResourceGenerationTest extends TestCase
 {
     use Assertions;
 

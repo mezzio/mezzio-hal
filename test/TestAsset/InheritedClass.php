@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\TestAsset;
 
-class InheritedClass extends InheritFooBar
+final class InheritedClass extends InheritFooBar
 {
 }

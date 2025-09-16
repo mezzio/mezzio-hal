@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-class LinkGeneratorFactoryTest extends TestCase
+final class LinkGeneratorFactoryTest extends TestCase
 {
     use PHPUnitDeprecatedAssertions;
 

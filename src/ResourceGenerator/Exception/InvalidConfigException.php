@@ -10,6 +10,7 @@ use RuntimeException;
 use function get_debug_type;
 use function sprintf;
 
+/** @final */
 class InvalidConfigException extends RuntimeException implements ExceptionInterface
 {
     public static function dueToNonArray(mixed $config): self

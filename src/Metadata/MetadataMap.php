@@ -6,6 +6,7 @@ namespace Mezzio\Hal\Metadata;
 
 use function class_exists;
 
+/** @final */
 class MetadataMap
 {
     /** @psalm-var array<string, AbstractMetadata> */

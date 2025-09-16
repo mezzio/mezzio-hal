@@ -7,7 +7,7 @@ namespace MezzioTest\Hal\TestAsset;
 use Mezzio\Hal\Metadata\AbstractMetadata;
 use stdClass;
 
-class TestMetadata extends AbstractMetadata
+final class TestMetadata extends AbstractMetadata
 {
     public function getClass(): string
     {

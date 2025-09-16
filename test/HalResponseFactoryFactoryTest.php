@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionProperty;
 
-class HalResponseFactoryFactoryTest extends TestCase
+final class HalResponseFactoryFactoryTest extends TestCase
 {
     use PHPUnitDeprecatedAssertions;
 

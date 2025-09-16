@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 use function json_encode;
 
-class JsonRendererTest extends TestCase
+final class JsonRendererTest extends TestCase
 {
     use TestAsset;
 

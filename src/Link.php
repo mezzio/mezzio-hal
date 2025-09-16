@@ -19,6 +19,7 @@ use function is_string;
 use function method_exists;
 use function sprintf;
 
+/** @final */
 class Link implements EvolvableLinkInterface
 {
     public const AS_COLLECTION = '__FORCE_COLLECTION__';

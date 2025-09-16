@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @see MockObject
  */
-class MetadataMapTest extends TestCase
+final class MetadataMapTest extends TestCase
 {
     /** @psalm-var non-empty-list<class-string<Metadata\AbstractMetadata>> */
     private array $metadataClasses = [
