@@ -17,7 +17,7 @@ use function str_contains;
 use function strlen;
 use function strstr;
 
-class HalResponseFactoryTest extends TestCase
+final class HalResponseFactoryTest extends TestCase
 {
     use TestAsset;
 

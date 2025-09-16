@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
-class LinkGeneratorTest extends TestCase
+final class LinkGeneratorTest extends TestCase
 {
     use ProphecyTrait;
 

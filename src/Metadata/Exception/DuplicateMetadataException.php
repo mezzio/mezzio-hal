@@ -8,6 +8,7 @@ use DomainException;
 
 use function sprintf;
 
+/** @final */
 class DuplicateMetadataException extends DomainException implements ExceptionInterface
 {
     public static function create(string $class): self

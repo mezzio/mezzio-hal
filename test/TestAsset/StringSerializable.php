@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\TestAsset;
 
-class StringSerializable
+final class StringSerializable
 {
     public function __toString(): string
     {

@@ -22,7 +22,7 @@ use function array_map;
 use function count;
 use function range;
 
-class DoctrinePaginatorTest extends TestCase
+final class DoctrinePaginatorTest extends TestCase
 {
     /** @var RouteBasedCollectionMetadata&MockObject */
     private $metadata;

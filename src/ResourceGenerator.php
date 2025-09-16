@@ -9,12 +9,15 @@ use Mezzio\Hal\ResourceGenerator\StrategyInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function assert;
 use function class_exists;
 use function class_implements;
 use function class_parents;
 use function in_array;
+use function is_iterable;
 use function is_string;
 
+/** @final */
 class ResourceGenerator implements ResourceGeneratorInterface
 {
     /** @var array<string, StrategyInterface> */
@@ -135,7 +138,9 @@ class ResourceGenerator implements ResourceGeneratorInterface
     {
         $class = $instance::class;
         if (! $this->metadataMap->has($class)) {
-            foreach (class_parents($instance) as $parent) {
+            $classParents = class_parents($instance);
+            assert(is_iterable($classParents));
+            foreach ($classParents as $parent) {
                 if ($this->metadataMap->has($parent)) {
                     return $this->metadataMap->get($parent);
                 }

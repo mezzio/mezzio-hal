@@ -11,7 +11,7 @@ use Mezzio\Hal\Renderer\XmlRenderer;
 use MezzioTest\Hal\TestAsset\StringSerializable;
 use PHPUnit\Framework\TestCase;
 
-class XmlRendererTest extends TestCase
+final class XmlRendererTest extends TestCase
 {
     use TestAsset;
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal\ResourceGenerator;
 
+use Mezzio\Hal\Link;
 use Mezzio\Hal\Metadata\AbstractCollectionMetadata;
 use Mezzio\Hal\ResourceGenerator;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,6 +18,7 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 trait GenerateSelfLinkTrait
 {
+    /** @return Link */
     abstract protected function generateSelfLink(
         AbstractCollectionMetadata $metadata,
         ResourceGenerator $resourceGenerator,

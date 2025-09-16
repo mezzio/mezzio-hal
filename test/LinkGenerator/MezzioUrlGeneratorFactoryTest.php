@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
 
-class MezzioUrlGeneratorFactoryTest extends TestCase
+final class MezzioUrlGeneratorFactoryTest extends TestCase
 {
     /** @var ContainerInterface&MockObject */
     private $container;
@@ -53,7 +53,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
             ->withConsecutive(
                 [UrlHelper::class],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                ['Zend\Expressive\Helper\ServerUrlHelper']
             )
             ->willReturnOnConsecutiveCalls(true, false, false);
         $this->container
@@ -136,7 +136,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
             ->withConsecutive(
                 [CustomUrlHelper::class],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                ['Zend\Expressive\Helper\ServerUrlHelper']
             )->willReturnOnConsecutiveCalls(true, false, false);
 
         $this->container
@@ -168,7 +168,7 @@ class MezzioUrlGeneratorFactoryTest extends TestCase
             ->withConsecutive(
                 ['customUrlHelper'],
                 [ServerUrlHelper::class],
-                [\Zend\Expressive\Helper\ServerUrlHelper::class]
+                ['Zend\Expressive\Helper\ServerUrlHelper']
             )->willReturnOnConsecutiveCalls(true, false, false);
 
         $this->container

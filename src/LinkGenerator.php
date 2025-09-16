@@ -7,6 +7,7 @@ namespace Mezzio\Hal;
 use Mezzio\Hal\LinkGenerator\UrlGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/** @final */
 class LinkGenerator
 {
     public function __construct(private readonly UrlGeneratorInterface $urlGenerator)

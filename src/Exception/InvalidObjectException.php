@@ -10,6 +10,7 @@ use Mezzio\Hal\HalResource;
 use function gettype;
 use function sprintf;
 
+/** @final */
 class InvalidObjectException extends InvalidArgumentException implements ExceptionInterface
 {
     /**

@@ -22,7 +22,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 use function array_key_exists;
 
-class ResourceWithNestedInstancesTest extends TestCase
+final class ResourceWithNestedInstancesTest extends TestCase
 {
     use Assertions;
 

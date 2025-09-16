@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use ReflectionProperty;
 
-class MezzioUrlGeneratorTest extends TestCase
+final class MezzioUrlGeneratorTest extends TestCase
 {
     public function testCanGenerateUrlWithOnlyUrlHelper(): void
     {

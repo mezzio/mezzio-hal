@@ -18,7 +18,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use stdClass;
 
-class ResourceGeneratorFactoryTest extends TestCase
+final class ResourceGeneratorFactoryTest extends TestCase
 {
     use PHPUnitDeprecatedAssertions;
 

@@ -8,6 +8,7 @@ use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
 use Psr\Http\Message\ServerRequestInterface;
 
+/** @final */
 class MezzioUrlGenerator implements UrlGeneratorInterface
 {
     public function __construct(

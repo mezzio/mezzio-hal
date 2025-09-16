@@ -11,6 +11,7 @@ use RuntimeException;
 
 use function sprintf;
 
+/** @final */
 class MezzioUrlGeneratorFactory
 {
     /**
@@ -45,8 +46,8 @@ class MezzioUrlGeneratorFactory
             $container->get($this->urlHelperServiceName),
             $container->has(ServerUrlHelper::class)
                 ? $container->get(ServerUrlHelper::class)
-                : ($container->has(\Zend\Expressive\Helper\ServerUrlHelper::class)
-                    ? $container->get(\Zend\Expressive\Helper\ServerUrlHelper::class)
+                : ($container->has('Zend\Expressive\Helper\ServerUrlHelper')
+                    ? $container->get('Zend\Expressive\Helper\ServerUrlHelper')
                     : null)
         );
     }
