@@ -140,11 +140,10 @@ final class NestedCollectionResourceGenerationTest extends TestCase
     }
 
     /**
-     * @param ServerRequestInterface|ObjectProphecy $request
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
      * @psalm-return ObjectProphecy<LinkGenerator>
      */
-    public function createLinkGenerator($request): ObjectProphecy
+    public function createLinkGenerator(ServerRequestInterface|ObjectProphecy $request): ObjectProphecy
     {
         $linkGenerator = $this->prophesize(LinkGenerator::class);
 
@@ -153,7 +152,7 @@ final class NestedCollectionResourceGenerationTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                Argument::that(fn(array $params) => array_key_exists('id', $params)
+                Argument::that(fn(array $params): bool => array_key_exists('id', $params)
                     && $params['id'] === 101010)
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
@@ -164,7 +163,7 @@ final class NestedCollectionResourceGenerationTest extends TestCase
                     'self',
                     $request->reveal(),
                     'child',
-                    Argument::that(fn(array $params) => array_key_exists('id', $params)
+                    Argument::that(fn(array $params): bool => array_key_exists('id', $params)
                         && $params['id'] === $i)
                 )
                 ->willReturn(new Link('self', '/api/child/' . $i));

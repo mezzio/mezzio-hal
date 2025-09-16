@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal;
 
+use Mezzio\Hal\Renderer\JsonRenderer;
+use Mezzio\Hal\Renderer\XmlRenderer;
 use Mezzio\Hal\Response\CallableResponseFactoryDecorator;
 use Negotiation\Negotiator;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -31,18 +33,14 @@ class HalResponseFactory
         'application/*+xml',
     ];
 
-    /** @var Renderer\JsonRenderer */
-    private $jsonRenderer;
+    private readonly JsonRenderer $jsonRenderer;
 
     /**
      * A callable capable of producing an empty ResponseInterface instance.
-     *
-     * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private readonly ResponseFactoryInterface $responseFactory;
 
-    /** @var Renderer\XmlRenderer */
-    private $xmlRenderer;
+    private readonly XmlRenderer $xmlRenderer;
 
     /**
      * @param (callable():ResponseInterface)|ResponseFactoryInterface $responseFactory
@@ -60,8 +58,8 @@ class HalResponseFactory
         }
 
         $this->responseFactory = $responseFactory;
-        $this->jsonRenderer    = $jsonRenderer ?: new Renderer\JsonRenderer();
-        $this->xmlRenderer     = $xmlRenderer ?: new Renderer\XmlRenderer();
+        $this->jsonRenderer    = $jsonRenderer ?: new JsonRenderer();
+        $this->xmlRenderer     = $xmlRenderer ?: new XmlRenderer();
     }
 
     public function createResponse(
@@ -73,7 +71,7 @@ class HalResponseFactory
         $matchedType = (new Negotiator())->getBest($accept, self::NEGOTIATION_PRIORITIES);
 
         switch (true) {
-            case $matchedType && str_contains($matchedType->getValue(), 'json'):
+            case $matchedType && str_contains((string) $matchedType->getValue(), 'json'):
                 $renderer   = $this->jsonRenderer;
                 $mediaType .= '+json';
                 break;

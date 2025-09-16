@@ -22,10 +22,7 @@ class InvalidStrategyException extends InvalidArgumentException implements Excep
         ));
     }
 
-    /**
-     * @param mixed $strategy
-     */
-    public static function forInstance($strategy): self
+    public static function forInstance(mixed $strategy): self
     {
         return new self(sprintf(
             'Invalid strategy of type "%s"; does not implement %s',

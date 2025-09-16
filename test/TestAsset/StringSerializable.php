@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal\TestAsset;
 
-final class StringSerializable
+use Stringable;
+
+final class StringSerializable implements Stringable
 {
     public function __toString(): string
     {

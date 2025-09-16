@@ -30,15 +30,11 @@ class HalResponseFactoryFactory
     {
         $jsonRenderer = $container->has(Renderer\JsonRenderer::class)
             ? $container->get(Renderer\JsonRenderer::class)
-            : ($container->has('Zend\Expressive\Hal\Renderer\JsonRenderer')
-                ? $container->get('Zend\Expressive\Hal\Renderer\JsonRenderer')
-                : new Renderer\JsonRenderer());
+            : new Renderer\JsonRenderer();
 
         $xmlRenderer = $container->has(Renderer\XmlRenderer::class)
             ? $container->get(Renderer\XmlRenderer::class)
-            : ($container->has('Zend\Expressive\Hal\Renderer\XmlRenderer')
-                ? $container->get('Zend\Expressive\Hal\Renderer\XmlRenderer')
-                : new Renderer\XmlRenderer());
+            : new Renderer\XmlRenderer();
 
         return new HalResponseFactory(
             $this->detectResponseFactory($container),

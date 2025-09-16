@@ -194,18 +194,21 @@ final class RouteBasedCollectionWithRouteParamsTest extends TestCase
     }
 
     /**
-     * @param LinkGenerator|ObjectProphecy $linkGenerator
-     * @param ServerRequestInterface|ObjectProphecy $request
      * @psalm-param LinkGenerator&ObjectProphecy $linkGenerator
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
      */
-    private function createLinkGeneratorProphecy($linkGenerator, $request, string $rel, int $page): void
-    {
+    private function createLinkGeneratorProphecy(
+        LinkGenerator|ObjectProphecy $linkGenerator,
+        ServerRequestInterface|ObjectProphecy $request,
+        string $rel,
+        int $page
+    ): void {
+        /** @psalm-suppress InvalidArgument */
         $linkGenerator->fromRoute(
             $rel,
             $request->reveal(),
             'foo-bar',
-            Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+            Argument::that(fn(array $params): bool => array_key_exists('foo_id', $params)
                 && array_key_exists('p', $params)
                 && $params['foo_id'] === 1234
                 && $params['p'] === $page),
@@ -217,13 +220,13 @@ final class RouteBasedCollectionWithRouteParamsTest extends TestCase
     }
 
     /**
-     * @param LinkGenerator|ObjectProphecy $linkGenerator
-     * @param ServerRequestInterface|ObjectProphecy $request
      * @psalm-param LinkGenerator&ObjectProphecy $linkGenerator
      * @psalm-param ServerRequestInterface&ObjectProphecy $request
      */
-    private function createCollectionItems($linkGenerator, $request): array
-    {
+    private function createCollectionItems(
+        LinkGenerator|ObjectProphecy $linkGenerator,
+        ServerRequestInterface|ObjectProphecy $request
+    ): array {
         $instance      = new TestAsset\FooBar();
         $instance->foo = 'BAR';
         $instance->bar = 'BAZ';
@@ -234,12 +237,13 @@ final class RouteBasedCollectionWithRouteParamsTest extends TestCase
             $next->id = $i;
             $items[]  = $next;
 
+            /** @psalm-suppress InvalidArgument */
             $linkGenerator
                 ->fromRoute(
                     'self',
                     $request->reveal(),
                     'foo-bar',
-                    Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                    Argument::that(fn(array $params): bool => array_key_exists('foo_id', $params)
                         && array_key_exists('bar_id', $params)
                         && $params['foo_id'] === 1234
                         && $params['bar_id'] === $i)

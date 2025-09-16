@@ -38,10 +38,10 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     use LinkCollection;
 
     /** @var array All data to represent. */
-    private $data = [];
+    private array $data = [];
 
     /** @var array<array-key, self|array<array-key, self>> */
-    private $embedded = [];
+    private array $embedded = [];
 
     /**
      * @param LinkInterface[] $links
@@ -53,11 +53,9 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         array $embedded = [],
         private bool $embedEmptyCollections = false
     ) {
-        $this->embedEmptyCollections = $embedEmptyCollections;
-
         $context = self::class;
 
-        array_walk($data, function ($value, $name) use ($context) {
+        array_walk($data, function ($value, $name) use ($context): void {
             $this->validateElementName($name, $context);
 
             if ($value instanceof self || $this->isResourceCollection($value)) {
@@ -68,7 +66,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             $this->data[$name] = $value;
         });
 
-        array_walk($embedded, function ($resource, $name) use ($context) {
+        array_walk($embedded, function ($resource, $name) use ($context): void {
             $this->validateElementName($name, $context);
             $this->detectCollisionWithData($name, $context);
 
@@ -92,8 +90,8 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         if (
             array_reduce(
                 $links,
-                fn($containsNonLinkItem, $link)
-                => $containsNonLinkItem || ! $link instanceof LinkInterface,
+                fn($containsNonLinkItem, $link): bool =>
+                $containsNonLinkItem || ! $link instanceof LinkInterface,
                 false
             )
         ) {
@@ -238,12 +236,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         $resource = $this->data;
 
         $links = $this->serializeLinks();
-        if (! empty($links)) {
+        if ($links !== []) {
             $resource['_links'] = $links;
         }
 
         $embedded = $this->serializeEmbeddedResources();
-        if (! empty($embedded)) {
+        if ($embedded !== []) {
             $resource['_embedded'] = $embedded;
         }
 
@@ -261,7 +259,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
      */
     private function validateElementName(string $name, string $context): void
     {
-        if (empty($name)) {
+        if ($name === '') {
             throw new InvalidArgumentException(sprintf(
                 '$name provided to %s cannot be empty',
                 $context
@@ -325,8 +323,8 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             is_array($resource)
             && array_reduce(
                 $resource,
-                fn(bool $allAreResources, $resource): bool
-                => $allAreResources && $resource instanceof HalResource,
+                fn(bool $allAreResources, $resource): bool =>
+                $allAreResources && $resource instanceof HalResource,
                 true
             )
         ) {
@@ -346,7 +344,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         Assert::allIsInstanceOf($collection, self::class);
 
         $collectionFirstResource = $this->firstResource($collection);
-        if (null === $collectionFirstResource) {
+        if (! $collectionFirstResource instanceof HalResource) {
             throw new InvalidArgumentException(sprintf(
                 '%s detected structurally inequivalent resources for element %s',
                 $context,
@@ -370,11 +368,11 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         $originalFirstResource   = $this->firstResource($original);
         $collectionFirstResource = $this->firstResource($collection);
 
-        if (null === $originalFirstResource && null === $collectionFirstResource) {
+        if (! $originalFirstResource instanceof HalResource && ! $collectionFirstResource instanceof HalResource) {
             return [];
         }
 
-        if (null === $originalFirstResource || null === $collectionFirstResource) {
+        if (! $originalFirstResource instanceof HalResource || ! $collectionFirstResource instanceof HalResource) {
             throw new InvalidArgumentException(sprintf(
                 '%s detected structurally inequivalent resources for element %s',
                 $context,
@@ -414,12 +412,12 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return $this->embedEmptyCollections;
         }
 
-        return array_reduce($value, static fn($isResource, $item) => $isResource && $item instanceof self, true);
+        return array_reduce($value, static fn($isResource, $item): bool => $isResource && $item instanceof self, true);
     }
 
     private function serializeLinks(): array
     {
-        $relations = array_reduce($this->links, function (array $byRelation, LinkInterface $link) {
+        $relations = array_reduce($this->links, function (array $byRelation, LinkInterface $link): array {
             $representation = array_merge($link->getAttributes(), [
                 'href' => $link->getHref(),
             ]);
@@ -428,7 +426,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             }
 
             $linkRels = $link->getRels();
-            array_walk($linkRels, function ($rel) use (&$byRelation, $representation) {
+            array_walk($linkRels, function ($rel) use (&$byRelation, $representation): void {
                 $forceCollection = array_key_exists(Link::AS_COLLECTION, $representation)
                     && $representation[Link::AS_COLLECTION];
                 unset($representation[Link::AS_COLLECTION]);
@@ -459,7 +457,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return $byRelation;
         }, []);
 
-        array_walk($relations, function ($links, $key) use (&$relations) {
+        array_walk($relations, function ($links, $key) use (&$relations): void {
             if (isset($relations[$key][Link::AS_COLLECTION])) {
                 // If forcing a collection, do nothing to the links, but DO
                 // remove the marker indicating a collection should be
@@ -485,7 +483,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             function ($resource, string $name) use (&$embedded): void {
                 $embedded[$name] = $resource instanceof self
                     ? $resource->toArray()
-                    : array_map(fn($item) => $item->toArray(), $resource);
+                    : array_map(fn($item): mixed => $item->toArray(), $resource);
             }
         );
 
