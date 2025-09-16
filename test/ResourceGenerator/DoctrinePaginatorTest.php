@@ -144,7 +144,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
         $this->paginator
             ->method('getIterator')
             ->willReturn(new ArrayIterator($values));
@@ -251,7 +251,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -372,7 +372,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->with('page_num', 1)
             ->willReturn(3);
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
