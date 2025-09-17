@@ -7,8 +7,7 @@ namespace Mezzio\Hal\Metadata;
 use function array_intersect;
 use function array_keys;
 
-/** @final */
-class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
+final class RouteBasedResourceMetadataFactory implements MetadataFactoryInterface
 {
     /**
      * Creates a RouteBasedResourceMetadata based on the MetadataMap configuration.

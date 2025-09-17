@@ -11,8 +11,7 @@ use RuntimeException;
 
 use function sprintf;
 
-/** @final */
-class MezzioUrlGeneratorFactory
+final class MezzioUrlGeneratorFactory
 {
     /**
      * Allow serialization

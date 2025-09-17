@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
  *
  * @final
  */
-class HalResponseFactoryFactory
+final class HalResponseFactoryFactory
 {
     use Psr17ResponseFactoryTrait;
 
