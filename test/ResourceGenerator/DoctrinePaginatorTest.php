@@ -17,6 +17,7 @@ use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
+use stdClass;
 
 use function array_map;
 use function count;
@@ -24,8 +25,6 @@ use function range;
 
 final class DoctrinePaginatorTest extends TestCase
 {
-    private RouteBasedCollectionMetadata&MockObject $metadata;
-
     private LinkGenerator&MockObject $linkGenerator;
 
     private ResourceGenerator&MockObject $generator;
@@ -38,7 +37,6 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->metadata      = $this->createMock(RouteBasedCollectionMetadata::class);
         $this->linkGenerator = $this->createMock(LinkGenerator::class);
         $this->generator     = $this->createMock(ResourceGenerator::class);
         $this->request       = $this->createMock(ServerRequestInterface::class);
@@ -75,13 +73,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->method('count')
             ->willReturn($numPages);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
-
-        $this->metadata
-            ->method('getPaginationParam')
-            ->willReturn('page_num');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            RouteBasedCollectionMetadata::TYPE_QUERY,
+            [],
+            []
+        );
 
         $this->request
             ->method('getQueryParams')
@@ -90,7 +90,7 @@ final class DoctrinePaginatorTest extends TestCase
         $this->expectException(OutOfBoundsException::class);
         $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );
@@ -111,29 +111,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->method('count')
             ->willReturn(100);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn('unknown');
-
-        $this->metadata
-            ->expects(self::never())
-            ->method('getPaginationParam');
-
-        $this->metadata
-            ->method('getRouteParams')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getQueryStringArguments')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getRoute')
-            ->willReturn('test');
-
-        $this->metadata
-            ->method('getCollectionRelation')
-            ->willReturn('test');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            'unknown',
+            [],
+            []
+        );
 
         $this->request
             ->expects(self::once())
@@ -191,7 +177,7 @@ final class DoctrinePaginatorTest extends TestCase
 
         $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );
@@ -218,29 +204,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->method('count')
             ->willReturn(100);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
-
-        $this->metadata
-            ->method('getPaginationParam')
-            ->willReturn('page_num');
-
-        $this->metadata
-            ->method('getRouteParams')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getQueryStringArguments')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getRoute')
-            ->willReturn('test');
-
-        $this->metadata
-            ->method('getCollectionRelation')
-            ->willReturn('test');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            RouteBasedCollectionMetadata::TYPE_QUERY,
+            [],
+            []
+        );
 
         $this->request
             ->expects(self::exactly(6))
@@ -311,7 +283,7 @@ final class DoctrinePaginatorTest extends TestCase
 
         $resource = $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );
@@ -337,29 +309,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->willReturn($query);
         $this->paginator->method('count')->willReturn(100);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn(RouteBasedCollectionMetadata::TYPE_PLACEHOLDER);
-
-        $this->metadata
-            ->method('getPaginationParam')
-            ->willReturn('page_num');
-
-        $this->metadata
-            ->method('getRouteParams')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getQueryStringArguments')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getRoute')
-            ->willReturn('test');
-
-        $this->metadata
-            ->method('getCollectionRelation')
-            ->willReturn('test');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            RouteBasedCollectionMetadata::TYPE_PLACEHOLDER,
+            [],
+            []
+        );
 
         $this->request
             ->expects(self::exactly(5))
@@ -431,7 +389,7 @@ final class DoctrinePaginatorTest extends TestCase
 
         $resource = $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );

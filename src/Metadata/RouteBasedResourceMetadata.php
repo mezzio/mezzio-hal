@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal\Metadata;
 
-/** @final */
-class RouteBasedResourceMetadata extends AbstractResourceMetadata
+final class RouteBasedResourceMetadata extends AbstractResourceMetadata
 {
     private const DEFAULT_RESOURCE_ID = 'id';
 

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal\Metadata;
 
-/** @final */
-class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
+final class RouteBasedCollectionMetadata extends AbstractCollectionMetadata
 {
     /**
      * @param array<string, mixed> $routeParams

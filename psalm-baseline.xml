@@ -791,14 +791,12 @@
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->createMock(LinkGenerator::class)]]></code>
       <code><![CDATA[$this->createMock(ResourceGenerator::class)]]></code>
-      <code><![CDATA[$this->createMock(RouteBasedCollectionMetadata::class)]]></code>
     </InvalidPropertyAssignmentValue>
     <MixedMethodCall>
       <code><![CDATA[expects]]></code>
       <code><![CDATA[expects]]></code>
       <code><![CDATA[expects]]></code>
       <code><![CDATA[expects]]></code>
-      <code><![CDATA[expects]]></code>
       <code><![CDATA[method]]></code>
       <code><![CDATA[method]]></code>
       <code><![CDATA[method]]></code>
@@ -808,45 +806,6 @@
       <code><![CDATA[method]]></code>
       <code><![CDATA[method]]></code>
       <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[method]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
-      <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
@@ -868,10 +827,6 @@
       <code><![CDATA[$this->generator]]></code>
       <code><![CDATA[$this->generator]]></code>
       <code><![CDATA[$this->generator]]></code>
-      <code><![CDATA[$this->metadata]]></code>
-      <code><![CDATA[$this->metadata]]></code>
-      <code><![CDATA[$this->metadata]]></code>
-      <code><![CDATA[$this->metadata]]></code>
     </NoValue>
   </file>
   <file src="test/ResourceGenerator/ExceptionTest.php">
