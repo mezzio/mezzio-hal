@@ -33,7 +33,6 @@ trait Assertions
     public static function getLinkByRel(string $rel, HalResource $resource): Link
     {
         $links = $resource->getLinksByRel($rel);
-        self::assertIsArray($links, sprintf("Did not receive list of links for rel %s", $rel));
         self::assertCount(1, $links, sprintf(
             'Received more links than expected (expected 1; received %d) for rel %s',
             count($links),

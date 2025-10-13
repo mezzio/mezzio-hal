@@ -24,8 +24,7 @@ final class ResourceGeneratorFactoryTest extends TestCase
 
     use ProphecyTrait;
 
-    /** @var ObjectProphecy|ContainerInterface */
-    private $container;
+    private ObjectProphecy|ContainerInterface $container;
 
     public function setUp(): void
     {

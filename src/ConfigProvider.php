@@ -20,8 +20,7 @@ use Mezzio\Hal\ResourceGenerator\RouteBasedResourceStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedCollectionStrategy;
 use Mezzio\Hal\ResourceGenerator\UrlBasedResourceStrategy;
 
-/** @final */
-class ConfigProvider
+final class ConfigProvider
 {
     public function __invoke(): array
     {
@@ -37,18 +36,6 @@ class ConfigProvider
             'aliases'    => [
                 UrlGeneratorInterface::class      => MezzioUrlGenerator::class,
                 ResourceGeneratorInterface::class => ResourceGenerator::class,
-
-                // Legacy Zend Framework aliases
-                'Zend\Expressive\Hal\LinkGenerator\UrlGeneratorInterface'  => UrlGeneratorInterface::class,
-                'Zend\Expressive\Hal\HalResponseFactory'                   => HalResponseFactory::class,
-                'Zend\Expressive\Hal\LinkGenerator'                        => LinkGenerator::class,
-                'Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGenerator' => MezzioUrlGenerator::class,
-                'Zend\Expressive\Hal\Metadata\MetadataMap'                 => MetadataMap::class,
-                'Zend\Expressive\Hal\ResourceGenerator'                    => ResourceGenerator::class,
-                'Zend\Expressive\Hal\RouteBasedCollectionStrategy'         => RouteBasedCollectionStrategy::class,
-                'Zend\Expressive\Hal\RouteBasedResourceStrategy'           => RouteBasedResourceStrategy::class,
-                'Zend\Expressive\Hal\UrlBasedCollectionStrategy'           => UrlBasedCollectionStrategy::class,
-                'Zend\Expressive\Hal\UrlBasedResourceStrategy'             => UrlBasedResourceStrategy::class,
             ],
             'factories'  => [
                 HalResponseFactory::class => HalResponseFactoryFactory::class,

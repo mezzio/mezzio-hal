@@ -99,11 +99,8 @@ class XmlRenderer implements RendererInterface
      * Convert true and false to appropriate strings.
      *
      * In all other cases, return the value as-is.
-     *
-     * @param mixed $value
-     * @return string|mixed
      */
-    private function normalizeConstantValue($value)
+    private function normalizeConstantValue(mixed $value): mixed
     {
         $value = $value === true ? 'true' : $value;
         $value = $value === false ? 'false' : $value;
@@ -175,11 +172,10 @@ class XmlRenderer implements RendererInterface
      * @todo Detect JsonSerializable, and pass to
      *     json_decode(json_encode($object), true), passing the final value
      *     back to createResourceElement()?
-     * @param object $object
      * @throws Exception\InvalidResourceValueException If unable to serialize
      *     the data to a string.
      */
-    private function createDataFromObject($object): string
+    private function createDataFromObject(object $object): string
     {
         if ($object instanceof DateTimeInterface) {
             return $object->format('c');

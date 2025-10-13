@@ -9,14 +9,11 @@ abstract class AbstractCollectionMetadata extends AbstractMetadata
     public const TYPE_PLACEHOLDER = 'placeholder';
     public const TYPE_QUERY       = 'query';
 
-    /** @var string */
-    protected $collectionRelation;
+    protected string $collectionRelation;
 
-    /** @var string */
-    protected $paginationParam;
+    protected string $paginationParam;
 
-    /** @var string */
-    protected $paginationParamType;
+    protected string $paginationParamType;
 
     public function getCollectionRelation(): string
     {

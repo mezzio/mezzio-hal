@@ -8,12 +8,12 @@ use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Metadata;
 use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Stringable;
 
 use function array_key_exists;
 use function is_scalar;
 
-/** @final */
-class RouteBasedResourceStrategy implements StrategyInterface
+final class RouteBasedResourceStrategy implements StrategyInterface
 {
     use ExtractInstanceTrait;
 
@@ -45,6 +45,10 @@ class RouteBasedResourceStrategy implements StrategyInterface
 
         // Inject all scalar entity keys automatically into route parameters
         foreach ($data as $key => $value) {
+            if ($value instanceof Stringable) {
+                $value = (string) $value;
+            }
+
             if (! is_scalar($value)) {
                 continue;
             }

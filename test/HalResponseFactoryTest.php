@@ -21,20 +21,15 @@ final class HalResponseFactoryTest extends TestCase
 {
     use TestAsset;
 
-    /** @var ServerRequestInterface&MockObject */
-    private $request;
+    private ServerRequestInterface&MockObject $request;
 
-    /** @var ResponseInterface&MockObject */
-    private $response;
+    private ResponseInterface&MockObject $response;
 
-    /** @var Renderer\JsonRenderer&MockObject */
-    private $jsonRenderer;
+    private Renderer\JsonRenderer&MockObject $jsonRenderer;
 
-    /** @var Renderer\XmlRenderer&MockObject */
-    private $xmlRenderer;
+    private Renderer\XmlRenderer&MockObject $xmlRenderer;
 
-    /** @var HalResponseFactory */
-    private $factory;
+    private HalResponseFactory $factory;
 
     public function setUp(): void
     {

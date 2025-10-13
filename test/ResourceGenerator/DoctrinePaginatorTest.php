@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MezzioTest\Hal\ResourceGenerator;
 
 use ArrayIterator;
-use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
@@ -24,23 +24,17 @@ use function range;
 
 final class DoctrinePaginatorTest extends TestCase
 {
-    /** @var RouteBasedCollectionMetadata&MockObject */
-    private $metadata;
+    private RouteBasedCollectionMetadata&MockObject $metadata;
 
-    /** @var LinkGenerator&MockObject */
-    private $linkGenerator;
+    private LinkGenerator&MockObject $linkGenerator;
 
-    /** @var ResourceGenerator&MockObject */
-    private $generator;
+    private ResourceGenerator&MockObject $generator;
 
-    /** @var ServerRequestInterface&MockObject */
-    private $request;
+    private ServerRequestInterface&MockObject $request;
 
-    /** @var Paginator&MockObject */
-    private $paginator;
+    private Paginator&MockObject $paginator;
 
-    /** @var RouteBasedCollectionStrategy */
-    private $strategy;
+    private RouteBasedCollectionStrategy $strategy;
 
     public function setUp(): void
     {
@@ -51,17 +45,6 @@ final class DoctrinePaginatorTest extends TestCase
         $this->paginator     = $this->createMock(Paginator::class);
 
         $this->strategy = new RouteBasedCollectionStrategy();
-    }
-
-    /**
-     * @psalm-return AbstractQuery&MockObject
-     */
-    public function mockQuery(): AbstractQuery
-    {
-        return $this->getMockBuilder(AbstractQuery::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getMaxResults', 'setFirstResult'])
-            ->getMockForAbstractClass();
     }
 
     /** @return iterable<string, array{0: int, 1: int}> */
@@ -77,7 +60,7 @@ final class DoctrinePaginatorTest extends TestCase
      */
     public function testThrowsOutOfBoundsExceptionForInvalidPage(int $page, int $numPages): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -115,7 +98,7 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function testDoesNotCreateLinksForUnknownPaginationParamType(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query->expects($this->once())
             ->method('getMaxResults')
             ->with()
@@ -161,7 +144,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
         $this->paginator
             ->method('getIterator')
             ->willReturn(new ArrayIterator($values));
@@ -216,7 +199,7 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function testCreatesLinksForQueryBasedPagination(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -268,7 +251,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -338,7 +321,7 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function testCreatesLinksForRouteBasedPagination(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -389,7 +372,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->with('page_num', 1)
             ->willReturn(3);
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
