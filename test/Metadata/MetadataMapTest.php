@@ -5,27 +5,13 @@ declare(strict_types=1);
 namespace MezzioTest\Hal\Metadata;
 
 use Generator;
+use Laminas\Hydrator\ObjectPropertyHydrator;
 use Mezzio\Hal\Metadata;
 use Mezzio\Hal\Metadata\MetadataMap;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @see MockObject
- */
 final class MetadataMapTest extends TestCase
 {
-    /** @psalm-var non-empty-list<class-string<Metadata\AbstractMetadata>> */
-    private array $metadataClasses = [
-        Metadata\AbstractMetadata::class,
-        Metadata\AbstractCollectionMetadata::class,
-        Metadata\AbstractResourceMetadata::class,
-        Metadata\RouteBasedCollectionMetadata::class,
-        Metadata\RouteBasedResourceMetadata::class,
-        Metadata\UrlBasedCollectionMetadata::class,
-        Metadata\UrlBasedResourceMetadata::class,
-    ];
-
     private MetadataMap $map;
 
     public function setUp(): void
@@ -36,19 +22,31 @@ final class MetadataMapTest extends TestCase
     /**
      * @psalm-return Generator<class-string<Metadata\AbstractMetadata>, array{
      *  0: class-string<Metadata\AbstractMetadata>,
-     *  1: Metadata\AbstractMetadata&MockObject
+     *  1: Metadata\AbstractMetadata
      * }>
      */
     public function validMetadataTypes(): Generator
     {
-        foreach ($this->metadataClasses as $class) {
-            $metadata = $this->createMock($class);
-            $metadata
-                ->method('getClass')
-                ->willReturn($class);
+        $class = Metadata\RouteBasedCollectionMetadata::class;
+        yield Metadata\RouteBasedCollectionMetadata::class => [
+            $class,
+            new Metadata\RouteBasedCollectionMetadata($class, 'foo-bar', 'foo-bar'),
+        ];
 
-            yield $class => [$class, $metadata];
-        }
+        yield Metadata\RouteBasedResourceMetadata::class => [
+            $class,
+            new Metadata\RouteBasedResourceMetadata($class, 'foo-bar', ObjectPropertyHydrator::class),
+        ];
+
+        yield Metadata\UrlBasedCollectionMetadata::class => [
+            $class,
+            new Metadata\UrlBasedCollectionMetadata($class, 'foo-bar', 'foo-bar'),
+        ];
+
+        yield Metadata\UrlBasedResourceMetadata::class => [
+            $class,
+            new Metadata\UrlBasedResourceMetadata($class, 'foo-bar', ObjectPropertyHydrator::class),
+        ];
     }
 
     /**

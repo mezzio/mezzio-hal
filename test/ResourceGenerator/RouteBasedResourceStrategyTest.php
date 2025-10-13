@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MezzioTest\Hal\ResourceGenerator;
 
 use Laminas\Hydrator\ExtractionInterface;
+use Laminas\Hydrator\ObjectPropertyHydrator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\LinkGenerator;
@@ -13,6 +14,7 @@ use Mezzio\Hal\Metadata\RouteBasedResourceMetadata;
 use Mezzio\Hal\ResourceGenerator\Exception\UnexpectedMetadataTypeException;
 use Mezzio\Hal\ResourceGenerator\RouteBasedResourceStrategy;
 use Mezzio\Hal\ResourceGeneratorInterface;
+use MezzioTest\Hal\TestAsset\FooBar;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -391,26 +393,23 @@ final class RouteBasedResourceStrategyTest extends TestCase
 
     private function createRouteBasedMetadata(string $route): RouteBasedResourceMetadata
     {
-        $metadata = $this->createMock(RouteBasedResourceMetadata::class);
-        $metadata->method('getRoute')->willReturn($route);
-        $metadata->method('getRouteParams')->willReturn([]);
-        $metadata->method('getIdentifiersToPlaceholdersMapping')->willReturn([]);
-        $metadata->method('hasReachedMaxDepth')->willReturn(false);
-
-        return $metadata;
+        return new RouteBasedResourceMetadata(
+            FooBar::class,
+            $route,
+            ObjectPropertyHydrator::class,
+        );
     }
 
     private function createRouteBasedMetadataWithPlaceholders(
         string $route,
         array $placeholders
     ): RouteBasedResourceMetadata {
-        $metadata = $this->createMock(RouteBasedResourceMetadata::class);
-        $metadata->method('getRoute')->willReturn($route);
-        $metadata->method('getRouteParams')->willReturn([]);
-        $metadata->method('getIdentifiersToPlaceholdersMapping')->willReturn($placeholders);
-        $metadata->method('hasReachedMaxDepth')->willReturn(false);
-
-        return $metadata;
+        return new RouteBasedResourceMetadata(
+            FooBar::class,
+            $route,
+            ObjectPropertyHydrator::class,
+            identifiersToPlaceHoldersMapping: $placeholders,
+        );
     }
 
     private function createResourceGenerator(): ResourceGeneratorInterface

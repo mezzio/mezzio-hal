@@ -9,8 +9,7 @@ use InvalidArgumentException;
 use function in_array;
 use function sprintf;
 
-/** @final */
-class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
+final class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
 {
     public function __construct(
         string $class,
