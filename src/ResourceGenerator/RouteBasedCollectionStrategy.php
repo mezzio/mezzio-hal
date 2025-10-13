@@ -7,6 +7,8 @@ namespace Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 use Mezzio\Hal\Metadata;
+use Mezzio\Hal\Metadata\AbstractCollectionMetadata;
+use Mezzio\Hal\ResourceGenerator;
 use Mezzio\Hal\ResourceGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Traversable;
@@ -16,9 +18,7 @@ use function array_merge;
 /** @final */
 class RouteBasedCollectionStrategy implements StrategyInterface
 {
-    use ExtractCollectionTrait, GenerateSelfLinkTrait {
-        GenerateSelfLinkTrait::generateSelfLink insteadof ExtractCollectionTrait;
-    }
+    use ExtractCollectionTrait;
 
     public function createResource(
         object $instance,
@@ -43,20 +43,20 @@ class RouteBasedCollectionStrategy implements StrategyInterface
     }
 
     /**
-     * @param string $rel Relation to use when creating Link
-     * @param int $page Page number for generated link
-     * @param Metadata\AbstractCollectionMetadata $metadata Used to provide the
+     * @param string $rel                                   Relation to use when creating Link
+     * @param int $page                                     Page number for generated link
+     * @param AbstractCollectionMetadata $metadata          Used to provide the
      *     base URL, pagination parameter, and type of pagination used (query
      *     string, path parameter)
      * @param ResourceGeneratorInterface $resourceGenerator Used to retrieve link
      *     generator in order to generate link based on routing information.
-     * @param ServerRequestInterface $request Passed to link generator when
+     * @param ServerRequestInterface $request               Passed to link generator when
      *     generating link based on routing information.
      */
     protected function generateLinkForPage(
         string $rel,
         int $page,
-        Metadata\AbstractCollectionMetadata $metadata,
+        AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ): Link {
@@ -67,10 +67,10 @@ class RouteBasedCollectionStrategy implements StrategyInterface
         $queryStringArgs = array_merge($request->getQueryParams(), $metadata->getQueryStringArguments());
 
         $paramsWithPage = [$paginationParam => $page];
-        $routeParams    = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_PLACEHOLDER
+        $routeParams    = $paginationType === AbstractCollectionMetadata::TYPE_PLACEHOLDER
             ? array_merge($routeParams, $paramsWithPage)
             : $routeParams;
-        $queryParams    = $paginationType === Metadata\AbstractCollectionMetadata::TYPE_QUERY
+        $queryParams    = $paginationType === AbstractCollectionMetadata::TYPE_QUERY
             ? array_merge($queryStringArgs, $paramsWithPage)
             : $queryStringArgs;
 
@@ -86,15 +86,15 @@ class RouteBasedCollectionStrategy implements StrategyInterface
     }
 
     /**
-     * @param Metadata\AbstractCollectionMetadata $metadata Provides base URL
+     * @param AbstractCollectionMetadata $metadata Provides base URL
      *     for self link.
-     * @param ResourceGeneratorInterface $resourceGenerator Used to retrieve link
+     * @param ResourceGenerator $resourceGenerator Used to retrieve link
      *     generator in order to generate link based on routing information.
      * @param ServerRequestInterface $request Passed to link generator when
      *     generating link based on routing information.
      */
     protected function generateSelfLink(
-        Metadata\AbstractCollectionMetadata $metadata,
+        AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
     ): Link {

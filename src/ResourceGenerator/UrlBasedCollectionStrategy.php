@@ -26,9 +26,7 @@ use const PHP_URL_QUERY;
 /** @final */
 class UrlBasedCollectionStrategy implements StrategyInterface
 {
-    use ExtractCollectionTrait, GenerateSelfLinkTrait {
-        GenerateSelfLinkTrait::generateSelfLink insteadof ExtractCollectionTrait;
-    }
+    use ExtractCollectionTrait;
 
     public function createResource(
         object $instance,
@@ -95,13 +93,12 @@ class UrlBasedCollectionStrategy implements StrategyInterface
      *     abstract.
      * @param ServerRequestInterface $request Ignored; required to fulfill
      *     abstract.
-     * @return Link
      */
     protected function generateSelfLink(
         Metadata\AbstractCollectionMetadata $metadata,
         ResourceGeneratorInterface $resourceGenerator,
         ServerRequestInterface $request
-    ) {
+    ): Link {
         $queryStringArgs = $request->getQueryParams();
         $url             = $metadata->getUrl();
         if ($queryStringArgs !== []) {
