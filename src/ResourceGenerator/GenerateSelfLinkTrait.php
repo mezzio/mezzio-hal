@@ -14,6 +14,8 @@ use Psr\Http\Message\ServerRequestInterface;
  * from the trait linked below, and their implementations, since that difference
  * now results in a fatal error in PHP 8.
  *
+ * @deprecated
+ *
  * @see ExtractCollectionTrait::generateSelfLink
  */
 trait GenerateSelfLinkTrait

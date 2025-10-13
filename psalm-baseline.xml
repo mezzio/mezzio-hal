@@ -362,18 +362,10 @@
     </PossiblyFalseArgument>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
-    <MethodSignatureMismatch>
-      <code><![CDATA[abstract protected function generateSelfLink(
-        AbstractCollectionMetadata $metadata,
-        ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
-    ): Link;]]></code>
-      <code><![CDATA[abstract protected function generateSelfLink(
-        AbstractCollectionMetadata $metadata,
-        ResourceGeneratorInterface $resourceGenerator,
-        ServerRequestInterface $request
-    ): Link;]]></code>
-    </MethodSignatureMismatch>
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$resourceGenerator]]></code>
+      <code><![CDATA[$resourceGenerator]]></code>
+    </ArgumentTypeCoercion>
     <MixedArgument>
       <code><![CDATA[$item]]></code>
       <code><![CDATA[$item]]></code>
@@ -411,9 +403,6 @@
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGenerator/RouteBasedCollectionStrategy.php">
-    <MethodSignatureMismatch>
-      <code><![CDATA[protected function generateSelfLink(]]></code>
-    </MethodSignatureMismatch>
     <MixedArgument>
       <code><![CDATA[$metadata->getQueryStringArguments()]]></code>
       <code><![CDATA[$metadata->getQueryStringArguments()]]></code>
@@ -432,6 +421,9 @@
       <code><![CDATA[$routeParams]]></code>
       <code><![CDATA[$routeParams]]></code>
     </MixedAssignment>
+    <MoreSpecificImplementedParamType>
+      <code><![CDATA[$resourceGenerator]]></code>
+    </MoreSpecificImplementedParamType>
     <UndefinedMethod>
       <code><![CDATA[getQueryStringArguments]]></code>
       <code><![CDATA[getQueryStringArguments]]></code>
@@ -450,9 +442,6 @@
     </MixedArrayOffset>
   </file>
   <file src="src/ResourceGenerator/UrlBasedCollectionStrategy.php">
-    <MethodSignatureMismatch>
-      <code><![CDATA[protected function generateSelfLink(]]></code>
-    </MethodSignatureMismatch>
     <MixedArgument>
       <code><![CDATA[$url]]></code>
     </MixedArgument>
