@@ -51,15 +51,15 @@
         "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
-        "doctrine/orm": "^3.5",
+        "doctrine/orm": "^3.5.2",
         "laminas/laminas-coding-standard": "^3.1.0",
         "laminas/laminas-paginator": "^2.19.0",
-        "phpspec/prophecy": "^1.22",
+        "phpspec/prophecy": "^1.23",
         "phpspec/prophecy-phpunit": "^2.4.0",
-        "phpunit/phpunit": "^9.6.27",
+        "phpunit/phpunit": "^9.6.29",
         "psalm/plugin-phpunit": "^0.19.5",
-        "rector/rector": "^2.1",
-        "shipmonk/composer-dependency-analyser": "^1.8",
+        "rector/rector": "^2.2.3",
+        "shipmonk/composer-dependency-analyser": "^1.8.3",
         "vimeo/psalm": "^6.13.1"
     },
     "provide": {

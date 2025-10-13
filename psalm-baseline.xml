@@ -324,6 +324,10 @@
     </PossiblyFalseArgument>
   </file>
   <file src="src/ResourceGenerator/ExtractCollectionTrait.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$resourceGenerator]]></code>
+      <code><![CDATA[$resourceGenerator]]></code>
+    </ArgumentTypeCoercion>
     <MixedArgument>
       <code><![CDATA[$item]]></code>
       <code><![CDATA[$item]]></code>
@@ -379,6 +383,9 @@
       <code><![CDATA[$routeParams]]></code>
       <code><![CDATA[$routeParams]]></code>
     </MixedAssignment>
+    <MoreSpecificImplementedParamType>
+      <code><![CDATA[$resourceGenerator]]></code>
+    </MoreSpecificImplementedParamType>
     <UndefinedMethod>
       <code><![CDATA[getQueryStringArguments]]></code>
       <code><![CDATA[getQueryStringArguments]]></code>
