@@ -52,7 +52,7 @@
         "doctrine/orm": "^2.20.6",
         "laminas/laminas-coding-standard": "~3.1.0",
         "laminas/laminas-hydrator": "^4.16",
-        "laminas/laminas-paginator": "^2.19.0",
+        "laminas/laminas-paginator": "^3.0.0",
         "mezzio/mezzio-helpers": "^5.20",
         "phpspec/prophecy-phpunit": "^2.4.0",
         "phpunit/phpunit": "^9.6.29",
