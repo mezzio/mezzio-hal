@@ -457,9 +457,6 @@
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGeneratorFactory.php">
-    <MissingDependency>
-      <code><![CDATA[HydratorPluginManager]]></code>
-    </MissingDependency>
     <MixedArgument>
       <code><![CDATA[$container->get($strategy)]]></code>
       <code><![CDATA[$container->get($this->linkGeneratorServiceName)]]></code>
@@ -467,7 +464,6 @@
       <code><![CDATA[$container->get(Metadata\MetadataMap::class)]]></code>
       <code><![CDATA[$data['linkGeneratorServiceName'] ?? LinkGenerator::class]]></code>
       <code><![CDATA[$strategy]]></code>
-      <code><![CDATA[HydratorPluginManager::class]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$config['mezzio-hal']['resource-generator']]]></code>
@@ -949,12 +945,6 @@
                 && $params['foo_id'] === 1234
                 && $params['p'] === $page)]]></code>
     </InvalidArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$this->createCollectionItems(
-            $linkGenerator,
-            $request
-        )]]></code>
-    </MixedArgumentTypeCoercion>
     <MixedMethodCall>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
@@ -1006,9 +996,6 @@
                         && $params['foo_id'] === 1234
                         && $params['bar_id'] === $i)]]></code>
     </InvalidArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$this->createCollectionItems($linkGenerator, $request)]]></code>
-    </MixedArgumentTypeCoercion>
     <MixedMethodCall>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
@@ -1052,10 +1039,6 @@
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
     </InvalidMethodCall>
-    <MissingDependency>
-      <code><![CDATA[HydratorPluginManager]]></code>
-      <code><![CDATA[HydratorPluginManager]]></code>
-    </MissingDependency>
     <MixedArgument>
       <code><![CDATA[$this->container->reveal()]]></code>
       <code><![CDATA[$this->container->reveal()]]></code>
