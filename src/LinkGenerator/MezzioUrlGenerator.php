@@ -8,8 +8,7 @@ use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
 use Psr\Http\Message\ServerRequestInterface;
 
-/** @final */
-class MezzioUrlGenerator implements UrlGeneratorInterface
+final class MezzioUrlGenerator implements UrlGeneratorInterface
 {
     public function __construct(
         private readonly UrlHelper $urlHelper,
@@ -25,7 +24,7 @@ class MezzioUrlGenerator implements UrlGeneratorInterface
     ): string {
         $path = $this->urlHelper->generate($routeName, $routeParams, $queryParams);
 
-        if (! $this->serverUrlHelper) {
+        if (! $this->serverUrlHelper instanceof ServerUrlHelper) {
             return $path;
         }
 

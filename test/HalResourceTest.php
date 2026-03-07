@@ -24,6 +24,15 @@ final class HalResourceTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $resource->getElements());
     }
 
+    public function testCanNotConstructEmptyString(): void
+    {
+        $this->expectExceptionObject(
+            new InvalidArgumentException('$name provided to Mezzio\Hal\HalResource cannot be empty')
+        );
+
+        new HalResource(['' => '']);
+    }
+
     /**
      * @psalm-return array<string, array{0: string, 1: string}>
      */

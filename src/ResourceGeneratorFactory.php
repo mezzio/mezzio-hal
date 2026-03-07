@@ -13,8 +13,7 @@ use Traversable;
 use function is_array;
 use function is_string;
 
-/** @final */
-class ResourceGeneratorFactory
+final class ResourceGeneratorFactory
 {
     /**
      * Allow serialization
@@ -75,7 +74,7 @@ class ResourceGeneratorFactory
         }
 
         foreach ($strategies as $metadataType => $strategy) {
-            if (! is_string($metadataType) || empty($metadataType)) {
+            if (! is_string($metadataType) || ($metadataType === '')) {
                 continue;
             }
 

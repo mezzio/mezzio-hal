@@ -8,8 +8,7 @@ use RuntimeException;
 
 use function sprintf;
 
-/** @final */
-class UndefinedMetadataException extends RuntimeException implements ExceptionInterface
+final class UndefinedMetadataException extends RuntimeException implements ExceptionInterface
 {
     public static function create(string $class): self
     {

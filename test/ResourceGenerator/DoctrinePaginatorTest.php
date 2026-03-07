@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MezzioTest\Hal\ResourceGenerator;
 
 use ArrayIterator;
-use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
@@ -17,6 +17,7 @@ use Mezzio\Hal\ResourceGenerator\RouteBasedCollectionStrategy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
+use stdClass;
 
 use function array_map;
 use function count;
@@ -24,44 +25,24 @@ use function range;
 
 final class DoctrinePaginatorTest extends TestCase
 {
-    /** @var RouteBasedCollectionMetadata&MockObject */
-    private $metadata;
+    private LinkGenerator&MockObject $linkGenerator;
 
-    /** @var LinkGenerator&MockObject */
-    private $linkGenerator;
+    private ResourceGenerator&MockObject $generator;
 
-    /** @var ResourceGenerator&MockObject */
-    private $generator;
+    private ServerRequestInterface&MockObject $request;
 
-    /** @var ServerRequestInterface&MockObject */
-    private $request;
+    private Paginator&MockObject $paginator;
 
-    /** @var Paginator&MockObject */
-    private $paginator;
-
-    /** @var RouteBasedCollectionStrategy */
-    private $strategy;
+    private RouteBasedCollectionStrategy $strategy;
 
     public function setUp(): void
     {
-        $this->metadata      = $this->createMock(RouteBasedCollectionMetadata::class);
         $this->linkGenerator = $this->createMock(LinkGenerator::class);
         $this->generator     = $this->createMock(ResourceGenerator::class);
         $this->request       = $this->createMock(ServerRequestInterface::class);
         $this->paginator     = $this->createMock(Paginator::class);
 
         $this->strategy = new RouteBasedCollectionStrategy();
-    }
-
-    /**
-     * @psalm-return AbstractQuery&MockObject
-     */
-    public function mockQuery(): AbstractQuery
-    {
-        return $this->getMockBuilder(AbstractQuery::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getMaxResults', 'setFirstResult'])
-            ->getMockForAbstractClass();
     }
 
     /** @return iterable<string, array{0: int, 1: int}> */
@@ -77,7 +58,7 @@ final class DoctrinePaginatorTest extends TestCase
      */
     public function testThrowsOutOfBoundsExceptionForInvalidPage(int $page, int $numPages): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -92,13 +73,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->method('count')
             ->willReturn($numPages);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
-
-        $this->metadata
-            ->method('getPaginationParam')
-            ->willReturn('page_num');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            RouteBasedCollectionMetadata::TYPE_QUERY,
+            [],
+            []
+        );
 
         $this->request
             ->method('getQueryParams')
@@ -107,7 +90,7 @@ final class DoctrinePaginatorTest extends TestCase
         $this->expectException(OutOfBoundsException::class);
         $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );
@@ -115,7 +98,7 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function testDoesNotCreateLinksForUnknownPaginationParamType(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query->expects($this->once())
             ->method('getMaxResults')
             ->with()
@@ -128,29 +111,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->method('count')
             ->willReturn(100);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn('unknown');
-
-        $this->metadata
-            ->expects(self::never())
-            ->method('getPaginationParam');
-
-        $this->metadata
-            ->method('getRouteParams')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getQueryStringArguments')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getRoute')
-            ->willReturn('test');
-
-        $this->metadata
-            ->method('getCollectionRelation')
-            ->willReturn('test');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            'unknown',
+            [],
+            []
+        );
 
         $this->request
             ->expects(self::once())
@@ -161,7 +130,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
         $this->paginator
             ->method('getIterator')
             ->willReturn(new ArrayIterator($values));
@@ -208,7 +177,7 @@ final class DoctrinePaginatorTest extends TestCase
 
         $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );
@@ -216,7 +185,7 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function testCreatesLinksForQueryBasedPagination(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -235,29 +204,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->method('count')
             ->willReturn(100);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn(RouteBasedCollectionMetadata::TYPE_QUERY);
-
-        $this->metadata
-            ->method('getPaginationParam')
-            ->willReturn('page_num');
-
-        $this->metadata
-            ->method('getRouteParams')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getQueryStringArguments')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getRoute')
-            ->willReturn('test');
-
-        $this->metadata
-            ->method('getCollectionRelation')
-            ->willReturn('test');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            RouteBasedCollectionMetadata::TYPE_QUERY,
+            [],
+            []
+        );
 
         $this->request
             ->expects(self::exactly(6))
@@ -268,7 +223,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -328,7 +283,7 @@ final class DoctrinePaginatorTest extends TestCase
 
         $resource = $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );
@@ -338,7 +293,7 @@ final class DoctrinePaginatorTest extends TestCase
 
     public function testCreatesLinksForRouteBasedPagination(): void
     {
-        $query = $this->mockQuery();
+        $query = $this->createMock(Query::class);
         $query
             ->expects($this->once())
             ->method('getMaxResults')
@@ -354,29 +309,15 @@ final class DoctrinePaginatorTest extends TestCase
             ->willReturn($query);
         $this->paginator->method('count')->willReturn(100);
 
-        $this->metadata
-            ->method('getPaginationParamType')
-            ->willReturn(RouteBasedCollectionMetadata::TYPE_PLACEHOLDER);
-
-        $this->metadata
-            ->method('getPaginationParam')
-            ->willReturn('page_num');
-
-        $this->metadata
-            ->method('getRouteParams')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getQueryStringArguments')
-            ->willReturn([]);
-
-        $this->metadata
-            ->method('getRoute')
-            ->willReturn('test');
-
-        $this->metadata
-            ->method('getCollectionRelation')
-            ->willReturn('test');
+        $metadata = new RouteBasedCollectionMetadata(
+            stdClass::class,
+            'test',
+            'test',
+            'page_num',
+            RouteBasedCollectionMetadata::TYPE_PLACEHOLDER,
+            [],
+            []
+        );
 
         $this->request
             ->expects(self::exactly(5))
@@ -389,7 +330,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->with('page_num', 1)
             ->willReturn(3);
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(fn(int $value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -448,7 +389,7 @@ final class DoctrinePaginatorTest extends TestCase
 
         $resource = $this->strategy->createResource(
             $this->paginator,
-            $this->metadata,
+            $metadata,
             $this->generator,
             $this->request
         );

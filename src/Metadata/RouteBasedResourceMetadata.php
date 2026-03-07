@@ -4,39 +4,22 @@ declare(strict_types=1);
 
 namespace Mezzio\Hal\Metadata;
 
-/** @final */
-class RouteBasedResourceMetadata extends AbstractResourceMetadata
+final class RouteBasedResourceMetadata extends AbstractResourceMetadata
 {
     private const DEFAULT_RESOURCE_ID = 'id';
 
-    /** @var array */
-    private $identifiersToPlaceHoldersMapping;
-
-    /** @var string */
-    private $resourceIdentifier;
-
-    /** @var string */
-    private $route;
-
-    /** @var array */
-    private $routeParams;
-
     public function __construct(
         string $class,
-        string $route,
+        private readonly string $route,
         string $extractor,
-        string $resourceIdentifier = self::DEFAULT_RESOURCE_ID,
-        array $routeParams = [],
-        array $identifiersToPlaceholdersMapping = [],
+        private readonly string $resourceIdentifier = self::DEFAULT_RESOURCE_ID,
+        private array $routeParams = [],
+        private readonly array $identifiersToPlaceHoldersMapping = [],
         int $maxDepth = 10
     ) {
-        $this->class                            = $class;
-        $this->route                            = $route;
-        $this->extractor                        = $extractor;
-        $this->resourceIdentifier               = $resourceIdentifier;
-        $this->routeParams                      = $routeParams;
-        $this->identifiersToPlaceHoldersMapping = $identifiersToPlaceholdersMapping;
-        $this->maxDepth                         = $maxDepth;
+        $this->class     = $class;
+        $this->extractor = $extractor;
+        $this->maxDepth  = $maxDepth;
     }
 
     public function getRoute(): string

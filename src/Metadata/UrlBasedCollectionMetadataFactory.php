@@ -7,8 +7,7 @@ namespace Mezzio\Hal\Metadata;
 use function array_intersect;
 use function array_keys;
 
-/** @final */
-class UrlBasedCollectionMetadataFactory implements MetadataFactoryInterface
+final class UrlBasedCollectionMetadataFactory implements MetadataFactoryInterface
 {
     /**
      * Creates a UrlBasedCollectionMetadata based on the MetadataMap configuration.

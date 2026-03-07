@@ -10,8 +10,7 @@ abstract class AbstractMetadata
 {
     use LinkCollection;
 
-    /** @var string */
-    protected $class;
+    protected string $class;
 
     public function getClass(): string
     {

@@ -10,13 +10,9 @@ use RuntimeException;
 use function get_debug_type;
 use function sprintf;
 
-/** @final */
-class InvalidResourceValueException extends RuntimeException implements ExceptionInterface
+final class InvalidResourceValueException extends RuntimeException implements ExceptionInterface
 {
-    /**
-     * @param mixed $value
-     */
-    public static function fromValue($value): self
+    public static function fromValue(mixed $value): self
     {
         return new self(sprintf(
             'Encountered non-primitive type "%s" when serializing %s instance; unable to serialize',
@@ -25,10 +21,7 @@ class InvalidResourceValueException extends RuntimeException implements Exceptio
         ));
     }
 
-    /**
-     * @param object $object
-     */
-    public static function fromObject($object): self
+    public static function fromObject(object $object): self
     {
         return new self(sprintf(
             'Encountered object of type "%s" when serializing %s instance; unable to serialize',

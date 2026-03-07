@@ -8,7 +8,7 @@ use Mezzio\Hal\Metadata\MetadataMapFactory;
 
 final class TestMetadataMapFactory extends MetadataMapFactory
 {
-    protected function createTestMetadata(): TestMetadata
+    public function createTestMetadata(): TestMetadata
     {
         return new TestMetadata();
     }

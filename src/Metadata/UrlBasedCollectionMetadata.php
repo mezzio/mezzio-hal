@@ -9,8 +9,7 @@ use InvalidArgumentException;
 use function in_array;
 use function sprintf;
 
-/** @final */
-class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
+final class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
 {
     public function __construct(
         string $class,
@@ -22,11 +21,11 @@ class UrlBasedCollectionMetadata extends AbstractCollectionMetadata
         string $paginationParam = 'page',
         string $paginationParamType = self::TYPE_QUERY
     ) {
-        if (empty($collectionRelation)) {
+        if ($collectionRelation === '') {
             throw new InvalidArgumentException('$collectionRelation MUST NOT be empty');
         }
 
-        if (empty($paginationParam)) {
+        if ($paginationParam === '') {
             throw new InvalidArgumentException('$paginationParam MUST NOT be empty');
         }
 

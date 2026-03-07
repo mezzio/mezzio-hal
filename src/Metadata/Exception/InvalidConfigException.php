@@ -15,13 +15,9 @@ use function implode;
 use function is_string;
 use function sprintf;
 
-/** @final */
-class InvalidConfigException extends RuntimeException implements ExceptionInterface
+final class InvalidConfigException extends RuntimeException implements ExceptionInterface
 {
-    /**
-     * @param mixed $config
-     */
-    public static function dueToNonArray($config): self
+    public static function dueToNonArray(mixed $config): self
     {
         return new self(sprintf(
             'Invalid %s configuration; expected an array, but received %s',
@@ -30,10 +26,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    /**
-     * @param mixed $metadata
-     */
-    public static function dueToNonArrayMetadata($metadata): self
+    public static function dueToNonArrayMetadata(mixed $metadata): self
     {
         return new self(sprintf(
             'Invalid %s metadata item configuration; expected an array, but received %s',
@@ -47,10 +40,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         return new self('Unable to generate metadata; missing "__class__" element');
     }
 
-    /**
-     * @param mixed $class
-     */
-    public static function dueToInvalidMetadataClass($class): self
+    public static function dueToInvalidMetadataClass(mixed $class): self
     {
         $className = $class;
         if (! is_string($className)) {

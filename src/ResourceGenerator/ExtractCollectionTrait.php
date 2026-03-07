@@ -22,7 +22,7 @@ use function sprintf;
 trait ExtractCollectionTrait
 {
     /** @var string[] */
-    private $paginationTypes = [
+    private array $paginationTypes = [
         AbstractCollectionMetadata::TYPE_PLACEHOLDER,
         AbstractCollectionMetadata::TYPE_QUERY,
     ];
@@ -81,8 +81,7 @@ trait ExtractCollectionTrait
         return $this->createPaginatedCollectionResource(
             $pageCount,
             $data,
-            /** @param int<1, max> $page */
-            function (int $page) use ($collection) {
+            function (int $page) use ($collection): void {
                 $collection->setCurrentPageNumber($page);
             },
             $collection,
@@ -117,7 +116,7 @@ trait ExtractCollectionTrait
         return $this->createPaginatedCollectionResource(
             $pageCount,
             $data,
-            function (int $page) use ($query, $perPage) {
+            function (int $page) use ($query, $perPage): void {
                 $query->setFirstResult($perPage * ($page - 1));
             },
             $collection,
