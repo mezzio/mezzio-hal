@@ -6,7 +6,7 @@ namespace Mezzio\Hal;
 
 use Psr\Container\ContainerInterface;
 
-final class LinkGeneratorFactory
+final readonly class LinkGeneratorFactory
 {
     /**
      * Allow serialization
@@ -22,7 +22,7 @@ final class LinkGeneratorFactory
      * Allow varying behavior based on URL generator service name.
      */
     public function __construct(
-        private readonly string $urlGeneratorServiceName = LinkGenerator\UrlGeneratorInterface::class
+        private string $urlGeneratorServiceName = LinkGenerator\UrlGeneratorInterface::class
     ) {
     }
 

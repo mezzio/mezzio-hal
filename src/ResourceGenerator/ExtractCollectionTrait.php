@@ -81,6 +81,7 @@ trait ExtractCollectionTrait
         return $this->createPaginatedCollectionResource(
             $pageCount,
             $data,
+            /** @param int<1, max> $page */
             function (int $page) use ($collection): void {
                 $collection->setCurrentPageNumber($page);
             },

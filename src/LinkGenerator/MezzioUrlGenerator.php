@@ -8,11 +8,11 @@ use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class MezzioUrlGenerator implements UrlGeneratorInterface
+final readonly class MezzioUrlGenerator implements UrlGeneratorInterface
 {
     public function __construct(
-        private readonly UrlHelper $urlHelper,
-        private readonly ?ServerUrlHelper $serverUrlHelper = null
+        private UrlHelper $urlHelper,
+        private ?ServerUrlHelper $serverUrlHelper = null
     ) {
     }
 

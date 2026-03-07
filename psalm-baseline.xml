@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[forNonObject]]></code>
@@ -9,16 +9,12 @@
     <MissingClosureParamType>
       <code><![CDATA[$key]]></code>
       <code><![CDATA[$links]]></code>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$name]]></code>
       <code><![CDATA[$resource]]></code>
       <code><![CDATA[$value]]></code>
     </MissingClosureParamType>
     <MixedArgument>
       <code><![CDATA[$links]]></code>
       <code><![CDATA[$links]]></code>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$name]]></code>
       <code><![CDATA[$relation]]></code>
       <code><![CDATA[$relation]]></code>
       <code><![CDATA[$relation]]></code>
