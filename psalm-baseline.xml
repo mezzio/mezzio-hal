@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[forNonObject]]></code>
@@ -9,16 +9,12 @@
     <MissingClosureParamType>
       <code><![CDATA[$key]]></code>
       <code><![CDATA[$links]]></code>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$name]]></code>
       <code><![CDATA[$resource]]></code>
       <code><![CDATA[$value]]></code>
     </MissingClosureParamType>
     <MixedArgument>
       <code><![CDATA[$links]]></code>
       <code><![CDATA[$links]]></code>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$name]]></code>
       <code><![CDATA[$relation]]></code>
       <code><![CDATA[$relation]]></code>
       <code><![CDATA[$relation]]></code>
@@ -419,9 +415,6 @@
     </UndefinedMethod>
   </file>
   <file src="src/ResourceGeneratorFactory.php">
-    <MissingDependency>
-      <code><![CDATA[HydratorPluginManager]]></code>
-    </MissingDependency>
     <MixedArgument>
       <code><![CDATA[$container->get($strategy)]]></code>
       <code><![CDATA[$container->get($this->linkGeneratorServiceName)]]></code>
@@ -429,7 +422,6 @@
       <code><![CDATA[$container->get(Metadata\MetadataMap::class)]]></code>
       <code><![CDATA[$data['linkGeneratorServiceName'] ?? LinkGenerator::class]]></code>
       <code><![CDATA[$strategy]]></code>
-      <code><![CDATA[HydratorPluginManager::class]]></code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$config['mezzio-hal']['resource-generator']]]></code>
@@ -947,12 +939,6 @@
       <code><![CDATA[$request]]></code>
       <code><![CDATA[$request]]></code>
     </InvalidArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$this->createCollectionItems(
-            $linkGenerator,
-            $request
-        )]]></code>
-    </MixedArgumentTypeCoercion>
     <MixedMethodCall>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
@@ -1000,9 +986,6 @@
       <code><![CDATA[$linkGenerator]]></code>
       <code><![CDATA[$request]]></code>
     </InvalidArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$this->createCollectionItems($linkGenerator, $request)]]></code>
-    </MixedArgumentTypeCoercion>
     <MixedMethodCall>
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
@@ -1046,10 +1029,6 @@
       <code><![CDATA[willReturn]]></code>
       <code><![CDATA[willReturn]]></code>
     </InvalidMethodCall>
-    <MissingDependency>
-      <code><![CDATA[HydratorPluginManager]]></code>
-      <code><![CDATA[HydratorPluginManager]]></code>
-    </MissingDependency>
     <MixedArgument>
       <code><![CDATA[$this->container->reveal()]]></code>
       <code><![CDATA[$this->container->reveal()]]></code>

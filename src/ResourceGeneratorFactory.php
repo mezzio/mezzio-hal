@@ -13,7 +13,7 @@ use Traversable;
 use function is_array;
 use function is_string;
 
-final class ResourceGeneratorFactory
+final readonly class ResourceGeneratorFactory
 {
     /**
      * Allow serialization
@@ -28,7 +28,7 @@ final class ResourceGeneratorFactory
     /**
      * Allow varying behavior based on link generator service name.
      */
-    public function __construct(private readonly string $linkGeneratorServiceName = LinkGenerator::class)
+    public function __construct(private string $linkGeneratorServiceName = LinkGenerator::class)
     {
     }
 

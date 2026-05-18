@@ -11,7 +11,7 @@ use RuntimeException;
 
 use function sprintf;
 
-final class MezzioUrlGeneratorFactory
+final readonly class MezzioUrlGeneratorFactory
 {
     /**
      * Allow serialization
@@ -26,7 +26,7 @@ final class MezzioUrlGeneratorFactory
     /**
      * Vary behavior based on the URL helper service name.
      */
-    public function __construct(private readonly string $urlHelperServiceName = UrlHelper::class)
+    public function __construct(private string $urlHelperServiceName = UrlHelper::class)
     {
     }
 

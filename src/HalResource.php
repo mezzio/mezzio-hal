@@ -55,7 +55,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
     ) {
         $context = self::class;
 
-        array_walk($data, function ($value, $name) use ($context): void {
+        array_walk($data, function ($value, string $name) use ($context): void {
             $this->validateElementName($name, $context);
 
             if ($value instanceof self || $this->isResourceCollection($value)) {
@@ -66,7 +66,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             $this->data[$name] = $value;
         });
 
-        array_walk($embedded, function ($resource, $name) use ($context): void {
+        array_walk($embedded, function ($resource, string $name) use ($context): void {
             $this->validateElementName($name, $context);
             $this->detectCollisionWithData($name, $context);
 
