@@ -161,7 +161,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(static fn($value) => (object) ['value' => $value], range(46, 60));
         $this->paginator
             ->method('getIterator')
             ->willReturn(new ArrayIterator($values));
@@ -268,7 +268,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::never())
             ->method('getAttribute');
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(static fn($value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -290,7 +290,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->withConsecutive(
                 ...$consecutiveGeneratorArguments
             )
-            ->willReturnCallback(function () use ($testCase): HalResource {
+            ->willReturnCallback(static function () use ($testCase): HalResource {
                 $resource = $testCase->createMock(HalResource::class);
                 $resource->method('getElements')->willReturn(['test' => true]);
                 return $resource;
@@ -389,7 +389,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->with('page_num', 1)
             ->willReturn(3);
 
-        $values = array_map(fn($value) => (object) ['value' => $value], range(46, 60));
+        $values = array_map(static fn($value) => (object) ['value' => $value], range(46, 60));
 
         $this->paginator
             ->method('getIterator')
@@ -409,7 +409,7 @@ final class DoctrinePaginatorTest extends TestCase
             ->expects(self::exactly(count($consecutiveGeneratorArguments)))
             ->method('fromObject')
             ->withConsecutive(...$consecutiveGeneratorArguments)
-            ->willReturnCallback(function () use ($testCase): HalResource {
+            ->willReturnCallback(static function () use ($testCase): HalResource {
                 $resource = $testCase->createMock(HalResource::class);
                 $resource->method('getElements')->willReturn(['test' => true]);
                 return $resource;

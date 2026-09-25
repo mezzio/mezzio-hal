@@ -92,7 +92,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
         if (
             array_reduce(
                 $links,
-                fn($containsNonLinkItem, $link)
+                static fn($containsNonLinkItem, $link)
                 => $containsNonLinkItem || ! $link instanceof LinkInterface,
                 false
             )
@@ -325,7 +325,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             is_array($resource)
             && array_reduce(
                 $resource,
-                fn(bool $allAreResources, $resource): bool
+                static fn(bool $allAreResources, $resource): bool
                 => $allAreResources && $resource instanceof HalResource,
                 true
             )
@@ -419,7 +419,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
 
     private function serializeLinks(): array
     {
-        $relations = array_reduce($this->links, function (array $byRelation, LinkInterface $link) {
+        $relations = array_reduce($this->links, static function (array $byRelation, LinkInterface $link) {
             $representation = array_merge($link->getAttributes(), [
                 'href' => $link->getHref(),
             ]);
@@ -428,7 +428,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             }
 
             $linkRels = $link->getRels();
-            array_walk($linkRels, function ($rel) use (&$byRelation, $representation) {
+            array_walk($linkRels, static function ($rel) use (&$byRelation, $representation) {
                 $forceCollection = array_key_exists(Link::AS_COLLECTION, $representation)
                     && $representation[Link::AS_COLLECTION];
                 unset($representation[Link::AS_COLLECTION]);
@@ -459,7 +459,7 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             return $byRelation;
         }, []);
 
-        array_walk($relations, function ($links, $key) use (&$relations) {
+        array_walk($relations, static function ($links, $key) use (&$relations) {
             if (isset($relations[$key][Link::AS_COLLECTION])) {
                 // If forcing a collection, do nothing to the links, but DO
                 // remove the marker indicating a collection should be
@@ -482,10 +482,10 @@ class HalResource implements EvolvableLinkProviderInterface, JsonSerializable
             /**
              * @param array|self $resource
              */
-            function ($resource, string $name) use (&$embedded): void {
+            static function ($resource, string $name) use (&$embedded): void {
                 $embedded[$name] = $resource instanceof self
                     ? $resource->toArray()
-                    : array_map(fn($item) => $item->toArray(), $resource);
+                    : array_map(static fn($item) => $item->toArray(), $resource);
             }
         );
 

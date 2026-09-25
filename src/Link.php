@@ -143,7 +143,7 @@ class Link implements EvolvableLinkInterface
         }
 
         $new            = clone $this;
-        $new->relations = array_filter($this->relations, fn($value) => $rel !== $value);
+        $new->relations = array_filter($this->relations, static fn($value) => $rel !== $value);
         return $new;
     }
 
@@ -215,7 +215,7 @@ class Link implements EvolvableLinkInterface
         }
 
         if (
-            is_array($value) && array_reduce($value, fn($isInvalid, $value) => $isInvalid || ! is_string($value), false)
+            is_array($value) && array_reduce($value, static fn($isInvalid, $value) => $isInvalid || ! is_string($value), false)
         ) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects $value to contain an array of strings; one or more values was not a string',
@@ -251,7 +251,7 @@ class Link implements EvolvableLinkInterface
         if (
             is_array($relation) && false === array_reduce(
                 $relation,
-                fn($isString, $value) =>
+                static fn($isString, $value) =>
                     $isString === false || is_string($value) || empty($value),
                 true
             )

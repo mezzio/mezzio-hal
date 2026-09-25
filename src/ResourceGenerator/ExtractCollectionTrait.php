@@ -82,7 +82,7 @@ trait ExtractCollectionTrait
             $pageCount,
             $data,
             /** @param int<1, max> $page */
-            function (int $page) use ($collection) {
+            static function (int $page) use ($collection) {
                 $collection->setCurrentPageNumber($page);
             },
             $collection,
@@ -117,7 +117,7 @@ trait ExtractCollectionTrait
         return $this->createPaginatedCollectionResource(
             $pageCount,
             $data,
-            function (int $page) use ($query, $perPage) {
+            static function (int $page) use ($query, $perPage) {
                 $query->setFirstResult($perPage * ($page - 1));
             },
             $collection,

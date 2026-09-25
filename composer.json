@@ -49,6 +49,7 @@
         "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
+        "boundwize/structarmed": "^0.18.0",
         "doctrine/orm": "^2.20.9",
         "laminas/laminas-coding-standard": "~3.1.0",
         "laminas/laminas-hydrator": "^4.17",

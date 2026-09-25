@@ -35,7 +35,7 @@ trait LinkCollection
      */
     public function getLinksByRel($rel): array
     {
-        return array_filter($this->links, function (LinkInterface $link) use ($rel) {
+        return array_filter($this->links, static function (LinkInterface $link) use ($rel) {
             $rels = $link->getRels();
             return in_array($rel, $rels, true);
         });
@@ -65,7 +65,7 @@ trait LinkCollection
         }
 
         $new        = clone $this;
-        $new->links = array_filter($this->links, fn(LinkInterface $compare) => $link !== $compare);
+        $new->links = array_filter($this->links, static fn(LinkInterface $compare) => $link !== $compare);
         return $new;
     }
 }

@@ -547,7 +547,7 @@ final class HalResourceTest extends TestCase
             ->withLink(new Link('self', '/api/foo'))
             ->withLink(new Link('about', '/doc/about'))
             ->withLink(new Link('about', '/doc/resources/foo'))
-            ->withElements(['foo' => 'bar', 'id' => 12345678])
+            ->withElements(['foo' => 'bar', 'id' => 12_345_678])
             ->embed('bar', new HalResource(['bar' => 'baz'], [new Link('self', '/api/bar')]))
             ->embed('baz', [
                 new HalResource(['baz' => 'bat', 'id' => 987654], [new Link('self', '/api/baz/987654')]),
@@ -555,7 +555,7 @@ final class HalResourceTest extends TestCase
             ]);
         $expected = [
             'foo'       => 'bar',
-            'id'        => 12345678,
+            'id'        => 12_345_678,
             '_links'    => [
                 'self'  => [
                     'href' => '/api/foo',

@@ -7,3 +7,4 @@
 /phpcs.xml export-ignore
 /phpunit.xml.dist export-ignore
 /test/ export-ignore
+/structarmed.php export-ignore
