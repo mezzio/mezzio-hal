@@ -205,7 +205,7 @@ final class RouteBasedCollectionWithRouteParamsTest extends TestCase
             $rel,
             $request->reveal(),
             'foo-bar',
-            Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+            Argument::that(static fn(array $params) => array_key_exists('foo_id', $params)
                 && array_key_exists('p', $params)
                 && $params['foo_id'] === 1234
                 && $params['p'] === $page),
@@ -239,7 +239,7 @@ final class RouteBasedCollectionWithRouteParamsTest extends TestCase
                     'self',
                     $request->reveal(),
                     'foo-bar',
-                    Argument::that(fn(array $params) => array_key_exists('foo_id', $params)
+                    Argument::that(static fn(array $params) => array_key_exists('foo_id', $params)
                         && array_key_exists('bar_id', $params)
                         && $params['foo_id'] === 1234
                         && $params['bar_id'] === $i)

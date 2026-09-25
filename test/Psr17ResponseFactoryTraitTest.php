@@ -90,7 +90,7 @@ final class Psr17ResponseFactoryTraitTest extends TestCase
         $container->set('config', $config);
         $container->set(ResponseFactoryInterface::class, $responseFactory);
         $response = $this->createMock(ResponseInterface::class);
-        $container->set(ResponseInterface::class, fn(): ResponseInterface => $response);
+        $container->set(ResponseInterface::class, static fn(): ResponseInterface => $response);
 
         $detectedResponseFactory = ($this->factory)($container);
         self::assertNotSame($responseFactory, $detectedResponseFactory);

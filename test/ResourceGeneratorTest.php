@@ -187,7 +187,7 @@ final class ResourceGeneratorTest extends TestCase
                 'self',
                 $this->request->reveal(),
                 'foo-bar',
-                Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                Argument::that(static fn(array $params) => array_key_exists('foo_bar_id', $params)
                     && array_key_exists('test', $params)
                     && $params['foo_bar_id'] === 'XXXX-YYYY-ZZZZ'
                     && $params['test'] === 'param')
@@ -304,7 +304,7 @@ final class ResourceGeneratorTest extends TestCase
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                    Argument::that(static fn(array $params) => array_key_exists('foo_bar_id', $params)
                         && array_key_exists('test', $params)
                         && $params['foo_bar_id'] === $i
                         && $params['test'] === 'param')
@@ -434,7 +434,7 @@ final class ResourceGeneratorTest extends TestCase
                     'self',
                     $this->request->reveal(),
                     'foo-bar',
-                    Argument::that(fn(array $params) => array_key_exists('foo_bar_id', $params)
+                    Argument::that(static fn(array $params) => array_key_exists('foo_bar_id', $params)
                         && array_key_exists('test', $params)
                         && $params['foo_bar_id'] === $i
                         && $params['test'] === 'param')

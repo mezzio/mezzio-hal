@@ -98,7 +98,7 @@ final class ResourceWithSelfReferringInstanceTest extends TestCase
                 'self',
                 $request->reveal(),
                 'foo-bar',
-                Argument::that(fn(array $params): bool => array_key_exists('id', $params)
+                Argument::that(static fn(array $params): bool => array_key_exists('id', $params)
                     && $params['id'] === 1234)
             )
             ->willReturn(new Link('self', '/api/foo-bar/1234'));
