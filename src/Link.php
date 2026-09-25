@@ -215,7 +215,11 @@ class Link implements EvolvableLinkInterface
         }
 
         if (
-            is_array($value) && array_reduce($value, static fn($isInvalid, $value) => $isInvalid || ! is_string($value), false)
+            is_array($value) && array_reduce(
+                $value,
+                static fn($isInvalid, $value) => $isInvalid || ! is_string($value),
+                false
+            )
         ) {
             throw new InvalidArgumentException(sprintf(
                 '%s expects $value to contain an array of strings; one or more values was not a string',
