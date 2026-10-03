@@ -52,7 +52,7 @@
         "boundwize/structarmed": "^0.18.0",
         "doctrine/orm": "^2.20.9",
         "laminas/laminas-coding-standard": "~3.1.0",
-        "laminas/laminas-hydrator": "^4.17",
+        "laminas/laminas-hydrator": "^4.17 || ^5.0.0",
         "laminas/laminas-paginator": "^2.22.0 || ^3.0.0",
         "mezzio/mezzio-helpers": "^5.20",
         "phpspec/prophecy-phpunit": "^2.4.0",

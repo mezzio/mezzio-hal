@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.18.0@536dd6236b39a5115385b0307b42d6d1ad431a02">
+<files psalm-version="6.18.1@79465b8dc674127f442ae31ea114c11bc4dd7ed6">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[forNonObject]]></code>
@@ -474,9 +474,6 @@
     </MixedAssignment>
   </file>
   <file src="test/Assertions.php">
-    <DeprecatedClass>
-      <code><![CDATA[ObjectProperty::class]]></code>
-    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$actual->getHref()]]></code>
       <code><![CDATA[$actual->getRels()]]></code>
@@ -489,6 +486,7 @@
     </MixedMethodCall>
     <MoreSpecificReturnType>
       <code><![CDATA[Link]]></code>
+      <code><![CDATA[ObjectPropertyHydrator::class]]></code>
     </MoreSpecificReturnType>
     <RedundantCondition>
       <code><![CDATA[assertIsArray]]></code>
