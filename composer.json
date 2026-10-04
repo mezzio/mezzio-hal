@@ -41,7 +41,7 @@
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
         "ext-dom": "*",
         "ext-json": "*",
-        "laminas/laminas-hydrator": "^4.16",
+        "laminas/laminas-hydrator": "^5.0.0",
         "mezzio/mezzio-helpers": "^5.20.0",
         "psr/container": "^1.1.2 || ^2.0.2",
         "psr/http-factory": "^1.0",

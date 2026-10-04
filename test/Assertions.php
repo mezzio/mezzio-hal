@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace MezzioTest\Hal;
 
-use Laminas\Hydrator\ObjectProperty;
 use Laminas\Hydrator\ObjectPropertyHydrator;
 use Mezzio\Hal\HalResource;
 use Mezzio\Hal\Link;
 
 use function array_shift;
-use function class_exists;
 use function count;
 use function get_debug_type;
 use function in_array;
@@ -21,13 +19,11 @@ use function var_export;
 trait Assertions
 {
     /**
-     * @psalm-return ObjectPropertyHydrator::class|ObjectProperty::class
+     * @psalm-return ObjectPropertyHydrator::class
      */
     public static function getObjectPropertyHydratorClass(): string
     {
-        return class_exists(ObjectPropertyHydrator::class)
-            ? ObjectPropertyHydrator::class
-            : ObjectProperty::class;
+        return ObjectPropertyHydrator::class;
     }
 
     public static function getLinkByRel(string $rel, HalResource $resource): Link
