@@ -432,9 +432,6 @@
     </MixedAssignment>
   </file>
   <file src="test/Assertions.php">
-    <DeprecatedClass>
-      <code><![CDATA[ObjectProperty::class]]></code>
-    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$actual->getHref()]]></code>
       <code><![CDATA[$actual->getRels()]]></code>
