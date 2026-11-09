@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.18.1@79465b8dc674127f442ae31ea114c11bc4dd7ed6">
+<files psalm-version="6.20.10@7fc81490f861c801061836a9010603d2393bf8da">
   <file src="src/Exception/InvalidObjectException.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[forNonObject]]></code>
@@ -146,6 +146,12 @@
       <code><![CDATA[$container->get($this->urlGeneratorServiceName)]]></code>
       <code><![CDATA[$data['urlGeneratorServiceName'] ?? LinkGenerator\UrlGeneratorInterface::class]]></code>
     </MixedArgument>
+  </file>
+  <file src="src/Metadata/AbstractCollectionMetadata.php">
+    <MissingClassConstType>
+      <code><![CDATA[TYPE_PLACEHOLDER = 'placeholder']]></code>
+      <code><![CDATA[TYPE_QUERY       = 'query']]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/Metadata/AbstractMetadata.php">
     <MissingConstructor>
