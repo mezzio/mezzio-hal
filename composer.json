@@ -58,7 +58,7 @@
         "mezzio/mezzio-helpers": "^5.20",
         "phpspec/prophecy-phpunit": "^2.5.0",
         "phpunit/phpunit": "^9.6.38",
-        "psalm/plugin-phpunit": "^0.19.7",
+        "psalm/plugin-phpunit": "^1.0.0",
         "vimeo/psalm": "^6.20.10"
     },
     "provide": {
