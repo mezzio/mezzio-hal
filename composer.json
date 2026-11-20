@@ -49,7 +49,7 @@
         "willdurand/negotiation": "^3.0"
     },
     "require-dev": {
-        "boundwize/structarmed": "^0.18.11",
+        "boundwize/structarmed": "^0.21.0",
         "laminas/internal-tooling": "^1.0.0",
         "doctrine/orm": "^2.20.14",
         "laminas/laminas-coding-standard": "~3.1.0",
@@ -58,7 +58,7 @@
         "mezzio/mezzio-helpers": "^5.20",
         "phpspec/prophecy-phpunit": "^2.5.0",
         "phpunit/phpunit": "^9.6.38",
-        "psalm/plugin-phpunit": "^0.19.7",
+        "psalm/plugin-phpunit": "^0.22.0",
         "vimeo/psalm": "^6.20.10"
     },
     "provide": {
